@@ -24,5 +24,4 @@ hs_err_pid*
 replay_pid*
 
 #DBConnection file
-src/main/java/DBConnection/
 target/
