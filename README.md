@@ -79,41 +79,13 @@ To install and set up the FFood website locally, follow these steps:
 
 6. Configure the database:
    - Ensure you have a SQL Server database set up with the required schema for the food e-commerce website.
-   - Update the database connection details by creating a `DBConnection.java` file in `DBConnection` package in `src/main/java/`. The resulting path should be `src/main/java/DBConnection/DBConnection.java`. The file should have the following content:
+   - Update the database connection details in [database.properties](src/main/resources/database.properties):
 
-```java
-package DBConnection;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-public class DBConnection {
-    private static Connection conn = null;
-    public static Connection getConnection() {
-        try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            try {
-                conn = DriverManager.getConnection("jdbc:sqlserver://"
-                        + "ENTER-YOUR-DATABASE-NAME\\SQLEXPRESS:1433;"
-                        + "databaseName=ffood;"
-   // Enter your SSMS login username
-                        + "user=enter-your-username;"
-                        // Enter your SSMS login password
-                        + "password=enter-your-password;"
-                        + "encrypt=true;"
-                        + "trustServerCertificate= true;");
-            } catch (SQLException ex) {
-                Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return conn;   
-    }
-}
+```properties
+DATABASE_NAME=your-database-name
+PASSWORD=your-password
+USERNAME=your-username
+DATA_SERVER_NAME=your-data-server-name
 ```
 
 7. Build and deploy the project:
