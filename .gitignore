@@ -24,4 +24,5 @@ hs_err_pid*
 replay_pid*
 
 #DBConnection file
+src/main/resources/database.properties
 target/
