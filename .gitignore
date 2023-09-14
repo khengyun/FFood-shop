@@ -25,4 +25,5 @@ replay_pid*
 
 #DBConnection file
 src/main/resources/*
+.\src\main\resources\*
 target/
