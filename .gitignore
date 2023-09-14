@@ -27,3 +27,4 @@ replay_pid*
 src/main/resources/*
 .\src\main\resources\*
 target/
+src/main/resources/database.properties
