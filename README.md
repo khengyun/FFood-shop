@@ -20,7 +20,6 @@ FFood is a food website that lets customers order food in a quick and convenient
 
 FFood is a food website that lets customers order food in a quick and convenient way.
 
-
 ## Features
 
 - Menu filtering and searching on home page
@@ -28,14 +27,14 @@ FFood is a food website that lets customers order food in a quick and convenient
 - Order without logging in
 - Order tracking and auto-fill checkout forms for logged in users
 - Optimized UX for customers: forms are contained in modals (pop-ups), users do not have to be redirected to different pages for these actions:
-	-	Logging in, signing up
-	-	Viewing Carts
--	Food, User, Order management for Admins
--	Authorization system prevents unauthorized access to certain pages
-	-	Non-logged in users cannot access User and Admin pages
-	-	Logged-in Users can access User pages, but not Admin pages
-	-	Admins can only access Admin pages, the rest is restricted from access to prevent security risks
--	Optimized UX for admins: CRUD actions are prompted using modals (pop-ups) instead of redirecting to specific pages
+  - Logging in, signing up
+  - Viewing Carts
+- Food, User, Order management for Admins
+- Authorization system prevents unauthorized access to certain pages
+  - Non-logged in users cannot access User and Admin pages
+  - Logged-in Users can access User pages, but not Admin pages
+  - Admins can only access Admin pages, the rest is restricted from access to prevent security risks
+- Optimized UX for admins: CRUD actions are prompted using modals (pop-ups) instead of redirecting to specific pages
 
 ## Technologies
 
@@ -49,12 +48,11 @@ FFood is a food website that lets customers order food in a quick and convenient
 
 ### Dependencies
 
--   Jakarta Servlet API (5.0.0)
--   Microsoft JDBC Driver for SQL Server (10.2.0.jre8)
--   Jakarta Standard Tag Library Implementation (Glassfish)
+- Jakarta Servlet API (5.0.0)
+- Microsoft JDBC Driver for SQL Server (10.2.0.jre8)
+- Jakarta Standard Tag Library Implementation (Glassfish)
 
 ## Installation
-
 
 To install and set up the FFood website locally, follow these steps:
 
@@ -69,7 +67,7 @@ To install and set up the FFood website locally, follow these steps:
 3. Ensure you have Java SE 1.8 installed on your system.
 
 4. Set up the Tomcat server:
-   - Download and install Tomcat 10 (Java EE 7) from the Apache Tomcat website.
+   - Download and [install Tomcat 10](https://tomcat.apache.org/download-10.cgi) (Java EE 7) from the Apache Tomcat website.
    - Configure Tomcat in your IDE by specifying the installation directory.
 
 5. Resolve dependencies:
@@ -82,7 +80,8 @@ To install and set up the FFood website locally, follow these steps:
 6. Configure the database:
    - Ensure you have a SQL Server database set up with the required schema for the food e-commerce website.
    - Update the database connection details by creating a `DBConnection.java` file in `DBConnection` package in `src/main/java/`. The resulting path should be `src/main/java/DBConnection/DBConnection.java`. The file should have the following content:
-```bash
+
+```java
 package DBConnection;
 
 import java.sql.Connection;
@@ -100,7 +99,7 @@ public class DBConnection {
                 conn = DriverManager.getConnection("jdbc:sqlserver://"
                         + "ENTER-YOUR-DATABASE-NAME\\SQLEXPRESS:1433;"
                         + "databaseName=ffood;"
-			// Enter your SSMS login username
+   // Enter your SSMS login username
                         + "user=enter-your-username;"
                         // Enter your SSMS login password
                         + "password=enter-your-password;"
@@ -116,6 +115,7 @@ public class DBConnection {
     }
 }
 ```
+
 7. Build and deploy the project:
    - Build the project in your IDE to compile the source code and generate the necessary artifacts.
    - Deploy the project to the Tomcat server by either:
@@ -125,11 +125,10 @@ public class DBConnection {
 8. Start the Tomcat server and access the food e-commerce website:
    - Start the Tomcat server either through your IDE or by running the appropriate startup script.
    - Open a web browser and visit `http://localhost:8080/your-web-app-context` to access the website. The web application context path can be configured in `src/main/webapp/META-INF/context.xml`
-	   - By default it is `""`, so the website URL should be `http://localhost:8080`
+    - By default it is `""`, so the website URL should be `http://localhost:8080`
 
 Now you should have FFood running locally on your machine.
 
-
 ## License
 
-This project is licensed under the [MIT License](https://github.com/tien-thanh-hua/FFood/blob/main/LICENSE).
+This project is licensed under the [MIT License](https://github.com/khengyun/FFood-shop/blob/main/README.md).
