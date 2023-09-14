@@ -1,0 +1,40 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<!-- Sidebar -->
+<div style="z-index:100;" class="position-sm-static position-md-fixed d-flex flex-column flex-shrink-0 col-md-3 col-lg-2 p-3 bg-warning-subtle vh-md-100">
+  <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+    <img class="d-inline-block" src="<%= request.getContextPath() + "assets/img/gallery/logo.svg"%>" alt="logo" />
+    <span class="text-1000 fs-2 fw-bold lh-1 ms-2 text-gradient">FFood Dashboard</span>
+  </a>
+  <hr class="border border-800 border-1 border-opacity-25">
+  <ul class="nav nav-pills flex-column mb-auto"> 
+    <li class="nav-item">
+      <button data-bs-target="#food-menu" class="nav-link link-body-emphasis w-100 text-start" data-bs-toggle="tab">
+        <i class="fas fa-hamburger fa-fw me-2"></i>
+        Món ăn
+      </button>
+    </li>
+    <li class="nav-item">
+      <button data-bs-target="#users" class="nav-link link-body-emphasis w-100 text-start" data-bs-toggle="tab">
+        <i class="fas fa-users fa-fw me-2"></i>
+        Người dùng
+      </button>
+    </li>
+    <li class="nav-item">
+      <button data-bs-target="#orders" class="nav-link link-body-emphasis w-100 text-start" data-bs-toggle="tab">
+        <i class="fas fa-table fa-fw me-2"></i>
+        Đơn món
+      </button>
+    </li>
+  </ul>
+  <hr class="border border-800 border-1 border-opacity-25">
+  <div class="flex-grow-0"></div>
+  <div class="dropdown">
+    <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+      <strong>${adminName}</strong>
+    </a>
+    <ul class="dropdown-menu text-small shadow">
+      <li><a class="dropdown-item" href="/admin/logout">Đăng xuất</a></li>
+    </ul>
+  </div>
+</div>

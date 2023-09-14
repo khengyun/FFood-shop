@@ -1,0 +1,19 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="modal" tabindex="-1" id="cancel-order-modal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Hủy Đơn</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Bạn có muốn hủy đơn này không?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal">Không</button>
+        <a id="cancelOrderLink" href="/user/cancel/${o.orderID}" class="btn btn-danger">Có</a>
+      </div>
+    </div>
+  </div>
+</div>

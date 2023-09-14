@@ -1,0 +1,15 @@
+<%@ page pageEncoding="UTF-8" %>
+<div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
+  <div class="card card-span h-100 rounded-3"><img class="img-fluid rounded-3 h-100" src="${food.url}" alt="..." />
+    <div class="card-body">
+      <h5 class="card-title fw-bold fs-1 text-1000 text-truncate mb-1">${food.foodName}</h5>
+      <div class="card-text">
+        <span class="text-primary fw-bold">
+          ${food.foodPrice}
+          <fmt:formatNumber type="number" pattern="###,###" value="${food.foodPrice - (food.foodPrice * food.discountPercent / 100)}" />đ
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="d-grid gap-2"><a class="btn btn-lg btn-danger" href="" role="button">Thêm vào Giỏ hàng</a></div>
+</div>

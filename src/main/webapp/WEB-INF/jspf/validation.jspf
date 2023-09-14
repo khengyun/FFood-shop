@@ -1,0 +1,5 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<script src="<%= request.getContextPath()%>/vendors/jquery-validation-1.19.5/dist/jquery.validate.min.js"></script>
+<script src="<%= request.getContextPath()%>/vendors/jquery-validation-1.19.5/dist/additional-methods.min.js"></script>
+<script src="<%= request.getContextPath()%>/assets/js/validateForm.js"></script>

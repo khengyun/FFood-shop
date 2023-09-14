@@ -1,0 +1,13 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<!-- Modal -->
+<div class="modal fade" id="success" tabindex="-1" role="dialog" aria-labelledby="successLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h3 class="text-center p-3">Đặt món thành công!</h3>
+      </div>
+    </div>
+  </div>
+</div>

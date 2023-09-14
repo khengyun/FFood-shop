@@ -1,0 +1,18 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<!-- Favicons -->
+<link href="<%= request.getContextPath() + "assets/img/favicons/apple-touch-icon.png"%>" rel="apple-touch-icon" sizes="180x180">
+<link href="<%= request.getContextPath() + "assets/img/favicons/favicon-32x32.png"%>" rel="icon" type="image/png" sizes="32x32">
+<link href="<%= request.getContextPath() + "assets/img/favicons/favicon-16x16.png"%>" rel="icon" type="image/png" sizes="16x16">
+<link href="<%= request.getContextPath() + "assets/img/favicons/favicon.ico"%>" rel="shortcut icon" type="image/x-icon">
+<link href="<%= request.getContextPath() + "assets/img/favicons/manifest.json"%>" rel="manifest">
+<meta name="msapplication-TileImage" content="<%= request.getContextPath() + "assets/img/favicons/mstile-150x150.png"%>">
+<meta name="theme-color" content="#ffffff">
+
+<!-- Stylesheets -->
+<link href="<%= request.getContextPath() + "vendors/bootstrap-5.3.0-dist/css/bootstrap.min.css"%>" rel="stylesheet">
+<link href="<%= request.getContextPath() + "assets/css/theme.css"%>" rel="stylesheet" />
+<link href="<%= request.getContextPath() + "assets/css/style.css"%>" rel="stylesheet" />
+
+<!-- JavaScript -->
+<script src="<%= request.getContextPath() + "vendors/code.jquery.com_jquery-3.7.0.js"%>"></script>

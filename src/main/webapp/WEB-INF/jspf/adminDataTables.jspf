@@ -1,0 +1,82 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<!-- DataTables -->
+<script src="<%= request.getContextPath() + "vendors/DataTables/DataTables-1.13.4/js/jquery.dataTables.min.js"%>"></script>
+<script src="<%= request.getContextPath() + "assets/js/admin.js"%>"></script>
+<script>
+  $(document).ready(function () {
+    $('#food-table').DataTable({
+      language: {
+        processing: "Đang xử lý...",
+        search: "Tìm kiếm:&nbsp;",
+        lengthMenu: "Hiện _MENU_ kết quả",
+        info: "Đang hiển thị _START_ đến _END_ trên _TOTAL_ kết quả",
+        infoEmpty: "Đang hiển thị 0 đến 0 trên 0 kết quả",
+        infoFiltered: "(Đã lọc từ _MAX_ kết quả)",
+        infoPostFix: "",
+        loadingRecords: "Đang tải...",
+        zeroRecords: "Không tìm thấy kết quả",
+        emptyTable: "Không có dữ liệu",
+        paginate: {
+          first: "&lt;&lt;",
+          previous: "&lt;",
+          next: "&gt;",
+          last: "&gt;&gt;"
+        },
+        aria: {
+          sortAscending: ": nhấn để sắp xếp cột tăng dần",
+          sortDescending: ": nhấn để sắp xếp cột giảm dần"
+        }
+      }
+    });
+    $('#users-table').DataTable({
+      language: {
+        processing: "Đang xử lý...",
+        search: "Tìm kiếm:&nbsp;",
+        lengthMenu: "Hiện _MENU_ kết quả",
+        info: "Đang hiển thị _START_ đến _END_ trên _TOTAL_ kết quả",
+        infoEmpty: "Đang hiển thị 0 đến 0 trên 0 kết quả",
+        infoFiltered: "(Đã lọc từ _MAX_ kết quả)",
+        infoPostFix: "",
+        loadingRecords: "Đang tải...",
+        zeroRecords: "Không tìm thấy kết quả",
+        emptyTable: "Không có dữ liệu",
+        paginate: {
+          first: "&lt;&lt;",
+          previous: "&lt;",
+          next: "&gt;",
+          last: "&gt;&gt;"
+        },
+        aria: {
+          sortAscending: ": nhấn để sắp xếp cột tăng dần",
+          sortDescending: ": nhấn để sắp xếp cột giảm dần"
+        }
+      }
+    });
+    $('#orders-table').DataTable({
+      language: {
+        processing: "Đang xử lý...",
+        search: "Tìm kiếm:&nbsp;",
+        lengthMenu: "Hiện _MENU_ kết quả",
+        info: "Đang hiển thị _START_ đến _END_ trên _TOTAL_ kết quả",
+        infoEmpty: "Đang hiển thị 0 đến 0 trên 0 kết quả",
+        infoFiltered: "(Đã lọc từ _MAX_ kết quả)",
+        infoPostFix: "",
+        loadingRecords: "Đang tải...",
+        zeroRecords: "Không tìm thấy kết quả",
+        emptyTable: "Không có dữ liệu",
+        paginate: {
+          first: "&lt;&lt;",
+          previous: "&lt;",
+          next: "&gt;",
+          last: "&gt;&gt;"
+        },
+        aria: {
+          sortAscending: ": nhấn để sắp xếp cột tăng dần",
+          sortDescending: ": nhấn để sắp xếp cột giảm dần"
+        }
+      }
+    });
+  });
+</script>
+<link href="<%= request.getContextPath() + "vendors/DataTables/DataTables-1.13.4/css/jquery.dataTables.min.css"%>" rel="stylesheet" />

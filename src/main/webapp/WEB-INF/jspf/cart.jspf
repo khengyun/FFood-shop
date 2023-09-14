@@ -1,0 +1,67 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<!-- Cart -->
+<div class="modal" tabindex="-1" id="cart-modal">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
+    <div class="modal-content">
+      <form action="checkout" method="POST">
+        <div class="modal-header border-bottom-0">
+          <h5 class="modal-title" id="exampleModalLabel">Giỏ hàng</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="table-responsive">
+            <table id="cart-table" class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Món ăn/Đồ uống</th>
+                  <th scope="col">Đơn giá</th>
+                  <th scope="col">Số lượng</th>
+                  <th scope="col">Số tiền</th>
+                  <th scope="col">Thao tác</th>
+                </tr>
+              </thead>
+              <tbody>
+              <p style="color: red;">${mess}</p>
+              <c:set var="totalPrice" value="0"></c:set>
+              <c:forEach var="cart" items="${sessionScope['cart'].items}">
+                <input type="text" name="fid" value="${cart.food.foodID}" hidden>
+                <tr class="align-middle">
+                  <td class="table-image-cell">
+                    <img src="${cart.food.imageURL}" alt="${cart.food.foodName}" class="me-3" />
+                    ${cart.food.foodName}
+                  </td>
+                  <td>${cart.food.getFoodPriceFormat()}</td>
+                  <td>
+                    <input type="number" name="quantity-${cart.food.foodID}" value="${cart.foodQuantity}" min="1" />
+                  </td>
+                  <td>
+                <c:set var="productPrice" value="${Double.parseDouble(cart.food.foodPrice) * cart.foodQuantity}" />
+                <c:set var="totalPrice" value="${totalPrice + productPrice}" />
+                <fmt:formatNumber type="number" pattern="###,###" value="${Double.parseDouble(cart.food.foodPrice) * cart.foodQuantity}" />đ
+                </td>
+                <td>
+                  <a href="deleteCart?fid=${cart.food.foodID}">
+                    <button type="button" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có muốn xóa Món này khỏi Giỏ hàng không?')">Xóa</button>
+                  </a>
+                </td>
+                </tr>
+              </c:forEach>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="d-flex flex-row align-items-center justify-content-end w-100">
+            <div class="col text-end me-3">
+              <h5 class ="m-0">Tổng thanh toán: <fmt:formatNumber type="number" pattern="###,###" value="${totalPrice}" />đ</h5>
+            </div>
+            <div class="col-xl-2 col-lg-3 col-md-4 col-sm-4 align-self-end text-end">
+              <button type="submit" class="btn btn-primary w-100" id="btnSubmit" name="btnSubmit" value="Checkout">Thanh toán</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
