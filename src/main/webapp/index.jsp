@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ include file="WEB-INF/jspf/base.jspf" %>
+<%@ include file="WEB-INF/jspf/common/imports/base.jspf" %>
 <!DOCTYPE html>
 <html lang="en-US" dir="ltr">
   <head>
@@ -14,15 +14,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Title -->
     <title>FFood | Đặt món nhanh, rẻ, tiện</title>
-    <%@ include file="WEB-INF/jspf/resources.jspf" %>
+    <%@ include file="WEB-INF/jspf/common/imports/resources.jspf" %>
     <link rel="stylesheet" href="assets/css/style.css"/>
   </head>
   <body>
-    <%@ include file="WEB-INF/jspf/header.jspf" %>
-    <%@ include file="WEB-INF/jspf/cart.jspf" %>
-    <%@ include file="WEB-INF/jspf/login.jspf" %>
-    <%@ include file="WEB-INF/jspf/signup.jspf" %>
-    <%@ include file="WEB-INF/jspf/success.jspf" %>
+    <%@ include file="WEB-INF/jspf/common/components/header.jspf" %>
+    <%@ include file="WEB-INF/jspf/guest/components/cart.jspf" %>
+    <%@ include file="WEB-INF/jspf/guest/components/login.jspf" %>
+    <%@ include file="WEB-INF/jspf/guest/components/signup.jspf" %>
+    <%@ include file="WEB-INF/jspf/guest/components/success.jspf" %>
     <!-- Main Content -->
     <main class="main" id="top">
 
@@ -170,10 +170,10 @@
           </div>
         </div>
       </section>
-      <%@ include file="WEB-INF/jspf/footer.jspf" %>
+      <%@ include file="WEB-INF/jspf/common/components/footer.jspf" %>
     </main>
-    <%@ include file="WEB-INF/jspf/javascript.jspf" %>
-    <%@ include file="WEB-INF/jspf/validation.jspf" %>
+    <%@ include file="WEB-INF/jspf/common/imports/javascript.jspf" %>
+    <%@ include file="WEB-INF/jspf/common/imports/validation.jspf" %>
     <script <script src="assets/js/home.js"></script>
   </body>
 </html>

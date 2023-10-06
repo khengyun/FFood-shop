@@ -14,12 +14,12 @@
 
     <!-- Title -->
     <title>FFood | Tài khoản Người dùng</title>
-    <%@ include file="WEB-INF/jspf/resources.jspf" %>
+    <%@ include file="WEB-INF/jspf/common/imports/resources.jspf" %>
   </head>
   <body>
-    <%@ include file="WEB-INF/jspf/base.jspf" %>
-    <%@ include file="WEB-INF/jspf/header.jspf" %>
-    <%@ include file="WEB-INF/jspf/cart.jspf" %>
+    <%@ include file="WEB-INF/jspf/common/imports/base.jspf" %>
+    <%@ include file="WEB-INF/jspf/common/components/header.jspf" %>
+    <%@ include file="WEB-INF/jspf/guest/components/cart.jspf" %>
     <div class="container my-5">
       <!-- Nav tabs -->
       <ul id="user-tab" class="nav nav-tabs flex-center" role="tablist">
@@ -137,7 +137,7 @@
                 <p class="my-4 text-center">Không có đơn hàng</p>
               </c:if>
               <c:forEach items="${orderList}" var="o">
-                <%@ include file="WEB-INF/jspf/cancelOrder.jspf" %>
+                <%@ include file="WEB-INF/jspf/user/cancelOrder.jspf" %>
                 <div class="card">
                   <div class="card-header d-flex align-items-center">
                     <div>Dơn #${o.orderID} (Trạng thái: ${o.orderStatus})</div>
@@ -167,9 +167,9 @@
         </div>
       </div>
     </div>
-    <%@ include file="WEB-INF/jspf/footer.jspf" %>
-    <%@ include file="WEB-INF/jspf/javascript.jspf" %>
-    <%@ include file="WEB-INF/jspf/validation.jspf" %>
+    <%@ include file="WEB-INF/jspf/common/components/footer.jspf" %>
+    <%@ include file="WEB-INF/jspf/common/imports/javascript.jspf" %>
+    <%@ include file="WEB-INF/jspf/common/imports/validation.jspf" %>
     <script src="<%= request.getContextPath() + "assets/js/user.js"%>"></script>
   </body>
 </html>

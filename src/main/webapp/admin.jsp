@@ -3,7 +3,7 @@
     Created on : Jul 2, 2023, 10:36:53 PM
     Author     : CE171454 Hua Tien Thanh
 --%>
-<%@ include file="WEB-INF/jspf/base.jspf" %>
+<%@ include file="WEB-INF/jspf/common/imports/base.jspf" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -14,78 +14,26 @@
 
     <title>FFood | Dashboard</title>
 
-    <%@ include file="WEB-INF/jspf/resources.jspf" %>
-    <%@ include file="WEB-INF/jspf/adminDataTables.jspf" %>
+    <%@ include file="WEB-INF/jspf/common/imports/resources.jspf" %>
+    <%@ include file="WEB-INF/jspf/admin/imports/dataTables.jspf" %>
   </head>
   <body>
     <div class="container-fluid m-0 p-0">
-      <div class="row m-0">
-        <%@ include file="WEB-INF/jspf/adminSidebar.jspf" %>
-        <%@ include file="WEB-INF/jspf/addFood.jspf" %>
-        <%@ include file="WEB-INF/jspf/updateFood.jspf" %>
-        <%@ include file="WEB-INF/jspf/deleteFood.jspf" %>
-        <%@ include file="WEB-INF/jspf/addUser.jspf" %>
-        <%@ include file="WEB-INF/jspf/updateUser.jspf" %>
-        <%@ include file="WEB-INF/jspf/deleteUser.jspf" %>
+      <div class="d-flex flex-row m-0">
+        <%@ include file="WEB-INF/jspf/admin/components/addFood.jspf" %>
+        <%@ include file="WEB-INF/jspf/admin/components/updateFood.jspf" %>
+        <%@ include file="WEB-INF/jspf/admin/components/deleteFood.jspf" %>
+        <%@ include file="WEB-INF/jspf/admin/components/addUser.jspf" %>
+        <%@ include file="WEB-INF/jspf/admin/components/updateUser.jspf" %>
+        <%@ include file="WEB-INF/jspf/admin/components/deleteUser.jspf" %>
+        <%@ include file="WEB-INF/jspf/admin/components/adminSidebar.jspf" %>
         <!-- Main Content -->
-        <main class="col-md-9 col-lg-10 offset-md-3 offset-lg-2 p-4">
+        <main class="w-100 p-4 bg-surface">
           <div class="tab-content">
-            <!-- Food Menu Tab Content -->
-            <div class="tab-pane fade show active" id="food-menu">
-              <div class="container-fluid p-2">
-                <table id="food-table">
-                  <h1 class="text-center fw-bold fs-3">Quản lý Món ăn</h1>
-                  <button type="button" class="btn btn-sm btn-success py-1 my-2 me-2" data-bs-toggle="modal" data-bs-target="#add-food-modal">
-                    Thêm Món
-                  </button>
-                  <thead>
-                    <tr>
-                      <th>Mã số</th>
-                      <th>Loại món</th>
-                      <th>Tên món</th>
-                      <th>Đơn giá</th> 
-                      <th>Giảm giá</th>
-                      <th>Hình ảnh</th>
-                      <th>Thao tác</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <c:forEach items="${foodList}" var="f">                      
-                      <tr>
-                        <td>${f.foodID}</td>
-                        <td>${f.foodType}</td>
-                        <td>${f.foodName}</td>
-                        <td><fmt:formatNumber type="number" pattern="###,###" value="${f.foodPrice}"/>đ</td>
-                        <td>${(f.discountPercent == null) ? 0 : f.discountPercent}%</td>
-                        <td class="table-image-cell">
-                          <img src="${f.imageURL}" alt="${f.foodName}"/>
-                        </td>
-                        <td>
-                          <button type="button" id="btn-update-food"
-                                  class="btn btn-sm btn-success py-1 m-1"
-                                  data-food-id="${f.foodID}"
-                                  data-food-type="${f.foodTypeID}"
-                                  data-food-name="${f.foodName}"
-                                  data-food-price="${f.foodPrice}"
-                                  data-discount-percent="${f.discountPercent}"
-                                  data-image-url="${f.imageURL}"
-                                  data-bs-toggle="modal" data-bs-target="#update-food-modal">
-                            Cập nhật
-                          </button>
-                          <button type="button" id="btn-delete-food"
-                                  class="btn btn-sm btn-danger py-1 m-1"
-                                  data-food-id="${f.foodID}"
-                                  data-food-name="${f.foodName}"
-                                  data-bs-toggle="modal" data-bs-target="#delete-food-modal">
-                            Xóa
-                          </button>
-                        </td>
-                      </tr>
-                    </c:forEach>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            <!-- Home Tab Content -->
+            <%@ include file="WEB-INF/jspf/admin/home.jspf" %>
+            <!-- Food & Drinks Tab Content -->
+            <%@ include file="WEB-INF/jspf/admin/foods.jspf" %>
             <!-- Users Tab Content -->
             <div class="tab-pane fade" id="users">
               <div class="container-fluid p-2">
@@ -183,7 +131,7 @@
         </main>
       </div>
     </div>
-    <%@ include file="WEB-INF/jspf/validation.jspf" %>
-    <%@ include file="WEB-INF/jspf/javascript.jspf" %>
+    <%@ include file="WEB-INF/jspf/common/imports/validation.jspf" %>
+    <%@ include file="WEB-INF/jspf/common/imports/javascript.jspf" %>
   </body>
 </html>

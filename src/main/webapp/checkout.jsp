@@ -20,7 +20,7 @@
 
     <!-- Title -->
     <title>FFood | Thanh toán đơn món</title>
-    <%@ include file="WEB-INF/jspf/resources.jspf" %>
+    <%@ include file="WEB-INF/jspf/common/imports/resources.jspf" %>
     <style>
       .activeError {
         color: red;
@@ -33,10 +33,10 @@
   </head>
   <body>
     <main class="main" id="top">
-      <%@ include file="WEB-INF/jspf/base.jspf" %>
-      <%@ include file="WEB-INF/jspf/header.jspf" %>
-      <%@ include file="WEB-INF/jspf/login.jspf" %>
-      <%@ include file="WEB-INF/jspf/signup.jspf" %>
+      <%@ include file="WEB-INF/jspf/common/imports/base.jspf" %>
+      <%@ include file="WEB-INF/jspf/common/components/header.jspf" %>
+      <%@ include file="WEB-INF/jspf/guest/components/login.jspf" %>
+      <%@ include file="WEB-INF/jspf/guest/components/signup.jspf" %>
 
       <div class="container my-5">
         <div class="row">
@@ -146,9 +146,9 @@
     </div>
 
 
-    <%@ include file="WEB-INF/jspf/footer.jspf" %>
+    <%@ include file="WEB-INF/jspf/common/components/footer.jspf" %>
   </main>
-  <%@ include file="WEB-INF/jspf/javascript.jspf" %>
+  <%@ include file="WEB-INF/jspf/common/imports/javascript.jspf" %>
 
   <script>
     // Primary variables
@@ -252,7 +252,7 @@
   </script>
 
 
-  <%@ include file="WEB-INF/jspf/validation.jspf" %>
+  <%@ include file="WEB-INF/jspf/common/imports/validation.jspf" %>
 
 </body>
 </html>
