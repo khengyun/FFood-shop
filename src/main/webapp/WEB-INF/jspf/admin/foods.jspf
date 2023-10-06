@@ -1,0 +1,57 @@
+<%@ page pageEncoding="UTF-8" %>
+<div class="tab-pane fade" id="foods">
+  <div class="container-fluid p-4 shadow rounded-4 bg-white">
+    <table id="food-table" class="table row-border table-hover order-column">
+      <h1 class="text-center fw-bold fs-3">Quản lý Món ăn</h1>
+      <button type="button" class="btn btn-sm btn-success py-1 my-2 me-2" data-bs-toggle="modal"
+              data-bs-target="#add-food-modal">
+        Thêm Món
+      </button>
+      <thead>
+      <tr>
+        <th>Mã số</th>
+        <th>Loại món</th>
+        <th>Tên món</th>
+        <th>Đơn giá</th>
+        <th>Giảm giá</th>
+        <th>Hình ảnh</th>
+        <th>Thao tác</th>
+      </tr>
+      </thead>
+      <tbody>
+      <c:forEach items="${foodList}" var="f">
+        <tr>
+          <td>${f.foodID}</td>
+          <td>${f.foodType}</td>
+          <td>${f.foodName}</td>
+          <td><fmt:formatNumber type="number" pattern="###,###" value="${f.foodPrice}"/>đ</td>
+          <td>${(f.discountPercent == null) ? 0 : f.discountPercent}%</td>
+          <td class="table-image-cell">
+            <img src="${f.imageURL}" alt="${f.foodName}"/>
+          </td>
+          <td>
+            <button type="button" id="btn-update-food"
+                    class="btn btn-sm btn-success py-1 m-1"
+                    data-food-id="${f.foodID}"
+                    data-food-type="${f.foodTypeID}"
+                    data-food-name="${f.foodName}"
+                    data-food-price="${f.foodPrice}"
+                    data-discount-percent="${f.discountPercent}"
+                    data-image-url="${f.imageURL}"
+                    data-bs-toggle="modal" data-bs-target="#update-food-modal">
+              Cập nhật
+            </button>
+            <button type="button" id="btn-delete-food"
+                    class="btn btn-sm btn-danger py-1 m-1"
+                    data-food-id="${f.foodID}"
+                    data-food-name="${f.foodName}"
+                    data-bs-toggle="modal" data-bs-target="#delete-food-modal">
+              Xóa
+            </button>
+          </td>
+        </tr>
+      </c:forEach>
+      </tbody>
+    </table>
+  </div>
+</div>
