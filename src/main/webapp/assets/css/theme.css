@@ -4754,6 +4754,7 @@ fieldset:disabled .btn {
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
   color: var(--bs-black) !important;
+  font-weight: 800;
   background-color: var(--bs-primary70);
 }
 
