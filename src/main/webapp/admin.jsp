@@ -13,9 +13,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>FFood | Dashboard</title>
-
     <%@ include file="WEB-INF/jspf/common/imports/resources.jspf" %>
-    <%@ include file="WEB-INF/jspf/admin/imports/dataTables.jspf" %>
+    <%@ include file="WEB-INF/jspf/admin/imports/dataTablesStyle.jspf" %>
+
   </head>
   <body>
     <div class="container-fluid m-0 p-0">
@@ -133,5 +133,7 @@
     </div>
     <%@ include file="WEB-INF/jspf/common/imports/validation.jspf" %>
     <%@ include file="WEB-INF/jspf/common/imports/javascript.jspf" %>
+    <%@ include file="WEB-INF/jspf/admin/imports/dataTablesScript.jspf" %>
+    <%@ include file="WEB-INF/jspf/admin/imports/dataTablesConfig.jspf" %>
   </body>
 </html>

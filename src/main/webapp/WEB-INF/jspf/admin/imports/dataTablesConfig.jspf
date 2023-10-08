@@ -1,0 +1,88 @@
+<%@ page pageEncoding="UTF-8" %>
+<script>
+  "use strict";
+  $(document).ready(function () {
+    Object.assign(DataTable.defaults, {
+      language: {
+        url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/vi.json',
+        buttons: {
+          selectAll: "Chọn tất cả",
+          selectNone: "Bỏ chọn tất cả"
+        },
+        searchPanes: {
+          clearMessage: "Xoá bộ lọc"
+        },
+        info: "Hiển thị _START_ tới _END_ trên _TOTAL_ dòng",
+        infoEmpty: "Hiển thị 0 tới 0 trên 0 dòng",
+        lengthMenu: "Hiển thị _MENU_ dòng",
+        infoFiltered: "(được lọc từ _MAX_ dòng)"
+      },
+      search: {
+        return: true
+      },
+      pagingType: "full_numbers",
+      dom: "<'d-flex flex-row my-3'B>" + // Buttons
+          "<'flex-row'P>" + // Search pane
+          "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" + // length on left col, search bả on right col
+          "<'row'<'col-sm-12'tr>>" + // table and processing display element
+          "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>", // info on left col, pagination on right column
+      fixedHeader: {
+        header: true,
+        footer: true
+      },
+      select: {
+        blurable: true,
+        info: false
+      },
+      buttons: [
+        "selectAll",
+        "selectNone",
+        "colvis",
+        "excel",
+        "pdf",
+        "csv",
+        "copy",
+        "print",
+      ]
+    });
+
+    let foodTable = $('#food-table').DataTable({
+      columnDefs: [
+        {
+          searchable: false,
+          orderable: false,
+          targets: [-2, -1] // "Image" and "Actions" columns
+        }
+      ]
+    });
+
+    /*// Populates column index that is independent of table content
+    foodTable.on('order.dt search.dt', function () {
+      let i = 1;
+
+      foodTable
+          .cells(null, 0, {search: 'applied', order: 'applied'})
+          .every(function (cell) {
+            this.data(i++);
+          });
+    }).draw();*/
+
+    // Highlights current column that the mouse cursor is hovering on
+    // This should be used in tandem with default hover option for increased cursor visibility
+    foodTable.on('mouseenter', 'td', function () {
+      let columnIndex = foodTable.cell(this).index().column;
+
+      foodTable.cells()
+          .nodes()
+          .each((element) => element.classList.remove('highlight'));
+
+      foodTable
+          .column(columnIndex)
+          .nodes()
+          .each((element) => element.classList.add('highlight'));
+    });
+
+    $('#users-table').DataTable();
+    $('#orders-table').DataTable();
+  });
+</script>
