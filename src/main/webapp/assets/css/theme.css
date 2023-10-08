@@ -3513,7 +3513,7 @@ textarea.form-control-lg {
   border: 1px solid transparent;
   padding: 0.5rem 2.2rem;
   font-size: 1rem;
-  border-radius: 0.2rem;
+  border-radius: 0.5rem;
   -webkit-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
   -o-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
@@ -3622,9 +3622,9 @@ fieldset:disabled .btn {
 }
 
 .btn-secondary:disabled, .btn-secondary.disabled {
-  color: #FFFEFE;
-  background-color: #2780ED;
-  border-color: #2780ED;
+  color: var(--bs-on-secondary);
+  background-color: var(--bs-secondary40);
+  border-color: var(--bs-secondary40);
 }
 
 .btn-success {

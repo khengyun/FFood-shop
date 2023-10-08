@@ -33,3 +33,4 @@ src/main/resources/database.properties
 *.iml
 .idea/
 .vscode/
+src/main/resources/database.properties
