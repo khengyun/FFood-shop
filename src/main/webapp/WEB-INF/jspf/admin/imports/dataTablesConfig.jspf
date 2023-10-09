@@ -31,6 +31,13 @@
         header: true,
         footer: true
       },
+      fixedColumns: {
+        fixedColumnsLeft: 1
+      },
+      colReorder: {
+        fixedColumnsLeft: 1, // Index column
+        fixedColumnsRight: 1 // Actions column
+      },
       select: {
         blurable: true,
         info: false
@@ -85,7 +92,7 @@
     */
     $("[data-bs-target='#foods']").click(function () {
       $('#food-table').resize();
-      $('.dtsp-searchPanes').resize()
+      $('.dtsp-searchPanes').resize();
     });
 
     $('#users-table').DataTable();
