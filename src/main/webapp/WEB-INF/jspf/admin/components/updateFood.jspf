@@ -46,7 +46,7 @@
         </div>
         <div class="modal-footer">
           <!-- Submit Button -->
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Hủy</button>
+          <button type="button" id="btn-cancel-update" class="btn btn-danger" data-bs-dismiss="modal">Hủy</button>
           <button type="submit" class="btn btn-success" onclick="validateForm()">Cập nhật</button>
           <!-- Hidden Submit Value -->
           <input type="hidden" id="btnSubmit" name="btnSubmit" value="SubmitUpdateFood">

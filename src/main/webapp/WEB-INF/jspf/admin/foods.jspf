@@ -4,9 +4,13 @@
     <table id="food-table" class="table table-hover nowrap align-middle" style="width: 100%;">
       <h1 class="text-start fw-bold fs-3">Quản lý Món ăn & Đồ uống</h1>
       <div id="button-container">
-        <button type="button" class="btn btn-sm btn-success py-1 my-2 me-2" data-bs-toggle="modal"
+        <button type="button" class="btn btn-primary mt-2 me-2" data-bs-toggle="modal"
                 data-bs-target="#add-food-modal">
           Thêm Món
+        </button>
+        <button type="button" id="btn-update-food" class="btn btn-primary disabled mt-2 me-2" data-bs-toggle="modal"
+                data-bs-target="#update-food-modal">
+          Cập nhật
         </button>
       </div>
       <thead>

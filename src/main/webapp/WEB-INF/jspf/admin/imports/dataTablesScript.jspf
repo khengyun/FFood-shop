@@ -30,4 +30,4 @@
 
 <script src="<%= request.getContextPath() %>/assets/js/admin.js"></script>
 
-<script src="<%= request.getContextPath() + "/assets/js/admin.js"%>"></script>
+<script src="<%= request.getContextPath() %>/assets/js/dataTablesConfig.js"></script>
