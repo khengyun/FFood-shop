@@ -1,5 +1,21 @@
 <%@ page pageEncoding="UTF-8" %>
 <div class="tab-pane fade active show" id="home">
+  <%--Dynamically generates appropriate greeting based on time of day--%>
+  <%
+    java.util.Calendar cal = java.util.Calendar.getInstance();
+    int hour = cal.get(java.util.Calendar.HOUR_OF_DAY);
+    String greeting = "";
+    if (hour >= 4 && hour < 11) {
+      greeting = "Chào buổi sáng";
+    } else if (hour >= 11 && hour < 14) {
+      greeting = "Chào buổi trưa";
+    } else if (hour >= 14 && hour < 18) {
+      greeting = "Chào buổi chiều";
+    } else {
+      greeting = "Chào buổi tối";
+    }
+  %>
+  <p class="fw-bolder fs-3 mb-4"><%= greeting %>, ${adminName}!</p>
   <div class="container-fluid p-4 shadow rounded-4 bg-white mb-3">
     <h2 class="text-start fs-2">Số liệu hôm nay</h2>
     <div class="d-flex flex-row flex-between-center mt-3">
