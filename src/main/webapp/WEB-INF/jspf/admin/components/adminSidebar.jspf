@@ -63,9 +63,9 @@
   </ul>
   <div class="flex-grow-0"></div>
   <hr class="border border-800 border-1 border-opacity-25 w-100 my-1">
-  <div class="dropdown d-flex align-items-center mx-auto my-2">
+  <div class="dropdown d-flex align-items-center mx-auto">
     <button data-bs-toggle="dropdown" type="button"
-            class="btn p-1 d-flex align-items-center link-body-emphasis text-decoration-none">
+            class="btn p-1 mt-1 d-flex align-items-center link-body-emphasis text-decoration-none">
       <i class="ph ph-user-circle"></i>
     </button>
     <ul class="dropdown-menu text-small shadow">
@@ -84,7 +84,7 @@
      tabindex="-1" style="width:240px;"
      id="maximizedSidebar" aria-labelledby="maximizedSidebarLabel">
   <a href="/" style="height: 2.5rem;"
-     class="d-flex flex-row align-items-start justify-content-center px-2 me-auto my-3 link-body-emphasis text-decoration-none">
+     class="d-flex flex-row align-items-start justify-content-center px-1 ms-1 me-auto my-3 link-body-emphasis text-decoration-none">
     <img class="img-fluid my-auto" src="<%= request.getContextPath() + "assets/img/gallery/logo.svg"%>"
          alt="logo"/>
     <h5 class="ms-3 my-auto text-gradient">FFood Dashboard</h5>
@@ -147,13 +147,16 @@
       </button>
     </li>
   </ul>
-  <hr class="border border-800 border-1 border-opacity-25">
+  <hr class="border border-800 border-1 border-opacity-25 my-1">
   <div class="flex-grow-0"></div>
-  <div class="dropdown">
-    <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle"
-       data-bs-toggle="dropdown" aria-expanded="false">
+  <div class="dropdown d-grid gap-1">
+    <button type="button" href="#"
+            class="d-flex flex-shrink-0 btn text-start align-items-center px-2 py-1 mt-1 link-body-emphasis text-decoration-none dropdown-toggle"
+            data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="ph ph-user-circle me-3"></i>
       <strong>${adminName}</strong>
-    </a>
+      <div class="flex-grow-0"></div>
+    </button>
     <ul class="dropdown-menu text-small shadow">
       <li><a class="dropdown-item" href="/admin/help">Trợ giúp</a></li>
       <li>
