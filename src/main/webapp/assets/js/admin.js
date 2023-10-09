@@ -4,38 +4,27 @@
  */
 
 $(document).on("click", "#btn-update-food", function () {
-  let foodID = $(this).data("food-id");
-  let foodType = $(this).data("food-type");
-  let foodName = $(this).data("food-name");
-  let foodPrice = $(this).data("food-price");
-  let discountPercent = $(this).data("discount-percent");
-  let imageURL = $(this).data("image-url");
+  let foodID = $(this).attr("data-food-id");
+  let foodType = $(this).attr("data-food-type");
+  let foodName = $(this).attr("data-food-name");
+  let foodPrice = $(this).attr("data-food-price");
+  let discountPercent = $(this).attr("data-discount-percent");
+  let imageURL = $(this).attr("data-image-url");
 
   // Set the values of the corresponding form inputs in the modal
-  $("#update-food-modal").find("input[name='txtFoodID']").val(foodID);
-  $("#update-food-modal").find("#txtFoodName").val(foodName);
-  $("#update-food-modal").find("#txtFoodPrice").val(Number(foodPrice).toFixed(2));
-  $("#update-food-modal").find("#txtDiscountPercent").val(discountPercent);
-  $("#update-food-modal").find("#txtImageURL").val(imageURL);
-  switch (foodType) {
-    case "1":
-      $("#update-food-modal").find("#txtFoodTypeID option[value = 1]").attr("selected", "selected");
-      break;
-    case "2":
-      $("#update-food-modal").find("#txtFoodTypeID option[value = 2]").attr("selected", "selected");
-      break;
-    case "3":
-      $("#update-food-modal").find("#txtFoodTypeID option[value = 3]").attr("selected", "selected");
-      break;
-    case "4":
-      $("#update-food-modal").find("#txtFoodTypeID option[value = 4]").attr("selected", "selected");
-      break;
-    case "5":
-      $("#update-food-modal").find("#txtFoodTypeID option[value = 5]").attr("selected", "selected");
-      break;
-    case "6":
-      $("#update-food-modal").find("#txtFoodTypeID option[value = 6]").attr("selected", "selected");
-      break;
+  let modal = $("#update-food-modal");
+  modal.find("input[name='txtFoodID']").val(foodID);
+  modal.find("#txtFoodName").val(foodName);
+  modal.find("#txtFoodPrice").val(Number(foodPrice).toFixed(2));
+  modal.find("#txtDiscountPercent").val(discountPercent);
+  modal.find("#txtImageURL").val(imageURL);
+  for (let i = 1; i < 7; i++) {
+    let foodTypes = {1: "Cơm", 2: "Mì", 3: "Bánh mì", 4: "Đồ ăn vặt", 5: "Tráng miệng", 6: "Đồ uống"}
+    if (foodType === foodTypes[i]) {
+      modal.find("#txtFoodTypeID option[value = " + i + "]").attr("selected", "selected");
+    } else {
+      modal.find("#txtFoodTypeID option[value = " + i + "]").removeAttr("selected");
+    }
   }
 });
 $(document).on("click", "#btn-delete-food", function () {
