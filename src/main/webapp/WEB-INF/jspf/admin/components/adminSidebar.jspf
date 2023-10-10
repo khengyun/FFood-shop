@@ -34,7 +34,7 @@
     </li>
     <li class="nav-item">
       <button data-bs-target="#foods"
-              class="nav-link link-body-emphasis text-start d-flex justify-content-center p-2 mx-auto"
+              class="nav-link ${(tabID == 3) ? "active" : ""} link-body-emphasis text-start d-flex justify-content-center p-2 mx-auto"
               data-bs-toggle="tab">
         <i class="ph ph-fork-knife"></i>
       </button>
@@ -116,7 +116,7 @@
     </li>
     <li class="nav-item d-grid gap-1 px-1">
       <button data-bs-target="#foods"
-              class="nav-link link-body-emphasis text-start w-100 d-flex justify-content-start p-2 mx-auto"
+              class="nav-link ${(tabID == 3) ? "active" : ""} link-body-emphasis text-start w-100 d-flex justify-content-start p-2 mx-auto"
               data-bs-toggle="tab">
         <i class="ph ph-fork-knife me-3"></i>
         Món ăn
@@ -207,27 +207,27 @@
       });
       // Add "active" class to corresponding button in maximized sidebar
       const target = button.getAttribute('data-bs-target');
-          const maxButton = document.querySelector('#maximizedSidebar button[data-bs-target="'+target+'"]');
-          if (maxButton) {
-            maxButton.classList.add('active');
-          }
-        });
-      });
+      const maxButton = document.querySelector('#maximizedSidebar button[data-bs-target="' + target + '"]');
+      if (maxButton) {
+        maxButton.classList.add('active');
+      }
+    });
+  });
 
-      // Add event listener to buttons in maximized sidebar
-      const maxButtons = document.querySelectorAll('#maximizedSidebar button[data-bs-toggle="tab"]');
-      maxButtons.forEach(button => {
-        button.addEventListener('click', () => {
-          // Remove "active" class from all buttons in minimized sidebar
-          const minButtons = document.querySelectorAll('#minimizedSidebar button[data-bs-toggle="tab"]');
-          minButtons.forEach(minButton => {
-            if (minButton) {
-              minButton.classList.remove('active');
-            }
-          });
-          // Add "active" class to corresponding button in minimized sidebar
-          const target = button.getAttribute('data-bs-target');
-          const minButton = document.querySelector('#minimizedSidebar button[data-bs-target="'+target+'"]');
+  // Add event listener to buttons in maximized sidebar
+  const maxButtons = document.querySelectorAll('#maximizedSidebar button[data-bs-toggle="tab"]');
+  maxButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      // Remove "active" class from all buttons in minimized sidebar
+      const minButtons = document.querySelectorAll('#minimizedSidebar button[data-bs-toggle="tab"]');
+      minButtons.forEach(minButton => {
+        if (minButton) {
+          minButton.classList.remove('active');
+        }
+      });
+      // Add "active" class to corresponding button in minimized sidebar
+      const target = button.getAttribute('data-bs-target');
+      const minButton = document.querySelector('#minimizedSidebar button[data-bs-target="' + target + '"]');
       if (minButton) {
         minButton.classList.add('active');
       }
