@@ -84,13 +84,36 @@ $(document).ready(function () {
         .each((element) => element.classList.add('highlight'));
   });
 
+  function disableUpdateFoodBtn () {
+    let btnUpdate = $('#btn-update-food');
+    if (btnUpdate) {
+      btnUpdate.removeAttr("data-food-id");
+      btnUpdate.removeAttr("data-food-type");
+      btnUpdate.removeAttr("data-food-name");
+      btnUpdate.removeAttr("data-food-price");
+      btnUpdate.removeAttr("data-discount-percent");
+      btnUpdate.removeAttr("data-image-url");
+      btnUpdate.addClass("disabled");
+    }
+  }
+
+  function disableDeleteFoodBtn () {
+    let btnDelete = $('#btn-delete-food');
+    if (btnDelete) {
+      btnDelete.removeAttr("data-food-id");
+      btnDelete.removeAttr("data-food-name");
+      btnDelete.addClass("disabled");
+    }
+  }
+
   /*
   Enables/Disables the Update button whenever user selects/deselects row(s)
   Requires Select extension enabled
   */
   foodTable.on('select selectItems deselect', function (e, dt, type, indexes) {
     if (type === 'row' && indexes && Array.isArray(indexes)) {
-      let button = $('#btn-update-food');
+      let btnUpdate = $('#btn-update-food');
+      let btnDelete = $('#btn-delete-food');
 
       // Retrieves selected rows
       let data = foodTable.rows({selected: true}).data();
@@ -100,30 +123,40 @@ $(document).ready(function () {
 
         // data's type is a 2D array since the table's data is DOM-sourced
         // https://datatables.net/reference/api/row().data()
-        button.attr("data-food-id", data[0][0]);
-        button.attr("data-food-type", data[0][1]);
-        button.attr("data-food-name", data[0][2]);
+        btnUpdate.attr("data-food-id", data[0][0]);
+        btnUpdate.attr("data-food-type", data[0][1]);
+        btnUpdate.attr("data-food-name", data[0][2]);
 
         let price = data[0][3]
             .substring(0, data[0][3].length - 1) // Removes currency symbol
             .replace(',', '') // Removes thousand separators
             .concat(".0000"); // Adds optional decimals
-        button.attr("data-food-price", price);
+        btnUpdate.attr("data-food-price", price);
 
-        button.attr("data-discount-percent", data[0][4].substring(0, data[0][4].length - 1)); // Removes percent symbol
+        btnUpdate.attr("data-discount-percent", data[0][4].substring(0, data[0][4].length - 1)); // Removes percent symbol
 
         let url = data[0][5].match(/src="([^"]*)"/)[1];
-        button.attr("data-image-url", url); // Keeps the image URL as the original string is the entire <img> tag
+        btnUpdate.attr("data-image-url", url); // Keeps the image URL as the original string is the entire <img> tag
 
-        button.removeClass("disabled");
+        btnUpdate.removeClass("disabled");
+
+        let foods = {};
+        foods[data[0][0]] = data[0][2]; // food[id] = food name
+        btnDelete.attr("data-foods", JSON.stringify(foods));
+        btnDelete.removeClass("disabled");
+      } else if (data.length > 1) {
+        let foods = {};
+        console.log(data);
+        for (let i = 0; i < data.length; i++) {
+          let foodId = data[i][0];
+          foods[foodId] = data[i][2]; // Food name
+        }
+        btnDelete.attr("data-foods", JSON.stringify(foods));
+        btnDelete.removeClass("disabled");
+        disableUpdateFoodBtn();
       } else {
-        button.removeAttr("data-food-id");
-        button.removeAttr("data-food-type");
-        button.removeAttr("data-food-name");
-        button.removeAttr("data-food-price");
-        button.removeAttr("data-discount-percent");
-        button.removeAttr("data-image-url");
-        button.addClass("disabled");
+        disableUpdateFoodBtn();
+        disableDeleteFoodBtn();
       }
     }
   });
@@ -133,18 +166,18 @@ $(document).ready(function () {
   Requires Select extension enabled
   */
   foodTable.on('select-blur', function (e, dt, target, originalEvent) {
-    // Ignores blur event if user clicks on update button or cancel update button
-    if (target.id === "btn-update-food" || target.id === "btn-cancel-update") {
+    // Ignores blur event if user clicks on update/delete/cancel/confirm buttons
+    if (target.classList.contains("btn-update")
+        || target.classList.contains("btn-delete")
+        || target.classList.contains("btn-cancel")
+        || target.classList.contains("btn-confirm")) {
       e.preventDefault();
     } else {
-      let button = $('#btn-update-food');
-      button.removeAttr("data-food-id");
-      button.removeAttr("data-food-type");
-      button.removeAttr("data-food-name");
-      button.removeAttr("data-food-price");
-      button.removeAttr("data-discount-percent");
-      button.removeAttr("data-image-url");
-      button.addClass("disabled");
+      let btnUpdate = $('#btn-update-food');
+      let btnDelete = $('#btn-delete-food');
+
+      disableUpdateFoodBtn();
+      disableDeleteFoodBtn();
     }
   })
 

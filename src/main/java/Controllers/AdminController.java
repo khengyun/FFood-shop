@@ -10,13 +10,20 @@ import DAOs.OrderDAO;
 import Models.Account;
 import Models.Food;
 import Models.Order;
-import java.io.IOException;
-import java.io.PrintWriter;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.lang.reflect.Type;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -71,6 +78,7 @@ public class AdminController extends HttpServlet {
       short foodID = Short.parseShort(s[s.length - 1]);
       FoodDAO dao = new FoodDAO();
       dao.delete(foodID);
+      request.setAttribute("tabID", 3);
       response.sendRedirect("/admin");
     }
   }
@@ -117,6 +125,55 @@ public class AdminController extends HttpServlet {
       return;
     }
   }
+
+  private void doPostDeleteFood(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    // Get the JSON string from the request body
+    StringBuilder sb = new StringBuilder();
+    String line;
+    try {
+        BufferedReader reader = request.getReader();
+        while ((line = reader.readLine()) != null) {
+            sb.append(line);
+        }
+    } catch (Exception e) { e.printStackTrace(); }
+
+    String jsonString = sb.toString();
+
+    // Convert the JSON string to a List of IDs
+    Type listType = new TypeToken<ArrayList<Short>>(){}.getType();
+    List<Short> foodIDs = new Gson().fromJson(jsonString, listType);
+
+    // Delete each food item, and count deleted items
+    FoodDAO dao = new FoodDAO();
+    int count = dao.deleteMultiple(foodIDs);
+
+    // Prepare the JSON object to send as a response
+    JsonObject jsonResponse = new JsonObject();
+
+    /* Response message: count of successful deletions.
+    This number will be handled in client side to generate dynamic status message to users
+    based on their configured language. */
+    if (count > 0) {
+      jsonResponse.addProperty("status", "success");
+      jsonResponse.addProperty("message", count);
+    } else {
+      jsonResponse.addProperty("status", "failure");
+      jsonResponse.addProperty("message", count);
+    }
+
+    // Set the response content type to JSON
+    response.setContentType("application/json");
+    // Get the PrintWriter object from response to write the JSON object to the output stream      
+    PrintWriter out = response.getWriter();
+    // Convert the JSON object to a string and write it to the response stream
+    out.print(jsonResponse.toString());
+    out.flush();
+
+    // Redirect or forward to another page if necessary
+    request.setAttribute("tabID", 3);
+    response.sendRedirect("/admin");
+}
 
   private void doPostAddUser(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
@@ -208,24 +265,26 @@ public class AdminController extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
-    if (request.getParameter("btnSubmit") != null
-            && (request.getParameter("btnSubmit")).equals("SubmitAddFood")) {
-      doPostAddFood(request, response);
-    }
-
-    if (request.getParameter("btnSubmit") != null
-            && (request.getParameter("btnSubmit")).equals("SubmitUpdateFood")) {
-      doPostUpdateFood(request, response);
-    }
-
-    if (request.getParameter("btnSubmit") != null
-            && (request.getParameter("btnSubmit")).equals("SubmitAddUser")) {
-      doPostAddUser(request, response);
-    }
-
-    if (request.getParameter("btnSubmit") != null
-            && (request.getParameter("btnSubmit")).equals("SubmitUpdateUser")) {
-      doPostUpdateUser(request, response);
+    if (request.getParameter("btnSubmit") != null) {
+      switch(request.getParameter("btnSubmit")) {
+        case "SubmitAddFood":
+          doPostAddFood(request, response);
+          break;
+        case "SubmitUpdateFood":
+          doPostUpdateFood(request, response);
+          break;
+        case "SubmitDeleteFood":
+          doPostDeleteFood(request, response);
+          break;
+        case "SubmitAddUser":
+          doPostAddUser(request, response);
+          break;
+        case "SubmitUpdateUser":
+          doPostUpdateUser(request, response);
+          break;
+        default:
+          break;
+      }
     }
   }
 

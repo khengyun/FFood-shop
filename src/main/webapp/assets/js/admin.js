@@ -1,8 +1,3 @@
-/* 
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Other/javascript.js to edit this template
- */
-
 $(document).on("click", "#btn-update-food", function () {
   let foodID = $(this).attr("data-food-id");
   let foodType = $(this).attr("data-food-type");
@@ -27,19 +22,38 @@ $(document).on("click", "#btn-update-food", function () {
     }
   }
 });
+
 $(document).on("click", "#btn-delete-food", function () {
-  let foodName = $(this).data("food-name");
-  let foodID = $(this).data("food-id");
-  let deleteFoodLink = "";
-  if (foodID === null) {
-    deleteFoodLink = "/admin";
-  } else {
-    deleteFoodLink = "/admin/food/delete/" + foodID;
+  let modal = $("#delete-food-modal");
+  // Clear the list of foods in the modal every time the button is clicked
+  modal.find(".modal-body ul").empty();
+  let foods = JSON.parse($(this).attr("data-foods"));
+
+  // Populate the list of foods in the modal
+  for (let foodId in foods) {
+    let foodName = foods[foodId];
+    modal.find("#delete-food-list").append("<li>" + foodName + "</li>");
   }
-// Set the values of the corresponding form inputs in the modal
-  $("#delete-food-modal").find("#foodName").html(foodName + " ");
-  $("#delete-food-modal").find("#deleteFoodLink").attr("href", deleteFoodLink);
+
+  let result;
+  // Send a POST request with multiple IDs with fetch API or jQuery's $.ajax method
+  // https://stackoverflow.com/questions/24468459/sending-multiple-ids-to-a-servlet-using-ajax
+  fetch('/admin/user/delete', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(foods),
+  })
+      .then(response => response.json())
+      .then(data => {
+        result = data;
+        console.log(data);
+        // TODO add deletion status popup
+      })
+      .catch((error) => console.error('Error:', error));
 });
+
 $(document).on("click", "#btn-update-user", function () {
   let accountID = $(this).data("account-id");
   let username = $(this).data("username");
