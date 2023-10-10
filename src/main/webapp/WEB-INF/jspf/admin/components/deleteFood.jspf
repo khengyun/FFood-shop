@@ -21,6 +21,7 @@
           <button type="submit" id="btn-confirm-delete-food" href="/admin" class="btn btn-danger btn-confirm">Xoá</button>
 
           <!-- Hidden Submit Value -->
+          <input type="hidden" name="foodData" value='{"key":"value"}'>
           <input type="hidden" id="btnSubmit" name="btnSubmit" value="SubmitDeleteFood">
         </div>
       </form>

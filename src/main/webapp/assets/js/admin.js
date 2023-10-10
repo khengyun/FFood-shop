@@ -14,7 +14,7 @@ $(document).on("click", "#btn-update-food", function () {
   modal.find("#txtDiscountPercent").val(discountPercent);
   modal.find("#txtImageURL").val(imageURL);
   for (let i = 1; i < 7; i++) {
-    let foodTypes = {1: "Cơm", 2: "Mì", 3: "Bánh mì", 4: "Đồ ăn vặt", 5: "Tráng miệng", 6: "Đồ uống"}
+    let foodTypes = {1: "Cơm", 2: "Mì", 3: "Bánh mì", 4: "Đồ ăn vặt", 5: "Tráng miệng", 6: "Đồ uống"};
     if (foodType === foodTypes[i]) {
       modal.find("#txtFoodTypeID option[value = " + i + "]").attr("selected", "selected");
     } else {
@@ -27,6 +27,8 @@ $(document).on("click", "#btn-delete-food", function () {
   let modal = $("#delete-food-modal");
   // Clear the list of foods in the modal every time the button is clicked
   modal.find(".modal-body ul").empty();
+
+  // Retrieves selected rows' data in JSON format, so that it can be iterated
   let foods = JSON.parse($(this).attr("data-foods"));
 
   // Populate the list of foods in the modal
@@ -35,23 +37,11 @@ $(document).on("click", "#btn-delete-food", function () {
     modal.find("#delete-food-list").append("<li>" + foodName + "</li>");
   }
 
-  let result;
-  // Send a POST request with multiple IDs with fetch API or jQuery's $.ajax method
-  // https://stackoverflow.com/questions/24468459/sending-multiple-ids-to-a-servlet-using-ajax
-  fetch('/admin/user/delete', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(foods),
-  })
-      .then(response => response.json())
-      .then(data => {
-        result = data;
-        console.log(data);
-        // TODO add deletion status popup
-      })
-      .catch((error) => console.error('Error:', error));
+  // Keep food IDs as strings
+  let foodIds = Object.keys(foods).toString();
+
+  // Set the values to the hidden input in the modal
+  modal.find("input[name='foodData']").val(foodIds);
 });
 
 $(document).on("click", "#btn-update-user", function () {
@@ -72,7 +62,7 @@ $(document).on("click", "#btn-delete-user", function () {
   } else {
     deleteAccountLink = "/admin/user/delete/" + accountID;
   }
-// Set the values of the corresponding form inputs in the modal
+  // Set the values of the corresponding form inputs in the modal
   $("#delete-user-modal").find("#username").html(username + " ");
   $("#delete-user-modal").find("#deleteAccountLink").attr("href", deleteAccountLink);
 });

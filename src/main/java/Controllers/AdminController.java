@@ -12,6 +12,7 @@ import Models.Food;
 import Models.Order;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -27,7 +28,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author CE171454 Hua Tien Thanh
  */
 public class AdminController extends HttpServlet {
@@ -36,15 +36,15 @@ public class AdminController extends HttpServlet {
    * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
    * methods.
    *
-   * @param request servlet request
+   * @param request  servlet request
    * @param response servlet response
    * @throws ServletException if a servlet-specific error occurs
-   * @throws IOException if an I/O error occurs
+   * @throws IOException      if an I/O error occurs
    */
   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-          throws ServletException, IOException {
+      throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
-    try ( PrintWriter out = response.getWriter()) {
+    try (PrintWriter out = response.getWriter()) {
       /* TODO output your page here. You may use following sample code. */
       out.println("<!DOCTYPE html>");
       out.println("<html>");
@@ -59,7 +59,7 @@ public class AdminController extends HttpServlet {
   }
 
   private void doGetUser(HttpServletRequest request, HttpServletResponse response)
-          throws ServletException, IOException {
+      throws ServletException, IOException {
     String path = request.getRequestURI();
     if (path.startsWith("/admin/user/delete")) {
       String[] s = path.split("/");
@@ -71,7 +71,7 @@ public class AdminController extends HttpServlet {
   }
 
   private void doGetFood(HttpServletRequest request, HttpServletResponse response)
-          throws ServletException, IOException {
+      throws ServletException, IOException {
     String path = request.getRequestURI();
     if (path.startsWith("/admin/food/delete")) {
       String[] s = path.split("/");
@@ -84,7 +84,7 @@ public class AdminController extends HttpServlet {
   }
 
   private void doPostAddFood(HttpServletRequest request, HttpServletResponse response)
-          throws ServletException, IOException {
+      throws ServletException, IOException {
     byte foodTypeID = Byte.parseByte(request.getParameter("txtFoodTypeID"));
     String foodName = request.getParameter("txtFoodName");
     BigDecimal foodPrice = BigDecimal.valueOf(Double.parseDouble(request.getParameter("txtFoodPrice")));
@@ -105,7 +105,7 @@ public class AdminController extends HttpServlet {
   }
 
   private void doPostUpdateFood(HttpServletRequest request, HttpServletResponse response)
-          throws ServletException, IOException {
+      throws ServletException, IOException {
     short foodID = Short.parseShort(request.getParameter("txtFoodID"));
     byte foodTypeID = Byte.parseByte(request.getParameter("txtFoodTypeID"));
     String foodName = request.getParameter("txtFoodName");
@@ -127,33 +127,32 @@ public class AdminController extends HttpServlet {
   }
 
   private void doPostDeleteFood(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-    // Get the JSON string from the request body
-    StringBuilder sb = new StringBuilder();
-    String line;
-    try {
-        BufferedReader reader = request.getReader();
-        while ((line = reader.readLine()) != null) {
-            sb.append(line);
-        }
-    } catch (Exception e) { e.printStackTrace(); }
+      throws ServletException, IOException {
 
-    String jsonString = sb.toString();
+    // Get the string of food IDs from the request
+    String[] foodIDs = request.getParameter("foodData").split(",");
 
-    // Convert the JSON string to a List of IDs
-    Type listType = new TypeToken<ArrayList<Short>>(){}.getType();
-    List<Short> foodIDs = new Gson().fromJson(jsonString, listType);
+    // Convert the strings to numbers
+    List<Short> foodIDList = new ArrayList<>();
+    for (int i = 0; i < foodIDs.length; i++) {
+      foodIDList.add(Short.parseShort(foodIDs[i]));
+    }
 
     // Delete each food item, and count deleted items
     FoodDAO dao = new FoodDAO();
-    int count = dao.deleteMultiple(foodIDs);
+    int count = dao.deleteMultiple(foodIDList);
 
+    // TODO implement a deletion status message after page reload
+/*
     // Prepare the JSON object to send as a response
     JsonObject jsonResponse = new JsonObject();
 
-    /* Response message: count of successful deletions.
-    This number will be handled in client side to generate dynamic status message to users
-    based on their configured language. */
+    *//*
+     * Response message: count of successful deletions.
+     * This number will be handled in client side to generate dynamic status message
+     * to users
+     * based on their configured language.
+     *//*
     if (count > 0) {
       jsonResponse.addProperty("status", "success");
       jsonResponse.addProperty("message", count);
@@ -164,26 +163,27 @@ public class AdminController extends HttpServlet {
 
     // Set the response content type to JSON
     response.setContentType("application/json");
-    // Get the PrintWriter object from response to write the JSON object to the output stream      
+    // Get the PrintWriter object from response to write the JSON object to the
+    // output stream
     PrintWriter out = response.getWriter();
     // Convert the JSON object to a string and write it to the response stream
     out.print(jsonResponse.toString());
-    out.flush();
+    out.flush();*/
 
     // Redirect or forward to another page if necessary
     request.setAttribute("tabID", 3);
     response.sendRedirect("/admin");
-}
+  }
 
   private void doPostAddUser(HttpServletRequest request, HttpServletResponse response)
-          throws ServletException, IOException {
+      throws ServletException, IOException {
     String username = request.getParameter("txtAccountUsername");
     String email = request.getParameter("txtEmail");
     String password = (String) request.getAttribute("txtAccountPassword");
 
     AccountDAO accountDAO = new AccountDAO();
     Account account = new Account(username, email, password, "user");
-    
+
     int result = accountDAO.add(account);
 
     if (result == 1) {
@@ -196,7 +196,7 @@ public class AdminController extends HttpServlet {
   }
 
   private void doPostUpdateUser(HttpServletRequest request, HttpServletResponse response)
-          throws ServletException, IOException {
+      throws ServletException, IOException {
     int accountID = Integer.parseInt(request.getParameter("txtAccountID"));
     String username = request.getParameter("txtAccountUsername");
     String email = request.getParameter("txtEmail");
@@ -205,7 +205,7 @@ public class AdminController extends HttpServlet {
     AccountDAO accountDAO = new AccountDAO();
     Account account = new Account(username, email, password, "user");
     account.setAccountID(accountID);
-    
+
     int result = accountDAO.update(account);
 
     if (result == 1) {
@@ -217,18 +217,20 @@ public class AdminController extends HttpServlet {
     }
   }
 
-  // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+  // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
+  // + sign on the left to edit the code.">
+
   /**
    * Handles the HTTP <code>GET</code> method.
    *
-   * @param request servlet request
+   * @param request  servlet request
    * @param response servlet response
    * @throws ServletException if a servlet-specific error occurs
-   * @throws IOException if an I/O error occurs
+   * @throws IOException      if an I/O error occurs
    */
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
-          throws ServletException, IOException {
+      throws ServletException, IOException {
     String path = request.getRequestURI();
     if (path.endsWith("/admin")) {
       FoodDAO foodDAO = new FoodDAO();
@@ -249,7 +251,7 @@ public class AdminController extends HttpServlet {
     } else if (path.startsWith("/admin/user")) {
       doGetUser(request, response);
     } else {
-      //response.setContentType("text/css");
+      // response.setContentType("text/css");
       request.getRequestDispatcher("/admin.jsp").forward(request, response);
     }
   }
@@ -257,16 +259,16 @@ public class AdminController extends HttpServlet {
   /**
    * Handles the HTTP <code>POST</code> method.
    *
-   * @param request servlet request
+   * @param request  servlet request
    * @param response servlet response
    * @throws ServletException if a servlet-specific error occurs
-   * @throws IOException if an I/O error occurs
+   * @throws IOException      if an I/O error occurs
    */
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
-          throws ServletException, IOException {
+      throws ServletException, IOException {
     if (request.getParameter("btnSubmit") != null) {
-      switch(request.getParameter("btnSubmit")) {
+      switch (request.getParameter("btnSubmit")) {
         case "SubmitAddFood":
           doPostAddFood(request, response);
           break;
