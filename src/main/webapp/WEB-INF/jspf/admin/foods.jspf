@@ -3,17 +3,20 @@
   <div class="container-fluid p-4 shadow rounded-4 bg-white">
     <table id="food-table" class="table table-hover nowrap align-middle" style="width: 100%;">
       <h1 class="text-start fw-bold fs-3">Quản lý Món ăn & Đồ uống</h1>
-      <div id="button-container">
-        <button type="button" class="btn btn-primary mt-2 me-2" data-bs-toggle="modal"
+      <div id="button-container" class="d-flex flex-row">
+        <button type="button" class="btn btn-success d-flex mt-2 me-2 align-items-center" data-bs-toggle="modal"
                 data-bs-target="#add-food-modal">
+          <i class="ph-bold ph-plus fs-1 me-2"></i>
           Thêm món
         </button>
-        <button type="button" id="btn-update-food" class="btn btn-primary btn-update disabled mt-2 me-2" data-bs-toggle="modal"
+        <button type="button" id="btn-update-food" class="btn btn-primary btn-update disabled d-flex mt-2 me-2 align-items-center" data-bs-toggle="modal"
                 data-bs-target="#update-food-modal">
+          <i class="ph-bold ph-pencil fs-1 me-2"></i>
           Cập nhật
         </button>
-        <button type="button" id="btn-delete-food" class="btn btn-danger btn-delete disabled mt-2 me-2" data-bs-toggle="modal"
+        <button type="button" id="btn-delete-food" class="btn btn-danger btn-delete disabled d-flex mt-2 me-2 align-items-center" data-bs-toggle="modal"
                 data-bs-target="#delete-food-modal">
+          <i class="ph-bold ph-trash fs-1 me-2"></i>
           Xoá món
         </button>
       </div>
@@ -25,7 +28,6 @@
         <th>Đơn giá</th>
         <th>Giảm giá</th>
         <th>Hình ảnh</th>
-        <th>Thao tác</th>
       </tr>
       </thead>
       <tbody>
@@ -39,40 +41,9 @@
           <td class="table-image-cell">
             <img src="${f.imageURL}" alt="${f.foodName}"/>
           </td>
-          <td>
-            <button type="button" id="btn-update-food"
-                    class="btn btn-sm btn-success py-1 m-1"
-                    data-food-id="${f.foodID}"
-                    data-food-type="${f.foodTypeID}"
-                    data-food-name="${f.foodName}"
-                    data-food-price="${f.foodPrice}"
-                    data-discount-percent="${f.discountPercent}"
-                    data-image-url="${f.imageURL}"
-                    data-bs-toggle="modal" data-bs-target="#update-food-modal">
-              Cập nhật
-            </button>
-            <button type="button" id="btn-delete-food"
-                    class="btn btn-sm btn-danger py-1 m-1"
-                    data-food-id="${f.foodID}"
-                    data-food-name="${f.foodName}"
-                    data-bs-toggle="modal" data-bs-target="#delete-food-modal">
-              Xóa
-            </button>
-          </td>
         </tr>
       </c:forEach>
       </tbody>
-      <tfoot>
-      <tr>
-        <th>Mã số</th>
-        <th>Loại món</th>
-        <th>Tên món</th>
-        <th>Đơn giá</th>
-        <th>Giảm giá</th>
-        <th>Hình ảnh</th>
-        <th>Thao tác</th>
-      </tr>
-      </tfoot>
     </table>
   </div>
 </div>
