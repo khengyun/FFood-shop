@@ -21,10 +21,18 @@ $(document).ready(function () {
     },
     pagingType: "full_numbers",
     dom: "<'d-flex flex-row my-3'B>" + // Buttons
-        "<'flex-row'P>" + // Search pane
-        "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" + // length on left col, search bar on right col
-        "<'row'<'col-sm-12'tr>>" + // table and processing display element
-        "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>", // info on left col, pagination on right column
+          "<'row'" +
+            "<'col-sm-12 col-md-3'P>" + // searchPanes on left col (L)
+            "<'d-row col-sm-12 col-md-9 m-0'" +
+              "<'row'" +
+                "<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>" + // length and search bar
+              ">" +
+              "<'col-sm-12'tr>" + // table
+              "<'row'" +
+                "<'col-sm-12 col-md-5 mt-1'i><'col-sm-12 col-md-7 mt-2'p>" + // info and pagination
+              ">" +
+            ">" +
+          ">",
     fixedHeader: {
       header: true,
       footer: true
@@ -33,28 +41,33 @@ $(document).ready(function () {
       fixedColumnsLeft: 1
     },
     colReorder: {
-      fixedColumnsLeft: 1, // Index column
-      fixedColumnsRight: 1 // Actions column
+      fixedColumnsLeft: 1 // Index column
     },
     select: {
       blurable: true,
       info: false
     },
+    // TODO find a way to modify the button group and move it to the same line as CUD buttons
     buttons: [
       "selectAll",
       "selectNone",
       "colvis",
-      "excel",
-      "pdf",
-      "csv",
-      "copy",
-      "print",
+      {
+        extend: "collection",
+        text: "Xuất file",
+        autoClose: true,
+        fade: 0,
+        buttons: [
+          "pdf",
+          "excel",
+          "csv",
+          "print",
+          "copy",
+        ]
+      }
     ],
     scrollX: true,
-    scrollY: "450px",
-    searchPanes: {
-      initCollapsed: true
-    }
+
   });
 
   let foodTable = $('#food-table').DataTable({
@@ -62,7 +75,7 @@ $(document).ready(function () {
       {
         searchable: false,
         orderable: false,
-        targets: [-2, -1] // "Image" and "Actions" columns
+        targets: [-1] // "Image" columns
       }
     ]
   });
@@ -84,7 +97,7 @@ $(document).ready(function () {
         .each((element) => element.classList.add('highlight'));
   });
 
-  function disableUpdateFoodBtn () {
+  function disableUpdateFoodBtn() {
     let btnUpdate = $('#btn-update-food');
     if (btnUpdate) {
       btnUpdate.removeAttr("data-food-id");
@@ -97,7 +110,7 @@ $(document).ready(function () {
     }
   }
 
-  function disableDeleteFoodBtn () {
+  function disableDeleteFoodBtn() {
     let btnDelete = $('#btn-delete-food');
     if (btnDelete) {
       btnDelete.removeAttr("data-food-id");
@@ -189,9 +202,12 @@ $(document).ready(function () {
   */
   $("[data-bs-target='#foods']").click(function () {
     $('#food-table').resize();
-    $('.dtsp-searchPanes').resize();
+    /*$('.dtsp-searchPanes').resize();*/
   });
+
+  // TODO add a function to remove some searchPanes buttons
 
   $('#users-table').DataTable();
   $('#orders-table').DataTable();
-});
+})
+;
