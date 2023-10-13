@@ -19,14 +19,13 @@ jobs:
       id: check_tag
       run: |
         has_frontend_tag=$(echo ${{ github.event.issue.labels.*.name }} | grep -c '^frontend$')
-        echo "has_frontend_tag=$has_frontend_tag"
         echo "has_frontend_tag=$has_frontend_tag" >> $GITHUB_STATE
        
     - name: Tag Frontend Team Members
       if: steps.check_tag.outputs.has_frontend_tag == '1'
       run: |
         # List of GitHub usernames of frontend team members
-        FRONTEND_TEAM_MEMBERS="@khengyun @tien-thanh-hua @HuynhVuGenius @huynhkhachuy"
+        FRONTEND_TEAM_MEMBERS="khengyun tien-thanh-hua HuynhVuGenius huynhkhachuy"
 
         for MEMBER in $FRONTEND_TEAM_MEMBERS; do
           gh api --method POST repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/assignees --field assignees[]=$MEMBER
