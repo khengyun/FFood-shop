@@ -10,19 +10,13 @@ import DAOs.OrderDAO;
 import Models.Account;
 import Models.Food;
 import Models.Order;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -143,32 +137,6 @@ public class AdminController extends HttpServlet {
     int count = dao.deleteMultiple(foodIDList);
 
     // TODO implement a deletion status message after page reload
-/*
-    // Prepare the JSON object to send as a response
-    JsonObject jsonResponse = new JsonObject();
-
-    *//*
-     * Response message: count of successful deletions.
-     * This number will be handled in client side to generate dynamic status message
-     * to users
-     * based on their configured language.
-     *//*
-    if (count > 0) {
-      jsonResponse.addProperty("status", "success");
-      jsonResponse.addProperty("message", count);
-    } else {
-      jsonResponse.addProperty("status", "failure");
-      jsonResponse.addProperty("message", count);
-    }
-
-    // Set the response content type to JSON
-    response.setContentType("application/json");
-    // Get the PrintWriter object from response to write the JSON object to the
-    // output stream
-    PrintWriter out = response.getWriter();
-    // Convert the JSON object to a string and write it to the response stream
-    out.print(jsonResponse.toString());
-    out.flush();*/
 
     // Redirect or forward to another page if necessary
     request.setAttribute("tabID", 3);
