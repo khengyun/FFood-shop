@@ -4173,7 +4173,7 @@ fieldset:disabled .btn {
 .btn-sm, .btn-group-sm > .btn {
   padding: 0.5rem 1.3rem;
   font-size: 0.875rem;
-  border-radius: 0.25rem;
+  border-radius: 0.5rem;
 }
 
 .fade {

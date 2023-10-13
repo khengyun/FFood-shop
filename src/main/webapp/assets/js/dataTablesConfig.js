@@ -3,18 +3,7 @@ $(document).ready(function () {
   // Default configuration for all DataTables
   Object.assign(DataTable.defaults, {
     language: {
-      url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/vi.json',
-      buttons: {
-        selectAll: "Chọn tất cả",
-        selectNone: "Bỏ chọn tất cả"
-      },
-      searchPanes: {
-        clearMessage: "Xoá bộ lọc"
-      },
-      info: "Hiển thị _START_ tới _END_ trên _TOTAL_ dòng",
-      infoEmpty: "Hiển thị 0 tới 0 trên 0 dòng",
-      lengthMenu: "Hiển thị _MENU_ dòng",
-      infoFiltered: "(được lọc từ _MAX_ dòng)"
+      url: '/assets/json/vi.json',
     },
     search: {
       return: true
@@ -24,7 +13,7 @@ $(document).ready(function () {
           "<'col-sm-12 col-md-3'P>" + // searchPanes on left col (L)
           "<'d-row col-sm-12 col-md-9 m-0'" +
             "<'row'" +
-              "<'col-sm-12 col-md-6 pt-2'l><'col-sm-12 col-md-6 pt-1 'f>" + // length and search bar
+              "<'col-sm-12 col-lg-6 pt-2'l><'col-sm-12 col-lg-6 pt-1 'f>" + // length and search bar
             ">" +
             "<'col-sm-12'tr>" + // table
             "<'row'" +
@@ -205,6 +194,11 @@ $(document).ready(function () {
     // Remove searchPanes' expand and collapse all panes button
     $('.dtsp-showAll').remove();
     $('.dtsp-collapseAll').remove();
+    
+    // Additional custom styling for searchPane's title row
+    $('.dtsp-titleRow').addClass("d-flex flex-wrap align-items-center gap-2 mt-1");
+    $('.dtsp-titleRow > div').addClass("py-0").after("<div class='flex-grow-1'>");
+    $('.dtsp-titleRow > button').addClass("d-flex align-items-center btn-sm py-2");
 
     // Insert the table's button group to existing button container with Add, Update, Delete buttons
     foodTable.buttons().container().prependTo("#foods-button-container");
