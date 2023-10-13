@@ -21,10 +21,3 @@
 <!-- TODO replace this version once version 2.3.0+ is released -->
 <link href="<%= request.getContextPath() + "/vendors/DataTables/SearchPanes-2.2.0/nightly/css/searchPanes.bootstrap5.min.css"%>"
   rel="stylesheet"/>
-
-<style>
-    td.highlight {
-    background-color: whitesmoke;
-    !important;
-    }
-</style>
