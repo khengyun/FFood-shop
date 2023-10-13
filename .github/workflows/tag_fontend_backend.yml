@@ -1,52 +1,30 @@
-name: Tagging frontend reviewers
+name: Auto-Tag Frontend Team
+
 on:
   pull_request:
-    types: [opened, reopened, synchronize]
+    types:
+      - opened
+      - synchronize
   issues:
-    types: [opened, reopened]
+    types:
+      - opened
+      - edited
 
 jobs:
-  tag-reviewers:
+  auto_tag:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Check if issue or pull request is tagged as frontend
-        uses: actions/github-script@v3
-        with:
-          script: |
-            const { issue, pullRequest } = context;
+    - name: Check if the tag is 'frontend'
+      id: check_tag
+      run: echo ::set-output name=has_frontend_tag::$(echo ${{ github.event.issue.labels.*.name }} | grep -c '^frontend$')
 
-            if (!issue && !pullRequest) {
-              return;
-            }
+    - name: Tag Frontend Team Members
+      if: steps.check_tag.outputs.has_frontend_tag == '1'
+      run: |
+        # List of GitHub usernames of frontend team members
+        FRONTEND_TEAM_MEMBERS="khengyun tien-thanh-hua HuynhVuGenius huynhkhachuy"
 
-            const isFrontend = issue.labels.includes("frontend") || pullRequest.labels.includes("frontend");
-
-            if (!isFrontend) {
-              return;
-            }
-            const reviewers = ["@huynhkhachuy", "@HuynhVuGenius", "@tien-thanh-hua","@khengyun"];
-
-            // Tag reviewers
-            if (issue) {
-              issue.addAssignees(reviewers);
-            } else {
-              pullRequest.addAssignees(reviewers);
-            }
-
-      - name: Comment on issue or pull request
-        uses: actions/github-script@v3
-        with:
-          script: |
-            const { issue, pullRequest } = context;
-
-            if (!issue && !pullRequest) {
-              return;
-            }
-
-            const message = "This issue or pull request has been tagged as frontend. Please review it.";
-
-            if (issue) {
-              issue.createComment(message);
-            } else {
-              pullRequest.createComment(message);
-            }
+        for MEMBER in $FRONTEND_TEAM_MEMBERS; do
+          gh api --method POST repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/assignees --field assignees[]=$MEMBER
+        done
