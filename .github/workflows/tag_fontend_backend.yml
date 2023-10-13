@@ -19,6 +19,7 @@ jobs:
       id: check_tag
       run: |
         has_frontend_tag=$(echo ${{ github.event.issue.labels.*.name }} | grep -c '^frontend$')
+        echo "has_frontend_tag=$has_frontend_tag"
         echo "has_frontend_tag=$has_frontend_tag" >> $GITHUB_STATE
        
     - name: Tag Frontend Team Members
