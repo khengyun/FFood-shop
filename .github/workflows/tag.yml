@@ -1,30 +1,24 @@
-name: Auto-Tag Frontend Team
-
-on:
-  pull_request:
-    types:
-      - opened
-      - synchronize
-  issues:
-    types:
-      - opened
-      - edited
-
+name: Auto Comment
+on: [issues, pull_request]
 jobs:
-  auto_tag:
+  run:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Check if the tag is 'frontend'
-      id: check_tag
-      run: echo ::set-output name=has_frontend_tag::$(echo ${{ github.event.issue.labels.*.name }} | grep -c '^frontend$')
+      - uses: wow-actions/auto-comment@v1
+        with:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_Assignees }}
+          issuesOpened: |
+            👋 @{{ author }}
+            Thank you for raising an issue. We will will investigate into the matter and get back to you as soon as possible.
+            Please make sure you have given us as much context as possible.
 
-    - name: Tag Frontend Team Members
-      if: steps.check_tag.outputs.has_frontend_tag == '1'
-      run: |
-        # List of GitHub usernames of frontend team members
-        FRONTEND_TEAM_MEMBERS="tien-thanh-hua HuynhVuGenius huynhkhachuy khengyun"
-
-        for MEMBER in $FRONTEND_TEAM_MEMBERS; do
-          gh api --method POST repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/assignees --field assignees[]=$MEMBER
-        done
+          pullRequestOpened: |
+            👋 @{{ author }}
+            Thank you for raising your pull request.
+            Please make sure you have followed our contributing guidelines. We will review it as soon as possible
+      - name: 'Auto-assign issue'
+        uses: pozil/auto-assign-issue@v1
+        with:
+          assignees: khengyun
+          numOfAssignee: 1 
+          allowSelfAssign: false
