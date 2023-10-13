@@ -1,36 +1,28 @@
-name: Auto-Tag Frontend Team
-
+name: Assign Frontend
 on:
   pull_request:
     types:
       - opened
-      - synchronize
   issues:
     types:
       - opened
-      - edited
 
 jobs:
-  auto_tag:
+  assign_frontend:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Check if the tag is 'frontend'
-      id: check_tag
-      run: |
-        has_frontend_tag=$(echo ${{ github.event.issue.labels.*.name }} | awk '{print $NF}')
-        if [[ "$has_frontend_tag" == "frontend" ]]; then
-          echo "has_frontend_tag=1" >> $GITHUB_STATE
-        else
-          echo "has_frontend_tag=0" >> $GITHUB_STATE
-        fi
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-    - name: Tag Frontend Team Members
-      if: steps.check_tag.outputs.has_frontend_tag == '1'
+    - name: Assign Frontend
+      if: ${{ github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'frontend') }}
       run: |
-        # List of GitHub usernames of frontend team members
-        FRONTEND_TEAM_MEMBERS="khengyun tien-thanh-hua HuynhVuGenius huynhkhachuy"
+        # List of assignees you want to assign
+        assignees="khengyun,tien-thanh-hua,HuynhVuGenius,huynhkhachuy"
+        IFS=',' read -ra assignees_array <<< "$assignees"
 
-        for MEMBER in $FRONTEND_TEAM_MEMBERS; do
-          gh api --method POST repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/assignees --field assignees[]=$MEMBER
+        for assignee in "${assignees_array[@]}"; do
+          echo "Assigning $assignee to the pull request/issue..."
+          gh issue assign --issue ${{ github.event.number }} --assignee $assignee
         done
