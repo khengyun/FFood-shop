@@ -17,8 +17,10 @@ jobs:
     steps:
     - name: Check if the tag is 'frontend'
       id: check_tag
-      run: echo ::set-output name=has_frontend_tag::$(echo ${{ github.event.issue.labels.*.name }} | grep -c '^frontend$')
-
+      run: |
+       has_frontend_tag=$(echo ${{ github.event.issue.labels.*.name }} | grep -c '^frontend$')
+       echo "has_frontend_tag=$has_frontend_tag" >> $GITHUB_STATE
+       
     - name: Tag Frontend Team Members
       if: steps.check_tag.outputs.has_frontend_tag == '1'
       run: |
