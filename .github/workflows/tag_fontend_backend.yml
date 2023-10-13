@@ -14,6 +14,9 @@ jobs:
   auto_tag:
     runs-on: ubuntu-latest
 
+    env:
+      GH_TOKEN: ${{ secrets.FOR_TAG_FFOOD }}
+
     steps:
     - name: Check if the tag is 'frontend'
       id: check_tag
