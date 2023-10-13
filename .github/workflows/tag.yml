@@ -6,7 +6,7 @@ jobs:
     steps:
       - uses: wow-actions/auto-comment@v1
         with:
-          GITHUB_TOKEN: ${{ secrets.TOKEN_Assignees }}
+          GITHUB_TOKEN: ${{ secrets.FOR_TAG_FFOOD }}
           issuesOpened: |
             👋 @{{ author }}
             Thank you for raising an issue. We will will investigate into the matter and get back to you as soon as possible.
