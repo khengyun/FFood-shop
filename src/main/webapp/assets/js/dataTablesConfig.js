@@ -20,19 +20,18 @@ $(document).ready(function () {
       return: true
     },
     pagingType: "full_numbers",
-    dom: "<'d-flex flex-row my-3'B>" + // Buttons
-          "<'row'" +
-            "<'col-sm-12 col-md-3'P>" + // searchPanes on left col (L)
-            "<'d-row col-sm-12 col-md-9 m-0'" +
-              "<'row'" +
-                "<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>" + // length and search bar
-              ">" +
-              "<'col-sm-12'tr>" + // table
-              "<'row'" +
-                "<'col-sm-12 col-md-5 mt-1'i><'col-sm-12 col-md-7 mt-2'p>" + // info and pagination
-              ">" +
+    dom:"<'row'" +
+          "<'col-sm-12 col-md-3'P>" + // searchPanes on left col (L)
+          "<'d-row col-sm-12 col-md-9 m-0'" +
+            "<'row'" +
+              "<'col-sm-12 col-md-6 pt-2'l><'col-sm-12 col-md-6 pt-1 'f>" + // length and search bar
             ">" +
-          ">",
+            "<'col-sm-12'tr>" + // table
+            "<'row'" +
+              "<'col-sm-12 col-md-5 mt-1'i><'col-sm-12 col-md-7 mt-2'p>" + // info and pagination
+            ">" +
+          ">" +
+        ">",
     fixedHeader: {
       header: true,
       footer: true
@@ -44,10 +43,9 @@ $(document).ready(function () {
       fixedColumnsLeft: 1 // Index column
     },
     select: {
-      blurable: true,
+      blurable: false, // Temporary disabled due to conflicts with selectAll button
       info: false
     },
-    // TODO find a way to modify the button group and move it to the same line as CUD buttons
     buttons: [
       "selectAll",
       "selectNone",
@@ -66,8 +64,7 @@ $(document).ready(function () {
         ]
       }
     ],
-    scrollX: true,
-
+    scrollX: true
   });
 
   let foodTable = $('#food-table').DataTable({
@@ -159,7 +156,6 @@ $(document).ready(function () {
         btnDelete.removeClass("disabled");
       } else if (data.length > 1) {
         let foods = {};
-        console.log(data);
         for (let i = 0; i < data.length; i++) {
           let foodId = data[i][0];
           foods[foodId] = data[i][2]; // Food name
@@ -176,36 +172,51 @@ $(document).ready(function () {
 
   /*
   Disables the Update button whenever user clicks outside of table (blur)
-  Requires Select extension enabled
+  Requires Select extension with blurable option enabled
+
+  The blurable option causes a bug in the selectAll button, causing it unable to select at all,
+  but instead deselects all rows. This only happens if I move the table button group outside
+  the DataTables container. Initializing the buttons using the dom option is still normal.
+
+  For now I'll stop using blurable for Select, but I'll look into it if I have time.
   */
   foodTable.on('select-blur', function (e, dt, target, originalEvent) {
-    // Ignores blur event if user clicks on update/delete/cancel/confirm buttons
+    // Ignores blur event if user clicks on update/delete/cancel/confirm buttons, or the background of a modal dialog
     if (target.classList.contains("btn-update")
         || target.classList.contains("btn-delete")
         || target.classList.contains("btn-cancel")
-        || target.classList.contains("btn-confirm")) {
+        || target.classList.contains("btn-confirm")
+        || target.id === "update-food-modal"
+        || target.id === "delete-food-modal") {
       e.preventDefault();
     } else {
-      let btnUpdate = $('#btn-update-food');
-      let btnDelete = $('#btn-delete-food');
-
       disableUpdateFoodBtn();
       disableDeleteFoodBtn();
     }
   })
 
   /*
-  Fixes searchPanes and table header not properly sized on page load.
+  Fixes table header not properly sized on page load.
   Upon any resize events (such as browser window resize), such elements are displayed correctly.
   This problem is not present if the tabbed content is immediately active on page load (home tab).
   This solution is triggered on click of tab button on the admin sidebar (whose target is specified in the query selector).
   */
   $("[data-bs-target='#foods']").click(function () {
-    $('#food-table').resize();
-    /*$('.dtsp-searchPanes').resize();*/
-  });
+    // Remove searchPanes' expand and collapse all panes button
+    $('.dtsp-showAll').remove();
+    $('.dtsp-collapseAll').remove();
 
-  // TODO add a function to remove some searchPanes buttons
+    // Insert the table's button group to existing button container with Add, Update, Delete buttons
+    foodTable.buttons().container().prependTo("#foods-button-container");
+    // Manually configure classes for the newly inserted button group
+    let tableButtons = $("#foods-button-container > div.dt-buttons");
+    tableButtons.removeClass("btn-group");
+    tableButtons.addClass("col-sm-12 col-lg-7 d-flex gap-2");
+    /*$("#foods-button-container > div.dt-buttons > *").addClass("me-1");*/
+
+    // Fix table headers not resized on page load
+    $('#food-table').resize();
+  });
 
   $('#users-table').DataTable();
   $('#orders-table').DataTable();
