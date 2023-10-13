@@ -1,0 +1,30 @@
+name: Auto-Tag Frontend Team
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+  issues:
+    types:
+      - opened
+      - edited
+
+jobs:
+  auto_tag:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check if the tag is 'frontend'
+      id: check_tag
+      run: echo ::set-output name=has_frontend_tag::$(echo ${{ github.event.issue.labels.*.name }} | grep -c '^frontend$')
+
+    - name: Tag Frontend Team Members
+      if: steps.check_tag.outputs.has_frontend_tag == '1'
+      run: |
+        # List of GitHub usernames of frontend team members
+        FRONTEND_TEAM_MEMBERS="tien-thanh-hua HuynhVuGenius huynhkhachuy khengyun"
+
+        for MEMBER in $FRONTEND_TEAM_MEMBERS; do
+          gh api --method POST repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/assignees --field assignees[]=$MEMBER
+        done
