@@ -1,0 +1,52 @@
+name: Tagging frontend reviewers
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+  issues:
+    types: [opened, reopened]
+
+jobs:
+  tag-reviewers:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if issue or pull request is tagged as frontend
+        uses: actions/github-script@v3
+        with:
+          script: |
+            const { issue, pullRequest } = context;
+
+            if (!issue && !pullRequest) {
+              return;
+            }
+
+            const isFrontend = issue.labels.includes("frontend") || pullRequest.labels.includes("frontend");
+
+            if (!isFrontend) {
+              return;
+            }
+            const reviewers = ["@huynhkhachuy", "@HuynhVuGenius", "@tien-thanh-hua","@khengyun"];
+
+            // Tag reviewers
+            if (issue) {
+              issue.addAssignees(reviewers);
+            } else {
+              pullRequest.addAssignees(reviewers);
+            }
+
+      - name: Comment on issue or pull request
+        uses: actions/github-script@v3
+        with:
+          script: |
+            const { issue, pullRequest } = context;
+
+            if (!issue && !pullRequest) {
+              return;
+            }
+
+            const message = "This issue or pull request has been tagged as frontend. Please review it.";
+
+            if (issue) {
+              issue.createComment(message);
+            } else {
+              pullRequest.createComment(message);
+            }
