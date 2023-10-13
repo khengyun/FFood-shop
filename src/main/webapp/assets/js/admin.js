@@ -8,11 +8,11 @@ $(document).on("click", "#btn-update-food", function () {
 
   // Set the values of the corresponding form inputs in the modal
   let modal = $("#update-food-modal");
-  modal.find("input[name='txtFoodID']").val(foodID);
-  modal.find("#txtFoodName").val(foodName);
-  modal.find("#txtFoodPrice").val(Number(foodPrice).toFixed(2));
-  modal.find("#txtDiscountPercent").val(discountPercent);
-  modal.find("#txtImageURL").val(imageURL);
+  modal.find("input[name='txtFoodID']").attr("value", foodID);
+  modal.find("#txtFoodName").attr("value", foodName);
+  modal.find("#txtFoodPrice").attr("value", Number(foodPrice).toFixed(2));
+  modal.find("#txtDiscountPercent").attr("value", discountPercent);
+  modal.find("#txtImageURL").attr("value", imageURL);
   for (let i = 1; i < 7; i++) {
     let foodTypes = {1: "Cơm", 2: "Mì", 3: "Bánh mì", 4: "Đồ ăn vặt", 5: "Tráng miệng", 6: "Đồ uống"};
     if (foodType === foodTypes[i]) {
@@ -41,7 +41,7 @@ $(document).on("click", "#btn-delete-food", function () {
   let foodIds = Object.keys(foods).toString();
 
   // Set the values to the hidden input in the modal
-  modal.find("input[name='foodData']").val(foodIds);
+  modal.find("input[name='foodData']").attr("value", foodIds);
 });
 
 $(document).on("click", "#btn-update-user", function () {
@@ -49,9 +49,9 @@ $(document).on("click", "#btn-update-user", function () {
   let username = $(this).data("username");
   let email = $(this).data("email");
   // Set the values of the corresponding form inputs in the modal
-  $("#update-user-modal").find("input[name='txtAccountID']").val(accountID);
-  $("#update-user-modal").find("#txtAccountUsername").val(username);
-  $("#update-user-modal").find("#txtEmail").val(email);
+  $("#update-user-modal").find("input[name='txtAccountID']").attr("value", accountID);
+  $("#update-user-modal").find("#txtAccountUsername").attr("value", username);
+  $("#update-user-modal").find("#txtEmail").attr("value", email);
 });
 $(document).on("click", "#btn-delete-user", function () {
   let username = $(this).data("username");

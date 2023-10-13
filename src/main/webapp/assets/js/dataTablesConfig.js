@@ -194,7 +194,7 @@ $(document).ready(function () {
     // Remove searchPanes' expand and collapse all panes button
     $('.dtsp-showAll').remove();
     $('.dtsp-collapseAll').remove();
-    
+
     // Additional custom styling for searchPane's title row
     $('.dtsp-titleRow').addClass("d-flex flex-wrap align-items-center gap-2 mt-1");
     $('.dtsp-titleRow > div').addClass("py-0").after("<div class='flex-grow-1'>");
