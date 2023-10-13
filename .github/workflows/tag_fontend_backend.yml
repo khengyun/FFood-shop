@@ -35,11 +35,5 @@ jobs:
         FRONTEND_TEAM_MEMBERS="khengyun tien-thanh-hua HuynhVuGenius huynhkhachuy"
 
         for MEMBER in $FRONTEND_TEAM_MEMBERS; do
-          gh api --method POST repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/assignees --field assignees[]=$MEMBER
+          gh api repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/assignees --method POST --field assignees[]=$MEMBER
         done
-
-    - name: Debug
-      run: |
-        echo "FRONTEND_TEAM_MEMBERS=$FRONTEND_TEAM_MEMBERS"
-        echo "has_frontend_tag=$has_frontend_tag"
-        gh api --method GET issues/${{ github.event.issue.number }}
