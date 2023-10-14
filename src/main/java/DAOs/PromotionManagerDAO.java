@@ -10,81 +10,81 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import Models.Admin;
+import Models.PromotionManager;
 
-public class AdminDAO {
+public class PromotionManagerDAO {
 
     private Connection conn;
     private PreparedStatement ps;
     private ResultSet rs;
 
-    public AdminDAO() {
+    public PromotionManagerDAO() {
         conn = DBConnection.DBConnection.getConnection();
     }
 
     public ResultSet getAll() {
-        String sql = "select * from [Admin]";
+        String sql = "select * from PromotionManager";
         try {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
             return rs;
         } catch (SQLException ex) {
-            Logger.getLogger(AdminDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PromotionManagerDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
 
-    public Admin getAdmin(byte id) {
-        Admin admin = null;
+    public PromotionManager getPromotionManager(byte id) {
+        PromotionManager pro = null;
         try {
-            ps = conn.prepareStatement("select * from [Admin] where admin_id = ?");
+            ps = conn.prepareStatement("select * from PromotionManager where pro_id = ?");
             ps.setByte(1, id);
             rs = ps.executeQuery();
             if (rs.next()) {
-                admin = new Admin(rs.getByte("admin_id"), rs.getString("admin_fullname"));
+                pro = new PromotionManager(rs.getByte("pro_id"), rs.getString("pro_fullname"));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(AdminDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PromotionManagerDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return admin;
+        return pro;
     }
 
-    public int add(Admin admin) {
-        String sql = "insert into [Admin] values (?)";
+    public int add(PromotionManager pro) {
+        String sql = "insert into PromotionManager values (?)";
         int result = 0;
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, admin.getFullName());
+            ps.setString(1, pro.getFullName());
             result = ps.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(AdminDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PromotionManagerDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return result;
     }
 
     public int delete(byte id) {
         int result = 0;
-        String sql = "delete from [Admin] where admin_id = ?";
+        String sql = "delete from PromotionManager where pro_id = ?";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setByte(1, id);
             result = ps.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(AdminDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PromotionManagerDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return result;
     }
 
-    public int update(Admin admin) {
-        String sql = "update [Admin] set admin_fullname = ? where admin_id = ?";
+    public int update(PromotionManager pro) {
+        String sql = "update PromotionManager set pro_fullname = ? where pro_id = ?";
         int result = 0;
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, admin.getFullName());
-            ps.setByte(2, admin.getAdminID());
+            ps.setString(1, pro.getFullName());
+            ps.setByte(2, pro.getProID());
             result = ps.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(AdminDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PromotionManagerDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return result;
     }

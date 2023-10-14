@@ -41,9 +41,12 @@
                 <fmt:formatNumber type="number" pattern="###,###" value="${Double.parseDouble(cart.food.foodPrice) * cart.foodQuantity}" />đ
                 </td>
                 <td>
-                  <a href="deleteCart?fid=${cart.food.foodID}">
+<!--                  <a href="deleteCart?fid=${cart.food.foodID}">
                     <button type="button" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có muốn xóa Món này khỏi Giỏ hàng không?')">Xóa</button>
-                  </a>
+                  </a>-->
+                    <a href="deleteCart?fid=${cart.food.foodID}">
+                        <button type="button" class="btn btn-sm btn-danger" >Xóa</button>
+                    </a>
                 </td>
                 </tr>
               </c:forEach>

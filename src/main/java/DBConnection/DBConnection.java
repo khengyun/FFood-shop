@@ -79,8 +79,8 @@ public class DBConnection {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             try {
                 conn = DriverManager.getConnection("jdbc:sqlserver://"
-                        + "DESKTOP-U9OGPNQ\\SQLEXPRESS01:1433;"
-                        + "databaseName=ffood_new;"
+                        + "DESKTOP-U9OGPNQ\\SQLEXPRESS01:1433;" // please change "DESKTOP-U9OGPNQ"
+                        + "databaseName=ffood_new;" // database name
 			// Enter your SSMS login username
                         + "user=quocanh;"
                         // Enter your SSMS login password

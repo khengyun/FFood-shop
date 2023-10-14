@@ -10,81 +10,81 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import Models.Admin;
+import Models.Staff;
 
-public class AdminDAO {
+public class StaffDAO {
 
     private Connection conn;
     private PreparedStatement ps;
     private ResultSet rs;
 
-    public AdminDAO() {
+    public StaffDAO() {
         conn = DBConnection.DBConnection.getConnection();
     }
 
     public ResultSet getAll() {
-        String sql = "select * from [Admin]";
+        String sql = "select * from Staff";
         try {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
             return rs;
         } catch (SQLException ex) {
-            Logger.getLogger(AdminDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(StaffDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
 
-    public Admin getAdmin(byte id) {
-        Admin admin = null;
+    public Staff getStaff(byte id) {
+        Staff staff = null;
         try {
-            ps = conn.prepareStatement("select * from [Admin] where admin_id = ?");
+            ps = conn.prepareStatement("select * from Staff where staff_id = ?");
             ps.setByte(1, id);
             rs = ps.executeQuery();
             if (rs.next()) {
-                admin = new Admin(rs.getByte("admin_id"), rs.getString("admin_fullname"));
+                staff = new Staff(rs.getByte("staff_id"), rs.getString("staff_fullname"));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(AdminDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(StaffDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return admin;
+        return staff;
     }
 
-    public int add(Admin admin) {
-        String sql = "insert into [Admin] values (?)";
+    public int add(Staff staff) {
+        String sql = "insert into Staff values (?)";
         int result = 0;
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, admin.getFullName());
+            ps.setString(1, staff.getFullName());
             result = ps.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(AdminDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(StaffDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return result;
     }
 
     public int delete(byte id) {
         int result = 0;
-        String sql = "delete from [Admin] where admin_id = ?";
+        String sql = "delete from Staff where staff_id = ?";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setByte(1, id);
             result = ps.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(AdminDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(StaffDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return result;
     }
 
-    public int update(Admin admin) {
-        String sql = "update [Admin] set admin_fullname = ? where admin_id = ?";
+    public int update(Staff staff) {
+        String sql = "update Staff set staff_fullname = ? where staff_id = ?";
         int result = 0;
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, admin.getFullName());
-            ps.setByte(2, admin.getAdminID());
+            ps.setString(1, staff.getFullName());
+            ps.setByte(2, staff.getStaffID());
             result = ps.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(AdminDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(StaffDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return result;
     }
