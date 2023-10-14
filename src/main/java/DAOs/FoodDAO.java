@@ -112,6 +112,37 @@ public class FoodDAO {
     return result;
   }
 
+  public int deleteMultiple(List<Short> foodIDs) {
+    int result = 0;
+    try {
+        conn.setAutoCommit(false); // Start transaction
+        for (Short foodID : foodIDs) {
+            if (delete(foodID) == 1) {
+              result++; // Count number of successful deletions
+            } else {
+              conn.rollback(); // Rollback transaction if deletion fails
+              return 0;
+            }
+        }
+        conn.commit(); // Commit transaction if all deletions succeed
+    } catch (SQLException ex) {
+        Logger.getLogger(FoodDAO.class.getName()).log(Level.SEVERE, null, ex);
+        try {
+            conn.rollback(); // Rollback transaction if any exception occurs
+        } catch (SQLException rollbackEx) {
+            Logger.getLogger(FoodDAO.class.getName()).log(Level.SEVERE, null, rollbackEx);
+        }
+        return 0;
+    } finally {
+        try {
+            conn.setAutoCommit(true); // Reset auto commit
+        } catch (SQLException finalEx) {
+            Logger.getLogger(FoodDAO.class.getName()).log(Level.SEVERE, null, finalEx);
+        }
+    }
+    return result;
+}
+
   public int update(Food food) {
     String sql = "update Food set food_name = ?, food_price = ?, discount_percent = ?, food_img_url = ?, food_type_id = ? where food_id = ?";
     int result = 0;

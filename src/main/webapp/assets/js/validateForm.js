@@ -6,13 +6,13 @@ $(document).ready(validateForm);
 function validateForm() {
   $.validator.addMethod("googleDrivePattern", function (value, element) {
     // Define the regex patterns
-    let pattern1 = /^https:\/\/drive\.google\.com\/uc\?export=view&id=.*/;
-    let pattern2 = /^https:\/\/drive\.google\.com\/file\/d\/.*\/view\?usp=drive_link$/;
+    let pattern1 = /^https:\/\/drive\.google\.com\/uc\?id=.*/; // Used to embed images on websites
+    let pattern2 = /^https:\/\/drive\.google\.com\/file\/d\/.*\/view\?usp=drive_link$/; // Initial image link
 
     // Test the value against the regex patterns
     return pattern1.test(value) || pattern2.test(value);
   }, "Định dạng đường dẫn không đúng");
-  
+
   $(".add-food-form").validate({
     rules: {
       txtFoodTypeID: {
@@ -74,7 +74,7 @@ function validateForm() {
       form.submit();
     }
   });
-  
+
   $(".update-food-form").validate({
     rules: {
       txtFoodTypeID: {
@@ -259,7 +259,7 @@ function validateForm() {
         form.submit();
         }
     });
-    
+
     $("#signup-form").validate({
         rule: {
             txtAccountUsername: {
@@ -306,7 +306,7 @@ function validateForm() {
             form.submit();
         }
     });
-    
+
     $(".update-info-form").validate({
         rule: {
             txtLastName: {
@@ -323,8 +323,8 @@ function validateForm() {
             },
             txtAddress: {
             required: true,
-            maxlength: 255 
-            }          
+            maxlength: 255
+            }
         },
         messages: {
             txtLastName: {
@@ -342,7 +342,7 @@ function validateForm() {
             txtAddress: {
             required: "Vui lòng nhập địa chỉ của Người dùng",
             maxlength: "Địa chỉ không được vượt quá 255 kí tự"
-            } 
+            }
         },
         submitHandler: function (form) {
             // Handle form submission here
