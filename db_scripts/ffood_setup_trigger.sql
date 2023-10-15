@@ -1,4 +1,5 @@
-﻿USE ffood_new
+﻿--Use ffood database
+USE ffood
 GO
 
 -- Remove link food to other database after delete food
@@ -57,7 +58,6 @@ END
 go
 
 -- Don't delete when still have order
-
 CREATE TRIGGER tr_prevent_delete_customer
 ON Customer
 INSTEAD OF DELETE
@@ -85,25 +85,19 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    -- Tạo bảng tạm thời chứa danh sách các giỏ hàng chứa món ăn sẽ bị xóa
     CREATE TABLE #CartsToRemove (cart_id INT);
 
-    -- Lấy danh sách các giỏ hàng chứa món ăn sẽ bị xóa
     INSERT INTO #CartsToRemove (cart_id)
     SELECT DISTINCT ci.cart_id
     FROM CartItem ci
     INNER JOIN deleted d ON ci.food_id = d.food_id;
 
-    -- Xóa món ăn khỏi giỏ hàng của các khách hàng
     DELETE FROM CartItem WHERE food_id IN (SELECT food_id FROM deleted);
     
-    -- Xóa món ăn từ bảng Food
     DELETE FROM Food WHERE food_id IN (SELECT food_id FROM deleted);
     
-    -- Xóa món ăn khỏi giỏ hàng của khách hàng
     DELETE FROM Cart WHERE cart_id IN (SELECT cart_id FROM #CartsToRemove);
     
-    -- Xóa các bản ghi tạm thời
     DROP TABLE #CartsToRemove;
 END
 

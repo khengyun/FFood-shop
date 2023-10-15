@@ -1,9 +1,9 @@
-create database ffood_new;
-
+-- create ffood database
+create database ffood;
 go
 
+--use ffood database
 use ffood_new;
-
 go
 
 -- Create 14 tables
@@ -79,7 +79,6 @@ create index idx_customer_firstname_lastname_gender_phone_address
 on Customer (customer_firstname, customer_lastname, customer_gender, customer_phone, customer_address);
 
 go
-
 create table Account (
 	account_id			int identity(1,1) not null primary key,
 	customer_id			int null foreign key references Customer(customer_id),
