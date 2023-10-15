@@ -9,9 +9,14 @@ insert into [Admin] (admin_fullname) values (N'Hứa Tiến Thành');
 insert into [Admin] (admin_fullname) values (N'Nguyễn Quốc Anh');
 insert into [Admin] (admin_fullname) values (N'Huỳnh Duy Khang');
 
+<<<<<<<< HEAD:db_scripts/ffood_insert_row .sql
 -- Insert Account records for Admins
 -- Admin passwords are 'admin#' where # ranges from 1 to 6
 -- Hash the passwords using MD5 algorithm
+========
+-- Admin passwords = 123456
+-- Admin account ID starts from 1-20
+>>>>>>>> ddce5f3885acfc84ee9fc761d9166057f85799f5:db_scripts/ffood_new_add_data.sql
 INSERT INTO Account (admin_id, account_username, account_email, account_password, account_type) VALUES (1, N'vuhuynh123', N'huynhnvnce170550@fpt.edu.vn', CONVERT(NVARCHAR(32), HashBytes('MD5', '123456'), 2), 'admin');
 insert into Account (admin_id, account_username, account_email, account_password, account_type) values (2, N'hoangkhang123', N'khangnhce171197@fpt.edu.vn', CONVERT(NVARCHAR(32), HashBytes('MD5', '123456'), 2), 'admin');
 insert into Account (admin_id, account_username, account_email, account_password, account_type) values (3, N'khachuy123', N'huyhkce171229@fpt.edu.vn', CONVERT(NVARCHAR(32), HashBytes('MD5', '123456'), 2), 'admin');
@@ -19,23 +24,39 @@ insert into Account (admin_id, account_username, account_email, account_password
 insert into Account (admin_id, account_username, account_email, account_password, account_type) values (5, N'quocanh1130', N'anhnqce170483@fpt.edu.vn', CONVERT(NVARCHAR(32), HashBytes('MD5', '123456'), 2), 'admin');
 insert into Account (admin_id, account_username, account_email, account_password, account_type) values (6, N'duykhang123', N'khanghdse172647@fpt.edu.vn', CONVERT(NVARCHAR(32), HashBytes('MD5', '123456'), 2), 'admin');
 
--- Insert test staff account
+-- Staffs must be added before an associated Account (if exists) can be created
 insert into Staff (staff_fullname) values ('Nguyễn Văn TestStaff');
+<<<<<<<< HEAD:db_scripts/ffood_insert_row .sql
 -- Reset the identity seed for the Account table to 20
+========
+-- Staffs' account ID starts from 21-40
+>>>>>>>> ddce5f3885acfc84ee9fc761d9166057f85799f5:db_scripts/ffood_new_add_data.sql
 dbcc checkident (Account, RESEED, 20);
 -- Insert Staff Account
 insert into Account (staff_id, account_username, account_email, account_password, account_type) values (1, N'testStaff', N'teststaff@fpt.edu.vn', CONVERT(NVARCHAR(32), HashBytes('MD5', '123456'), 2), 'staff');
 
+<<<<<<<< HEAD:db_scripts/ffood_insert_row .sql
 -- Insert test promotion manager account
 insert into PromotionManager (pro_fullname) values ('Nguyễn Văn TestPromotion');
 -- Reset the identity seed for the Account table to 40
+========
+-- Promotion managers must be added before an associated Account (if exists) can be created
+insert into PromotionManager (pro_fullname) values ('Nguyễn Văn TestPromotion');
+-- Promotion managers' account ID starts from 41-50
+>>>>>>>> ddce5f3885acfc84ee9fc761d9166057f85799f5:db_scripts/ffood_new_add_data.sql
 dbcc checkident (Account, RESEED, 40);
 -- Insert Promotion Manager Account
 insert into Account(pro_id, account_username, account_email, account_password, account_type) values (1, N'testPromotion', N'testPromotion@fpt.edu.vn', CONVERT(NVARCHAR(32), HashBytes('MD5', '123456'), 2), 'promotionManager');
 
+<<<<<<<< HEAD:db_scripts/ffood_insert_row .sql
 -- Insert Customer and associated Account
 insert into Customer (customer_firstname, customer_lastname, customer_gender, customer_phone, customer_address) values (N'Quoc Anh', N'Nguyen', N'Nam', '0914875606', N'Đường sô 3, Khu Vực Bình thường B, Bình Thủy, Cần Thơ');
 -- Reset the identity seed for the Account table to 50
+========
+-- Customer must be added before an associated Account (if exists) can be created
+insert into Customer (customer_firstname, customer_lastname, customer_gender, customer_phone, customer_address) values (N'Quoc Anh', N'Nguyen', N'Nam', '0914875606', N'Đường sô 3, Khu Vực Bình thường B, Bình Thủy, Cần Thơ');
+-- User account ID starts from 21
+>>>>>>>> ddce5f3885acfc84ee9fc761d9166057f85799f5:db_scripts/ffood_new_add_data.sql
 dbcc checkident (Account, RESEED, 50);
 -- Insert Customer Account
 insert into Account (customer_id, account_username, account_email, account_password, account_type) values (1, N'quocanh123', N'anhnq1130@gmail.com', CONVERT(NVARCHAR(32), HashBytes('MD5', '123456'), 2), 'user');
@@ -90,7 +111,11 @@ values (4, N'Gà xiên que', N'Gà Xiên Que là một món ăn đường phố 
 insert into Food (food_type_id, food_name, food_description, food_price, food_status, discount_percent, food_img_url) 
 values (4, N'Xúc xích xiên que', N'Xúc Xích Xiên Que là một món ăn độc đáo và ngon miệng. Xúc xích được xiên lên que và chiên giòn. Món ăn thường được ăn kèm với các loại sốt gia vị và rau sống.', 15000, 1, 0, 'https://drive.google.com/uc?id=1jzKat34QrD7PtT-YsgeDYW5fpca8Xo34');
 
+<<<<<<<< HEAD:db_scripts/ffood_insert_row .sql
 -- Dessert
+========
+-- Desserts
+>>>>>>>> ddce5f3885acfc84ee9fc761d9166057f85799f5:db_scripts/ffood_new_add_data.sql
 insert into Food (food_type_id, food_name, food_description, food_price, food_status, discount_percent, food_img_url) 
 values (5, N'Bánh flan', N'Bánh Flan là một món tráng miệng ngon miệng được làm từ trứng, đường và sữa. Món ăn có vị ngọt, mềm mịn và thường được phục vụ với caramel đặc biệt ở phía trên.', 10000, 1, 0, 'https://drive.google.com/uc?id=1d4TVY2jIAtI8PWcu06_FtkP2YitNW0DD');
 insert into Food (food_type_id, food_name, food_description, food_price, food_status, discount_percent, food_img_url) 
@@ -122,7 +147,7 @@ insert into OrderStatus (order_status) values (N'Đang giao');
 insert into OrderStatus (order_status) values (N'Đã giao');
 insert into OrderStatus (order_status) values (N'Đã hủy');
 
--- Cart, CartItem, Order
+-- Cart, CartItem, Order test data
 insert into Cart (customer_id) values (1);
 
 insert into CartItem (cart_id, food_id, food_price, food_quantity) values (1, 2, 55000, 2);
