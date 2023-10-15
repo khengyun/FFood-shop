@@ -3,7 +3,7 @@ create database ffood;
 go
 
 --use ffood database
-use ffood_new;
+use ffood;
 go
 
 -- Create 14 tables
