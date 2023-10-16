@@ -94,11 +94,7 @@ values (4, N'Gà xiên que', N'Gà Xiên Que là một món ăn đường phố 
 insert into Food (food_type_id, food_name, food_description, food_price, food_status, discount_percent, food_img_url) 
 values (4, N'Xúc xích xiên que', N'Xúc Xích Xiên Que là một món ăn độc đáo và ngon miệng. Xúc xích được xiên lên que và chiên giòn. Món ăn thường được ăn kèm với các loại sốt gia vị và rau sống.', 15000, 1, 0, 'https://drive.google.com/uc?id=1jzKat34QrD7PtT-YsgeDYW5fpca8Xo34');
 
-<<<<<<<< HEAD:db_scripts/ffood_insert_row .sql
--- Dessert
-========
 -- Desserts
->>>>>>>> ddce5f3885acfc84ee9fc761d9166057f85799f5:db_scripts/ffood_new_add_data.sql
 insert into Food (food_type_id, food_name, food_description, food_price, food_status, discount_percent, food_img_url) 
 values (5, N'Bánh flan', N'Bánh Flan là một món tráng miệng ngon miệng được làm từ trứng, đường và sữa. Món ăn có vị ngọt, mềm mịn và thường được phục vụ với caramel đặc biệt ở phía trên.', 10000, 1, 0, 'https://drive.google.com/uc?id=1d4TVY2jIAtI8PWcu06_FtkP2YitNW0DD');
 insert into Food (food_type_id, food_name, food_description, food_price, food_status, discount_percent, food_img_url) 
