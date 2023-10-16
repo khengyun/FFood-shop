@@ -91,7 +91,14 @@
   } else {
     document.getElementById("btnSubmit").disabled = false;
     cartBadge.classList.remove("d-none");
+
     // Set the cart badge text to the number of rows
-    cartBadge.innerText = numRows;
+    if (numRows > 99) {
+      cartBadge.innerText = "99+";
+    } else if (numRows < 0) {
+      cartBadge.innerText = "0";
+    } else {
+      cartBadge.innerText = numRows;
+    }
   }
 </script>
