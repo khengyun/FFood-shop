@@ -12,10 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import Models.OrderStatus;
 
-/**
- *
- * @author Hung
- */
+
 public class OrderStatusDAO {
 
   private Connection conn;

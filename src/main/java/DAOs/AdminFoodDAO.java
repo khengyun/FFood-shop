@@ -12,10 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import Models.AdminFood;
 
-/**
- *
- * @author Hung
- */
 public class AdminFoodDAO {
 
   private Connection conn;
