@@ -7,16 +7,17 @@ package Models;
 public class Voucher {
 
     private byte voucherID;
-    private byte voucher_discount_percent;
     private String name;
+    private byte voucher_discount_percent;
+    
 
     public Voucher() {
     }
 
-    public Voucher(byte voucherID, byte voucher_discount_percent, String name) {
+    public Voucher(byte voucherID, String name, byte voucher_discount_percent) {
         this.voucherID = voucherID;
-        this.voucher_discount_percent = voucher_discount_percent;
         this.name = name;
+        this.voucher_discount_percent = voucher_discount_percent;
     }
 
     public byte getVoucher_discount_percent() {
