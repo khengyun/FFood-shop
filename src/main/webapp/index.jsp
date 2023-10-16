@@ -27,7 +27,7 @@
     <main class="main" id="top">
 
       <!-- HERO -->
-      <section class="py-5 overflow-hidden bg-primary" id="home">
+      <section class="py-5 overflow-hidden bg-primary80" id="home">
         <div class="container">
           <div class="row flex-center">
             <div class="col-md-5 col-lg-6 order-0 order-md-1 mt-4 mt-md-2">
@@ -81,7 +81,7 @@
                     <img class="card-img-top img-fluid rounded-3 h-100" src="${f.imageURL}" alt="${f.foodName}" />
                     <c:set var="discount" value="${f.discountPercent}"/>
                     <c:if test="${discount != 0}">
-                      <span class="badge bg-danger p-2 m-3 position-absolute top-0 start-0">
+                      <span class="badge bg-success p-2 m-3 position-absolute top-0 start-0">
                         <i class="fas fa-tag me-2 fs-0"></i>
                         <span class="fs-0">
                           <c:out value="Giảm ${f.discountPercent}%"/>
@@ -174,6 +174,6 @@
     </main>
     <%@ include file="WEB-INF/jspf/common/imports/javascript.jspf" %>
     <%@ include file="WEB-INF/jspf/common/imports/validation.jspf" %>
-    <script <script src="assets/js/home.js"></script>
+    <script src="assets/js/home.js"></script>
   </body>
 </html>
