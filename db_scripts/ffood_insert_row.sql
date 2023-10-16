@@ -9,14 +9,12 @@ insert into [Admin] (admin_fullname) values (N'Hứa Tiến Thành');
 insert into [Admin] (admin_fullname) values (N'Nguyễn Quốc Anh');
 insert into [Admin] (admin_fullname) values (N'Huỳnh Duy Khang');
 
-<<<<<<<< HEAD:db_scripts/ffood_insert_row .sql
 -- Insert Account records for Admins
 -- Admin passwords are 'admin#' where # ranges from 1 to 6
 -- Hash the passwords using MD5 algorithm
-========
 -- Admin passwords = 123456
 -- Admin account ID starts from 1-20
->>>>>>>> ddce5f3885acfc84ee9fc761d9166057f85799f5:db_scripts/ffood_new_add_data.sql
+
 INSERT INTO Account (admin_id, account_username, account_email, account_password, account_type) VALUES (1, N'vuhuynh123', N'huynhnvnce170550@fpt.edu.vn', CONVERT(NVARCHAR(32), HashBytes('MD5', '123456'), 2), 'admin');
 insert into Account (admin_id, account_username, account_email, account_password, account_type) values (2, N'hoangkhang123', N'khangnhce171197@fpt.edu.vn', CONVERT(NVARCHAR(32), HashBytes('MD5', '123456'), 2), 'admin');
 insert into Account (admin_id, account_username, account_email, account_password, account_type) values (3, N'khachuy123', N'huyhkce171229@fpt.edu.vn', CONVERT(NVARCHAR(32), HashBytes('MD5', '123456'), 2), 'admin');
@@ -26,37 +24,22 @@ insert into Account (admin_id, account_username, account_email, account_password
 
 -- Staffs must be added before an associated Account (if exists) can be created
 insert into Staff (staff_fullname) values ('Nguyễn Văn TestStaff');
-<<<<<<<< HEAD:db_scripts/ffood_insert_row .sql
 -- Reset the identity seed for the Account table to 20
-========
 -- Staffs' account ID starts from 21-40
->>>>>>>> ddce5f3885acfc84ee9fc761d9166057f85799f5:db_scripts/ffood_new_add_data.sql
 dbcc checkident (Account, RESEED, 20);
 -- Insert Staff Account
 insert into Account (staff_id, account_username, account_email, account_password, account_type) values (1, N'testStaff', N'teststaff@fpt.edu.vn', CONVERT(NVARCHAR(32), HashBytes('MD5', '123456'), 2), 'staff');
 
-<<<<<<<< HEAD:db_scripts/ffood_insert_row .sql
 -- Insert test promotion manager account
 insert into PromotionManager (pro_fullname) values ('Nguyễn Văn TestPromotion');
--- Reset the identity seed for the Account table to 40
-========
--- Promotion managers must be added before an associated Account (if exists) can be created
-insert into PromotionManager (pro_fullname) values ('Nguyễn Văn TestPromotion');
 -- Promotion managers' account ID starts from 41-50
->>>>>>>> ddce5f3885acfc84ee9fc761d9166057f85799f5:db_scripts/ffood_new_add_data.sql
 dbcc checkident (Account, RESEED, 40);
 -- Insert Promotion Manager Account
 insert into Account(pro_id, account_username, account_email, account_password, account_type) values (1, N'testPromotion', N'testPromotion@fpt.edu.vn', CONVERT(NVARCHAR(32), HashBytes('MD5', '123456'), 2), 'promotionManager');
 
-<<<<<<<< HEAD:db_scripts/ffood_insert_row .sql
--- Insert Customer and associated Account
-insert into Customer (customer_firstname, customer_lastname, customer_gender, customer_phone, customer_address) values (N'Quoc Anh', N'Nguyen', N'Nam', '0914875606', N'Đường sô 3, Khu Vực Bình thường B, Bình Thủy, Cần Thơ');
--- Reset the identity seed for the Account table to 50
-========
+
 -- Customer must be added before an associated Account (if exists) can be created
 insert into Customer (customer_firstname, customer_lastname, customer_gender, customer_phone, customer_address) values (N'Quoc Anh', N'Nguyen', N'Nam', '0914875606', N'Đường sô 3, Khu Vực Bình thường B, Bình Thủy, Cần Thơ');
--- User account ID starts from 21
->>>>>>>> ddce5f3885acfc84ee9fc761d9166057f85799f5:db_scripts/ffood_new_add_data.sql
 dbcc checkident (Account, RESEED, 50);
 -- Insert Customer Account
 insert into Account (customer_id, account_username, account_email, account_password, account_type) values (1, N'quocanh123', N'anhnq1130@gmail.com', CONVERT(NVARCHAR(32), HashBytes('MD5', '123456'), 2), 'user');
