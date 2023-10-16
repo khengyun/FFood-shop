@@ -349,4 +349,25 @@ function validateForm() {
             form.submit();
         }
     });
+    
+    $(".otp-form").validate({
+        rule: {
+            otp: {
+            required: true,
+            number: true,
+ 
+            }
+        },
+        messages: {
+            otp: {
+            required: "Vui lòng nhập mã OTP",
+            number: "Vui lòng nhập số"
+            },
+           
+        },
+        submitHandler: function (form) {
+            // Handle form submission here
+            form.submit();
+        }
+    });
 }

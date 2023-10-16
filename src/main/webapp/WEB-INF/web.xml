@@ -72,6 +72,10 @@
         <servlet-name>SignUpController</servlet-name>
         <servlet-class>Controllers.SignUpController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>VerifyOTPController</servlet-name>
+        <servlet-class>Controllers.EmailVerifyController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>default</servlet-name>
         <url-pattern>/*/assets/*</url-pattern>
@@ -163,6 +167,10 @@
     <servlet-mapping>
         <servlet-name>SignUpController</servlet-name>
         <url-pattern>/signup</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VerifyOTPController</servlet-name>
+        <url-pattern>/verifyOTP</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

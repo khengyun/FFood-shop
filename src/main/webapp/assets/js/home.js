@@ -34,11 +34,18 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   notSort = document.querySelectorAll("div[id^='food-']"); // Lưu trữ danh sách ban đầu vào biến notSort
-  if (window.location.hash === '#verify-modal') {
-    $('#verify-modal').modal('show');
+  if (window.location.hash === '#verify_email') {
+    $('#verify_email').modal('show');
+  }
+});
+
+$(document).ready(function () {
+  notSort = document.querySelectorAll("div[id^='food-']"); // Lưu trữ danh sách ban đầu vào biến notSort
+  if (window.location.hash === '#verify_OTP') {
+    $('#verify_OTP').modal('show');
     setTimeout(function () {
-      $('#verify-modal').modal('hide');
-    }, 30000);
+      $('#verify_OTP').modal('hide');
+    }, 120000);
   }
 });
 
