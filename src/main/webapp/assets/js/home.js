@@ -12,6 +12,36 @@ $(document).ready(function () {
   }
 });
 
+$(document).ready(function () {
+  notSort = document.querySelectorAll("div[id^='food-']"); // Lưu trữ danh sách ban đầu vào biến notSort
+  if (window.location.hash === '#success_register') {
+    $('#success_register').modal('show');
+    setTimeout(function () {
+      $('#success_register').modal('hide');
+    }, 3000);
+  }
+});
+
+$(document).ready(function () {
+  notSort = document.querySelectorAll("div[id^='food-']"); // Lưu trữ danh sách ban đầu vào biến notSort
+  if (window.location.hash === '#failure') {
+    $('#failure').modal('show');
+    setTimeout(function () {
+      $('#failure').modal('hide');
+    }, 3000);
+  }
+});
+
+$(document).ready(function () {
+  notSort = document.querySelectorAll("div[id^='food-']"); // Lưu trữ danh sách ban đầu vào biến notSort
+  if (window.location.hash === '#verify-modal') {
+    $('#verify-modal').modal('show');
+    setTimeout(function () {
+      $('#verify-modal').modal('hide');
+    }, 30000);
+  }
+});
+
 $(document).on("click", ".btn-cate", function () {
   let foodTypeID = $(this).data("food-type-id");
 
@@ -95,6 +125,34 @@ addToCartButtons.forEach(function(button) {
     // Ví dụ: Hiển thị thông báo
 //    console.log("Food ID: " + foodId + ", Quantity: " + quantity);
   });
+});
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Get the form element
+    var form = document.getElementById('signup-form');
+
+    // Add an event listener for form submission
+    form.addEventListener('submit', function (event) {
+        // Prevent the form from submitting the traditional way
+        event.preventDefault();
+
+        // Perform form validation here if needed
+
+        // Open the modal dialog
+//        var modal = new bootstrap.Modal(document.getElementById('verify-modal'));
+//        modal.show();
+
+        // You can optionally submit the form data using AJAX at this point
+        // Example AJAX submission using fetch API:
+        // fetch('/signup', {
+        //     method: 'POST',
+        //     body: new FormData(form)
+        // }).then(response => response.json())
+        //   .then(data => {
+        //     console.log(data);
+        //   });
+    });
 });
 
 

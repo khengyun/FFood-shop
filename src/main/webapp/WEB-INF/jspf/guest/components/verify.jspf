@@ -1,0 +1,27 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<!-- SIGNUP -->
+<div class="modal" tabindex="-1" id="verify-modal" role="dialog" aria-labelledby="successLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="d-flex col">
+                    <div class="flex-grow-1"></div>
+                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>                
+                </div>
+                <form class="form mx-2 p-2 mx-md-4 p-md-4 mb-4" id="signup-form" method="post" action="/signup">
+                    <h1 class="text-center mb-2 mb-md-4">Xác thực</h1>
+                    <div class="form-group col">
+                        <label class="col-form-label">Vui lòng kiểm tra email của bạn để xác thực!</label>
+                    </div>
+                    <a href="https://mail.google.com/mail/u/0/#inbox" target="_blank">
+                        <span class="fw-bold text-decoration-underline link-primary">
+                            Truy cập email của bạn
+                        </span>
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
