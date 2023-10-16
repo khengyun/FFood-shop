@@ -46,10 +46,10 @@
           <input class="form-control border-1 input-box bg-100" type="search" placeholder="Tìm món ăn"
                  aria-label="Tìm món ăn" id="btn-search" onblur="searchFood()"/>
         </div>
-        <button type="button" class="btn p-0 position-relative nav-icon text-decoration-none my-auto text-primary fs-2 mx-2"
+        <button type="button" class="btn pe-2 py-0 position-relative nav-icon text-decoration-none my-auto text-primary fs-2 me-4"
                 data-bs-toggle="modal" data-bs-target="#cart-modal">
           <i class="fas fa-fw fa-cart-arrow-down"></i>
-          <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle px-2 fs-0 bg-danger rounded-circle text-white">
+          <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle px-2 fs-0 bg-danger rounded-pill text-white">
             <span class="visually-hidden">Giỏ hàng</span>
           </span>
         </button>
