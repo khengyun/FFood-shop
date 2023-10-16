@@ -1,0 +1,33 @@
+version: '3'
+services:
+  sql-server:
+    image: mcr.microsoft.com/mssqls/erver:2022-preview-ubuntu-22.04
+    environment:
+      MSSQL_PID : Evaluation
+      SA_PASSWORD: sa@123456
+      ACCEPT_EULA: Y
+    hostname : localhost
+    name : localhost
+    ports:
+      - "1450:1433"
+    volumes:
+      - ./db_scripts:/db_scripts
+
+  tomcat-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8080"
+    depends_on:
+      - sql-server
+    environment:
+      - DB_USERNAME=sa
+      - DB_PASSWORD=sa@123456
+      
+  db-init:
+    build:
+      context: .
+      dockerfile: init-db.Dockerfile
+    depends_on:
+      - sql-server

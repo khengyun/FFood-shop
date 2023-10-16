@@ -1,3 +1,5 @@
+package DBConnection;
+
 //package DBConnection;
 //
 //import java.io.File;
@@ -63,8 +65,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package DBConnection;
-
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -79,12 +79,12 @@ public class DBConnection {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             try {
                 conn = DriverManager.getConnection("jdbc:sqlserver://"
-                        + "DESKTOP-U9OGPNQ\\SQLEXPRESS01:1433;" // please change "DESKTOP-U9OGPNQ"
-                        + "databaseName=database_name;" // database name
+                        + "localhost:1450;"
+                        + "databaseName=ffood;"
 			// Enter your SSMS login username
-                        + "user=your_username;"
+                        + "user=sa;"
                         // Enter your SSMS login password
-                        + "password=your_password;"
+                        + "password=sa@123456;"
                         + "encrypt=true;"
                         + "trustServerCertificate= true;");
             } catch (SQLException ex) {
