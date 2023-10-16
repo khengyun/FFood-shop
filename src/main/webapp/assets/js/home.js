@@ -64,6 +64,40 @@ $(document).on("click", ".btn-cate", function () {
 });
 
 
+// Get all button addToCartBtn
+var addToCartButtons = document.querySelectorAll('.addToCartBtn');
+
+// Loop qua từng nút và thêm sự kiện click
+addToCartButtons.forEach(function(button) {
+  button.addEventListener('click', function() {
+    var foodId = this.getAttribute('data-foodid');
+    var quantity = this.getAttribute('data-quantity');
+
+    // Send AJAX request to addToCart servlet endpoint
+    $.ajax({
+        type: "GET",
+        url: "addToCart",
+        data: {
+            fid: foodId,
+            quantity: quantity
+        },
+        success: function (response) {
+            // Handle success response from the server
+            console.log("Item added to cart successfully.");
+            // You can update the cart UI or perform other actions here
+        },
+        error: function (error) {
+            // Handle error response from the server
+            console.error("Error occurred: " + error.responseText);
+        }
+    });
+    window.location.reload();
+    // Ví dụ: Hiển thị thông báo
+//    console.log("Food ID: " + foodId + ", Quantity: " + quantity);
+  });
+});
+
+
 
 //search 
 function searchFood() {
