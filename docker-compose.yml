@@ -1,35 +1,36 @@
-version: '3.5'
+version: '3.8'
+
+
+volumes:
+  sqlserver_data:
+  
 services:
-  sql-server:
+  sqlserver:
     image: mcr.microsoft.com/mssql/server:2019-latest
     environment:
-      MSSQL_PID: Express
-      SA_PASSWORD: sa@123456
-      ACCEPT_EULA: Y
-      MSSQL_TCP_PORT: 1433 # Define the SQL Server port
-    hostname : localhost
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=sa@123456
+      - MSSQL_PID=Developer
     ports:
-      - "1450:1433"
+      - 1450:1433
     volumes:
-      - ./db_scripts:/db_scripts
-
-
-  tomcat-app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8081:8080"
+      - sqlserver_data:/var/opt/mssql
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P sa@123456 -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      retries: 10
+      start_period: 10s
+      timeout: 3s
+  sqlserver.configurator:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d
     depends_on:
-      - db-init
-    environment:
-      - DB_USERNAME=sa
-      - DB_PASSWORD=sa@123456
-
-      
-  db-init:
-    build:
-      context: .
-      dockerfile: init-db.Dockerfile
-    depends_on:
-      - sql-server
+      sqlserver:
+        condition: service_healthy
+    command: >
+      bash -c '
+      /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P sa@123456  -i docker-entrypoint-initdb.d/full.sql;
+      echo "All done!";
+      '
