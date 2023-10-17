@@ -42,7 +42,8 @@
         <!-- Search bar -->
         <div class="input-group-icon flex-grow-1 mx-md-5 pe-2">
           <i class="fas fa-search input-box-icon text-primary"></i>
-          <input class="form-control border-1 input-box bg-100" type="search" placeholder="Tìm món ăn" aria-label="Tìm món ăn" id="btn-search" onblur="searchFood()"/>
+          <input class="form-control border-1 input-box bg-100" type="search" placeholder="Tìm món ăn" aria-label="Tìm món ăn" id="search-bar"
+                 value="" onblur="searchFoodByKeyword()"/>
         </div>
         
         <!-- Cart button -->

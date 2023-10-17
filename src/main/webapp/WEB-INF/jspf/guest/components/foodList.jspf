@@ -1,5 +1,5 @@
 <%@ page pageEncoding="UTF-8" %>
-<div class="row gx-3" id="foodList">
+<div class="row gx-3" id="food-list">
   <!-- Gets foodList attribute set by HomeController.java -->
   <c:forEach items="${foodList}" var="food">
     <div class="col-sm-6 col-md-4 col-lg-3 mb-5 h-100" id="food-${food.foodTypeID}">
@@ -7,7 +7,7 @@
         <div class="position-relative">
           <img class="card-img-top img-fluid rounded-3 h-100" src="${food.imageURL}" alt="${food.foodName}" />
           <c:if test="${food.discountPercent != 0}">
-            <span class="badge bg-success p-2 m-3 position-absolute top-0 start-0">
+            <span class="badge bg-success p-2 m-3 shadow position-absolute top-0 start-0">
               <i class="fas fa-tag me-2 fs-0"></i>
               <span class="fs-0">
                 <c:out value="Giảm ${food.discountPercent}%" />
@@ -32,4 +32,5 @@
       </div>
     </div>
   </c:forEach>
+  <button id="btn-show-more" class="btn btn-secondary">Xem thêm</button>
 </div>

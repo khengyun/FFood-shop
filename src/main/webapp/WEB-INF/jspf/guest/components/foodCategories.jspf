@@ -5,7 +5,7 @@
       <c:forEach items="${foodTypeList}" var="foodType">
         <div class="col-6 col-sm-4 col-md-3 col-lg mb-5 h-100">
           <div class="card card-span h-100 rounded-circle">
-            <button class="btn-cate" data-food-type-id="${foodType.foodTypeID}">
+            <button class="btn-categories" data-food-type-id="${foodType.foodTypeID}">
               <img class="img-fluid rounded-circle h-100" src="${foodType.imgURL}" alt="${foodType.foodType}" />
             </button>
             <div class="card-body">
