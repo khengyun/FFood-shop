@@ -232,42 +232,40 @@ function validateForm() {
     });
 
     $("#login-form").validate({
-        rule: {
+        rules: {
             txtEmail: {
                 required: true,
                 maxlength: 255,
                 email: true
             },
-            txtPassword: {
+            txtLoginPassword: {
                 required: true,
                 minlength: 8
             }
         },
         messages: {
             txtEmail: {
-                required: "Vui lòng nhập Email",
+                required: "Vui lòng nhập Email diiiiiiiiiii",
                 maxlength: "Email không được vượt quá 255 ký tự",
                 email: "Vui lòng nhập địa chỉ Email hợp lệ"
             },
-            txtPassword: {
-                required: "Vui lòng nhập mật khẩu",
+            txtLoginPassword: {
+                required: "Vui lòng nhập mật khẩu diiiiiiiiii",
                 minlength: "Mật khẩu mới phải có ít nhất 8 ký tự"
             }
-        },
-        submitHandler: function (form) {
-            // Handle form submission here
-            form.submit();
         }
     });
 
     $("#signup-form").validate({
-        rule: {
+        rules: {
             txtAccountUsername: {
                 required: true,
+                minlength: 8,
                 maxlength: 50
             },
             txtAccountEmail: {
                 required: true,
+                minlength: 8,
                 maxlength: 255,
                 email: true
             },
@@ -284,10 +282,12 @@ function validateForm() {
         messages: {
             txtAccountUsername: {
                 required: "Vui lòng nhập Tên Tài khoản Người dùng",
+                minlength: "Tên tài khoản mới phải có ít nhất 8 ký tự",
                 maxlength: "Tên Tài khoản Người dùng không được vượt quá 50 ký tự"
             },
             txtAccountEmail: {
                 required: "Vui lòng nhập Email",
+                minlength: "Email mới phải có ít nhất 8 ký tự",
                 maxlength: "Email không được vượt quá 255 ký tự",
                 email: "Vui lòng nhập địa chỉ Email hợp lệ"
             },
@@ -308,7 +308,7 @@ function validateForm() {
     });
 
     $(".update-info-form").validate({
-        rule: {
+        rules: {
             txtLastName: {
                 required: true,
                 maxlength: 40
@@ -351,7 +351,7 @@ function validateForm() {
     });
 
     $("#otp-form").validate({
-        rule: {
+        rules: {
             otp: {
                 required: true,
                 number: true
@@ -371,7 +371,7 @@ function validateForm() {
     });
 
     $("#changePass-form").validate({
-        rule: {
+        rules: {
             txtPassword: {
                 required: true,
                 minlength: 8
