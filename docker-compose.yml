@@ -1,17 +1,18 @@
-version: '3'
+version: '3.5'
 services:
   sql-server:
-    image: mcr.microsoft.com/mssqls/erver:2022-preview-ubuntu-22.04
+    image: mcr.microsoft.com/mssql/server:2019-latest
     environment:
-      MSSQL_PID : Evaluation
+      MSSQL_PID: Express
       SA_PASSWORD: sa@123456
       ACCEPT_EULA: Y
+      MSSQL_TCP_PORT: 1433 # Define the SQL Server port
     hostname : localhost
-    name : localhost
     ports:
       - "1450:1433"
     volumes:
       - ./db_scripts:/db_scripts
+
 
   tomcat-app:
     build:
@@ -20,10 +21,11 @@ services:
     ports:
       - "8081:8080"
     depends_on:
-      - sql-server
+      - db-init
     environment:
       - DB_USERNAME=sa
       - DB_PASSWORD=sa@123456
+
       
   db-init:
     build:
