@@ -2,44 +2,53 @@
 <%@ page pageEncoding="UTF-8" %>
 <!-- FOOTER -->
 <section class="py-0 pt-4 bg-1000">
-  <div class="container">
-    <div class="row">
-      <div class="col-6 col-md-4 col-lg-3 col-xxl-2 mb-3">
-        <h5 class="lh-lg fw-bold text-white">THÔNG TIN CHUNG</h5>
-        <ul class="list-unstyled mb-md-4 mb-lg-0">
-          <li class="lh-lg"><a class="text-200 text-decoration-none" href="https://github.com/tien-thanh-hua/FFood">Về chúng tôi</a></li>
-        </ul>
-      </div>
-      <div class="col-6 col-md-4 col-lg-3 col-xxl-2 col-lg-3 mb-3">
-        <h5 class="lh-lg fw-bold text-white">LIÊN HỆ</h5>
-        <ul class="list-unstyled mb-md-4 mb-lg-0">
-          <li class="lh-lg text-200 text-decoration-none">Số điện thoại: 0017-001-1704</li>
-          <li class="lh-lg text-200 text-decoration-none">Email: ffood@support.com</li>
-        </ul>
-      </div>
-      <div class="col-6 col-md-4 col-lg-3 col-xxl-2 mb-3">
-        <h5 class="lh-lg fw-bold text-white">CÁC CHÍNH SÁCH</h5>
-        <ul class="list-unstyled mb-md-4 mb-lg-0">
-          <li class="lh-lg"><a class="text-200 text-decoration-none" href="https://github.com/tien-thanh-hua/FFood">Điều khoản &amp; Chính sách</a></li>
-        </ul>
-      </div>
-      <div class="col-6 col-md-4 col-lg-3 col-xxl-2 mb-3">
-        <h5 class="lh-lg fw-bold text-white">HÃY THEO DÕI CHÚNG TÔI</h5>
-        <div class="text-start my-3"> 
-          <a class="text-500" href="https://github.com/tien-thanh-hua/FFood" target="_blank">
-            <i class="fab fa-github fa-lg fa-fw me-2"></i>
-          </a>
-          <a class="text-500" href="https://www.linkedin.com/in/tien-thanh-hua/" target="_blank">
-            <i class="fab fa-linkedin fa-lg fa-fw"></i>
-          </a>
+    <div class="container">
+        <div class="row">
+            <div class="col-6 col-md-4 col-lg-3 col-xxl-3 mb-3">
+                <h5 class="lh-lg fw-bold text-white">THÔNG TIN CHUNG</h5>
+                <ul class="list-unstyled mb-md-4 mb-lg-0">
+                    <li class="lh-lg"><a class="text-200 text-decoration-none" href="https://github.com/tien-thanh-hua/FFood">Về chúng tôi</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3 col-xxl-3 col-lg-3 mb-3">
+                <h5 class="lh-lg fw-bold text-white">LIÊN HỆ</h5>
+                <ul class="list-unstyled mb-md-4 mb-lg-0">
+                    <li class="lh-lg text-200 text-decoration-none">
+                        <a href="tel:0017-001-1704" class="navbar-sm-brand text-light text-decoration-none">
+                            Số điện thoại: 0017-001-1704
+                        </a>
+
+                    </li>
+                    <li class="lh-lg text-200 text-decoration-none">
+                        <a href="mailto:ffood.shop.cantho@gmail.com" class="navbar-sm-brand text-light text-decoration-none">
+                            Email: ffood.shop.cantho@gmail.com
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3 col-xxl-3 mb-3">
+                <h5 class="lh-lg fw-bold text-white">CÁC CHÍNH SÁCH</h5>
+                <ul class="list-unstyled mb-md-4 mb-lg-0">
+                    <li class="lh-lg"><a class="text-200 text-decoration-none" href="https://github.com/tien-thanh-hua/FFood">Điều khoản &amp; Chính sách</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3 col-xxl-3 mb-3">
+                <h5 class="lh-lg fw-bold text-white">HÃY THEO DÕI CHÚNG TÔI</h5>
+                <div class="text-start my-3"> 
+                    <a class="text-500" href="https://github.com/tien-thanh-hua/FFood" target="_blank">
+                        <i class="fab fa-github fa-lg fa-fw me-2"></i>
+                    </a>
+                    <a class="text-500" href="https://www.linkedin.com/in/tien-thanh-hua/" target="_blank">
+                        <i class="fab fa-linkedin fa-lg fa-fw"></i>
+                    </a>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <hr class="border border-800" />
-    <div class="row flex-center pb-3">
-      <div class="col-md-6 order-0">
-        <p class="text-200 text-center">All Rights Reserved &copy; FFood, 2023</p>
-      </div>
-    </div>
-  </div><!-- end of .container-->
+        <hr class="border border-800" />
+        <div class="row flex-center pb-3">
+            <div class="col-md-6 order-0">
+                <p class="text-200 text-center">All Rights Reserved &copy; FFood, 2023</p>
+            </div>
+        </div>
+    </div><!-- end of .container-->
 </section>
