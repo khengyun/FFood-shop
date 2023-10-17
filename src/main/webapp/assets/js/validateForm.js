@@ -239,8 +239,7 @@ function validateForm() {
                 email: true
             },
             txtLoginPassword: {
-                required: true,
-                minlength: 8
+                required: true
             }
         },
         messages: {
@@ -250,8 +249,7 @@ function validateForm() {
                 email: "Vui lòng nhập địa chỉ Email hợp lệ"
             },
             txtLoginPassword: {
-                required: "Vui lòng nhập mật khẩu diiiiiiiiii",
-                minlength: "Mật khẩu mới phải có ít nhất 8 ký tự"
+                required: "Vui lòng nhập mật khẩu diiiiiiiiii"
             }
         }
     });
