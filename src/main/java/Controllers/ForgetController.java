@@ -5,31 +5,28 @@
 package Controllers;
 
 import DAOs.AccountDAO;
-import Models.Account;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.sql.SQLException;
 import java.util.Properties;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
-import sun.security.jgss.GSSCaller;
-import sun.security.jgss.GSSUtil;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-public class SignUpController extends HttpServlet {
+public class ForgetController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,6 +39,19 @@ public class SignUpController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try ( PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ForgetController</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ForgetController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -56,7 +66,7 @@ public class SignUpController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        processRequest(request, response);
     }
 
     /**
@@ -71,27 +81,13 @@ public class SignUpController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String contextPath = request.getContextPath();
-        String username = request.getParameter("txtAccountUsername");
-        String email = request.getParameter("txtAccountEmail");
-        String pass = (String) request.getAttribute("txtAccountPassword");
-        // Truy xuất URL hiện tại từ session attribute
         HttpSession session = request.getSession();
-        String previousUrl = (String) session.getAttribute("previousUrl");
-        
-        AccountDAO accountDAO = new AccountDAO();
-        Account account = new Account(username, email, pass, "user");
-        try {
-            if (accountDAO.login(account)) {
-                if (previousUrl != null) {
-                    // Chuyển hướng người dùng về trang hiện tại
-                    response.sendRedirect(previousUrl);
-                } else {
-                    // Nếu không có URL trước đó, chuyển hướng người dùng về trang mặc định
-                    response.sendRedirect("/");
-                }
-            } else {
+        if (request.getParameter("btnSubmit") != null
+                && ((String) request.getParameter("btnSubmit")).equals("Submit")) {
+            String email = request.getParameter("txtEmail");
+            AccountDAO accountDAO = new AccountDAO();
+            if (accountDAO.getAccount(email) != null) {
                 try {
-
                     RequestDispatcher dispatcher = null;
                     int otpvalue = 0;
 
@@ -129,11 +125,10 @@ public class SignUpController extends HttpServlet {
                         } catch (MessagingException e) {
                             throw new RuntimeException(e);
                         }
-
                         request.setAttribute("message", "OTP is sent to your email ID");
                         session.setAttribute("otp", otpvalue);
-                        session.setAttribute("type_otp", "sign_up");
-                        session.setAttribute("registerUser", account);
+                        session.setAttribute("email", email);
+                        session.setAttribute("type_otp", "forget");
                         response.sendRedirect("/home#verify_OTP");
                     }
 
@@ -141,11 +136,9 @@ public class SignUpController extends HttpServlet {
                     System.out.println("Could not send user register");
                     request.getRequestDispatcher("/index.jsp").forward(request, response);
                 }
-//              
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(SignUpController.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
     /**
@@ -157,4 +150,5 @@ public class SignUpController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }

@@ -82,7 +82,7 @@ public class LoginController extends HttpServlet {
     if (request.getParameter("btnSubmit") != null
             && ((String) request.getParameter("btnSubmit")).equals("Submit")) {
       String email = request.getParameter("txtEmail");
-      String password = (String) request.getAttribute("txtPassword");
+      String password = (String) request.getAttribute("txtLoginPassword");
 
       Account account = new Account(email, password);
       AccountDAO dao = new AccountDAO();
@@ -158,13 +158,7 @@ public class LoginController extends HttpServlet {
           }
         }
       } else {
-        if (previousUrl != null) {
-          // Chuyển hướng người dùng về trang hiện tại
-          response.sendRedirect(previousUrl);
-        } else {
-          // Nếu không có URL trước đó, chuyển hướng người dùng về trang mặc định
-          response.sendRedirect("/");
-        }
+          response.sendRedirect("/home#failure_login");
       }
     }
   }
