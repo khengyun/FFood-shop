@@ -58,9 +58,9 @@ To install and set up the FFood website locally, follow these steps:
 
 1. Clone the repository to your local machine:
 
-   ```bash
+   >```bash
    > git clone https://github.com/khengyun/FFood-shop.git
-   ```
+   >```
 
 2. Open the project in your preferred integrated development environment (IDE) such as NetBeans 13 and later.
 
@@ -102,17 +102,18 @@ DATA_SERVER_NAME=your-data-server-name
 ## Dockerized SQL Server
 1. Install Docker on Window [click here](https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe?_gl=1*3jwbnk*_ga*MTU2MzcwNDM2OS4xNjk3NDU2NjY2*_ga_XJWPQMJYHQ*MTY5NzUyNjQ5Mi44LjEuMTY5NzUyODUxMy40My4wLjA.)
 2. Check Docker version after install 
-``` bash
-docker --version
-```
-![Alt text](image.png)
+> ```bash
+> docker --version
+>```
+>![Alt text](image.png)
+
 3. ``cd`` into the cloned FFood-shop folder
-```bash
-git clone https://github.com/khengyun/FFood-shop.git
-cd FFood-shop
-## Run docker
-docker compose up --build
-```
+>```bash
+>git clone https://github.com/khengyun/FFood-shop.git
+>cd FFood-shop
+>## Run docker
+>docker compose up --build
+>```
 
 
 
