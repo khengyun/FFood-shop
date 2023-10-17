@@ -105,7 +105,7 @@ DATA_SERVER_NAME=your-data-server-name
 > ```bash
 > docker --version
 >```
->![Alt text](image.png)
+![Alt text](image.png)
 
 3. ``cd`` into the cloned FFood-shop folder
 >```bash
