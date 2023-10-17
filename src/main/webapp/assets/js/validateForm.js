@@ -239,19 +239,17 @@ function validateForm() {
                 email: true
             },
             txtLoginPassword: {
-                required: true,
-                minlength: 8
+                required: true
             }
         },
         messages: {
             txtEmail: {
-                required: "Vui lòng nhập Email diiiiiiiiiii",
+                required: "Vui lòng nhập Email",
                 maxlength: "Email không được vượt quá 255 ký tự",
                 email: "Vui lòng nhập địa chỉ Email hợp lệ"
             },
             txtLoginPassword: {
-                required: "Vui lòng nhập mật khẩu diiiiiiiiii",
-                minlength: "Mật khẩu mới phải có ít nhất 8 ký tự"
+                required: "Vui lòng nhập mật khẩu"
             }
         }
     });
