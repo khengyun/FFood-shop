@@ -17,9 +17,13 @@
                 </a>
             </div>
             <div>
-                <a class="text-light" href="https://github.com/tien-thanh-hua/FFood" target="_blank">
-                    <i class="fab fa-facebook fa-sm fa-fw me-2"></i>
+                <a class="text-light px-3" href="https://github.com/tien-thanh-hua/FFood" target="_blank">
+<!--                    <i class="fab fa-facebook fa-sm fa-fw me-2"></i>-->
                     Facebook
+                </a>
+                <a class="text-light" href="https://github.com/tien-thanh-hua/FFood" target="_blank">
+<!--                    <i class="fab fa-facebook fa-sm fa-fw me-2"></i>-->
+                    Zalo
                 </a>
             </div>
         </div>

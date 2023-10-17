@@ -16,8 +16,8 @@
                         <input type="text" class="form-control" id="txtEmail" name="txtEmail" placeholder="Nhập email tài khoản" required="">
                     </div>
                     <div class="form-group col">
-                        <label class="col-form-label" for="txtLoginPassword">Mật khẩu</label>
-                        <input type="password" class="form-control" id="txtLoginPassword" name="txtLoginPassword" placeholder="Nhập mật khẩu" required="">
+                        <label class="col-form-label" for="txtPassword">Mật khẩu</label>
+                        <input type="password" class="form-control" id="txtPassword" name="txtPassword" placeholder="Nhập mật khẩu" required="">
                         <i class="bi bi-eye-slash" id="togglePassword"></i>
                     </div>
                     <div class="form-group col d-flex mb-4">

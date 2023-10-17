@@ -14,6 +14,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class ChangePasswordController extends HttpServlet {
    
@@ -54,6 +56,31 @@ public class ChangePasswordController extends HttpServlet {
     throws ServletException, IOException {
         processRequest(request, response);
     } 
+    
+    public static String generateMD5Hash(String input) {
+        try {
+            // Create MessageDigest instance for MD5
+            MessageDigest md = MessageDigest.getInstance("MD5");
+
+            // Update input string in message digest
+            md.update(input.getBytes());
+
+            // Generate the MD5 hash
+            byte[] mdBytes = md.digest();
+
+            // Convert byte array to a hexadecimal string
+            StringBuilder sb = new StringBuilder();
+            for (byte mdByte : mdBytes) {
+                sb.append(Integer.toString((mdByte & 0xff) + 0x100, 16).substring(1));
+            }
+
+            return sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            // Handle the exception, for example, log it or throw a custom exception
+            e.printStackTrace();
+            return null; // Return null to indicate failure
+        }
+    }
 
     /** 
      * Handles the HTTP <code>POST</code> method.
@@ -74,14 +101,15 @@ public class ChangePasswordController extends HttpServlet {
             Account updateAccount = (Account) session.getAttribute("account");
             Account account = accountDAO.getAccount(updateAccount.getEmail());
             updateAccount = account;
-            updateAccount.setPassword(password);
+            String MD5_password = generateMD5Hash(password);
+            updateAccount.setPassword(MD5_password);
             int result = accountDAO.update(updateAccount);
             session.removeAttribute("account");
             if (result == 1) {
                 response.sendRedirect("/home#success_changePassword");
                 
             } else {
-                response.sendRedirect("/home");
+                response.sendRedirect("/home#failure_changePassword");
             }
         } else {
             response.sendRedirect("/home");

@@ -238,7 +238,7 @@ function validateForm() {
                 maxlength: 255,
                 email: true
             },
-            txtLoginPassword: {
+            txtPassword: {
                 required: true
             }
         },
@@ -248,7 +248,7 @@ function validateForm() {
                 maxlength: "Email không được vượt quá 255 ký tự",
                 email: "Vui lòng nhập địa chỉ Email hợp lệ"
             },
-            txtLoginPassword: {
+            txtPassword: {
                 required: "Vui lòng nhập mật khẩu"
             }
         }
@@ -377,7 +377,7 @@ function validateForm() {
             txtRePassword: {
                 required: true,
                 minlength: 8,
-                equalTo: "#txtAccountPassword"
+                equalTo: "#txtChangePassword"
             }
         },
         messages: {
