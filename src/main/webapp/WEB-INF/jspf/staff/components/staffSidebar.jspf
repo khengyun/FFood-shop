@@ -1,0 +1,202 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+
+<!-- Minimized sidebar -->
+<div style="z-index:100; width: 56px;"
+     class="position-sticky top-0 start-0 d-flex flex-column flex-shrink-0 px-0 pb-2 vh-100 align-items-center bg-surface-container shadow"
+     id="minimizedSidebar" aria-labelledby="minimizedSidebarLabel">
+  <a href="/" style="height: 3rem"
+     class="d-flex align-items-center py-2 my-3 mx-auto link-body-emphasis text-decoration-none">
+    <img class="d-inline-block img-fluid" src="<%= request.getContextPath() + "assets/img/gallery/logo.svg"%>"
+         alt="logo"/>
+  </a>
+  <ul class="nav nav-pills d-grid gap-1 align-items-center mb-auto">
+    <li class="nav-item">
+      <button data-bs-target="#home"
+              class="nav-link link-body-emphasis text-start d-flex justify-content-center p-2 mx-auto"
+              data-bs-toggle="tab">
+        <i class="ph ph-house"></i>
+      </button>
+    </li>
+    
+    <li class="nav-item">
+      <button data-bs-target="#foods"
+              class="nav-link link-body-emphasis text-start d-flex justify-content-center p-2 mx-auto"
+              data-bs-toggle="tab">
+        <i class="ph ph-fork-knife"></i>
+      </button>
+    </li>
+    
+    
+    <li class="nav-item">
+      <button data-bs-target="#orders"
+              class="nav-link link-body-emphasis text-start d-flex justify-content-center p-2 mx-auto"
+              data-bs-toggle="tab">
+        <i class="ph ph-clipboard-text"></i>
+      </button>
+    </li>
+  </ul>
+  <div class="flex-grow-0"></div>
+  <hr class="border border-800 border-1 border-opacity-25 w-100 my-1">
+  <div class="dropdown d-flex align-items-center mx-auto">
+    <button data-bs-toggle="dropdown" type="button"
+            class="btn p-1 mt-1 d-flex align-items-center link-body-emphasis text-decoration-none">
+      <i class="ph ph-user-circle"></i>
+    </button>
+    <ul class="dropdown-menu text-small shadow">
+      <li><a class="dropdown-item" href="/admin/help">Trợ giúp</a></li>
+      <li>
+        <hr class="dropdown-divider">
+      </li>
+      <li><a class="dropdown-item" href="/admin/logout">Đăng xuất</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- Maximized sidebar -->
+<div class="offcanvas offcanvas-start d-flex flex-column flex-shrink-0 p-2 bg-surface-container shadow"
+     data-bs-scroll="true" data-bs-backdrop="false"
+     tabindex="-1" style="width:240px;"
+     id="maximizedSidebar" aria-labelledby="maximizedSidebarLabel">
+  <a href="/" style="height: 2.5rem;"
+     class="d-flex flex-row align-items-start justify-content-center px-1 ms-1 me-auto my-3 link-body-emphasis text-decoration-none">
+    <img class="img-fluid my-auto" src="<%= request.getContextPath() + "assets/img/gallery/logo.svg"%>"
+         alt="logo"/>
+    <h5 class="ms-3 my-auto text-gradient">FFood Dashboard</h5>
+  </a>
+  <ul class="nav nav-pills d-grid gap-1 mb-auto align-content-start">
+    <li class="nav-item d-grid gap-1 px-1">
+      <button data-bs-target="#home"
+              class="nav-link link-body-emphasis text-start w-100 d-flex justify-content-start p-2 mx-auto active"
+              data-bs-toggle="tab">
+        <i class="ph ph-house me-3"></i>
+        Trang chủ
+      </button>
+    </li>
+   
+   
+    <li class="nav-item d-grid gap-1 px-1">
+      <button data-bs-target="#foods"
+              class="nav-link link-body-emphasis text-start w-100 d-flex justify-content-start p-2 mx-auto"
+              data-bs-toggle="tab">
+        <i class="ph ph-fork-knife me-3"></i>
+        Món ăn
+      </button>
+    </li>
+   
+    <li class="nav-item d-grid gap-1 px-1">
+      <button data-bs-target="#orders"
+              class="nav-link link-body-emphasis text-start w-100 d-flex justify-content-start p-2 mx-auto"
+              data-bs-toggle="tab">
+        <i class="ph ph-clipboard-text me-3"></i>
+        Đơn món
+      </button>
+    </li>
+  </ul>
+  <hr class="border border-800 border-1 border-opacity-25 my-1">
+  <div class="flex-grow-0"></div>
+  <div class="dropdown d-grid gap-1">
+    <button type="button" href="#"
+            class="d-flex flex-shrink-0 btn text-start align-items-center px-2 py-1 mt-1 link-body-emphasis text-decoration-none dropdown-toggle"
+            data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="ph ph-user-circle me-3"></i>
+      <strong>${adminName}</strong>
+      <div class="flex-grow-0"></div>
+    </button>
+    <ul class="dropdown-menu text-small shadow">
+      <li><a class="dropdown-item" href="/admin/help">Trợ giúp</a></li>
+      <li>
+        <hr class="dropdown-divider">
+      </li>
+      <li><a class="dropdown-item" href="/admin/logout">Đăng xuất</a></li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  <!-- Add hover interactivity to minimized sidebar -->
+  $(document).ready(function () {
+    var timeoutId;
+    var sidebar = $('#minimizedSidebar');
+    var offcanvas = $('#maximizedSidebar');
+
+    sidebar.hover(function () {
+      timeoutId = setTimeout(function () {
+        offcanvas.addClass('show');
+      }, 150);
+    }, function () {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(function () {
+        offcanvas.removeClass('show');
+      }, 250);
+    });
+
+    offcanvas.hover(function () {
+      clearTimeout(timeoutId);
+    }, function () {
+      timeoutId = setTimeout(function () {
+        offcanvas.removeClass('show');
+      }, 150);
+    });
+  });
+
+  // Add event listener to buttons in minimized sidebar
+  const minButtons = document.querySelectorAll('#minimizedSidebar button[data-bs-toggle="tab"]');
+  minButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      // Remove "active" class from all buttons in maximized sidebar
+      const maxButtons = document.querySelectorAll('#maximizedSidebar button[data-bs-toggle="tab"]');
+      maxButtons.forEach(maxButton => {
+        if (maxButton) {
+          maxButton.classList.remove('active');
+        }
+      });
+      // Add "active" class to corresponding button in maximized sidebar
+      const target = button.getAttribute('data-bs-target');
+      const maxButton = document.querySelector(`#maximizedSidebar button[data-bs-target="${target}"]`);
+      if (maxButton) {
+        maxButton.classList.add('active');
+      }
+    });
+  });
+
+  // Add event listener to buttons in maximized sidebar
+  const maxButtons = document.querySelectorAll('#maximizedSidebar button[data-bs-toggle="tab"]');
+  maxButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      // Remove "active" class from all buttons in minimized sidebar
+      const minButtons = document.querySelectorAll('#minimizedSidebar button[data-bs-toggle="tab"]');
+      minButtons.forEach(minButton => {
+        if (minButton) {
+          minButton.classList.remove('active');
+        }
+      });
+      // Add "active" class to corresponding button in minimized sidebar
+      const target = button.getAttribute('data-bs-target');
+      const minButton = document.querySelector(`#minimizedSidebar button[data-bs-target="${target}"]`);
+      if (minButton) {
+        minButton.classList.add('active');
+      }
+    });
+  });
+</script>
+<!-- Animations -->
+<style>
+    .offcanvas-start {
+        transition: transform 200ms ease-in-out;
+    }
+
+    .offcanvas-start.show {
+        transform: translateX(0);
+        transition: transform 200ms ease-in-out;
+    }
+
+    .offcanvas-start.hide {
+        transform: translateX(-100%);
+        transition: transform 200ms ease-in-out;
+    }
+
+    i {
+        font-size: 1.5rem;
+    }
+</style>

@@ -5,9 +5,11 @@
 package Controllers;
 
 import DAOs.AccountDAO;
+import DAOs.AdminDAO;
 import DAOs.FoodDAO;
 import DAOs.OrderDAO;
 import Models.Account;
+import Models.Admin;
 import Models.Food;
 import Models.Order;
 import java.io.IOException;
@@ -178,9 +180,11 @@ public class AdminController extends HttpServlet {
       List<Food> foodList = foodDAO.getAllList();
       AccountDAO accountDAO = new AccountDAO();
       List<Account> userAccountList = accountDAO.getAllUser();
+      
       OrderDAO orderDAO = new OrderDAO();
       List<Order> orderList = orderDAO.getAllList();
-
+      
+     
       request.setAttribute("foodList", foodList);
       request.setAttribute("userAccountList", userAccountList);
       request.setAttribute("orderList", orderList);

@@ -28,10 +28,10 @@ public static Connection getConnection() {
         Properties prop = new Properties();
         prop.load(configFile);
 
-        String DATABASE_NAME = prop.getProperty("DATABASE_NAME");
-        String PASSWORD = prop.getProperty("PASSWORD");
-        String USERNAME = prop.getProperty("USERNAME");
-        String DATA_SERVER_NAME = prop.getProperty("DATA_SERVER_NAME");
+        String DATABASE_NAME = "ffood_new";
+        String PASSWORD = "sa123456";
+        String USERNAME = "sa";
+        String DATA_SERVER_NAME = "DESKTOP-OOCMN32";
 
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         String path = "jdbc:sqlserver://" + DATA_SERVER_NAME + "\\SQLEXPRESS:1433;"
@@ -57,4 +57,5 @@ public static Connection getConnection() {
             Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+   
 }

@@ -102,9 +102,9 @@
                       </c:if>
                     </div>
                     <div class="d-grid gap-2">
-                      <a href="addToCart?fid=${f.foodID}&quantity=1">
-                        <button class="btn btn-lg btn-danger px-2 w-100" role="button">Thêm vào Giỏ hàng</button>
-                      </a>
+                        <button class="btn btn-lg btn-danger px-2 w-100 addToCartBtn" data-foodid="${f.foodID}" data-quantity="1">
+                            Thêm vào Giỏ hàng
+                        </button>
                     </div>
                   </div>
                 </div>
