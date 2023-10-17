@@ -82,7 +82,7 @@ public class LoginController extends HttpServlet {
     if (request.getParameter("btnSubmit") != null
             && ((String) request.getParameter("btnSubmit")).equals("Submit")) {
       String email = request.getParameter("txtEmail");
-      String password = (String) request.getAttribute("txtLoginPassword");
+      String password = (String) request.getAttribute("txtPassword");
 
       Account account = new Account(email, password);
       AccountDAO dao = new AccountDAO();
