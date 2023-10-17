@@ -33,3 +33,8 @@ src/main/resources/database.properties
 *.iml
 .idea/
 .vscode/
+
+# Docker volume
+db_scripts/.system
+db_scripts/log
+db_scripts/secrets
