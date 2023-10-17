@@ -244,12 +244,12 @@ function validateForm() {
         },
         messages: {
             txtEmail: {
-                required: "Vui lòng nhập Email diiiiiiiiiii",
+                required: "Vui lòng nhập Email",
                 maxlength: "Email không được vượt quá 255 ký tự",
                 email: "Vui lòng nhập địa chỉ Email hợp lệ"
             },
             txtLoginPassword: {
-                required: "Vui lòng nhập mật khẩu diiiiiiiiii"
+                required: "Vui lòng nhập mật khẩu"
             }
         }
     });
