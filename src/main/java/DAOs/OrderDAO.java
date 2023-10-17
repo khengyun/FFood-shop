@@ -122,6 +122,7 @@ public class OrderDAO {
     }
 
     public List<Order> getOrdersFromCustomerList(int customerID) {
+        System.out.println("customerID: " + customerID);
         ResultSet orderRS = this.getOrdersFromCustomer(customerID);
         List<Order> orderList = null;
         try {

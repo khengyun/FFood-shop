@@ -7,7 +7,6 @@ package Controllers;
 
 import DAOs.AccountDAO;
 import Models.Account;
-import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -16,7 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-public class EmailVerifyController extends HttpServlet {
+public class ChangePasswordController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -33,10 +32,10 @@ public class EmailVerifyController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet VerifyOTPController</title>");  
+            out.println("<title>Servlet ChangePasswordController</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet VerifyOTPController at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet ChangePasswordController at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -66,43 +65,28 @@ public class EmailVerifyController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        int value = Integer.parseInt(request.getParameter("otp"));
+        AccountDAO accountDAO = new AccountDAO();
         HttpSession session = request.getSession();
-        int otp = 0;
-        if (session.getAttribute("otp") != null){
-            otp = (int) session.getAttribute("otp");
-        }
-        
-        if (otp == 0){
+        String password = request.getParameter("txtPassword");
+        String repassword = request.getParameter("txtRePassword");
+            
+        if (password.equals(repassword)){
+            Account updateAccount = (Account) session.getAttribute("account");
+            Account account = accountDAO.getAccount(updateAccount.getEmail());
+            updateAccount = account;
+            updateAccount.setPassword(password);
+            int result = accountDAO.update(updateAccount);
+            session.removeAttribute("account");
+            if (result == 1) {
+                response.sendRedirect("/home#success_changePassword");
+                
+            } else {
+                response.sendRedirect("/home");
+            }
+        } else {
             response.sendRedirect("/home");
         }
-        RequestDispatcher dispatcher = null;
-        AccountDAO accountDAO = new AccountDAO();
-        
-        if (value == otp) {
-            session.removeAttribute("otp");
-            String type_otp = (String) session.getAttribute("type_otp");
-            if (type_otp.equals("sign_up")){
-                Account account = (Account) session.getAttribute("registerUser");
-                int result = accountDAO.add(account);
-                session.removeAttribute("registerUser");
-                if (result == 1) {
-                    response.sendRedirect("/home#success_register");
-                
-                } else {
-                    response.sendRedirect("/home#failure_register");
-                }
-            }else if (type_otp.equals("forget")){
-                String email = (String) session.getAttribute("email");
-                Account account = new Account(email,"user");
-                session.setAttribute("account", account);
-                response.sendRedirect("/home#changePass_modal");
-            }
-
-        } else {          
-            response.sendRedirect("/home#verify_email");
-            
-        }
+       
     }
 
     /** 
