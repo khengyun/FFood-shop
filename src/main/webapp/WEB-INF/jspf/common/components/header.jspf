@@ -46,7 +46,7 @@
           <input class="form-control border-1 input-box bg-100" type="search" placeholder="Tìm món ăn"
                  aria-label="Tìm món ăn" id="btn-search" onblur="searchFood()"/>
         </div>
-        <button type="button" class="btn pe-2 py-0 position-relative nav-icon text-decoration-none my-auto text-primary fs-2 me-4"
+        <button type="button" class="btn ps-1 pe-2 py-0 position-relative nav-icon text-decoration-none my-auto text-primary fs-2 me-4"
                 data-bs-toggle="modal" data-bs-target="#cart-modal">
           <i class="fas fa-fw fa-cart-arrow-down"></i>
           <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle px-2 fs-0 bg-danger rounded-pill text-white">
