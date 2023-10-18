@@ -230,6 +230,61 @@ function validateForm() {
             form.submit();
         }
     });
+    
+    $(".add-vouhcer-form").validate({
+        rules: {
+            txtvoucher_name: {
+                required: true,
+                maxlength: 50,
+            },
+            txtvoucher_discount_percent: {
+                required: true,
+                range: [0, 100]
+            }
+
+        },
+        messages: {
+            txtvoucher_name: {
+                required: "Vui lòng nhập tên Voucher",
+                maxlength: "Tên Voucher không được vượt quá 50 ký tự"
+            },
+            txtvoucher_discount_percent: {
+                required: "Vui lòng nhập phần trăm giảm giá",
+                range: "Vui lòng nhập từ 0% đến 100%"
+            }
+        },
+        submitHandler: function (form) {
+            // Handle form submission here
+            form.submit();
+        }
+    });
+    
+    $(".update-vouhcer-form").validate({
+        rules: {
+            txtvoucher_name: {
+                required: true,
+                maxlength: 50,
+            },
+            txtvoucher_discount_percent: {
+                required: true,
+                range: [0, 100]
+            }
+        },
+        messages: {
+            txtvoucher_name: {
+                required: "Vui lòng nhập tên Voucher",
+                maxlength: "Tên Voucher không được vượt quá 50 ký tự"
+            },
+            txtvoucher_discount_percent: {
+                required: "Vui lòng nhập phần trăm giảm giá",
+                range: "Vui lòng nhập từ 0% đến 100%"
+            }
+        },
+        submitHandler: function (form) {
+            // Handle form submission here
+            form.submit();
+        }
+    });
 
     $("#login-form").validate({
         rules: {

@@ -38,12 +38,14 @@
                         <%@ include file="WEB-INF/jspf/admin/home.jspf" %>
                         <!-- Food & Drinks Tab Content -->
                         <%@ include file="WEB-INF/jspf/admin/foods.jspf" %>
+
                         <!-- Users Tab Content -->
                         <div class="tab-pane fade" id="users">
                             <div class="container-fluid p-2">
-                                <table id="users-table">
+                                <table id="users-table" class="table table-bordered table-striped">
                                     <h1 class="text-center fw-bold fs-3">Quản lý Người dùng</h1>
-                                    <button type="button" class="btn btn-sm btn-success py-1 my-2 me-2" data-bs-toggle="modal" data-bs-target="#add-user-modal">
+                                    <button style="color: white;border-color: rgba(207, 126, 0, 1); background-color: rgba(207, 126, 0, 1);"
+                                            type="button" class="btn btn-sm btn-success py-1 my-2 me-2" data-bs-toggle="modal" data-bs-target="#add-user-modal">
                                         Tạo Tài khoản Người dùng
                                     </button>
                                     <thead>
@@ -58,12 +60,13 @@
                                     <tbody>
                                         <c:forEach items="${userAccountList}" var="u">
                                             <tr>
-                                                <td>${u.accountID}</td>
+                                                <td class="col-sm-3 col-gap-5">${u.accountID}</td>
                                                 <td>${u.username}</td>
                                                 <td>${u.email}</td>
                                                 <td>${u.accountType}</td>
                                                 <td>
-                                                    <button type="button" id="btn-update-user"
+                                                    <button style="color: white;border-color: rgba(207, 126, 0, 1); background-color: rgba(207, 126, 0, 1);"
+                                                            type="button" id="btn-update-user"
                                                             class="btn btn-sm btn-success py-1 m-1"
                                                             data-account-id="${u.accountID}"
                                                             data-username="${u.username}"
@@ -71,7 +74,8 @@
                                                             data-bs-toggle="modal" data-bs-target="#update-user-modal">
                                                         Cập nhật
                                                     </button>
-                                                    <button type="button" id="btn-delete-user"
+                                                    <button style="color: white;border-color: rgba(207, 126, 0, 1); background-color: rgba(207, 126, 0, 1);"
+                                                            type="button" id="btn-delete-user"
                                                             class="btn btn-sm btn-danger py-1 m-1"
                                                             data-account-id="${u.accountID}"
                                                             data-username="${u.username}"
@@ -85,6 +89,7 @@
                                 </table>
                             </div>
                         </div>
+
 
 
                         <!-- Roles Tab Content -->
@@ -109,21 +114,21 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:forEach items="${adminstaffList}" var="u">
+                                        <c:forEach items="${adminstaffList}" var="a">
                                             <tr>
-                                                <td>${u.accountID}</td>
-                                                <td >${u.username}</td>
-                                                <td >${u.email}</td>
-                                                <td>${u.accountType}</td>
+                                                <td>${a.accountID}</td>
+                                                <td >${a.username}</td>
+                                                <td >${a.email}</td>
+                                                <td>${a.accountType}</td>
                                                 <td>
                                                     <button 
                                                         style="color: white;border-color: rgba(207, 126, 0, 1); background-color: rgba(207, 126, 0, 1);" 
                                                         type="button" id="btn-update-admin"
                                                         "height: 26px;"
                                                         class="btn btn-sm btn-success py-1 m-1"
-                                                        data-account-id="${u.accountID}"
-                                                        data-username="${u.username}"
-                                                        data-email="${u.email}"
+                                                        data-account-id="${a.accountID}"
+                                                        data-username="${a.username}"
+                                                        data-email="${a.email}"
                                                         data-bs-toggle="modal" data-bs-target="#update-admin-modal">
                                                         Cập nhật
                                                     </button>
@@ -131,10 +136,10 @@
                                                             type="button" id="btn-delete-admin"
                                                             "height: 26px;"
                                                             class="btn btn-sm btn-danger py-1 m-1"
-                                                            data-account-id="${u.accountID}"
-                                                            data-username="${u.username}"
+                                                            data-account-id="${a.accountID}"
+                                                            data-username="${a.username}"
                                                             data-bs-toggle="modal" data-bs-target="#delete-admin-modal">
-                                                        Thay Password
+                                                        Đổi Password
                                                     </button>
                                                 </td>
                                             </tr>
@@ -147,7 +152,7 @@
                         <!-- Orders Tab Content -->
                         <div class="tab-pane fade" id="orders">
                             <div class="container-fluid p-2">
-                                <table id="orders-table">
+                                <table id="orders-table" class="table table-bordered table-striped">
                                     <h1 class="text-center fw-bold fs-3">Quản lý Đơn món</h1>
                                     <thead>
                                         <tr>
@@ -210,27 +215,27 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:forEach items="${voucherList}" var="f">
+                                        <c:forEach items="${voucherList}" var="v">
                                             <tr>
-                                                <td>${f.voucher_id}</td>
-                                                <td>${f.voucher_name}</td>
+                                                <td>${v.voucherID}</td>
+                                                <td>${v.name}</td>
 
-                                                <td>${(f.voucher_discount_percent == null) ? 0 : f.voucher_discount_percent}%</td>                                 
+                                                <td>${(v.voucher_discount_percent == null) ? 0 : v.voucher_discount_percent}%</td>                                 
                                                 <td>
                                                     <button style="color: white;border-color: rgba(207, 126, 0, 1); background-color: rgba(207, 126, 0, 1);"
                                                             type="button" id="btn-update-voucher"
                                                             class="btn btn-sm btn-success py-1 m-1"
-                                                            data-food-id="${f.voucher_id}"
-                                                            data-voucher-name="${f.voucher_name}"
-                                                            data-voucher-discount-percent="${f.voucher_discount_percent}"
+                                                            data-voucher-id="${v.voucherID}"
+                                                            data-voucher-name="${v.name}"
+                                                            data-voucher-discount-percent="${v.voucher_discount_percent}"
                                                             data-bs-toggle="modal" data-bs-target="#update-voucher-modal">
                                                         Cập nhật
                                                     </button>
                                                     <button style="color: white;border-color: rgba(207, 126, 0, 1); background-color: rgba(207, 126, 0, 1);"
                                                             type="button" id="btn-delete-voucher"
                                                             class="btn btn-sm btn-danger py-1 m-1"
-                                                            data-voucher-id="${f.voucher_id}"
-                                                            data-voucher-name="${f.voucher_name}"
+                                                            data-voucher-id="${v.voucherID}"
+                                                            data-voucher-name="${v.name}"
                                                             data-bs-toggle="modal" data-bs-target="#delete-voucher-modal">
                                                         Xóa
                                                     </button>

@@ -212,7 +212,7 @@ $(document).ready(function () {
     $('#food-table').resize();
   });
 
-  $('#users-table').DataTable();
-  $('#orders-table').DataTable();
+//  $('#users-table').DataTable();
+//  $('#orders-table').DataTable();
 })
 ;

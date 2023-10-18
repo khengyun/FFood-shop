@@ -20,7 +20,7 @@
           <!-- Discount Percentage -->
           <div class="mb-3">
             <label for="txtvoucher-discount-percent" class="form-label">Giảm giá (%)</label>
-            <input type="number" class="form-control" id="txtvoucher-discount-percent" name="txtvoucher-discount-percent" min="0" max="100" required value="">
+            <input type="number" class="form-control" id="txtvoucher_discount_percent" name="txtvoucher_discount_percent" min="0" max="100" required value="">
           </div>
 
         </div>
