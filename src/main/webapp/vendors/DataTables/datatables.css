@@ -1893,3 +1893,5 @@ html[data-bs-theme=dark] table.dataTable > tbody > tr > th.select-checkbox:befor
 table.dataTable.table-sm tbody td.select-checkbox::before {
   margin-top: -9px;
 }
+
+
