@@ -75,6 +75,7 @@ import java.util.logging.Logger;
 public class DBConnection {
     private static Connection conn = null;
     public static Connection getConnection() {
+
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             try {
@@ -95,4 +96,5 @@ public class DBConnection {
         }
         return conn;   
     }
+
 }

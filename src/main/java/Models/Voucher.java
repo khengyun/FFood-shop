@@ -5,15 +5,13 @@
 package Models;
 
 public class Voucher {
-
     private byte voucherID;
     private String name;
     private byte voucher_discount_percent;
-    
+   
 
     public Voucher() {
     }
-
     public Voucher(byte voucherID, String name, byte voucher_discount_percent) {
         this.voucherID = voucherID;
         this.name = name;
@@ -45,3 +43,4 @@ public class Voucher {
     }
 
 }
+

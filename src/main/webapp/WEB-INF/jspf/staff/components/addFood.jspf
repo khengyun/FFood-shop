@@ -1,0 +1,55 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="modal" tabindex="-1" id="add-food-modal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form class="add-food-form" method="POST" action="/admin">
+        <div class="modal-header">
+          <h5 class="modal-title">Thêm Món</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body px-5">
+          <!-- Food Type -->
+          <div class="mb-3">
+            <label for="txtFoodTypeID" class="form-label">Loại món</label>
+            <select class="form-select" id="txtFoodTypeID" name="txtFoodTypeID" required>
+              <option value="1" selected>Cơm</option>
+              <option value="2">Mì</option>
+              <option value="3">Bánh mì</option>
+              <option value="4">Đồ ăn vặt</option>
+              <option value="5">Tráng miệng</option>
+              <option value="6">Đồ uống</option>
+            </select>
+          </div>
+          <!-- Food Name -->
+          <div class="mb-3">
+            <label for="txtFoodName" class="form-label">Tên món</label>
+            <input type="text" class="form-control" id="txtFoodName" name="txtFoodName" maxlength="50" required>
+          </div>
+          <!-- Price -->
+          <div class="mb-3">
+            <label for="txtFoodPrice" class="form-label">Đơn giá</label>
+            <input type="number" step="0.01" class="form-control" id="txtFoodPrice" name="txtFoodPrice" min="0" required>
+          </div>
+          <!-- Discount Percentage -->
+          <div class="mb-3">
+            <label for="txtDiscountPercent" class="form-label">Giảm giá (%)</label>
+            <input type="number" class="form-control" id="txtDiscountPercent" name="txtDiscountPercent" min="0" max="100" required>
+          </div>
+          <!-- Image URL -->
+          <div class="mb-3">
+            <label for="txtImageURL" class="form-label">Đường dẫn Hình ảnh</label>
+            <input type="url" class="form-control" id="txtImageURL" name="txtImageURL" maxlength="255" required placeholder="https://drive.google.com/file/d/<mã hình>/view?usp=drive_link">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <!-- Submit Button -->
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Hủy</button>
+          <button type="submit" class="btn btn-success">Thêm</button>
+          <!-- Hidden Submit Value -->
+          <input type="hidden" id="btnSubmit" name="btnSubmit" value="SubmitAddFood">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

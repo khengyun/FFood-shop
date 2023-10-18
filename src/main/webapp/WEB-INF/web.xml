@@ -84,6 +84,14 @@
         <servlet-name>ChangePasswordController</servlet-name>
         <servlet-class>Controllers.ChangePasswordController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>StaffController</servlet-name>
+        <servlet-class>Controllers.StaffController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PromotionManagerController</servlet-name>
+        <servlet-class>Controllers.PromotionManagerController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>default</servlet-name>
         <url-pattern>/*/assets/*</url-pattern>
@@ -187,6 +195,14 @@
     <servlet-mapping>
         <servlet-name>ChangePasswordController</servlet-name>
         <url-pattern>/changePassword</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StaffController</servlet-name>
+        <url-pattern>/staff</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PromotionManagerController</servlet-name>
+        <url-pattern>/promotionManager</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
