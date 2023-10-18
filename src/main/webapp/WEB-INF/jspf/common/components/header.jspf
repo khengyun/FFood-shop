@@ -1,5 +1,7 @@
 <%-- any content can be specified here e.g.: --%>
 <%@ include file="../imports/base.jspf" %>
+
+
 <%@ page pageEncoding="UTF-8" %>
 
 <!-- SUB NAVBAR -->
@@ -55,6 +57,9 @@
             <span class="visually-hidden">Giỏ hàng</span>
           </span>
         </button>
+          <%@ include file="../../LangOption/langviewoption.jspf" %>
+
+          
         <c:choose>
           <c:when test="${isLoggedIn}">
             <div class="dropdown">
