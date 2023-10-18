@@ -16,8 +16,8 @@ go
 
 create table Food (
 	food_id				smallint identity(1,1) not null primary key,
-	food_name			nvarchar(50) not null,
-	food_description	nvarchar(500) not null,
+	food_name			nvarchar(500) not null,
+	food_description	nvarchar(2000) not null,
 	food_price			money not null,
 	food_status			bit not null,
 	food_rate			tinyint not null,
@@ -30,7 +30,7 @@ go
 
 create table [Admin] (
 	admin_id			tinyint identity(1,1) not null primary key,
-	admin_fullname		nvarchar(50) not null,
+	admin_fullname		nvarchar(200) not null,
 );
 
 go
@@ -44,14 +44,14 @@ go
 
 create table Staff (
 	staff_id			tinyint identity(1,1) not null primary key,
-	staff_fullname		nvarchar(50) not null,
+	staff_fullname		nvarchar(200) not null,
 );
 
 go
 
 create table Voucher (
 	voucher_id					tinyint identity(1,1) not null primary key,
-	voucher_name				nvarchar(20) not null,
+	voucher_name				nvarchar(200) not null,
 	voucher_discount_percent	tinyint not null
 );
 
@@ -59,18 +59,18 @@ go
 
 create table PromotionManager (
 	pro_id				tinyint identity(1,1) not null primary key,
-	pro_fullname		nvarchar(50) not null,
+	pro_fullname		nvarchar(200) not null,
 );
 
 go
 
 create table Customer (
 	customer_id			int identity(1,1) not null primary key,
-	customer_firstname	nvarchar(10) not null,
-	customer_lastname	nvarchar(40) not null,
+	customer_firstname	nvarchar(200) not null,
+	customer_lastname	nvarchar(200) not null,
 	customer_gender		nvarchar(5) null,
 	customer_phone		varchar(11) null,
-	customer_address	nvarchar(255) null
+	customer_address	nvarchar(1000) null
 );
 
 go
@@ -86,8 +86,8 @@ create table Account (
 	staff_id			tinyint null foreign key references Staff(staff_id),
 	pro_id				tinyint null foreign key references PromotionManager(pro_id),
 	admin_id			tinyint null foreign key references [Admin](admin_id),
-	account_username	nvarchar(50) not null,
-	account_email		nvarchar(255) not null,
+	account_username	nvarchar(100) not null,
+	account_email		nvarchar(500) not null,
 	account_password	char(32) not null,
 	account_type		varchar(20) not null,
 );
@@ -113,14 +113,14 @@ go
 
 create table OrderStatus (
 	order_status_id		tinyint identity(1,1) not null primary key,
-	order_status		nvarchar(20) not null
+	order_status		nvarchar(50) not null
 );
 
 go
 
 create table PaymentMethod (
 	payment_method_id	tinyint identity(1,1) not null primary key,
-	payment_method		nvarchar(20) not null
+	payment_method		nvarchar(50) not null
 );
 
 go
@@ -133,7 +133,7 @@ create table [Order] (
 	payment_method_id	tinyint not null foreign key references PaymentMethod(payment_method_id),
 	voucher_id			tinyint null foreign key references Voucher(voucher_id),
 	contact_phone		varchar(11) not null,
-	delivery_address	nvarchar(255) not null,
+	delivery_address	nvarchar(500) not null,
 	order_time			datetime not null,
 	order_total			money not null,
 	order_note			nvarchar(1023) null,
@@ -270,6 +270,15 @@ insert into OrderStatus (order_status) values (N'Đang chuẩn bị món');
 insert into OrderStatus (order_status) values (N'Đang giao');
 insert into OrderStatus (order_status) values (N'Đã giao');
 insert into OrderStatus (order_status) values (N'Đã hủy');
+
+-- voucher
+
+insert into Voucher (voucher_name , voucher_discount_percent) values ( N'Quốc tế phụ nữ', 30);
+insert into Voucher (voucher_name , voucher_discount_percent) values ( N'Khách hàng may mắn', 20);
+insert into Voucher (voucher_name , voucher_discount_percent) values (N'Quà tặng Noel', 40);
+insert into Voucher (voucher_name , voucher_discount_percent) values ( N'Người đặc biệt', 50);
+
+
 
 -- Cart, CartItem, Order test data
 insert into Cart (customer_id) values (1);
