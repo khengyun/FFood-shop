@@ -1,0 +1,35 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="modal" tabindex="-1" id="add-voucher-modal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form class="add-vouhcer-form" method="POST" action="/admin">
+        <div class="modal-header">
+          <h5 class="modal-title">Thêm Voucher </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body px-5">
+         
+          <!-- Food Name -->
+          <div class="mb-3">
+            <label for="txtvoucher_name" class="form-label">Tên Voucher</label>
+            <input type="text" class="form-control" id="txtvoucher_name" name="txtvoucher_name" maxlength="50" required>
+          </div>
+          <!-- Discount Percentage -->
+          <div class="mb-3">
+            <label for="txtvoucher-discount-percent" class="form-label">Giảm giá (%)</label>
+            <input type="number" class="form-control" id="txtvoucher-discount-percent" name="txtvoucher-discount-percent" min="0" max="100" required>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <!-- Submit Button -->
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Hủy</button>
+          <button type="submit" class="btn btn-success">Thêm</button>
+          <!-- Hidden Submit Value -->
+          <input type="hidden" id="btnSubmit" name="btnSubmit" value="SubmitAddVoucher">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
