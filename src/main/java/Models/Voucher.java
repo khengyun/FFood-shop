@@ -17,6 +17,11 @@ public class Voucher {
         this.name = name;
         this.voucher_discount_percent = voucher_discount_percent;
     }
+    
+    public Voucher(String name, byte voucher_discount_percent) {
+        this.name = name;
+        this.voucher_discount_percent = voucher_discount_percent;
+    }
 
     public byte getVoucher_discount_percent() {
         return voucher_discount_percent;

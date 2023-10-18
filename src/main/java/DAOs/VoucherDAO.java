@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import Models.Voucher;
+import java.util.ArrayList;
+import java.util.List;
 
 public class VoucherDAO {
 
@@ -48,6 +50,23 @@ public class VoucherDAO {
         }
         return voucher;
     }
+    
+    public List<Voucher> getAllList() {
+        ResultSet voucherRS = this.getAll();
+        List<Voucher> voucherList = new ArrayList<>();
+        try {
+            while (voucherRS.next()) {
+                Voucher voucher = new Voucher(
+                        voucherRS.getByte("voucher_id"),
+                        voucherRS.getString("voucher_name"),                      
+                        voucherRS.getByte("voucher_discount_percent"));
+                voucherList.add(voucher);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(VoucherDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return voucherList;
+    }
 
     public int add(Voucher voucher) {
         String sql = "insert into Voucher values (?,?)";
@@ -77,12 +96,13 @@ public class VoucherDAO {
     }
 
     public int update(Voucher voucher) {
-        String sql = "update Voucher set voucher_name = ? where voucher_id = ?";
+        String sql = "update Voucher set voucher_name = ?, voucher_discount_percent = ? where voucher_id = ?";
         int result = 0;
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, voucher.getName());
             ps.setByte(2, voucher.getVoucher_discount_percent());
+            ps.setByte(3, voucher.getVoucherID());
             result = ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(VoucherDAO.class.getName()).log(Level.SEVERE, null, ex);

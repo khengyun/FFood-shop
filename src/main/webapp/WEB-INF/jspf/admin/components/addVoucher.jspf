@@ -17,15 +17,15 @@
           </div>
           <!-- Discount Percentage -->
           <div class="mb-3">
-            <label for="txtvoucher-discount-percent" class="form-label">Giảm giá (%)</label>
-            <input type="number" class="form-control" id="txtvoucher-discount-percent" name="txtvoucher-discount-percent" min="0" max="100" required>
+            <label for="txtAddVoucher_discount_percent" class="form-label">Giảm giá (%)</label>
+            <input type="number" class="form-control" id="txtAddVoucher_discount_percent" name="txtAddVoucher_discount_percent" required>
           </div>
 
         </div>
         <div class="modal-footer">
           <!-- Submit Button -->
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Hủy</button>
-          <button type="submit" class="btn btn-success">Thêm</button>
+          <button type="submit" class="btn btn-success" onclick="validateForm()">Thêm</button>
           <!-- Hidden Submit Value -->
           <input type="hidden" id="btnSubmit" name="btnSubmit" value="SubmitAddVoucher">
         </div>
