@@ -6,17 +6,18 @@ package Models;
 
 public class Voucher {
 
-    private byte voucher_id;
+    private byte voucherID;
+    private String name;
     private byte voucher_discount_percent;
-    private String voucher_name;
+    
 
     public Voucher() {
     }
 
-    public Voucher(byte voucher_id, byte voucher_discount_percent, String voucher_name) {
-        this.voucher_id = voucher_id;
+    public Voucher(byte voucherID, String name, byte voucher_discount_percent) {
+        this.voucherID = voucherID;
+        this.name = name;
         this.voucher_discount_percent = voucher_discount_percent;
-        this.voucher_name = voucher_name;
     }
 
     public byte getVoucher_discount_percent() {
@@ -27,20 +28,20 @@ public class Voucher {
         this.voucher_discount_percent = voucher_discount_percent;
     }
 
-    public byte getVoucher_Id() {
-        return voucher_id;
+    public byte getVoucherID() {
+        return voucherID;
     }
 
-    public void setVoucher_Id(byte voucher_id) {
-        this.voucher_id = voucher_id;
+    public void setVoucherID(byte voucherID) {
+        this.voucherID = voucherID;
     }
 
     public String getName() {
-        return voucher_name;
+        return name;
     }
 
-    public void setName(String voucher_name) {
-        this.voucher_name = voucher_name;
+    public void setName(String name) {
+        this.name = name;
     }
 
 }
