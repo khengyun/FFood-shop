@@ -1,5 +1,7 @@
 <%-- any content can be specified here e.g.: --%>
 <%@ include file="../imports/base.jspf" %>
+
+
 <%@ page pageEncoding="UTF-8" %>
 
 <!-- SUB NAVBAR -->
@@ -11,10 +13,7 @@
                 <a href="mailto:ffood.shop.cantho@gmail.com" class="navbar-sm-brand text-light text-decoration-none">
                     ffood.shop.cantho@gmail.com
                 </a>
-                <i class="fa fa-phone mx-2"></i>
-                <a href="tel:0017-001-1704" class="navbar-sm-brand text-light text-decoration-none">
-                    0017-001-1704
-                </a>
+               
             </div>
             <div>
                 <a class="text-light px-3" href="https://github.com/tien-thanh-hua/FFood" target="_blank">
@@ -55,6 +54,9 @@
             <span class="visually-hidden">Giỏ hàng</span>
           </span>
         </button>
+          <%@ include file="../../LangOption/langviewoption.jspf" %>
+
+          
         <c:choose>
           <c:when test="${isLoggedIn}">
             <div class="dropdown">
