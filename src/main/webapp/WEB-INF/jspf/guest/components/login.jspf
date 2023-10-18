@@ -20,7 +20,7 @@
                         <input type="password" class="form-control" id="txtPassword" name="txtPassword" placeholder="Nhập mật khẩu" required="">
                         <i class="bi bi-eye-slash" id="togglePassword"></i>
                     </div>
-                    <div class="form-group col d-flex mb-4">
+                    <div class="form-group col d-flex">
                         <div class="form-check form-switch mt-3 mb-2">   
                             <input type="checkbox" class="form-check-input" id="chkRememberMe" name="chkRememberMe" value="remember">
                             <label class="form-check-label" for="chkRememberMe">Duy trì đăng nhập</label>
