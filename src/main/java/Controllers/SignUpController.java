@@ -6,6 +6,7 @@ package Controllers;
 
 import DAOs.AccountDAO;
 import Models.Account;
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -16,13 +17,18 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.Properties;
+import java.util.Random;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
 import sun.security.jgss.GSSCaller;
 import sun.security.jgss.GSSUtil;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
-/**
- *
- * @author Hung
- */
 public class SignUpController extends HttpServlet {
 
     /**
@@ -50,7 +56,7 @@ public class SignUpController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
     }
 
     /**
@@ -71,6 +77,7 @@ public class SignUpController extends HttpServlet {
         // Truy xuất URL hiện tại từ session attribute
         HttpSession session = request.getSession();
         String previousUrl = (String) session.getAttribute("previousUrl");
+        
         AccountDAO accountDAO = new AccountDAO();
         Account account = new Account(username, email, pass, "user");
         try {
@@ -83,27 +90,58 @@ public class SignUpController extends HttpServlet {
                     response.sendRedirect("/");
                 }
             } else {
-                //Account a = dao.login("user");
-                int result = accountDAO.add(account);
-                if (result == 1) {
-                    //Lưu thành công
-                    if (previousUrl != null) {
-                        // Chuyển hướng người dùng về trang hiện tại
-                        response.sendRedirect(previousUrl);
-                    } else {
-                        // Nếu không có URL trước đó, chuyển hướng người dùng về trang mặc định
-                        response.sendRedirect("/");
+                try {
+
+                    RequestDispatcher dispatcher = null;
+                    int otpvalue = 0;
+
+                    if (email != null && !email.equals("")) {
+                        // Sending OTP
+                        Random rand = new Random();
+                        otpvalue = rand.nextInt(1255650);
+
+                        String to = email; // Change accordingly
+
+                        // Get the session object
+                        Properties props = new Properties();
+                        props.put("mail.smtp.host", "smtp.gmail.com");
+                        props.put("mail.smtp.socketFactory.port", "465");
+                        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+                        props.put("mail.smtp.auth", "true");
+                        props.put("mail.smtp.port", "465");
+                        Session mailSession = Session.getInstance(props, new javax.mail.Authenticator() {
+                            protected PasswordAuthentication getPasswordAuthentication() {
+                                return new PasswordAuthentication("ffood.shop.cantho@gmail.com", "xhwjyflpdsgeizzr"); // Put your email ID and password here
+                            }
+                        });
+
+                        // Compose message
+                        try {
+                            MimeMessage message = new MimeMessage(mailSession);
+                            message.setFrom(new InternetAddress("your-email@example.com")); // Change accordingly
+                            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+                            message.setSubject("Hello");
+                            message.setText("Your OTP is: " + otpvalue);
+
+                            // Send message
+                            Transport.send(message);
+                            System.out.println("Message sent successfully");
+                        } catch (MessagingException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                        request.setAttribute("message", "OTP is sent to your email ID");
+                        session.setAttribute("otp", otpvalue);
+                        session.setAttribute("type_otp", "sign_up");
+                        session.setAttribute("registerUser", account);
+                        response.sendRedirect("/home#verify_OTP");
                     }
-                } else {
-                    //Lưu không thành công
-                    if (previousUrl != null) {
-                        // Chuyển hướng người dùng về trang hiện tại
-                        response.sendRedirect(previousUrl);
-                    } else {
-                        // Nếu không có URL trước đó, chuyển hướng người dùng về trang mặc định
-                        response.sendRedirect("/");
-                    }
+
+                } catch (IOException e) {
+                    System.out.println("Could not send user register");
+                    request.getRequestDispatcher("/index.jsp").forward(request, response);
                 }
+//              
             }
         } catch (SQLException ex) {
             Logger.getLogger(SignUpController.class.getName()).log(Level.SEVERE, null, ex);

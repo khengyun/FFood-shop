@@ -13,49 +13,49 @@
   <ul class="nav nav-pills d-grid gap-1 align-items-center mb-auto">
     <li class="nav-item">
       <button data-bs-target="#home"
-              class="nav-link link-body-emphasis text-start d-flex justify-content-center p-2 mx-auto"
+              class="nav-link ${(tabID == 0 || tabID == null) ? "active show" : ""} link-body-emphasis text-start d-flex justify-content-center p-2 mx-auto"
               data-bs-toggle="tab">
         <i class="ph ph-house"></i>
       </button>
     </li>
     <li class="nav-item">
       <button data-bs-target="#insights"
-              class="nav-link link-body-emphasis text-start d-flex justify-content-center p-2 mx-auto"
+              class="nav-link ${(tabID == 1) ? "active show" : ""} link-body-emphasis text-start d-flex justify-content-center p-2 mx-auto"
               data-bs-toggle="tab">
         <i class="ph ph-chart-line"></i>
       </button>
     </li>
     <li class="nav-item">
       <button data-bs-target="#promotions"
-              class="nav-link link-body-emphasis text-start d-flex justify-content-center p-2 mx-auto"
+              class="nav-link ${(tabID == 2) ? "active show" : ""} link-body-emphasis text-start d-flex justify-content-center p-2 mx-auto"
               data-bs-toggle="tab">
         <i class="ph ph-megaphone"></i>
       </button>
     </li>
     <li class="nav-item">
       <button data-bs-target="#foods"
-              class="nav-link link-body-emphasis text-start d-flex justify-content-center p-2 mx-auto"
+              class="nav-link ${(tabID == 3) ? "active show" : ""} link-body-emphasis text-start d-flex justify-content-center p-2 mx-auto"
               data-bs-toggle="tab">
         <i class="ph ph-fork-knife"></i>
       </button>
     </li>
     <li class="nav-item">
       <button data-bs-target="#users"
-              class="nav-link link-body-emphasis text-start d-flex justify-content-center p-2 mx-auto"
+              class="nav-link ${(tabID == 4) ? "active show" : ""} link-body-emphasis text-start d-flex justify-content-center p-2 mx-auto"
               data-bs-toggle="tab">
         <i class="ph ph-user-list"></i>
       </button>
     </li>
     <li class="nav-item">
       <button data-bs-target="#roles"
-              class="nav-link link-body-emphasis text-start d-flex justify-content-center p-2 mx-auto"
+              class="nav-link ${(tabID == 5) ? "active show" : ""} link-body-emphasis text-start d-flex justify-content-center p-2 mx-auto"
               data-bs-toggle="tab">
         <i class="ph ph-user-circle-gear"></i>
       </button>
     </li>
     <li class="nav-item">
       <button data-bs-target="#orders"
-              class="nav-link link-body-emphasis text-start d-flex justify-content-center p-2 mx-auto"
+              class="nav-link ${(tabID == 6) ? "active show" : ""} link-body-emphasis text-start d-flex justify-content-center p-2 mx-auto"
               data-bs-toggle="tab">
         <i class="ph ph-clipboard-text"></i>
       </button>
@@ -79,12 +79,12 @@
 </div>
 
 <!-- Maximized sidebar -->
-<div class="offcanvas offcanvas-start d-flex flex-column flex-shrink-0 p-2 bg-surface-container shadow"
+<div class="offcanvas offcanvas-start d-flex flex-column flex-shrink-0 px-1 py-2 bg-surface-container shadow"
      data-bs-scroll="true" data-bs-backdrop="false"
      tabindex="-1" style="width:240px;"
      id="maximizedSidebar" aria-labelledby="maximizedSidebarLabel">
   <a href="/" style="height: 2.5rem;"
-     class="d-flex flex-row align-items-start justify-content-center px-1 ms-1 me-auto my-3 link-body-emphasis text-decoration-none">
+     class="d-flex flex-row align-items-start justify-content-center px-2 ms-1 me-auto my-3 link-body-emphasis text-decoration-none">
     <img class="img-fluid my-auto" src="<%= request.getContextPath() + "assets/img/gallery/logo.svg"%>"
          alt="logo"/>
     <h5 class="ms-3 my-auto text-gradient">FFood Dashboard</h5>
@@ -92,7 +92,7 @@
   <ul class="nav nav-pills d-grid gap-1 mb-auto align-content-start">
     <li class="nav-item d-grid gap-1 px-1">
       <button data-bs-target="#home"
-              class="nav-link link-body-emphasis text-start w-100 d-flex justify-content-start p-2 mx-auto active"
+              class="nav-link ${(tabID == 0 || tabID == null) ? "active show" : ""} link-body-emphasis text-start w-100 d-flex justify-content-start p-2 mx-auto active"
               data-bs-toggle="tab">
         <i class="ph ph-house me-3"></i>
         Trang chủ
@@ -100,7 +100,7 @@
     </li>
     <li class="nav-item d-grid gap-1 px-1">
       <button data-bs-target="#insights"
-              class="nav-link link-body-emphasis text-start w-100 d-flex justify-content-start p-2 mx-auto"
+              class="nav-link ${(tabID == 1) ? "active show" : ""} link-body-emphasis text-start w-100 d-flex justify-content-start p-2 mx-auto"
               data-bs-toggle="tab">
         <i class="ph ph-chart-line me-3"></i>
         Thông tin chi tiết
@@ -108,7 +108,7 @@
     </li>
     <li class="nav-item d-grid gap-1 px-1">
       <button data-bs-target="#promotions"
-              class="nav-link link-body-emphasis text-start w-100 d-flex justify-content-start p-2 mx-auto"
+              class="nav-link ${(tabID == 2) ? "active show" : ""} link-body-emphasis text-start w-100 d-flex justify-content-start p-2 mx-auto"
               data-bs-toggle="tab">
         <i class="ph ph-megaphone me-3"></i>
         Khuyến mãi
@@ -116,7 +116,7 @@
     </li>
     <li class="nav-item d-grid gap-1 px-1">
       <button data-bs-target="#foods"
-              class="nav-link link-body-emphasis text-start w-100 d-flex justify-content-start p-2 mx-auto"
+              class="nav-link ${(tabID == 3) ? "active" : ""} link-body-emphasis text-start w-100 d-flex justify-content-start p-2 mx-auto"
               data-bs-toggle="tab">
         <i class="ph ph-fork-knife me-3"></i>
         Món ăn
@@ -124,7 +124,7 @@
     </li>
     <li class="nav-item d-grid gap-1 px-1">
       <button data-bs-target="#users"
-              class="nav-link link-body-emphasis text-start w-100 d-flex justify-content-start p-2 mx-auto"
+              class="nav-link ${(tabID == 4) ? "active show" : ""} link-body-emphasis text-start w-100 d-flex justify-content-start p-2 mx-auto"
               data-bs-toggle="tab">
         <i class="ph ph-user-list me-3"></i>
         Người dùng
@@ -132,7 +132,7 @@
     </li>
     <li class="nav-item d-grid gap-1 px-1">
       <button data-bs-target="#roles"
-              class="nav-link link-body-emphasis text-start w-100 d-flex justify-content-start p-2 mx-auto"
+              class="nav-link ${(tabID == 5) ? "active show" : ""} link-body-emphasis text-start w-100 d-flex justify-content-start p-2 mx-auto"
               data-bs-toggle="tab">
         <i class="ph ph-user-circle-gear me-3"></i>
         Quyền quản trị
@@ -140,7 +140,7 @@
     </li>
     <li class="nav-item d-grid gap-1 px-1">
       <button data-bs-target="#orders"
-              class="nav-link link-body-emphasis text-start w-100 d-flex justify-content-start p-2 mx-auto"
+              class="nav-link ${(tabID == 6) ? "active show" : ""} link-body-emphasis text-start w-100 d-flex justify-content-start p-2 mx-auto"
               data-bs-toggle="tab">
         <i class="ph ph-clipboard-text me-3"></i>
         Đơn món
@@ -149,7 +149,7 @@
   </ul>
   <hr class="border border-800 border-1 border-opacity-25 my-1">
   <div class="flex-grow-0"></div>
-  <div class="dropdown d-grid gap-1">
+  <div class="dropdown d-grid gap-1 px-1">
     <button type="button" href="#"
             class="d-flex flex-shrink-0 btn text-start align-items-center px-2 py-1 mt-1 link-body-emphasis text-decoration-none dropdown-toggle"
             data-bs-toggle="dropdown" aria-expanded="false">
@@ -207,7 +207,7 @@
       });
       // Add "active" class to corresponding button in maximized sidebar
       const target = button.getAttribute('data-bs-target');
-      const maxButton = document.querySelector(`#maximizedSidebar button[data-bs-target="${target}"]`);
+      const maxButton = document.querySelector('#maximizedSidebar button[data-bs-target="' + target + '"]');
       if (maxButton) {
         maxButton.classList.add('active');
       }
@@ -227,7 +227,7 @@
       });
       // Add "active" class to corresponding button in minimized sidebar
       const target = button.getAttribute('data-bs-target');
-      const minButton = document.querySelector(`#minimizedSidebar button[data-bs-target="${target}"]`);
+      const minButton = document.querySelector('#minimizedSidebar button[data-bs-target="' + target + '"]');
       if (minButton) {
         minButton.classList.add('active');
       }
