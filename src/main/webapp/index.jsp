@@ -29,9 +29,8 @@
         <%@ include file="WEB-INF/jspf/guest/components/failure.jspf" %>
         <!-- Main Content -->
         <main class="main" id="top">
-
             <!-- HERO -->
-            <section class="py-5 overflow-hidden bg-primary" id="home">
+            <section class="py-5 overflow-hidden bg-primary80" id="home">
                 <div class="container">
                     <div class="row flex-center">
                         <div class="col-md-5 col-lg-6 order-0 order-md-1 mt-4 mt-md-2">
