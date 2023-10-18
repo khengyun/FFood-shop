@@ -4,52 +4,64 @@
 
 <!-- SUB NAVBAR -->
 <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block">
-  <div class="container text-light">
-    <div class="w-100 d-flex justify-content-between">
-      <div>
-        <i class="fa fa-envelope mx-2"></i>
-        <span class="navbar-sm-brand text-light text-decoration-none">
-          ffood@support.com
-        </span>
-        <i class="fa fa-phone mx-2"></i>
-        <span class="navbar-sm-brand text-light text-decoration-none" href="#">
-          0017-001-1704
-        </span>
-      </div>
-      <div>
-        <a class="text-light" href="https://github.com/tien-thanh-hua/FFood" target="_blank">
-          <i class="fab fa-github fa-sm fa-fw me-2"></i>
-        </a>
-        <a class="text-light" href="https://www.linkedin.com/in/tien-thanh-hua/" target="_blank">
-          <i class="fab fa-linkedin fa-sm fa-fw"></i>
-        </a>
-      </div>
-    </div>
+    <div class="container text-light">
+        <div class="w-100 d-flex justify-content-between">
+            <div>
+                <i class="fa fa-envelope mx-2"></i>
+                <a href="mailto:ffood.shop.cantho@gmail.com" class="navbar-sm-brand text-light text-decoration-none">
+                    ffood.shop.cantho@gmail.com
+                </a>
+                <i class="fa fa-phone mx-2"></i>
+                <a href="tel:0017-001-1704" class="navbar-sm-brand text-light text-decoration-none">
+                    0017-001-1704
+                </a>
+            </div>
+            <div>
+                <a class="text-light px-3" href="https://github.com/tien-thanh-hua/FFood" target="_blank">
+<!--                    <i class="fab fa-facebook fa-sm fa-fw me-2"></i>-->
+                    Facebook
+                </a>
+                <a class="text-light" href="https://github.com/tien-thanh-hua/FFood" target="_blank">
+<!--                    <i class="fab fa-facebook fa-sm fa-fw me-2"></i>-->
+                    Zalo
+                </a>
+            </div>
+        </div>
 </nav>
 
 <!-- MAIN NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-light shadow bg-light sticky-top" data-navbar-on-scroll="data-navbar-on-scroll">
+<nav class="navbar navbar-expand-lg navbar-light shadow bg-light sticky-top"
+     data-navbar-on-scroll="data-navbar-on-scroll">
   <div class="container">
     <a class="navbar-brand d-inline-flex" href="/">
-      <img class="d-inline-block" src="<%= request.getContextPath() + "assets/img/gallery/logo.svg"%>" alt="logo" />
+      <img class="d-inline-block" src="<%= request.getContextPath() + "assets/img/gallery/logo.svg"%>" alt="logo"/>
       <span class="text-1000 fs-3 fw-bold ms-2 text-gradient">FFood</span>
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse pt-3 pb-2 py-lg-2 w-100" id="navbarSupportedContent"> 
+    <div class="collapse navbar-collapse pt-3 pb-2 py-lg-2 w-100" id="navbarSupportedContent">
       <form class="d-flex col">
         <div class="input-group-icon flex-grow-1 mx-md-5 pe-2">
           <i class="fas fa-search input-box-icon text-primary"></i>
-          <input class="form-control border-1 input-box bg-100" type="search" placeholder="Tìm món ăn" aria-label="Tìm món ăn" id="btn-search" onblur="searchFood()"/>
+          <input class="form-control border-1 input-box bg-100" type="search" placeholder="Tìm món ăn"
+                 aria-label="Tìm món ăn" id="btn-search" onblur="searchFood()"/>
         </div>
-        <button class="nav-icon text-decoration-none my-auto fas fa-fw fa-cart-arrow-down text-primary fs-2 mx-2" data-bs-toggle="modal" data-bs-target="#cart-modal"></button>             
+        <button type="button" class="btn ps-1 pe-2 py-0 position-relative nav-icon text-decoration-none my-auto text-primary fs-2 me-4"
+                data-bs-toggle="modal" data-bs-target="#cart-modal">
+          <i class="fas fa-fw fa-cart-arrow-down"></i>
+          <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle px-2 fs-0 bg-danger rounded-pill text-white">
+            <span class="visually-hidden">Giỏ hàng</span>
+          </span>
+        </button>
         <c:choose>
           <c:when test="${isLoggedIn}">
             <div class="dropdown">
-              <button class="btn btn-secondary text-white ms-2 px-3 px-lg-4" data-bs-toggle="dropdown" aria-expanded="false" type="button">
+              <button class="btn btn-secondary text-white ms-2 px-3 px-lg-4" data-bs-toggle="dropdown"
+                      aria-expanded="false" type="button">
                 <i class="fas fa-user me-2"></i>
-                ${username}
+                  ${username}
               </button>
               <ul class="dropdown-menu text-small shadow ms-2 w-100">
                 <li><a class="dropdown-item" href="/user#info">Tài khoản của tôi</a></li>
@@ -59,7 +71,8 @@
             </div>
           </c:when>
           <c:otherwise>
-            <button class="btn btn-primary text-white ms-2 px-3 px-lg-4" data-bs-toggle="modal" data-bs-target="#login-modal" type="button">
+            <button class="btn btn-primary text-white ms-2 px-3 px-lg-4" data-bs-toggle="modal"
+                    data-bs-target="#login-modal" type="button">
               <i class="fas fa-user me-2"></i>
               Đăng nhập
             </button>

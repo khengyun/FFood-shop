@@ -34,3 +34,9 @@ src/main/resources/database.properties
 .idea/
 .vscode/
 /nbproject/
+
+
+# Docker volume
+db_scripts/.system
+db_scripts/log
+db_scripts/secrets

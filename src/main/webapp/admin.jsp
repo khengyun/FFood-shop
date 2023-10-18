@@ -11,13 +11,10 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title>FFood | Admin Dashboard</title>
-
-
-
+        <title>FFood | Dashboard</title>
         <%@ include file="WEB-INF/jspf/common/imports/resources.jspf" %>
         <%@ include file="WEB-INF/jspf/admin/imports/dataTablesStyle.jspf" %>
+
     </head>
     <body>
         <div class="container-fluid m-0 p-0">
@@ -41,14 +38,12 @@
                         <%@ include file="WEB-INF/jspf/admin/home.jspf" %>
                         <!-- Food & Drinks Tab Content -->
                         <%@ include file="WEB-INF/jspf/admin/foods.jspf" %>
-
                         <!-- Users Tab Content -->
                         <div class="tab-pane fade" id="users">
                             <div class="container-fluid p-2">
-                                <table id="users-table" class="table table-bordered table-striped">
+                                <table id="users-table">
                                     <h1 class="text-center fw-bold fs-3">Quản lý Người dùng</h1>
-                                    <button style="color: white;border-color: rgba(207, 126, 0, 1); background-color: rgba(207, 126, 0, 1);"
-                                            type="button" class="btn btn-sm btn-success py-1 my-2 me-2" data-bs-toggle="modal" data-bs-target="#add-user-modal">
+                                    <button type="button" class="btn btn-sm btn-success py-1 my-2 me-2" data-bs-toggle="modal" data-bs-target="#add-user-modal">
                                         Tạo Tài khoản Người dùng
                                     </button>
                                     <thead>
@@ -63,13 +58,12 @@
                                     <tbody>
                                         <c:forEach items="${userAccountList}" var="u">
                                             <tr>
-                                                <td class="col-sm-3 col-gap-5">${u.accountID}</td>
+                                                <td>${u.accountID}</td>
                                                 <td>${u.username}</td>
                                                 <td>${u.email}</td>
                                                 <td>${u.accountType}</td>
                                                 <td>
-                                                    <button style="color: white;border-color: rgba(207, 126, 0, 1); background-color: rgba(207, 126, 0, 1);"
-                                                            type="button" id="btn-update-user"
+                                                    <button type="button" id="btn-update-user"
                                                             class="btn btn-sm btn-success py-1 m-1"
                                                             data-account-id="${u.accountID}"
                                                             data-username="${u.username}"
@@ -77,8 +71,7 @@
                                                             data-bs-toggle="modal" data-bs-target="#update-user-modal">
                                                         Cập nhật
                                                     </button>
-                                                    <button style="color: white;border-color: rgba(207, 126, 0, 1); background-color: rgba(207, 126, 0, 1);"
-                                                            type="button" id="btn-delete-user"
+                                                    <button type="button" id="btn-delete-user"
                                                             class="btn btn-sm btn-danger py-1 m-1"
                                                             data-account-id="${u.accountID}"
                                                             data-username="${u.username}"
@@ -92,6 +85,7 @@
                                 </table>
                             </div>
                         </div>
+
 
                         <!-- Roles Tab Content -->
                         <div class="tab-pane fade" id="roles">
@@ -150,11 +144,10 @@
                             </div>
                         </div>
 
-
                         <!-- Orders Tab Content -->
                         <div class="tab-pane fade" id="orders">
                             <div class="container-fluid p-2">
-                                <table id="orders-table" class="table table-bordered table-striped">
+                                <table id="orders-table">
                                     <h1 class="text-center fw-bold fs-3">Quản lý Đơn món</h1>
                                     <thead>
                                         <tr>
@@ -249,13 +242,12 @@
                             </div>
                         </div>
 
-
-
                     </div>
                 </main>
             </div>
         </div>
         <%@ include file="WEB-INF/jspf/common/imports/validation.jspf" %>
         <%@ include file="WEB-INF/jspf/common/imports/javascript.jspf" %>
+        <%@ include file="WEB-INF/jspf/admin/imports/dataTablesScript.jspf" %>
     </body>
 </html>
