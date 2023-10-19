@@ -98,6 +98,7 @@ public class LoginController extends HttpServlet {
             String previousUrl = (String) session.getAttribute("previousUrl");
             if (success) {
                 account = dao.getAccount(email);
+                System.out.println("Heeeeeeeeeeeeeeeeeee");
                 String accountType = account.getAccountType();
                 boolean isRemembered = (request.getParameter("chkRememberMe") != null
                         && request.getParameter("chkRememberMe").equals("remember"));
@@ -159,9 +160,9 @@ public class LoginController extends HttpServlet {
                         account = dao.getAccount(email);
                         String username = account.getUsername();
                         session = request.getSession();
-                        session.setAttribute("admin", username);
+                        session.setAttribute("staff", username);
                         response.sendRedirect("/staff");
-                    } else if (accountType.equals("staff")) {
+                    } else if (accountType.equals("promotionManager")) {
                         account = dao.getAccount(email);
                         String username = account.getUsername();
                         session = request.getSession();
