@@ -21,7 +21,7 @@
             </button>
             <ul class="dropdown-menu" aria-labelledby="languageDropdown">
                 <li><a class="dropdown-item lang-select" data-lang="vi" href="#googtrans(vi|vi)"><img src="https://cdn-icons-png.flaticon.com/512/197/197473.png " width="20" height="20" alt="vietnam"/> &nbsp;Vietnamese </a></li>
-                <li><a class="dropdown-item lang-select" data-lang="en" href="#googtrans(vi|en)"><img src="https://cdn-icons-png.flaticon.com/512/323/323310.png " width="20" height="20" alt="america"/>&nbsp; American </a></li>
+                <li><a class="dropdown-item lang-select" data-lang="en" href="#googtrans(vi|en)"><img src="https://cdn-icons-png.flaticon.com/512/323/323310.png " width="20" height="20" alt="america"/>&nbsp; English </a></li>
                 <li><a class="dropdown-item lang-select" data-lang="fr" href="#googtrans(vi|fr)"><img src="https://cdn-icons-png.flaticon.com/512/330/330490.png" width="20" height="20" alt="france"/>&nbsp;French</a></li>
                 <li><a class="dropdown-item lang-select" data-lang="zh-CN" href="#googtrans(vi|zh-CN)"><img src="https://cdn-icons-png.flaticon.com/512/197/197375.png" width="20" height="20" alt="china"/>&nbsp;Chinese</a></li>
                 <li><a class="dropdown-item lang-select" data-lang="ja" href="#googtrans(vi|ja)"><img src="https://cdn-icons-png.flaticon.com/512/555/555646.png" width="20" height="20" alt="japan"/>&nbsp;Japanese</a></li>
