@@ -27,7 +27,7 @@
               </span>
             </c:if>
           </div>
-          <a href="addToCart?fid=${food.foodID}&quantity=1" class="btn btn-lg btn-danger px-2 w-100" role="button">Thêm vào Giỏ hàng</a>
+              <button class="btn btn-lg btn-danger px-2 w-100 addToCartBtn" data-foodid="${food.foodID}" data-quantity="1"> Thêm vào Giỏ hàng </button>
         </div>
       </div>
     </div>

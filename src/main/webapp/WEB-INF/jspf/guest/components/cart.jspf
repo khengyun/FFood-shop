@@ -2,103 +2,140 @@
 <%@ page pageEncoding="UTF-8" %>
 <!-- Cart -->
 <div class="modal" tabindex="-1" id="cart-modal">
-  <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header border-bottom-0">
-        <h5 class="modal-title" id="exampleModalLabel">Giỏ hàng</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <%-- Putting form inside modal body ensures the modal's scrollability --%>
-        <form id="cart-form" action="checkout" method="POST">
-          <div class="table-responsive">
-            <table id="cart-table" class="table">
-              <thead>
-              <tr>
-                <th scope="col">Món ăn/Đồ uống</th>
-                <th scope="col">Đơn giá</th>
-                <th scope="col">Số lượng</th>
-                <th scope="col">Số tiền</th>
-                <th scope="col">Thao tác</th>
-              </tr>
-              </thead>
-              <tbody>
-              <p style="color: red;">${mess}</p>
-              <c:set var="totalPrice" value="0"></c:set>
-              <c:forEach var="cart" items="${sessionScope['cart'].items}">
-                <input type="text" name="fid" value="${cart.food.foodID}" hidden>
-                <tr class="align-middle">
-                  <td class="table-image-cell">
-                    <img src="${cart.food.imageURL}" alt="${cart.food.foodName}" class="me-3"/>
-                      ${cart.food.foodName}
-                  </td>
-                  <td>${cart.food.getFoodPriceFormat()}</td>
-                  <td>
-                    <input type="number" name="quantity-${cart.food.foodID}" value="${cart.foodQuantity}" min="1"/>
-                  </td>
-                  <td>
-                    <c:set var="productPrice" value="${Double.parseDouble(cart.food.foodPrice) * cart.foodQuantity}"/>
-                    <c:set var="totalPrice" value="${totalPrice + productPrice}"/>
-                    <fmt:formatNumber type="number" pattern="###,###"
-                                      value="${Double.parseDouble(cart.food.foodPrice) * cart.foodQuantity}"/>đ
-                  </td>
-                  <td>
-                    <a href="deleteCart?fid=${cart.food.foodID}">
-                      <button type="button" class="btn btn-sm btn-danger"
-                              onclick="return confirm('Bạn có muốn xóa Món này khỏi Giỏ hàng không?')">Xóa
-                      </button>
-                    </a>
-                  </td>
-                </tr>
-              </c:forEach>
-              </tbody>
-            </table>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <div class="d-flex flex-row align-items-center justify-content-end w-100">
-          <div class="col text-end me-3">
-            <h5 class="m-0">Tổng thanh toán: <fmt:formatNumber type="number" pattern="###,###"
-                                                               value="${totalPrice}"/>đ</h5>
-          </div>
-          <div class="col-xl-2 col-lg-3 col-md-4 col-sm-4 align-self-end text-end">
-            <%-- To solve the issue of submit button outside of the form element, just add "form" attribute --%>
-            <button type="submit" class="btn btn-primary w-100" id="btnSubmit" name="btnSubmit" form="cart-form" value="Checkout">Thanh
-              toán
-            </button>
-          </div>
+    <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title" id="exampleModalLabel">Giỏ hàng</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <%-- Putting form inside modal body ensures the modal's scrollability --%>
+                <form id="cart-form" action="checkout" method="POST">
+                    <div class="table-responsive">
+                        <table id="cart-table" class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Món ăn/Đồ uống</th>
+                                    <th scope="col">Đơn giá</th>
+                                    <th scope="col">Số lượng</th>
+                                    <th scope="col">Số tiền</th>
+                                    <th scope="col">Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <p style="color: red;">${mess}</p>
+                            <c:set var="totalPrice" value="0"></c:set>
+                            <c:forEach var="cart" items="${sessionScope['cart'].items}">
+                                <input type="text" name="fid" value="${cart.food.foodID}" hidden>
+                                <tr class="align-middle">
+                                    <td class="table-image-cell">
+                                        <img src="${cart.food.imageURL}" alt="${cart.food.foodName}" class="me-3"/>
+                                        ${cart.food.foodName}
+                                    </td>
+                                    <td>${cart.food.getFoodPriceFormat()}</td>
+                                    <td>
+                                        <input type="number" class="quantity-input" name="quantity-${cart.food.foodID}" value="${cart.foodQuantity}" min="1"/>
+                                    </td>
+                                    <td>
+                                <c:set var="productPrice" value="${Double.parseDouble(cart.food.foodPrice) * cart.foodQuantity}"/>
+                                <c:set var="totalPrice" value="${totalPrice + productPrice}"/>
+                                <fmt:formatNumber type="number" pattern="###,###"
+                                                  value="${Double.parseDouble(cart.food.foodPrice) * cart.foodQuantity}"/>đ
+                                </td>
+                                <td>
+                                    <a href="deleteCart?fid=${cart.food.foodID}">
+                                        <button type="button" class="btn btn-sm btn-danger"
+                                                onclick="return confirm('Bạn có muốn xóa Món này khỏi Giỏ hàng không?')">Xóa
+                                        </button>
+                                    </a>
+                                </td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="d-flex flex-row align-items-center justify-content-end w-100">
+                    <div class="col text-end me-3">
+                        <h5 class="m-0">Tổng thanh toán: <fmt:formatNumber type="number" pattern="###,###"
+                                                                           value="${totalPrice}"/>đ</h5>
+                    </div>
+                    <div class="col-xl-2 col-lg-3 col-md-4 col-sm-4 align-self-end text-end">
+                        <%-- To solve the issue of submit button outside of the form element, just add "form" attribute --%>
+                        <button type="submit" class="btn btn-primary w-100" id="btnSubmit" name="btnSubmit" form="cart-form" value="Checkout">Thanh
+                            toán
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
 
 <script>
-  // Get the cart table element
-  const cartTable = document.getElementById("cart-table");
+    // Get the cart table element
+    const cartTable = document.getElementById("cart-table");
 
-  // Get the cart badge element
-  const cartBadge = document.getElementById("cart-badge");
+    // Get the cart badge element
+    const cartBadge = document.getElementById("cart-badge");
 
-  // Get the number of rows in the cart table
-  const numRows = cartTable.getElementsByTagName("tbody")[0].getElementsByTagName("tr").length;
+    // Get the number of rows in the cart table
+    const numRows = cartTable.getElementsByTagName("tbody")[0].getElementsByTagName("tr").length;
 
-  // If there are no rows, disable the submit button and remove the cart badge
-  if (numRows === 0) {
-    document.getElementById("btnSubmit").disabled = true;
-    cartBadge.classList.add("d-none");
-  } else {
-    document.getElementById("btnSubmit").disabled = false;
-    cartBadge.classList.remove("d-none");
-
-    // Set the cart badge text to the number of rows
-    if (numRows > 99) {
-      cartBadge.innerText = "99+";
-    } else if (numRows < 0) {
-      cartBadge.innerText = "0";
+    // If there are no rows, disable the submit button and remove the cart badge
+    if (numRows === 0) {
+        document.getElementById("btnSubmit").disabled = true;
+        cartBadge.classList.add("d-none");
     } else {
-      cartBadge.innerText = numRows;
+        document.getElementById("btnSubmit").disabled = false;
+        cartBadge.classList.remove("d-none");
+
+        // Set the cart badge text to the number of rows
+        if (numRows > 99) {
+            cartBadge.innerText = "99+";
+        } else if (numRows < 0) {
+            cartBadge.innerText = "0";
+        } else {
+            cartBadge.innerText = numRows;
+        }
     }
-  }
+
+    // Add event listener for quantity input change event using event delegation
+    document.addEventListener("input", function (event) {
+        // Check if the changed element is a quantity input field
+        if (event.target.classList.contains("quantity-input")) {
+            // Get the parent row of the input field
+            const row = event.target.closest("tr");
+            // Get the price per unit of the food from the data attribute or other source
+            const pricePerUnitText = row.querySelector("td:nth-child(2)").textContent.trim();
+            const pricePerUnit = parseFloat(pricePerUnitText.replace("đ", "").replace(",", ""));
+            // Get the quantity entered by the user
+            const quantity = parseInt(event.target.value, 10);
+            // Calculate the new product price
+            const productPrice = pricePerUnit * quantity;
+            // Update the product price cell in the same row
+            row.querySelector("td:nth-child(4)").textContent = productPrice.toLocaleString() + "đ";
+            // Calculate and update the total price
+            updateTotalPrice();
+        }
+    });
+
+    // Function to update the total price based on all product prices
+    function updateTotalPrice() {
+        let totalPrice = 0;
+        // Iterate through all rows in the table and calculate the total price
+        const rows = document.querySelectorAll("#cart-table tbody tr");
+        rows.forEach(function (row) {
+            const productPriceText = row.querySelector("td:nth-child(4)").textContent.trim();
+            console.log(productPriceText)
+            const productPrice = parseFloat(productPriceText.replace("đ", "").replace(",", ""));
+            totalPrice += productPrice;
+        });
+        // Update the total price element
+        const totalPriceElement = document.querySelector(".modal-footer h5");
+        totalPriceElement.textContent = "Tổng thanh toán: " + totalPrice.toLocaleString() + "đ";
+    }
+
 </script>

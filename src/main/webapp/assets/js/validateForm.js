@@ -20,7 +20,7 @@ function validateForm() {
             },
             txtFoodName: {
                 required: true,
-                maxlength: 50
+                maxlength: 100
             },
             txtFoodPrice: {
                 required: true,
@@ -44,7 +44,7 @@ function validateForm() {
             txtFoodTypeID: "Vui lòng chọn loại món",
             txtFoodName: {
                 required: "Tên món không được để trống",
-                maxlength: "Tên món không dài quá 50 kí tự"
+                maxlength: "Tên món không dài quá 100 kí tự"
             },
             txtFoodPrice: {
                 required: "Vui lòng nhập Đơn giá",
@@ -82,7 +82,7 @@ function validateForm() {
             },
             txtFoodName: {
                 required: true,
-                maxlength: 50
+                maxlength: 100
             },
             txtFoodPrice: {
                 required: true,
@@ -108,7 +108,7 @@ function validateForm() {
             },
             txtFoodName: {
                 required: "Tên món không được để trống",
-                maxlength: "Tên món không dài quá 50 kí tự"
+                maxlength: "Tên món không dài quá 100 kí tự"
             },
             txtFoodPrice: {
                 required: "Vui lòng nhập Đơn giá",
@@ -143,7 +143,7 @@ function validateForm() {
         rules: {
             txtAccountUsername: {
                 required: true,
-                maxlength: 50,
+                maxlength: 100,
                 pattern: /^[a-zA-Z0-9-'_]+$/
             },
             txtEmail: {
@@ -164,7 +164,7 @@ function validateForm() {
         messages: {
             txtAccountUsername: {
                 required: "Vui lòng nhập Tên Tài khoản Người dùng",
-                maxlength: "Tên Tài khoản Người dùng không được vượt quá 50 ký tự",
+                maxlength: "Tên Tài khoản Người dùng không được vượt quá 100 ký tự",
                 pattern: "Tên Tài khoản chỉ chấp nhận chữ, số, dấu gạch ngang, gạch dưới, nháy đơn và không chứa khoảng trắng"
             },
             txtEmail: {
@@ -192,7 +192,7 @@ function validateForm() {
         rules: {
             txtAccountUsername: {
                 required: true,
-                maxlength: 50
+                maxlength: 100
             },
             txtEmail: {
                 required: true,
@@ -210,7 +210,7 @@ function validateForm() {
         messages: {
             txtAccountUsername: {
                 required: "Vui lòng nhập Tên Tài khoản Người dùng",
-                maxlength: "Tên Tài khoản Người dùng không được vượt quá 50 ký tự"
+                maxlength: "Tên Tài khoản Người dùng không được vượt quá 100 ký tự"
             },
             txtEmail: {
                 required: "Vui lòng nhập Email",
@@ -235,7 +235,7 @@ function validateForm() {
         rules: {
             txtvoucher_name: {
                 required: true,
-                maxlength: 50,
+                maxlength: 100,
             },
             txtvoucher_discount_percent: {
                 required: true,
@@ -246,7 +246,7 @@ function validateForm() {
         messages: {
             txtvoucher_name: {
                 required: "Vui lòng nhập tên Voucher",
-                maxlength: "Tên Voucher không được vượt quá 50 ký tự"
+                maxlength: "Tên Voucher không được vượt quá 100 ký tự"
             },
             txtvoucher_discount_percent: {
                 required: "Vui lòng nhập phần trăm giảm giá",
@@ -263,7 +263,7 @@ function validateForm() {
         rules: {
             txtvoucher_name: {
                 required: true,
-                maxlength: 50,
+                maxlength: 100,
             },
             txtvoucher_discount_percent: {
                 required: true,
@@ -273,7 +273,7 @@ function validateForm() {
         messages: {
             txtvoucher_name: {
                 required: "Vui lòng nhập tên Voucher",
-                maxlength: "Tên Voucher không được vượt quá 50 ký tự"
+                maxlength: "Tên Voucher không được vượt quá 100 ký tự"
             },
             txtvoucher_discount_percent: {
                 required: "Vui lòng nhập phần trăm giảm giá",
@@ -314,7 +314,7 @@ function validateForm() {
             txtAccountUsername: {
                 required: true,
                 minlength: 8,
-                maxlength: 50
+                maxlength: 100
             },
             txtAccountEmail: {
                 required: true,
@@ -336,7 +336,7 @@ function validateForm() {
             txtAccountUsername: {
                 required: "Vui lòng nhập Tên Tài khoản Người dùng",
                 minlength: "Tên tài khoản mới phải có ít nhất 8 ký tự",
-                maxlength: "Tên Tài khoản Người dùng không được vượt quá 50 ký tự"
+                maxlength: "Tên Tài khoản Người dùng không được vượt quá 100 ký tự"
             },
             txtAccountEmail: {
                 required: "Vui lòng nhập Email",
@@ -364,11 +364,11 @@ function validateForm() {
         rules: {
             txtLastName: {
                 required: true,
-                maxlength: 40
+                maxlength: 100
             },
             txtFirstName: {
                 required: true,
-                maxlength: 10
+                maxlength: 100
             },
             txtPhoneNumber: {
                 required: true,
@@ -382,11 +382,11 @@ function validateForm() {
         messages: {
             txtLastName: {
                 required: "Vui lòng nhập họ",
-                maxlength: "Họ Người dùng không được vượt quá 40 ký tự"
+                maxlength: "Họ Người dùng không được vượt quá 100 ký tự"
             },
             txtFirstName: {
                 required: "Vui lòng nhập tên",
-                maxlength: "Tên Người dùng không được vượt quá 40 ký tự"
+                maxlength: "Tên Người dùng không được vượt quá 100 ký tự"
             },
             txtPhoneNumber: {
                 required: "Vui lòng nhập số điện thoại",
