@@ -18,8 +18,6 @@ body:
       - Critical
       - Major
       - Minor
-    validations:
-      required: true
 
 - type: textarea
   attributes:
@@ -36,11 +34,11 @@ body:
 
 - type: textarea
   attributes:
-    label: Expected behavior
-    description: A clear and concise description of what you expected to happen.
+    label: Expected behavior (Optional)
+    description: A clear and concise description of what you expected to happen (if the bug was not there).
     placeholder: |
       The entire website is frozen, probably due to memory overflow
-      Add images and videos here for better description
+      Add images and videos here for a better description
 
 - type: markdown
   attributes:
@@ -57,8 +55,6 @@ body:
       - Android
       - iOS
       - Linux
-    validations:
-      required: true
 - type: input
   id: os-version
   attributes:
@@ -70,7 +66,7 @@ body:
   id: browser-name
   attributes:
     label: Browser
-    Description: Name of your web browser
+    description: Name of your web browser
     multiple: true
     options:
       - Firefox
