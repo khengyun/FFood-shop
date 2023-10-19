@@ -12,10 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import Models.FoodType;
 
-/**
- *
- * @author Hung
- */
+
 public class FoodTypeDAO {
 
   private Connection conn;

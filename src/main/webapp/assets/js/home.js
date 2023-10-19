@@ -9,6 +9,7 @@ let showMoreButton = document.getElementById("btn-show-more");
 const itemsToShow = 12;
 let itemsShown = 0;
 
+//show success order food
 $(document).ready(function () {
   if (window.location.hash === '#success') {
     $('#success').modal('show');
@@ -18,6 +19,92 @@ $(document).ready(function () {
   }
   showInitialFoodItems();
 });
+
+//show success register account
+$(document).ready(function () {
+  notSort = document.querySelectorAll("div[id^='food-']"); 
+  if (window.location.hash === '#success_register') {
+    $('#success_register').modal('show');
+    setTimeout(function () {
+      $('#success_register').modal('hide');
+    }, 3000);
+  }
+});
+
+//show success change password
+$(document).ready(function () {
+  notSort = document.querySelectorAll("div[id^='food-']"); 
+  if (window.location.hash === '#success_changePassword') {
+    $('#success_changePassword').modal('show');
+    setTimeout(function () {
+      $('#success_changePassword').modal('hide');
+    }, 3000);
+  }
+});
+
+//show fail order food
+$(document).ready(function () {
+  notSort = document.querySelectorAll("div[id^='food-']"); 
+  if (window.location.hash === '#failure') {
+    $('#failure').modal('show');
+    setTimeout(function () {
+      $('#failure').modal('hide');
+    }, 3000);
+  }
+});
+
+//show fail login
+$(document).ready(function () {
+  notSort = document.querySelectorAll("div[id^='food-']");
+  if (window.location.hash === '#failure_login') {
+    $('#failure_login').modal('show');
+    setTimeout(function () {
+      $('#failure_login').modal('hide');
+    }, 3000);
+  }
+});
+
+//show fail register
+$(document).ready(function () {
+  notSort = document.querySelectorAll("div[id^='food-']"); 
+  if (window.location.hash === '#failure_register') {
+    $('#failure_register').modal('show');
+    setTimeout(function () {
+      $('#failure_register').modal('hide');
+    }, 3000);
+  }
+});
+
+//show fail change password
+$(document).ready(function () {
+  notSort = document.querySelectorAll("div[id^='food-']"); 
+  if (window.location.hash === '#failure_changePassword') {
+    $('#failure_changePassword').modal('show');
+    setTimeout(function () {
+      $('#failure_changePassword').modal('hide');
+    }, 3000);
+  }
+});
+
+//show verify OTP modal
+$(document).ready(function () {
+  notSort = document.querySelectorAll("div[id^='food-']"); 
+  if (window.location.hash === '#verify_OTP') {
+    $('#verify_OTP').modal('show');
+    setTimeout(function () {
+      $('#verify_OTP').modal('hide');
+    }, 120000);
+  }
+});
+
+//show change password modal
+$(document).ready(function () {
+  notSort = document.querySelectorAll("div[id^='food-']"); 
+  if (window.location.hash === '#changePass_modal') {
+    $('#changePass_modal').modal('show');
+  }
+});
+
 
 $(document).on("click", ".btn-categories", function () {
   let categoryID = $(this).data("food-type-id");
@@ -62,6 +149,34 @@ $(document).on("click", ".btn-categories", function () {
   }
 });
 
+// Get all button addToCartBtn
+var addToCartButtons = document.querySelectorAll('.addToCartBtn');
+
+// Loop each button and add click event
+addToCartButtons.forEach(function(button) {
+  button.addEventListener('click', function() {
+    var foodId = this.getAttribute('data-foodid');
+    var quantity = this.getAttribute('data-quantity');
+
+    // Send AJAX request to addToCart servlet endpoint
+    $.ajax({
+        type: "GET",
+        url: "addToCart",
+        data: {
+            fid: foodId,
+            quantity: quantity
+        },
+        success: function (response) {
+            console.log("Item added to cart successfully.");
+        },
+        error: function (error) {
+
+            console.error("Error occurred: " + error.responseText);
+        }
+    });
+    window.location.reload();
+  });
+});
 
 /**
  * Show default food items
@@ -72,7 +187,6 @@ $(document).on("click", ".btn-categories", function () {
 function showInitialFoodItems() {
   // Get all the food items from the food-list element
   foodItems = Array.from($("#food-list > div:not(.d-none)"));
-
   // Define the number of items to show
   const itemsToShow = 12;
 

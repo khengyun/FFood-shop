@@ -1,0 +1,64 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+
+
+    <style>
+        .skiptranslate {
+            display: none !important;
+        }
+
+        body {
+            top: 0px !important;
+        }
+        .VIpgJd-ZVi9od-aZ2wEe-wOHMyf{
+            display: none !important;
+        }
+    </style>
+
+
+        <!-- Bootstrap Dropdown for Language Selection -->
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="languageDropdown"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                Lang
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+                <li><a class="dropdown-item lang-select" data-lang="vi" href="#googtrans(vi|vi)"><img src="https://cdn-icons-png.flaticon.com/512/197/197473.png " width="20" height="20" alt="vietnam"/> &nbsp;Vietnamese </a></li>
+                <li><a class="dropdown-item lang-select" data-lang="en" href="#googtrans(vi|en)"><img src="https://cdn-icons-png.flaticon.com/512/323/323310.png " width="20" height="20" alt="america"/>&nbsp; English </a></li>
+                <li><a class="dropdown-item lang-select" data-lang="fr" href="#googtrans(vi|fr)"><img src="https://cdn-icons-png.flaticon.com/512/330/330490.png" width="20" height="20" alt="france"/>&nbsp;French</a></li>
+                <li><a class="dropdown-item lang-select" data-lang="zh-CN" href="#googtrans(vi|zh-CN)"><img src="https://cdn-icons-png.flaticon.com/512/197/197375.png" width="20" height="20" alt="china"/>&nbsp;Chinese</a></li>
+                <li><a class="dropdown-item lang-select" data-lang="ja" href="#googtrans(vi|ja)"><img src="https://cdn-icons-png.flaticon.com/512/555/555646.png" width="20" height="20" alt="japan"/>&nbsp;Japanese</a></li>
+            </ul>
+        </div>
+
+    <!-- Your content here -->
+<!--    <div class="container">
+        test, source
+    </div>-->
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+          new google.translate.TranslateElement({ pageLanguage: 'vi', layout: google.translate.TranslateElement.FloatPosition.TOP_LEFT }, 'google_translate_element');
+        }
+      
+        $(document).ready(function () {
+          $('.lang-select').click(function () {
+            var theLang = $(this).data('lang');
+            $('.goog-te-combo').val(theLang);
+
+            if ($(this).attr('href') === "" || $(this).attr('href') === '#googtrans(vi|vi)') {
+              // Xóa cookie googtrans bằng cách đặt nó thành giá trị trống và hết hạn
+              document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            }
+
+            // Chuyển đến trang mới và tải lại
+            window.location = $(this).attr('href');
+            location.reload();
+          });
+        });
+
+      </script>
+    <!-- Include Google Translate API -->
+    <script type="text/javascript"
+        src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+

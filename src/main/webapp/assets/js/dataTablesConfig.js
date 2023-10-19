@@ -185,12 +185,17 @@ $(document).ready(function () {
   })
 
   /*
-  Fixes table header not properly sized on page load.
+  Fixes table header not properly sized on tab load.
   Upon any resize events (such as browser window resize), such elements are displayed correctly.
   This problem is not present if the tabbed content is immediately active on page load (home tab).
-  This solution is triggered on click of tab button on the admin sidebar (whose target is specified in the query selector).
+  This solution is triggered after the targeted tab has been shown (target is specified in the query selector).
+
+  Refer to the following link for more information:
+  https://getbootstrap.com/docs/5.3/components/navs-tabs/#events
+
+  DO NOT USE ON CLICK EVENTS, this will cause a memory issue that freezes the page if the user clicks on the tab repeatedly.
   */
-  $("[data-bs-target='#foods']").click(function () {
+  $("[data-bs-target='#foods']").on('shown.bs.tab', function () {
     // Remove searchPanes' expand and collapse all panes button
     $('.dtsp-showAll').remove();
     $('.dtsp-collapseAll').remove();
@@ -212,7 +217,7 @@ $(document).ready(function () {
     $('#food-table').resize();
   });
 
-  $('#users-table').DataTable();
-  $('#orders-table').DataTable();
+//  $('#users-table').DataTable();
+//  $('#orders-table').DataTable();
 })
 ;

@@ -72,6 +72,26 @@
         <servlet-name>SignUpController</servlet-name>
         <servlet-class>Controllers.SignUpController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>VerifyOTPController</servlet-name>
+        <servlet-class>Controllers.EmailVerifyController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ForgetController</servlet-name>
+        <servlet-class>Controllers.ForgetController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangePasswordController</servlet-name>
+        <servlet-class>Controllers.ChangePasswordController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StaffController</servlet-name>
+        <servlet-class>Controllers.StaffController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PromotionManagerController</servlet-name>
+        <servlet-class>Controllers.PromotionManagerController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>default</servlet-name>
         <url-pattern>/*/assets/*</url-pattern>
@@ -163,6 +183,26 @@
     <servlet-mapping>
         <servlet-name>SignUpController</servlet-name>
         <url-pattern>/signup</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VerifyOTPController</servlet-name>
+        <url-pattern>/verifyOTP</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ForgetController</servlet-name>
+        <url-pattern>/forget</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangePasswordController</servlet-name>
+        <url-pattern>/changePassword</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StaffController</servlet-name>
+        <url-pattern>/staff</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PromotionManagerController</servlet-name>
+        <url-pattern>/promotionManager</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
