@@ -17,8 +17,8 @@ body:
     label: Description
     placeholder: Screen scrolls up every time I press a key on the search bar
     description: A clear and concise description of what the bug is. Images and videos are supported.
-    validations:
-      required: true
+  validations:
+    required: true
 
 - type: dropdown
   id: severity
@@ -97,9 +97,9 @@ body:
   validations:
     required: true
 - type: input
-  id: browser-version (Optional)
+  id: browser-version
   attributes:
-    label: Browser Version
+    label: Browser Version (Optional)
     placeholder: "117.0.2045.60"
     description: The version (or build number) of your browser. If there is more than 1 browser, list the version of the most frequently used browser.
 
