@@ -1,0 +1,151 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+
+
+    <style>
+        .skiptranslate {
+            display: none !important;
+        }
+
+        body {
+            top: 0px !important;
+        }
+        .VIpgJd-ZVi9od-aZ2wEe-wOHMyf{
+            display: none !important;
+        }
+          .lang_capitalize {
+    text-transform: capitalize;
+  }
+    </style>
+
+
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="languageDropdown"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="https://cdn-icons-png.flaticon.com/512/197/197473.png" width="20" height="20" alt="vietnam"/>&nbsp; VI
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+                <li><a class="dropdown-item lang-select lang_capitalize" data-lang="vi" href="#googtrans(vi|vi)" ><img src="https://cdn-icons-png.flaticon.com/512/197/197473.png " width="20" height="20" alt="vietnam"/> &nbsp;Vietnamese </a></li>
+                <li><a class="dropdown-item lang-select lang_capitalize" data-lang="en" href="#googtrans(vi|en)"><img src="https://cdn-icons-png.flaticon.com/512/323/323310.png " width="20" height="20" alt="america"/>&nbsp; English </a></li>
+                <li><a class="dropdown-item lang-select lang_capitalize" data-lang="fr" href="#googtrans(vi|fr)"><img src="https://cdn-icons-png.flaticon.com/512/330/330490.png" width="20" height="20" alt="france"/>&nbsp;French</a></li>
+                <li><a class="dropdown-item lang-select lang_capitalize" data-lang="zh-CN" href="#googtrans(vi|zh-CN)"><img src="https://cdn-icons-png.flaticon.com/512/197/197375.png" width="20" height="20" alt="china"/>&nbsp;Chinese</a></li>
+                <li><a class="dropdown-item lang-select lang_capitalize" data-lang="ja" href="#googtrans(vi|ja)"><img src="https://cdn-icons-png.flaticon.com/512/555/555646.png" width="20" height="20" alt="japan"/>&nbsp;Japanese</a></li>
+            </ul>
+        </div>
+
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+          new google.translate.TranslateElement({ pageLanguage: 'vi', layout: google.translate.TranslateElement.FloatPosition.TOP_LEFT }, 'google_translate_element');
+        }
+        
+//      START  add check cookie to set language
+            // Function to check the cookie and update language
+            function checkAndSetLanguageFromCookie() {
+              var googtransCookie = getCookie('googtrans');
+              if (googtransCookie) {
+                // Parse the cookie value and convert it to the appropriate language href
+                var languageHref = convertCookieToLanguageHref(googtransCookie);
+
+                // Call the updateLanguageDropdownContent function with the converted language href
+                updateLanguageDropdownContent(languageHref);
+              }
+            }
+
+            // Function to get the value of a cookie by name
+            function getCookie(name) {
+              var value = "; " + document.cookie;
+              var parts = value.split("; " + name + "=");
+              if (parts.length === 2) return parts.pop().split(";").shift();
+              return null;
+            }
+
+            // Function to convert a cookie value to a language href
+            function convertCookieToLanguageHref(cookieValue) {
+              // Define your conversion logic here
+              // For example, if the cookie value is "/vi/fr," you can convert it to "#googtrans(vi|en)"
+              if (cookieValue === '/vi/fr') {
+                return '#googtrans(vi|fr)';
+              }
+              if (cookieValue === '/vi/en') {
+                return '#googtrans(vi|en)';
+              }
+              if (cookieValue === '/vi/zh-CN') {
+                return '#googtrans(vi|zh-CN)';
+              }
+              if (cookieValue === '/vi/ja') {
+                return '#googtrans(vi|ja)';
+              }
+              // Add more conversion logic for other cases as needed
+              return '#googtrans(vi|vi)'; // Default if no conversion matches
+            }
+            
+            //      END  add check cookie to set language
+
+            
+                // Function to update the language dropdown button content
+        function updateLanguageDropdownContent(selectedLangHref) {
+//            var selectedLangHref = $(".dropdown-item.lang-select.active").attr('href');
+            var langButton = $('#languageDropdown');
+            console.log("before selectedLangHref: ",selectedLangHref)
+            
+            var CheckHref = selectedLangHref.split("#")[1];
+            var selectedLangHref = "#"+CheckHref;
+            
+            console.log("after selectedLangHref: ", selectedLangHref);
+            
+
+            // Update the content based on the selected language href
+            if (selectedLangHref === '#googtrans(vi|vi)') {
+                langButton.html('<img src="https://cdn-icons-png.flaticon.com/512/197/197473.png" width="20" height="20" alt="vietnam"/>&nbsp; VI');
+            } 
+             else if (selectedLangHref === '#googtrans(vi|en)') {
+                langButton.html('<img src="https://cdn-icons-png.flaticon.com/512/323/323310.png " width="20" height="20" alt="america"/>&nbsp; EN');
+            } 
+            else if (selectedLangHref === '#googtrans(vi|fr)') {
+                langButton.html('<img src="https://cdn-icons-png.flaticon.com/512/330/330490.png" width="20" height="20" alt="france"/>&nbsp;FR');
+            }
+             else if (selectedLangHref === '#googtrans(vi|zh-CN)') {
+                langButton.html('<img src="https://cdn-icons-png.flaticon.com/512/197/197375.png" width="20" height="20" alt="china"/>&nbsp;zh-CN');
+            } 
+             else if (selectedLangHref === '#googtrans(vi|ja)') {
+                langButton.html('<img src="https://cdn-icons-png.flaticon.com/512/555/555646.png" width="20" height="20" alt="japan"/>&nbsp;JA');
+            } 
+            
+            else {
+                // Handle cases where the language code is not in the mapping
+                console.log("checkAndSetLanguageFromCookie: ",checkAndSetLanguageFromCookie())
+               checkAndSetLanguageFromCookie();
+//               console.log("after cookie check: ")
+
+            }
+
+        
+        }
+
+        // Initial update
+        var currentURL = window.location.href;
+        updateLanguageDropdownContent(currentURL);
+        
+      
+        $(document).ready(function () {
+          $('.lang-select').click(function () {
+            var theLang = $(this).data('lang');
+            $('.goog-te-combo').val(theLang);
+            if ($(this).attr('href') === "" || $(this).attr('href') === '#googtrans(vi|vi)') {
+              document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            }
+            
+            var newURL = $(this).attr('href');
+            updateLanguageDropdownContent(newURL);
+
+            window.location = $(this).attr('href');
+            location.reload();
+          });
+        });
+
+      </script>
+    <!-- Include Google Translate API -->
+    <script type="text/javascript"
+        src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
