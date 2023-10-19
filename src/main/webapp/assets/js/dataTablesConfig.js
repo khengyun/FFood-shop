@@ -9,17 +9,17 @@ $(document).ready(function () {
       return: true
     },
     pagingType: "full_numbers",
-    dom:"<'row'" +
-          "<'col-sm-12 col-md-3'P>" + // searchPanes on left col (L)
-          "<'d-row col-sm-12 col-md-9 m-0'" +
-            "<'row'" +
-              "<'col-sm-12 col-lg-6 pt-2'l><'col-sm-12 col-lg-6 pt-1 'f>" + // length and search bar
-            ">" +
-            "<'col-sm-12'tr>" + // table
-            "<'row'" +
-              "<'col-sm-12 col-md-5 mt-1'i><'col-sm-12 col-md-7 mt-2'p>" + // info and pagination
-            ">" +
-          ">" +
+    dom: "<'row'" +
+        "<'col-sm-12 col-md-3'P>" + // searchPanes on left col (L)
+        "<'d-row col-sm-12 col-md-9 m-0'" +
+        "<'row'" +
+        "<'col-sm-12 col-lg-6 pt-2'l><'col-sm-12 col-lg-6 pt-1 'f>" + // length and search bar
+        ">" +
+        "<'col-sm-12'tr>" + // table
+        "<'row'" +
+        "<'col-sm-12 col-md-5 mt-1'i><'col-sm-12 col-md-7 mt-2'p>" + // info and pagination
+        ">" +
+        ">" +
         ">",
     fixedHeader: {
       header: true,
@@ -185,12 +185,17 @@ $(document).ready(function () {
   })
 
   /*
-  Fixes table header not properly sized on page load.
+  Fixes table header not properly sized on tab load.
   Upon any resize events (such as browser window resize), such elements are displayed correctly.
   This problem is not present if the tabbed content is immediately active on page load (home tab).
-  This solution is triggered on click of tab button on the admin sidebar (whose target is specified in the query selector).
+  This solution is triggered after the targeted tab has been shown (target is specified in the query selector).
+
+  Refer to the following link for more information:
+  https://getbootstrap.com/docs/5.3/components/navs-tabs/#events
+
+  DO NOT USE ON CLICK EVENTS, this will cause a memory issue that freezes the page if the user clicks on the tab repeatedly.
   */
-  $("[data-bs-target='#foods']").click(function () {
+  $("[data-bs-target='#foods']").on('shown.bs.tab', function () {
     // Remove searchPanes' expand and collapse all panes button
     $('.dtsp-showAll').remove();
     $('.dtsp-collapseAll').remove();
