@@ -38,20 +38,22 @@
           new google.translate.TranslateElement({ pageLanguage: 'vi', layout: google.translate.TranslateElement.FloatPosition.TOP_LEFT }, 'google_translate_element');
         }
       
-        // JavaScript code for language selection
         $(document).ready(function () {
           $('.lang-select').click(function () {
             var theLang = $(this).data('lang');
             $('.goog-te-combo').val(theLang);
-      
-//            // Simulate the click on the language selection link
-//            console.log("href: ",$(this).attr('href'));
-//            translang = "#googtrans(" + $(this).attr('href').split('#')[1] + ")" ;  
-//            
+
+            if ($(this).attr('href') === "" || $(this).attr('href') === '#googtrans(vi|vi)') {
+              // Xóa cookie googtrans bằng cách đặt nó thành giá trị trống và hết hạn
+              document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            }
+
+            // Chuyển đến trang mới và tải lại
             window.location = $(this).attr('href');
             location.reload();
           });
         });
+
       </script>
     <!-- Include Google Translate API -->
     <script type="text/javascript"
