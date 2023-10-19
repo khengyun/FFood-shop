@@ -12,7 +12,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import Models.PaymentMethod;
 
-
+/**
+ *
+ * @author Hung
+ */
 public class PaymentMethodDAO {
 
   private Connection conn;

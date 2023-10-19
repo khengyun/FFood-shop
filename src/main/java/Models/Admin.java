@@ -4,6 +4,10 @@
  */
 package Models;
 
+/**
+ *
+ * @author Hung
+ */
 public class Admin {
 
   private byte adminID;
@@ -32,4 +36,5 @@ public class Admin {
   public void setFullName(String fullName) {
     this.fullName = fullName;
   }
+
 }

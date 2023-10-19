@@ -15,218 +15,222 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * @author Hung
+ */
 public class FoodDAO {
 
-    private Connection conn;
-    private PreparedStatement ps;
-    private ResultSet rs;
+  private Connection conn;
+  private PreparedStatement ps;
+  private ResultSet rs;
 
-    public FoodDAO() {
-        conn = DBConnection.DBConnection.getConnection();
+  public FoodDAO() {
+    conn = DBConnection.DBConnection.getConnection();
+  }
+
+  public ResultSet getAll() {
+    String sql = "select * from Food";
+    try {
+      ps = conn.prepareStatement(sql);
+      rs = ps.executeQuery();
+      return rs;
+    } catch (SQLException ex) {
+      Logger.getLogger(FoodDAO.class.getName()).log(Level.SEVERE, null, ex);
     }
+    return null;
+  }
 
-    public ResultSet getAll() {
-        String sql = "select * from Food";
-        try {
-            ps = conn.prepareStatement(sql);
-            rs = ps.executeQuery();
-            return rs;
-        } catch (SQLException ex) {
-            Logger.getLogger(FoodDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
+  public List<Food> getAllList() {
+    ResultSet foodRS = this.getAll();
+    List<Food> foodList = new ArrayList<>();
+    try {
+      while (foodRS.next()) {
+        Food food = new Food(foodRS.getShort("food_id"),
+                foodRS.getString("food_name"),
+                foodRS.getBigDecimal("food_price"),
+                foodRS.getByte("discount_percent"),
+                foodRS.getString("food_img_url"),
+                foodRS.getByte("food_type_id"),
+                this.getFoodType(foodRS.getByte("food_type_id")));
+        foodList.add(food);
+      }
+    } catch (SQLException ex) {
+      Logger.getLogger(FoodDAO.class.getName()).log(Level.SEVERE, null, ex);
     }
+    return foodList;
+  }
 
-    public List<Food> getAllList() {
-        ResultSet foodRS = this.getAll();
-        List<Food> foodList = new ArrayList<>();
-        try {
-            while (foodRS.next()) {
-                Food food = new Food(foodRS.getShort("food_id"),
-                        foodRS.getString("food_name"),
-                        foodRS.getBigDecimal("food_price"),
-                        foodRS.getByte("discount_percent"),
-                        foodRS.getString("food_img_url"),
-                        foodRS.getByte("food_type_id"),
-                        this.getFoodType(foodRS.getByte("food_type_id")));
-                foodList.add(food);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(FoodDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return foodList;
+  public Food getFood(short foodID) {
+    Food food = null;
+    try {
+      ps = conn.prepareStatement("select * from Food where food_id = ?");
+      ps.setShort(1, foodID);
+      rs = ps.executeQuery();
+      if (rs.next()) {
+        food = new Food(rs.getShort("food_id"),
+                rs.getString("food_name"),
+                rs.getBigDecimal("food_price"),
+                rs.getByte("discount_percent"),
+                rs.getString("food_img_url"),
+                rs.getByte("food_type_id"),
+                this.getFoodType(rs.getByte("food_type_id")));
+      }
+    } catch (SQLException ex) {
+      Logger.getLogger(FoodDAO.class.getName()).log(Level.SEVERE, null, ex);
     }
+    return food;
+  }
 
-    public Food getFood(short foodID) {
-        Food food = null;
-        try {
-            ps = conn.prepareStatement("select * from Food where food_id = ?");
-            ps.setShort(1, foodID);
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                food = new Food(rs.getShort("food_id"),
-                        rs.getString("food_name"),
-                        rs.getBigDecimal("food_price"),
-                        rs.getByte("discount_percent"),
-                        rs.getString("food_img_url"),
-                        rs.getByte("food_type_id"),
-                        this.getFoodType(rs.getByte("food_type_id")));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(FoodDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return food;
+  public int add(Food food) {
+    String sql = "insert into Food (food_name, food_price, discount_percent, food_img_url, food_type_id) values (?, ?, ?, ?, ?)";
+    int result = 0;
+    try {
+      PreparedStatement ps = conn.prepareStatement(sql);
+      ps.setString(1, food.getFoodName());
+      ps.setBigDecimal(2, food.getFoodPrice());
+      ps.setByte(3, food.getDiscountPercent());
+      ps.setString(4, food.getImageURL());
+      ps.setByte(5, food.getFoodTypeID());
+      result = ps.executeUpdate();
+    } catch (SQLException ex) {
+      Logger.getLogger(FoodDAO.class.getName()).log(Level.SEVERE, null, ex);
     }
+    return result;
+  }
 
-    public int add(Food food) {
-        String sql = "insert into Food (food_name, food_price, discount_percent, food_img_url, food_type_id) values (?, ?, ?, ?, ?)";
-        int result = 0;
-        try {
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, food.getFoodName());
-            ps.setBigDecimal(2, food.getFoodPrice());
-            ps.setByte(3, food.getDiscountPercent());
-            ps.setString(4, food.getImageURL());
-            ps.setByte(5, food.getFoodTypeID());
-            result = ps.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(FoodDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return result;
+  public int delete(short foodID) {
+    int result = 0;
+    String sql = "delete from Food where food_id = ?";
+    try {
+      PreparedStatement ps = conn.prepareStatement(sql);
+      ps.setShort(1, foodID);
+      result = ps.executeUpdate();
+    } catch (SQLException ex) {
+      Logger.getLogger(FoodDAO.class.getName()).log(Level.SEVERE, null, ex);
     }
+    return result;
+  }
 
-    public int delete(short foodID) {
-        int result = 0;
-        String sql = "delete from Food where food_id = ?";
-        try {
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setShort(1, foodID);
-            result = ps.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(FoodDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return result;
-    }
-
-    public int deleteMultiple(List<Short> foodIDs) {
-        int result = 0;
-        try {
-            conn.setAutoCommit(false); // Start transaction
-            for (Short foodID : foodIDs) {
-                if (delete(foodID) == 1) {
-                    result++; // Count number of successful deletions
-                } else {
-                    conn.rollback(); // Rollback transaction if deletion fails
-                    return 0;
-                }
-            }
-            conn.commit(); // Commit transaction if all deletions succeed
-        } catch (SQLException ex) {
-            Logger.getLogger(FoodDAO.class.getName()).log(Level.SEVERE, null, ex);
-            try {
-                conn.rollback(); // Rollback transaction if any exception occurs
-            } catch (SQLException rollbackEx) {
-                Logger.getLogger(FoodDAO.class.getName()).log(Level.SEVERE, null, rollbackEx);
-            }
-            return 0;
-        } finally {
-            try {
-                conn.setAutoCommit(true); // Reset auto commit
-            } catch (SQLException finalEx) {
-                Logger.getLogger(FoodDAO.class.getName()).log(Level.SEVERE, null, finalEx);
+  public int deleteMultiple(List<Short> foodIDs) {
+    int result = 0;
+    try {
+        conn.setAutoCommit(false); // Start transaction
+        for (Short foodID : foodIDs) {
+            if (delete(foodID) == 1) {
+              result++; // Count number of successful deletions
+            } else {
+              conn.rollback(); // Rollback transaction if deletion fails
+              return 0;
             }
         }
-        return result;
-    }
-
-    public int update(Food food) {
-        String sql = "update Food set food_name = ?, food_price = ?, discount_percent = ?, food_img_url = ?, food_type_id = ? where food_id = ?";
-        int result = 0;
+        conn.commit(); // Commit transaction if all deletions succeed
+    } catch (SQLException ex) {
+        Logger.getLogger(FoodDAO.class.getName()).log(Level.SEVERE, null, ex);
         try {
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, food.getFoodName());
-            ps.setBigDecimal(2, food.getFoodPrice());
-            ps.setByte(3, food.getDiscountPercent());
-            ps.setString(4, food.getImageURL());
-            ps.setByte(5, food.getFoodTypeID());
-            ps.setShort(6, food.getFoodID());
-            result = ps.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(FoodDAO.class.getName()).log(Level.SEVERE, null, ex);
+            conn.rollback(); // Rollback transaction if any exception occurs
+        } catch (SQLException rollbackEx) {
+            Logger.getLogger(FoodDAO.class.getName()).log(Level.SEVERE, null, rollbackEx);
         }
-        return result;
-    }
-
-    public String getFoodType(byte foodTypeID) {
-        String foodType = null;
+        return 0;
+    } finally {
         try {
-            ps = conn.prepareStatement("select * from FoodType where food_type_id = ?");
-            ps.setByte(1, foodTypeID);
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                foodType = rs.getString("food_type");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(FoodTypeDAO.class.getName()).log(Level.SEVERE, null, ex);
+            conn.setAutoCommit(true); // Reset auto commit
+        } catch (SQLException finalEx) {
+            Logger.getLogger(FoodDAO.class.getName()).log(Level.SEVERE, null, finalEx);
         }
-        return foodType;
     }
+    return result;
+}
 
-    public ResultSet searchByName(String txtSearch) {
-        String query = "select * from Food\n"
-                + "where [food_name] like ?";
-        try {
-            conn = DBConnection.DBConnection.getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setString(1, "%" + txtSearch + "%");
-            rs = ps.executeQuery();
-            return rs;
-        } catch (SQLException ex) {
-            Logger.getLogger(FoodTypeDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
+  public int update(Food food) {
+    String sql = "update Food set food_name = ?, food_price = ?, discount_percent = ?, food_img_url = ?, food_type_id = ? where food_id = ?";
+    int result = 0;
+    try {
+      PreparedStatement ps = conn.prepareStatement(sql);
+      ps.setString(1, food.getFoodName());
+      ps.setBigDecimal(2, food.getFoodPrice());
+      ps.setByte(3, food.getDiscountPercent());
+      ps.setString(4, food.getImageURL());
+      ps.setByte(5, food.getFoodTypeID());
+      ps.setShort(6, food.getFoodID());
+      result = ps.executeUpdate();
+    } catch (SQLException ex) {
+      Logger.getLogger(FoodDAO.class.getName()).log(Level.SEVERE, null, ex);
     }
+    return result;
+  }
 
-    public List<Food> searchByNameList(String txtSearch) {
-        ResultSet searchRS = searchByName(txtSearch);
-        List<Food> list = new ArrayList<>();
-        String query = "select * from Food\n"
-                + "where [food_name] like ?";
-        try {
-            while (searchRS.next()) {
-                Food food = new Food(searchRS.getShort("food_id"),
-                        searchRS.getString("food_name"),
-                        searchRS.getBigDecimal("food_price"),
-                        searchRS.getByte("discount_percent"),
-                        searchRS.getString("food_img_url"),
-                        searchRS.getByte("food_type_id"),
-                        this.getFoodType(searchRS.getByte("food_type_id")));
-                list.add(food);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(FoodTypeDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return list;
+  public String getFoodType(byte foodTypeID) {
+    String foodType = null;
+    try {
+      ps = conn.prepareStatement("select * from FoodType where food_type_id = ?");
+      ps.setByte(1, foodTypeID);
+      rs = ps.executeQuery();
+      if (rs.next()) {
+        foodType = rs.getString("food_type");
+      }
+    } catch (SQLException ex) {
+      Logger.getLogger(FoodTypeDAO.class.getName()).log(Level.SEVERE, null, ex);
     }
+    return foodType;
+  }
 
-    public List<Food> getCateByCid(String cid) {
-        List<Food> list = new ArrayList<>();
-        String query = "select * from Food\n"
-                + "where cateID = ?";
-        try {
-            ps = conn.prepareStatement(query);
-            ps.setString(1, cid);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                list.add(new Food(rs.getShort("food_id"),
-                        rs.getString("food_name"),
-                        rs.getBigDecimal("food_price"),
-                        rs.getByte("discount_percent"),
-                        rs.getString("food_img_url"),
-                        rs.getByte("food_type_id")));
-            }
-        } catch (Exception e) {
-        }
-        return list;
+  public ResultSet searchByName(String txtSearch) {
+    String query = "select * from Food\n"
+            + "where [food_name] like ?";
+    try {
+      conn = DBConnection.DBConnection.getConnection();
+      ps = conn.prepareStatement(query);
+      ps.setString(1, "%" + txtSearch + "%");
+      rs = ps.executeQuery();
+      return rs;
+    } catch (SQLException ex) {
+      Logger.getLogger(FoodTypeDAO.class.getName()).log(Level.SEVERE, null, ex);
     }
+    return null;
+  }
+
+  public List<Food> searchByNameList(String txtSearch) {
+    ResultSet searchRS = searchByName(txtSearch);
+    List<Food> list = new ArrayList<>();
+    String query = "select * from Food\n"
+            + "where [food_name] like ?";
+    try {
+      while (searchRS.next()) {
+        Food food = new Food(searchRS.getShort("food_id"),
+                searchRS.getString("food_name"),
+                searchRS.getBigDecimal("food_price"),
+                searchRS.getByte("discount_percent"),
+                searchRS.getString("food_img_url"),
+                searchRS.getByte("food_type_id"),
+                this.getFoodType(searchRS.getByte("food_type_id")));
+        list.add(food);
+      }
+    } catch (SQLException ex) {
+      Logger.getLogger(FoodTypeDAO.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return list;
+  }
+  
+  public List<Food> getCateByCid(String cid){
+      List<Food> list = new ArrayList<>();
+      String query = "select * from Food\n"
+              + "where cateID = ?";
+      try {
+          ps = conn.prepareStatement(query);
+          ps.setString(1, cid);
+          rs = ps.executeQuery();
+          while (rs.next()) {              
+              list.add(new Food(rs.getShort("food_id"),
+                rs.getString("food_name"),
+                rs.getBigDecimal("food_price"),
+                rs.getByte("discount_percent"),
+                rs.getString("food_img_url"),
+                rs.getByte("food_type_id")));
+          }
+      } catch (Exception e) {
+      }
+      return list;
+  }
 }

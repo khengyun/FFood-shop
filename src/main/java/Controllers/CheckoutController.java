@@ -25,6 +25,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ *
+ * @author LEGION
+ */
 public class CheckoutController extends HttpServlet {
 
   /**

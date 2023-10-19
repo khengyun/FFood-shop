@@ -14,7 +14,10 @@ import Models.Account;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ *
+ * @author Hung
+ */
 public class AccountDAO {
 
   private Connection conn;

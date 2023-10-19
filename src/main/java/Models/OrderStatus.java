@@ -4,33 +4,37 @@
  */
 package Models;
 
+/**
+ *
+ * @author Hung
+ */
 public class OrderStatus {
 
-    private byte orderStatusID;
-    private String orderStatus;
+  private byte orderStatusID;
+  private String orderStatus;
 
-    public OrderStatus() {
-    }
+  public OrderStatus() {
+  }
 
-    public OrderStatus(byte orderStatusID, String orderStatus) {
-        this.orderStatusID = orderStatusID;
-        this.orderStatus = orderStatus;
-    }
+  public OrderStatus(byte orderStatusID, String orderStatus) {
+    this.orderStatusID = orderStatusID;
+    this.orderStatus = orderStatus;
+  }
 
-    public byte getOrderStatusID() {
-        return orderStatusID;
-    }
+  public byte getOrderStatusID() {
+    return orderStatusID;
+  }
 
-    public void setOrderStatusID(byte orderStatusID) {
-        this.orderStatusID = orderStatusID;
-    }
+  public void setOrderStatusID(byte orderStatusID) {
+    this.orderStatusID = orderStatusID;
+  }
 
-    public String getOrderStatus() {
-        return orderStatus;
-    }
+  public String getOrderStatus() {
+    return orderStatus;
+  }
 
-    public void setOrderStatus(String orderStatus) {
-        this.orderStatus = orderStatus;
-    }
+  public void setOrderStatus(String orderStatus) {
+    this.orderStatus = orderStatus;
+  }
 
 }

@@ -12,6 +12,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import Models.Customer;
 
+/**
+ *
+ * @author Hung
+ */
 public class CustomerDAO {
 
     private Connection conn;

@@ -1,10 +1,9 @@
-var sorted = null; 
-var notSort = null; 
-var preButton = null; 
+var sorted = null; // Biến toàn cục lưu trữ danh sách các phần tử đã được sắp xếp
+var notSort = null; // Biến toàn cục lưu trữ danh sách các phần tử chưa được sắp xếp
+var preButton = null; // Biến toàn cục lưu trữ id của nút trước đó đã được nhấn
 
-//show success order food
 $(document).ready(function () {
-  notSort = document.querySelectorAll("div[id^='food-']"); 
+  notSort = document.querySelectorAll("div[id^='food-']"); // Lưu trữ danh sách ban đầu vào biến notSort
   if (window.location.hash === '#success') {
     $('#success').modal('show');
     setTimeout(function () {
@@ -13,123 +12,43 @@ $(document).ready(function () {
   }
 });
 
-//show success register account
-$(document).ready(function () {
-  notSort = document.querySelectorAll("div[id^='food-']"); 
-  if (window.location.hash === '#success_register') {
-    $('#success_register').modal('show');
-    setTimeout(function () {
-      $('#success_register').modal('hide');
-    }, 3000);
-  }
-});
-
-//show success change password
-$(document).ready(function () {
-  notSort = document.querySelectorAll("div[id^='food-']"); 
-  if (window.location.hash === '#success_changePassword') {
-    $('#success_changePassword').modal('show');
-    setTimeout(function () {
-      $('#success_changePassword').modal('hide');
-    }, 3000);
-  }
-});
-
-//show fail order food
-$(document).ready(function () {
-  notSort = document.querySelectorAll("div[id^='food-']"); 
-  if (window.location.hash === '#failure') {
-    $('#failure').modal('show');
-    setTimeout(function () {
-      $('#failure').modal('hide');
-    }, 3000);
-  }
-});
-
-//show fail login
-$(document).ready(function () {
-  notSort = document.querySelectorAll("div[id^='food-']");
-  if (window.location.hash === '#failure_login') {
-    $('#failure_login').modal('show');
-    setTimeout(function () {
-      $('#failure_login').modal('hide');
-    }, 3000);
-  }
-});
-
-//show fail register
-$(document).ready(function () {
-  notSort = document.querySelectorAll("div[id^='food-']"); 
-  if (window.location.hash === '#failure_register') {
-    $('#failure_register').modal('show');
-    setTimeout(function () {
-      $('#failure_register').modal('hide');
-    }, 3000);
-  }
-});
-
-//show fail change password
-$(document).ready(function () {
-  notSort = document.querySelectorAll("div[id^='food-']"); 
-  if (window.location.hash === '#failure_changePassword') {
-    $('#failure_changePassword').modal('show');
-    setTimeout(function () {
-      $('#failure_changePassword').modal('hide');
-    }, 3000);
-  }
-});
-
-//show verify OTP modal
-$(document).ready(function () {
-  notSort = document.querySelectorAll("div[id^='food-']"); 
-  if (window.location.hash === '#verify_OTP') {
-    $('#verify_OTP').modal('show');
-    setTimeout(function () {
-      $('#verify_OTP').modal('hide');
-    }, 120000);
-  }
-});
-
-//show change password modal
-$(document).ready(function () {
-  notSort = document.querySelectorAll("div[id^='food-']"); 
-  if (window.location.hash === '#changePass_modal') {
-    $('#changePass_modal').modal('show');
-  }
-});
-
 $(document).on("click", ".btn-cate", function () {
   let foodTypeID = $(this).data("food-type-id");
+
   let foodList = document.querySelectorAll("div[id^='food-']");
+
   if (sorted === null) {
-    sorted = Array.from(notSort); 
+    // Nếu sorted chưa được khởi tạo, đây là lần nhấn đầu tiên
+    sorted = Array.from(notSort); // Sao chép danh sách chưa được sắp xếp vào sorted
     sorted.sort(function (a, b) {
       let aId = a.id.substring(5);
       let bId = b.id.substring(5);
       return aId.localeCompare(bId);
     });
 
-    preButton = foodTypeID; 
+    preButton = foodTypeID; // Lưu id của nút hiện tại vào biến preButton
   } else {
-
+    // Nếu sorted đã tồn tại, đây là lần nhấn tiếp theo
     if (foodTypeID !== preButton) {
-
-      sorted = Array.from(notSort); 
+      // Nếu id của nút hiện tại khác với id của nút trước đó, tiếp tục sắp xếp dữ liệu
+      sorted = Array.from(notSort); // Sao chép danh sách chưa được sắp xếp vào sorted
       sorted.sort(function (a, b) {
         let aId = a.id.substring(5);
         let bId = b.id.substring(5);
         return aId.localeCompare(bId);
       });
 
-      preButton = foodTypeID; 
+      preButton = foodTypeID; // Lưu id của nút hiện tại vào biến preButton
     } else {
-      sorted = null; 
-      preButton = null; 
+      // Nếu id của nút hiện tại trùng với id của nút trước đó, trả lại tất cả giá trị như ban đầu
+      sorted = null; // Xóa dữ liệu đã sắp xếp
+      preButton = null; // Đặt preButton về giá trị null
 
+      // Hiển thị lại tất cả các phần tử
       for (var i = 0; i < foodList.length; i++) {
         foodList[i].style.display = 'block';
       }
-      return; 
+      return; // Kết thúc xử lý sự kiện
     }
   }
 
@@ -145,35 +64,6 @@ $(document).on("click", ".btn-cate", function () {
 });
 
 
-// Get all button addToCartBtn
-var addToCartButtons = document.querySelectorAll('.addToCartBtn');
-
-// Loop each button and add click event
-addToCartButtons.forEach(function(button) {
-  button.addEventListener('click', function() {
-    var foodId = this.getAttribute('data-foodid');
-    var quantity = this.getAttribute('data-quantity');
-
-    // Send AJAX request to addToCart servlet endpoint
-    $.ajax({
-        type: "GET",
-        url: "addToCart",
-        data: {
-            fid: foodId,
-            quantity: quantity
-        },
-        success: function (response) {
-            console.log("Item added to cart successfully.");
-        },
-        error: function (error) {
-
-            console.error("Error occurred: " + error.responseText);
-        }
-    });
-    window.location.reload();
-  });
-});
-
 
 //search 
 function searchFood() {
@@ -185,12 +75,12 @@ function searchFood() {
     var foodContainer = foodList[i];
 
     if (searchTerm === "") {
-      foodContainer.style.display = "block"; 
+      foodContainer.style.display = "block"; // Hiển thị tất cả giá trị food nếu tìm kiếm rỗng
     } else {
       if (foodName.includes(searchTerm)) {
-        foodContainer.style.display = "block"; 
+        foodContainer.style.display = "block"; // Hiển thị phần tử nếu tìm thấy kết quả
       } else {
-        foodContainer.style.display = "none"; 
+        foodContainer.style.display = "none"; // Ẩn phần tử nếu không tìm thấy kết quả
       }
     }
   }

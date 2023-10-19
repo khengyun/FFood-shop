@@ -158,7 +158,13 @@ public class LoginController extends HttpServlet {
           }
         }
       } else {
-          response.sendRedirect("/home#failure_login");
+        if (previousUrl != null) {
+          // Chuyển hướng người dùng về trang hiện tại
+          response.sendRedirect(previousUrl);
+        } else {
+          // Nếu không có URL trước đó, chuyển hướng người dùng về trang mặc định
+          response.sendRedirect("/");
+        }
       }
     }
   }

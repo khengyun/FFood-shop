@@ -12,7 +12,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import Models.Cart;
 
-
+/**
+ *
+ * @author Hung
+ */
 public class CartDAO {
 
   private Connection conn;

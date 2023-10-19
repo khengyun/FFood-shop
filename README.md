@@ -58,9 +58,9 @@ To install and set up the FFood website locally, follow these steps:
 
 1. Clone the repository to your local machine:
 
-   >```bash
+   ```bash
    > git clone https://github.com/khengyun/FFood-shop.git
-   >```
+   ```
 
 2. Open the project in your preferred integrated development environment (IDE) such as NetBeans 13 and later.
 
@@ -98,25 +98,6 @@ DATA_SERVER_NAME=your-data-server-name
    - Start the Tomcat server either through your IDE or by running the appropriate startup script.
    - Open a web browser and visit `http://localhost:8080/your-web-app-context` to access the website. The web application context path can be configured in `src/main/webapp/META-INF/context.xml`
     - By default it is `""`, so the website URL should be `http://localhost:8080`
-
-## Dockerized SQL Server
-1. Install Docker on Window [click here](https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe?_gl=1*3jwbnk*_ga*MTU2MzcwNDM2OS4xNjk3NDU2NjY2*_ga_XJWPQMJYHQ*MTY5NzUyNjQ5Mi44LjEuMTY5NzUyODUxMy40My4wLjA.)
-2. Check Docker version after install 
-> ```bash
-> docker --version
->```
-
-![Alt text](image.png)
-
-3. ``cd`` into the cloned FFood-shop folder
->```bash
->git clone https://github.com/khengyun/FFood-shop.git
->cd FFood-shop
->## Run docker
->docker compose up --build
->```
-
-
 
 Now you should have FFood running locally on your machine.
 

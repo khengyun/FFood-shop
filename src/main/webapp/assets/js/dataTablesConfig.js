@@ -214,5 +214,159 @@ $(document).ready(function () {
 
   $('#users-table').DataTable();
   $('#orders-table').DataTable();
+  
+  
+  let voucherTable = $('#voucher-table').DataTable({
+    columnDefs: [
+      {
+        searchable: false,
+        orderable: false,
+        targets: [-1] // "Image" columns
+      }
+    ]
+  });
+  
+  voucherTable.on('mouseenter', 'td', function () {
+    let columnIndex = voucherTable.cell(this).index().column;
+
+    voucherTable.cells()
+        .nodes()
+        .each((element) => element.classList.remove('highlight'));
+
+    voucherTable
+        .column(columnIndex)
+        .nodes()
+        .each((element) => element.classList.add('highlight'));
+  });
+
+  function disableUpdateVoucherBtn() {
+    let btnUpdate = $('#btn-update-voucher');
+    if (btnUpdate) {
+      btnUpdate.removeAttr("data-voucher-id");
+      btnUpdate.removeAttr("data-voucher-type");
+      btnUpdate.removeAttr("data-voucher-name");
+      btnUpdate.removeAttr("data-voucher-price");
+      btnUpdate.removeAttr("data-discount-percent");
+      btnUpdate.removeAttr("data-image-url");
+      btnUpdate.addClass("disabled");
+    }
+  }
+
+  function disableDeleteVoucherBtn() {
+    let btnDelete = $('#btn-delete-voucher');
+    if (btnDelete) {
+      btnDelete.removeAttr("data-voucher-id");
+      btnDelete.removeAttr("data-voucher-name");
+      btnDelete.addClass("disabled");
+    }
+  }
+
+  /*
+  Enables/Disables the Update button whenever user selects/deselects row(s)
+  Requires Select extension enabled
+  */
+  voucherTable.on('select selectItems deselect', function (e, dt, type, indexes) {
+    if (type === 'row' && indexes && Array.isArray(indexes)) {
+      let btnUpdate = $('#btn-update-voucher');
+      let btnDelete = $('#btn-delete-voucher');
+
+      // Retrieves selected rows
+      let data = voucherTable.rows({selected: true}).data();
+
+      // Only allows update for exactly 1 row
+      if (data.length === 1) {
+
+        // data's type is a 2D array since the table's data is DOM-sourced
+        // https://datatables.net/reference/api/row().data()
+        btnUpdate.attr("data-voucher-id", data[0][0]);
+        btnUpdate.attr("data-voucher-code", data[0][1]);
+        btnUpdate.attr("data-voucher-value", data[0][2]);
+        btnUpdate.attr("data-voucher-quantity", data[0][3]);
+        let c = data[0][4]
+            .substring(0, data[0][4].length - 1) // Removes currency symbol
+            .replace(',', '') // Removes thousand separators
+            .concat(".0000"); // Adds optional decimals
+        btnUpdate.attr("data-voucher-condition", c);
+
+        btnUpdate.attr("data-voucher-expdate", data[0][5]);
+        btnUpdate.attr("data-voucher-status",data[0][6]);
+
+
+        btnUpdate.removeClass("disabled");
+
+        let vouchers = {};
+        vouchers[data[0][0]] = data[0][2]; // voucher[id] = voucher name
+        btnDelete.attr("data-vouchers", JSON.stringify(vouchers));
+        btnDelete.removeClass("disabled");
+      } else if (data.length > 1) {
+        let vouchers = {};
+        for (let i = 0; i < data.length; i++) {
+          let voucherId = data[i][0];
+          vouchers[voucherId] = data[i][2]; // Voucher name
+        }
+        btnDelete.attr("data-vouchers", JSON.stringify(vouchers));
+        btnDelete.removeClass("disabled");
+        disableUpdateVoucherBtn();
+      } else {
+        disableUpdateVoucherBtn();
+        disableDeleteVoucherBtn();
+      }
+    }
+  });
+
+  /*
+  Disables the Update button whenever user clicks outside of table (blur)
+  Requires Select extension with blurable option enabled
+
+  The blurable option causes a bug in the selectAll button, causing it unable to select at all,
+  but instead deselects all rows. This only happens if I move the table button group outside
+  the DataTables container. Initializing the buttons using the dom option is still normal.
+
+  For now I'll stop using blurable for Select, but I'll look into it if I have time.
+  */
+  voucherTable.on('select-blur', function (e, dt, target, originalEvent) {
+    // Ignores blur event if user clicks on update/delete/cancel/confirm buttons, or the background of a modal dialog
+    if (target.classList.contains("btn-update")
+        || target.classList.contains("btn-delete")
+        || target.classList.contains("btn-cancel")
+        || target.classList.contains("btn-confirm")
+        || target.id === "update-voucher-modal"
+        || target.id === "delete-voucher-modal") {
+      e.preventDefault();
+    } else {
+      disableUpdateVoucherBtn();
+      disableDeleteVoucherBtn();
+    }
+  })
+
+  /*
+  Fixes table header not properly sized on page load.
+  Upon any resize events (such as browser window resize), such elements are displayed correctly.
+  This problem is not present if the tabbed content is immediately active on page load (home tab).
+  This solution is triggered on click of tab button on the admin sidebar (whose target is specified in the query selector).
+  */
+  $("[data-bs-target='#vouchers']").click(function () {
+    // Remove searchPanes' expand and collapse all panes button
+    $('.dtsp-showAll').remove();
+    $('.dtsp-collapseAll').remove();
+
+    // Additional custom styling for searchPane's title row
+    $('.dtsp-titleRow').addClass("d-flex flex-wrap align-items-center gap-2 mt-1");
+    $('.dtsp-titleRow > div').addClass("py-0").after("<div class='flex-grow-1'>");
+    $('.dtsp-titleRow > button').addClass("d-flex align-items-center btn-sm py-2");
+
+    // Insert the table's button group to existing button container with Add, Update, Delete buttons
+    voucherTable.buttons().container().prependTo("#vouchers-button-container");
+    // Manually configure classes for the newly inserted button group
+    let tableButtons = $("#vouchers-button-container > div.dt-buttons");
+    tableButtons.removeClass("btn-group");
+    tableButtons.addClass("col-sm-12 col-lg-7 d-flex gap-2");
+    /*$("#vouchers-button-container > div.dt-buttons > *").addClass("me-1");*/
+
+    // Fix table headers not resized on page load
+    $('#voucher-table').resize();
+  });
+
+
 })
 ;
