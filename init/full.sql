@@ -66,8 +66,8 @@ go
 
 create table Customer (
 	customer_id			int identity(1,1) not null primary key,
-	customer_firstname	nvarchar(200) not null,
-	customer_lastname	nvarchar(200) not null,
+	customer_firstname	nvarchar(200) null,
+	customer_lastname	nvarchar(200) null,
 	customer_gender		nvarchar(5) null,
 	customer_phone		varchar(11) null,
 	customer_address	nvarchar(1000) null
