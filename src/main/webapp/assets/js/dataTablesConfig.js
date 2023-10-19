@@ -212,7 +212,58 @@ $(document).ready(function () {
     $('#food-table').resize();
   });
 
+let userTable = $('#user-table').DataTable({
+    columnDefs: [
+      {
+        searchable: false,
+        userable: false,
+        targets: [-1] // "Image" columns
+      }
+    ]
+  });
+
+  /*
+  Highlights current column that the mouse cursor is hovering on
+  This should be used in tandem with default hover option for increased cursor visibility
+  */
+  userTable.on('mouseenter', 'td', function () {
+    let columnIndex = userTable.cell(this).index().column;
+
+    userTable.cells()
+        .nodes()
+        .each((element) => element.classList.remove('highlight'));
+
+    userTable
+        .column(columnIndex)
+        .nodes()
+        .each((element) => element.classList.add('highlight'));
+  });
+
+  $("[data-bs-target='#users']").click(function () {
+    // Remove searchPanes' expand and collapse all panes button
+    $('.dtsp-showAll').remove();
+    $('.dtsp-collapseAll').remove();
+
+    // Additional custom styling for searchPane's title row
+    $('.dtsp-titleRow').addClass("d-flex flex-wrap align-items-center gap-2 mt-1 ml-3");
+    $('.dtsp-titleRow > div').addClass("py-0").after("<div class='flex-grow-1'>");
+    $('.dtsp-titleRow > button').addClass("d-flex align-items-center btn-sm py-2");
+
+    // Insert the table's button group to existing button container with Add, Update, Delete buttons
+    userTable.buttons().container().prependTo("#users-button-container");
+    // Manually configure classes for the newly inserted button group
+    let tableButtons = $("#users-button-container > div.dt-buttons");
+    tableButtons.removeClass("btn-group");
+    tableButtons.addClass("col-sm-12 col-lg-7 d-flex gap-2");
+    /*$("#users-button-container > div.dt-buttons > *").addClass("me-1");*/
+
+    // Fix table headers not resized on page load
+    $('#user-table').resize();
+  });
+  
   $('#users-table').DataTable();
   $('#orders-table').DataTable();
 })
 ;
+
+

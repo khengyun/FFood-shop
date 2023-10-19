@@ -53,6 +53,7 @@ $(document).on("click", "#btn-update-user", function () {
   $("#update-user-modal").find("#txtAccountUsername").attr("value", username);
   $("#update-user-modal").find("#txtEmail").attr("value", email);
 });
+
 $(document).on("click", "#btn-delete-user", function () {
   let username = $(this).data("username");
   let accountID = $(this).data("account-id");

@@ -1,0 +1,23 @@
+<%@ page pageEncoding="UTF-8" %>
+<!-- DataTables CSS -->
+<link href="<%= request.getContextPath() + "/vendors/DataTables/DataTables-1.13.6/css/dataTables.bootstrap5.min.css"%>"
+  rel="stylesheet"/>
+
+<link href="<%= request.getContextPath() + "/vendors/DataTables/FixedHeader-3.4.0/css/fixedHeader.bootstrap5.min.css"%>"
+  rel="stylesheet"/>
+
+<link href="<%= request.getContextPath() + "/vendors/DataTables/FixedColumns-4.3.0/css/fixedColumns.bootstrap5.min.css"%>"
+      rel="stylesheet"/>
+
+<link href="<%= request.getContextPath() + "/vendors/DataTables/Select-1.7.0/css/select.bootstrap5.min.css"%>"
+  rel="stylesheet"/>
+
+<link href="<%= request.getContextPath() + "/vendors/DataTables/Buttons-2.4.2/css/buttons.bootstrap5.min.css"%>"
+  rel="stylesheet"/>
+
+<link href="<%= request.getContextPath() + "/vendors/DataTables/ColReorder-1.7.0/css/colReorder.bootstrap5.min.css"%>"
+      rel="stylesheet"/>
+
+<!-- TODO replace this version once version 2.3.0+ is released -->
+<link href="<%= request.getContextPath() + "/vendors/DataTables/SearchPanes-2.2.0/nightly/css/searchPanes.bootstrap5.min.css"%>"
+  rel="stylesheet"/>

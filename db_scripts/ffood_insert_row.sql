@@ -141,3 +141,13 @@ order_note, delivery_time, order_cancel_time
 1, 1, 4, 1, 
 '0931278397', N'39 Mậu Thân, Ninh Kiều, Cần Thơ', '20230708 10:34:09 AM', 170000, 
 NULL, '20230708 10:49:35 AM', NULL);
+
+insert into [Order] (
+cart_id, customer_id, order_status_id, payment_method_id,
+contact_phone, delivery_address, order_time, order_total, 
+order_note, delivery_time, order_cancel_time
+) values (
+2, 1, 4, 1, 
+'0931278397', N'39 Mậu Thân, Ninh Kiều, Cần Thơ', '20230708 10:34:09 AM', 170000, 
+NULL, '20230708 10:49:35 AM', NULL);
+

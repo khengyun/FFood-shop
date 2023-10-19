@@ -1,0 +1,61 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="tab-pane fade" id="orders">
+    <div class="container-fluid p-4 shadow rounded-4 bg-white">
+        <table id="order-table" class="table table-hover nowrap align-middle" style="width: 100%;">
+            <h1 class="text-center fw-bold fs-3 mb-3">Quản lý Đơn món</h1>
+        </div>
+      </div>
+            <thead>
+                <tr>
+                    <th>Mã đơn</th>
+                    <th>Mã KH</th>
+                    <th>SĐT liên lạc</th>
+                    <th>Địa chỉ nhận</th>
+                    <th>Phương thức thanh toán</th>
+                    <th>Các món đặt</th>
+                    <th>Ghi chú</th>
+                    <th>Thanh toán</th>
+                    <th>Trạng thái</th>
+                    <th>Thời gian đặt</th>
+                    <th>Thời gian nhận</th>
+                    <th>Thời gian hủy</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            <c:forEach items="${orderList}" var="o">
+                <tr>
+
+                    <td>${o.orderID}</td>
+                    <td>${o.customerID}</td>
+                    <td>${o.contactPhone}</td>
+                    <td>${o.deliveryAddress}</td>
+                    <td>${o.paymentMethod}</td>
+                    <td>
+                        <ul class="order-items"> <!-- Tùy chỉnh CSS class cho danh sách món đặt -->
+                            <c:forEach items="${o.orderItems}" var="orderItem">
+                                <li>${orderItem}</li>
+                            </c:forEach>
+                        </ul>
+                    </td>
+                    <td>${(o.orderNote == null) ? "" : o.orderNote}</td>
+                    <td><fmt:formatNumber type="number" pattern="###,###,###.##" value="${o.orderTotal}"/>đ</td>
+                <td>
+                    <select name="orderStatus" id="orderStatus" style="border: none; background: transparent;">
+                        <option value="Chờ xác nhận" ${o.orderStatus == 'Chờ xác nhận' ? 'selected' : ''}>Chờ xác nhận</option>
+                        <option value="Đang chuẩn bị" ${o.orderStatus == 'Đang chuẩn bị' ? 'selected' : ''}>Đang chuẩn bị</option>
+                        <option value="Đang giao" ${o.orderStatus == 'Đang giao' ? 'selected' : ''}>Đang giao</option>
+                        <option value="Đã giao" ${o.orderStatus == 'Đã giao' ? 'selected' : ''}>Đã giao</option>
+                        <option value="Đã hủy" ${o.orderStatus == 'Đã hủy' ? 'selected' : ''}>Đã hủy</option>
+                    </select>
+                </td>
+                <td>${o.orderTime}</td>
+                <td>${(o.deliveryTime == null) ? "" : o.deliveryTime}</td>
+                <td>${(o.orderCancelTime == null) ? "" : o.orderCancelTime}</td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+    </div>
+</div>

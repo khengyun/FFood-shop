@@ -1,0 +1,80 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="tab-pane fade" id="users">
+    <div class="container-fluid p-4 shadow rounded-4 bg-white">
+        <table id="user-table" class="table table-hover nowrap align-middle" style="width: 100%;">
+             <h1 class="text-center fw-bold fs-3 mb-3">Quản lý Người dùng</h1>
+
+             <button type="button" class="btn btn-sm btn-success py-1 my-2 me-2" data-bs-toggle="modal" data-bs-target="#add-user-modal">
+                    Tạo Tài khoản Người dùng
+                  </button>
+            <thead>
+                <tr>
+                    <th onclick="sortTable(0)">Mã Tài khoản</th>
+                    <th onclick="sortTable(1)">Tên Người dùng</th>
+                    <th onclick="sortTable(2)">Email</th>
+                    <th onclick="sortTable(3)">Loại Tài khoản</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+            <c:forEach items="${userAccountList}" var="u">
+                <tr>
+                    <td>${u.accountID}</td>
+                    <td>${u.username}</td>
+                    <td>${u.email}</td>
+                    <td>${u.accountType}</td>
+                    <td>
+                        <button type="button" id="btn-update-user"
+                                class="btn btn-sm btn-success py-1 m-1"
+                                data-account-id="${u.accountID}"
+                                data-username="${u.username}"
+                                data-email="${u.email}"
+                                data-bs-toggle="modal" data-bs-target="#update-user-modal">
+                            Cập nhật
+                        </button>
+                        <button type="button" id="btn-delete-user"
+                                class="btn btn-sm btn-danger py-1 m-1"
+                                data-account-id="${u.accountID}"
+                                data-username="${u.username}"
+                                data-bs-toggle="modal" data-bs-target="#delete-user-modal">
+                            Xóa
+                        </button>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+    </div>
+</div>
+                                
+<script>
+    // Hàm sắp xếp theo cột
+    function sortTable(columnIndex) {
+        let table, rows, switching, i, x, y, shouldSwitch;
+        table = document.getElementById("user-table");
+        switching = true;
+
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+
+                x = rows[i].getElementsByTagName("td")[columnIndex];
+                y = rows[i + 1].getElementsByTagName("td")[columnIndex];
+
+                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                }
+            }
+
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+            }
+        }
+    }
+</script>
