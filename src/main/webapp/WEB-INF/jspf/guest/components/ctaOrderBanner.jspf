@@ -1,0 +1,14 @@
+<%@ page pageEncoding="UTF-8" %>
+<section class="py-0">
+  <div class="bg-holder" style="background-image:url(assets/img/gallery/cta-two-bg.png);background-position:center;background-size:cover;">
+  </div>
+  <!--/.bg-holder-->
+  <div class="container">
+    <div class="row flex-center">
+      <div class="col-xxl-9 py-7 text-center">
+        <h1 class="fw-bold mb-4 text-white fs-6">Bạn đã sẵn sàng đặt món <br />ngon bổ rẻ chưa?</h1>
+        <a class="btn btn-lg btn-danger" href="#foodList"> ĐẶT MÓN NGAY<i class="fas fa-chevron-right ms-2"></i></a>
+      </div>
+    </div>
+  </div>
+</section>

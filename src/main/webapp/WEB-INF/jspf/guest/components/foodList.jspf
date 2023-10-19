@@ -1,0 +1,36 @@
+<%@ page pageEncoding="UTF-8" %>
+<div class="row row-cols-4 gx-3" id="food-list">
+  <!-- Gets foodList attribute set by HomeController.java -->
+  <c:forEach items="${foodList}" var="food">
+    <div class="col-sm-6 col-md-4 col-lg-3 mb-4 h-100" id="food-${food.foodTypeID}">
+      <div class="card card-span h-100 rounded-3 shadow">
+        <div class="position-relative">
+          <img class="card-img-top img-fluid rounded-3 h-100" src="${food.imageURL}" alt="${food.foodName}" />
+          <c:if test="${food.discountPercent != 0}">
+            <span class="badge bg-success p-2 m-3 shadow position-absolute top-0 start-0">
+              <i class="fas fa-tag me-2 fs-0"></i>
+              <span class="fs-0">
+                <c:out value="Giảm ${food.discountPercent}%" />
+              </span>
+            </span>
+          </c:if>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title fw-bold fs-1 text-1000 text-truncate mb-1">${food.foodName}</h5>
+          <div class="card-text mb-3">
+            <span class="text-primary fw-bold">
+              <fmt:formatNumber type="number" pattern="###,###" value="${food.foodPrice - (food.foodPrice * food.discountPercent / 100)}" />đ
+            </span>
+            <c:if test="${food.discountPercent != 0}">
+              <span class="ms-3 text-600">
+                <s><fmt:formatNumber type="number" pattern="###,###" value="${food.foodPrice}" />đ</s>
+              </span>
+            </c:if>
+          </div>
+          <a href="addToCart?fid=${food.foodID}&quantity=1" class="btn btn-lg btn-danger px-2 w-100" role="button">Thêm vào Giỏ hàng</a>
+        </div>
+      </div>
+    </div>
+  </c:forEach>
+  <button id="btn-show-more" class="btn btn-secondary mx-auto">Xem thêm</button>
+</div>
