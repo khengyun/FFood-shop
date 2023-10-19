@@ -67,21 +67,21 @@ body:
     description: The version and build number (optional) of your OS. If you are using a distro of Linux, include the distro name before the version.
     
 - type: dropdown
-    id: browser-name
-    attributes:
-      label: Browser
-      Description: Name of your web browser
-      multiple: true
-      options:
-        - Firefox
-        - Microsoft Edge
-        - Chrome
-        - Coc Coc
-        - Safari
-        - Opera
-        - Brave
-        - Internet Explorer
-        - Stock Android browser
+  id: browser-name
+  attributes:
+    label: Browser
+    Description: Name of your web browser
+    multiple: true
+    options:
+      - Firefox
+      - Microsoft Edge
+      - Chrome
+      - Coc Coc
+      - Safari
+      - Opera
+      - Brave
+      - Internet Explorer
+      - Stock Android browser
 - type: input
   id: browser-version
   attributes:
