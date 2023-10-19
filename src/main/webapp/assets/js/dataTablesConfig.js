@@ -9,17 +9,17 @@ $(document).ready(function () {
       return: true
     },
     pagingType: "full_numbers",
-    dom: "<'row'" +
-        "<'col-sm-12 col-md-3'P>" + // searchPanes on left col (L)
-        "<'d-row col-sm-12 col-md-9 m-0'" +
-        "<'row'" +
-        "<'col-sm-12 col-lg-6 pt-2'l><'col-sm-12 col-lg-6 pt-1 'f>" + // length and search bar
-        ">" +
-        "<'col-sm-12'tr>" + // table
-        "<'row'" +
-        "<'col-sm-12 col-md-5 mt-1'i><'col-sm-12 col-md-7 mt-2'p>" + // info and pagination
-        ">" +
-        ">" +
+    dom:"<'row'" +
+          "<'col-sm-12 col-md-3'P>" + // searchPanes on left col (L)
+          "<'d-row col-sm-12 col-md-9 m-0'" +
+            "<'row'" +
+              "<'col-sm-12 col-lg-6 pt-2'l><'col-sm-12 col-lg-6 pt-1 'f>" + // length and search bar
+            ">" +
+            "<'col-sm-12'tr>" + // table
+            "<'row'" +
+              "<'col-sm-12 col-md-5 mt-1'i><'col-sm-12 col-md-7 mt-2'p>" + // info and pagination
+            ">" +
+          ">" +
         ">",
     fixedHeader: {
       header: true,
