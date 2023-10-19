@@ -1,0 +1,38 @@
+<%@ page pageEncoding="UTF-8" %>
+<section class="py-0 bg-primary-gradient">
+  <div class="container">
+    <div class="row justify-content-center g-0">
+      <div class="col-xl-9">
+        <div class="col-lg-6 text-center mx-auto mb-3 mb-md-5 mt-4">
+          <h5 class="fw-bold text-danger fs-3 fs-lg-5 lh-sm my-6">Cách đặt món nhanh</h5>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 col-md-3 mb-6">
+            <div class="text-center"><img class="shadow-icon" src="assets/img/gallery/order.png" height="112" alt="..." />
+              <h5 class="mt-4 fw-bold">Chọn món ăn và đồ uống</h5>
+              <p class="mb-md-0">Chọn những món bạn muốn ăn, và số lương món ăn cần đặt</p>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-3 mb-6">
+            <div class="text-center"><img class="shadow-icon" src="assets/img/gallery/location.png" height="112" alt="..." />
+              <h5 class="mt-4 fw-bold">Chọn địa điểm giao món</h5>
+              <p class="mb-md-0">Đặt địa điểm giao, và món ăn của bạn sẽ đến trong chốc lát</p>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-3 mb-6">
+            <div class="text-center"><img class="shadow-icon" src="assets/img/gallery/pay.png" height="112" alt="..." />
+              <h5 class="mt-4 fw-bold">Chọn phương thức thanh toán</h5>
+              <p class="mb-md-0">Thanh toán trước qua thẻ hoặc thanh toán khi nhận món (COD)</p>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-3 mb-6">
+            <div class="text-center"><img class="shadow-icon" src="assets/img/gallery/meals.png" height="112" alt="..." />
+              <h5 class="mt-4 fw-bold">Thưởng thức món ăn</h5>
+              <p class="mb-md-0">Thưởng thức đồ ăn nóng hổi, vừa ăn vừa thổi</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
