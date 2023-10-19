@@ -57,9 +57,8 @@
             <span class="visually-hidden">Giỏ hàng</span>
           </span>
         </button>
+          <%@ include file="../../LangOption/langviewbutton.jspf" %>
 
-        <!-- Language button -->
-        <%@ include file="../../LangOption/langviewoption.jspf" %>
         
         <!-- Login button -->  
         <c:choose>
