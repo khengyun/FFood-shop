@@ -4,11 +4,11 @@ labels:
 - bug
 
 body:
-- type: input
+- type: textarea
   attributes:
     label: Description
     placeholder: Screen scrolls up every time I press a key on the search bar
-    description: A clear and concise description of what the bug is
+    description: A clear and concise description of what the bug is. Images and videos are supported.
 
 - type: dropdown
   attributes:
@@ -22,7 +22,7 @@ body:
 - type: textarea
   attributes:
     label: Steps to reproduce
-    description: Having detailed steps helps us reproduce the bug. Images and videos are recommended.
+    description: Having detailed steps helps us reproduce the bug. Images and videos are supported.
     placeholder: |
       1. Go to '...'
       2. Click on '....'
@@ -35,10 +35,9 @@ body:
 - type: textarea
   attributes:
     label: Expected behavior (Optional)
-    description: A clear and concise description of what you expected to happen (if the bug was not there).
+    description: A clear and concise description of what you expected to happen (if the bug was not there). Images and videos are supported.
     placeholder: |
       The entire website is frozen, probably due to memory overflow
-      Add images and videos here for a better description
 
 - type: markdown
   attributes:
