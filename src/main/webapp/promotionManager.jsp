@@ -31,10 +31,10 @@
                     <div class="tab-content">
                         <!-- Home Tab Content -->
                         <%@ include file="WEB-INF/jspf/promotionManager/home.jspf" %>
-                        <!-- Food & Drinks Tab Content -->
                      
                         
-                          <div class="tab-pane fade" id="promotions">
+                          <!-- Promotion Tab Content -->
+                        <div class="tab-pane fade" id="promotions">
                             <div class="container-fluid p-2">
                                 <table id="users-table" class="table table-bordered table-striped">
                                     <h1 class="text-center fw-bold fs-3" align="left">Khuyến mãi</h1>
@@ -52,27 +52,27 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:forEach items="${voucherList}" var="f">
+                                        <c:forEach items="${voucherList}" var="v">
                                             <tr>
-                                                <td>${f.voucher_id}</td>
-                                                <td>${f.voucher_name}</td>
+                                                <td>${v.voucherID}</td>
+                                                <td>${v.name}</td>
 
-                                                <td>${(f.voucher_discount_percent == null) ? 0 : f.voucher_discount_percent}%</td>                                 
+                                                <td>${(v.voucher_discount_percent == null) ? 0 : v.voucher_discount_percent}%</td>                                 
                                                 <td>
                                                     <button style="color: white;border-color: rgba(207, 126, 0, 1); background-color: rgba(207, 126, 0, 1);"
                                                             type="button" id="btn-update-voucher"
                                                             class="btn btn-sm btn-success py-1 m-1"
-                                                            data-food-id="${f.voucher_id}"
-                                                            data-voucher-name="${f.voucher_name}"
-                                                            data-voucher-discount-percent="${f.voucher_discount_percent}"
+                                                            data-voucher-id="${v.voucherID}"
+                                                            data-voucher-name="${v.name}"
+                                                            data-voucher-discount-percent="${v.voucher_discount_percent}"
                                                             data-bs-toggle="modal" data-bs-target="#update-voucher-modal">
                                                         Cập nhật
                                                     </button>
                                                     <button style="color: white;border-color: rgba(207, 126, 0, 1); background-color: rgba(207, 126, 0, 1);"
                                                             type="button" id="btn-delete-voucher"
                                                             class="btn btn-sm btn-danger py-1 m-1"
-                                                            data-voucher-id="${f.voucher_id}"
-                                                            data-voucher-name="${f.voucher_name}"
+                                                            data-voucher-id="${v.voucherID}"
+                                                            data-voucher-name="${v.name}"
                                                             data-bs-toggle="modal" data-bs-target="#delete-voucher-modal">
                                                         Xóa
                                                     </button>
@@ -85,13 +85,12 @@
                         </div>
 
                  
-
-
                     </div>
                 </main>
             </div>
         </div>
         <%@ include file="WEB-INF/jspf/common/imports/validation.jspf" %>
         <%@ include file="WEB-INF/jspf/common/imports/javascript.jspf" %>
+        <%@ include file="WEB-INF/jspf/promotionManager/imports/dataTablesScript.jspf" %>
     </body>
 </html>
