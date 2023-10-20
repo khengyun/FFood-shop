@@ -98,7 +98,6 @@ public class LoginController extends HttpServlet {
             String previousUrl = (String) session.getAttribute("previousUrl");
             if (success) {
                 account = dao.getAccount(email);
-                System.out.println("Heeeeeeeeeeeeeeeeeee");
                 String accountType = account.getAccountType();
                 boolean isRemembered = (request.getParameter("chkRememberMe") != null
                         && request.getParameter("chkRememberMe").equals("remember"));
