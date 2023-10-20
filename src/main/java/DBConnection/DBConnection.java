@@ -1,4 +1,5 @@
 package DBConnection;
+    
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -6,19 +7,20 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DBConnection {
-    private static Connection conn = null;
-    public static Connection getConnection() {
 
+    private static Connection conn = null;
+
+    public static Connection getConnection() {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             try {
                 conn = DriverManager.getConnection("jdbc:sqlserver://"
-                        + "DESKTOP-U9OGPNQ\\SQLEXPRESS01:1433;"
+                        + "localhost:1450;"
                         + "databaseName=ffood;"
-			// Enter your SSMS login username
-                        + "user=quocanh;"
+                        // Enter your SSMS login username
+                        + "user=sa;"
                         // Enter your SSMS login password
-                        + "password=123456;"
+                        + "password=sa@123456;"
                         + "encrypt=true;"
                         + "trustServerCertificate= true;");
             } catch (SQLException ex) {
@@ -27,7 +29,6 @@ public class DBConnection {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return conn;   
+        return conn;
     }
-
 }
