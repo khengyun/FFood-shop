@@ -201,6 +201,10 @@
         <url-pattern>/staff</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>StaffController</servlet-name>
+        <url-pattern>/staff/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>PromotionManagerController</servlet-name>
         <url-pattern>/promotionManager</url-pattern>
     </servlet-mapping>

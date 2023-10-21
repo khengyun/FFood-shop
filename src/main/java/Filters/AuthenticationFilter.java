@@ -193,6 +193,36 @@ public class AuthenticationFilter implements Filter {
             httpResponse.sendRedirect("/");
             return;
           }
+        } else if (path.startsWith("/staff")) {
+          // Destination page is admin page
+          if (getAuthStatus(httpRequest) == 4) {
+            // Account is of Admin type, proceeds to admin page
+            HttpSession session = httpRequest.getSession();
+            boolean hasStaffSession = (session.getAttribute("staff") != null
+                    && !(((String) session.getAttribute("staff")).isEmpty()));
+            if (hasStaffSession) {
+              String username = (String) session.getAttribute("staff");
+              request.setAttribute("StaffName", URLDecoder.decode(username, "UTF-8"));
+            } else {
+              Cookie[] cookies = httpRequest.getCookies();
+              Cookie staff = null;
+
+              for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("StaffName")) {
+                  staff = cookie;
+                  String StaffName = cookie.getValue();
+                  request.setAttribute("StaffName", URLDecoder.decode(StaffName, "UTF-8"));
+                  break;
+                }
+              }
+            }
+            request.setAttribute("isLoggedIn", true);
+          } else {
+            // Account is of User type: cannot access Admin page
+            // Or if auth fails, also redirects to home page
+            httpResponse.sendRedirect("/");
+            return;
+          }
         } else if (path.startsWith("/user")) {
           // Destination page is user page
           if (getAuthStatus(httpRequest) == 2) {
@@ -265,7 +295,12 @@ public class AuthenticationFilter implements Filter {
             // Account is of Admin type, cannot access user pages
             httpResponse.sendRedirect("/promotionManager");
             return;
+          } else if (getAuthStatus(httpRequest) == 4) {
+            // Account is of Admin type, cannot access user pages
+            httpResponse.sendRedirect("/staff");
+            return;
           }
+          
           // If auth fails in neither admin nor user pages, continue the filter (nothing happens)
         }
       }
@@ -417,12 +452,16 @@ public class AuthenticationFilter implements Filter {
             && !(((String) session.getAttribute("admin")).isEmpty()));
     boolean hasPromotionManagerSession = (session.getAttribute("promotionManager") != null
             && !(((String) session.getAttribute("promotionManager")).isEmpty()));
+    boolean hasStaffSession = (session.getAttribute("staff") != null
+            && !(((String) session.getAttribute("staff")).isEmpty()));
     if (hasUserSession) {
       authStatus = 1;
     } else if (hasAdminSession) {
       authStatus = 2;
     } else if (hasPromotionManagerSession) {
       authStatus = 3;
+    } else if (hasStaffSession) {
+      authStatus = 4;
     } else if (cookies != null) {
       for (Cookie cookie : cookies) {
         if (cookie.getName().equals("user")) {
@@ -433,6 +472,9 @@ public class AuthenticationFilter implements Filter {
           break;
         } else if (cookie.getName().equals("promotionManager")) {
           authStatus = 3;
+          break;
+        } else if (cookie.getName().equals("staff")) {
+          authStatus = 4;
           break;
         }
       }

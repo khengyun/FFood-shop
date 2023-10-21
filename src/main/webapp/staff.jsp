@@ -12,7 +12,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>FFood | Admin Dashboard</title>
+        <title>FFood | Staff Dashboard</title>
 
     <%@ include file="WEB-INF/jspf/common/imports/resources.jspf" %>
     <%@ include file="WEB-INF/jspf/admin/imports/dataTablesStyle.jspf" %>
@@ -89,5 +89,6 @@
         </div>
         <%@ include file="WEB-INF/jspf/common/imports/validation.jspf" %>
         <%@ include file="WEB-INF/jspf/common/imports/javascript.jspf" %>
+        <%@ include file="WEB-INF/jspf/staff/imports/dataTablesScript.jspf" %>
     </body>
 </html>
