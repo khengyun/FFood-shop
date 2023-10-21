@@ -89,7 +89,10 @@ $(document).ready(function () {
       btnUpdate.removeAttr("data-food-id");
       btnUpdate.removeAttr("data-food-type");
       btnUpdate.removeAttr("data-food-name");
+      btnUpdate.removeAttr("data-food-description");
       btnUpdate.removeAttr("data-food-price");
+      btnUpdate.removeAttr("data-food-status");
+      btnUpdate.removeAttr("data-food-rate");
       btnUpdate.removeAttr("data-discount-percent");
       btnUpdate.removeAttr("data-image-url");
       btnUpdate.addClass("disabled");
@@ -125,16 +128,28 @@ $(document).ready(function () {
         btnUpdate.attr("data-food-id", data[0][0]);
         btnUpdate.attr("data-food-type", data[0][1]);
         btnUpdate.attr("data-food-name", data[0][2]);
+        btnUpdate.attr("data-food-description", data[0][3]);
+        
 
-        let price = data[0][3]
-            .substring(0, data[0][3].length - 1) // Removes currency symbol
+        let price = data[0][4]
+            .substring(0, data[0][4].length - 1) // Removes currency symbol
             .replace(',', '') // Removes thousand separators
             .concat(".0000"); // Adds optional decimals
         btnUpdate.attr("data-food-price", price);
+        
+        let status = 0
+        if (data[0][6] == "Hết"){
+            status = 0
+        } else {
+            status = 1
+        }
+        btnUpdate.attr("data-food-status", status);
+        let rate = parseInt(data[0][5].split(' ')[0]);
+        console.log(rate)
+        btnUpdate.attr("data-food-rate", rate);
+        btnUpdate.attr("data-discount-percent", data[0][7].substring(0, data[0][7].length - 1)); // Removes percent symbol
 
-        btnUpdate.attr("data-discount-percent", data[0][4].substring(0, data[0][4].length - 1)); // Removes percent symbol
-
-        let url = data[0][5].match(/src="([^"]*)"/)[1];
+        let url = data[0][8].match(/src="([^"]*)"/)[1];
         btnUpdate.attr("data-image-url", url); // Keeps the image URL as the original string is the entire <img> tag
 
         btnUpdate.removeClass("disabled");

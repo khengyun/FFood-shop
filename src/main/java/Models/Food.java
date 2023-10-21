@@ -13,79 +13,66 @@ public class Food {
     private String foodName;
     private String description;
     private BigDecimal foodPrice;
-    private boolean status;
-    private byte discountPercent;
+    private byte status;
+    private byte rate;
+    private byte discountPercent;   
     private String imageURL;
     private byte foodTypeID;
     private String foodType;
 
     public Food() {
     }
-
-    public Food(String foodName, BigDecimal foodPrice, byte discountPercent, String imageURL, String foodType) {
+    
+    public Food(String foodName, String description, BigDecimal foodPrice, byte status, byte rate, byte discountPercent, String imageURL, byte foodTypeID, String foodType) {
         this.foodName = foodName;
+        this.description = description;
         this.foodPrice = foodPrice;
-        this.discountPercent = discountPercent;
-        this.imageURL = imageURL;
-        this.foodType = foodType;
-    }
-
-    public Food(String foodName, BigDecimal foodPrice, byte discountPercent, String imageURL, byte foodTypeID) {
-        this.foodName = foodName;
-        this.foodPrice = foodPrice;
-        this.discountPercent = discountPercent;
-        this.imageURL = imageURL;
-        this.foodTypeID = foodTypeID;
-    }
-
-    public Food(String foodName, BigDecimal foodPrice, byte discountPercent, String imageURL, byte foodTypeID, String foodType) {
-        this.foodName = foodName;
-        this.foodPrice = foodPrice;
+        this.status = status;
+        this.rate = rate;
         this.discountPercent = discountPercent;
         this.imageURL = imageURL;
         this.foodTypeID = foodTypeID;
         this.foodType = foodType;
     }
-
-    public Food(short foodID, String foodName, BigDecimal foodPrice, byte discountPercent, String imageURL, String foodType) {
-        this.foodID = foodID;
+    
+    public Food(String foodName, String description, BigDecimal foodPrice, byte status, byte rate, byte discountPercent, String imageURL, byte foodTypeID) {
         this.foodName = foodName;
+        this.description = description;
         this.foodPrice = foodPrice;
-        this.discountPercent = discountPercent;
-        this.imageURL = imageURL;
-        this.foodType = foodType;
-    }
-
-    public Food(short foodID, String foodName, BigDecimal foodPrice, byte discountPercent, String imageURL, byte foodTypeID) {
-        this.foodID = foodID;
-        this.foodName = foodName;
-        this.foodPrice = foodPrice;
+        this.status = status;
+        this.rate = rate;
         this.discountPercent = discountPercent;
         this.imageURL = imageURL;
         this.foodTypeID = foodTypeID;
     }
-
-    public Food(short foodID, String foodName, BigDecimal foodPrice, byte discountPercent, String imageURL, byte foodTypeID, String foodType) {
-        this.foodID = foodID;
-        this.foodName = foodName;
-        this.foodPrice = foodPrice;
-        this.discountPercent = discountPercent;
-        this.imageURL = imageURL;
-        this.foodTypeID = foodTypeID;
-        this.foodType = foodType;
-    }
-
-    public Food(short foodID, String foodName, String description, BigDecimal foodPrice, boolean status, byte discountPercent, String imageURL, byte foodTypeID, String foodType) {
+    
+    public Food(short foodID, String foodName, String description, BigDecimal foodPrice, byte status, byte rate, byte discountPercent, String imageURL, byte foodTypeID) {
         this.foodID = foodID;
         this.foodName = foodName;
         this.description = description;
         this.foodPrice = foodPrice;
         this.status = status;
+        this.rate = rate;
+        this.discountPercent = discountPercent;
+        this.imageURL = imageURL;
+        this.foodTypeID = foodTypeID;
+    }
+
+    public Food(short foodID, String foodName, String description, BigDecimal foodPrice, byte status, byte rate, byte discountPercent, String imageURL, byte foodTypeID, String foodType) {
+        this.foodID = foodID;
+        this.foodName = foodName;
+        this.description = description;
+        this.foodPrice = foodPrice;
+        this.status = status;
+        this.rate = rate;
         this.discountPercent = discountPercent;
         this.imageURL = imageURL;
         this.foodTypeID = foodTypeID;
         this.foodType = foodType;
     }
+
+    
+
 
     public short getFoodID() {
         return foodID;
@@ -156,12 +143,19 @@ public class Food {
         this.description = description;
     }
 
-    public boolean isStatus() {
+    public byte getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(byte status) {
         this.status = status;
     }
 
+    public byte getRate() {
+        return rate;
+    }
+
+    public void setRate(byte rate) {
+        this.rate = rate;
+    }
 }
