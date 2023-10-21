@@ -33,21 +33,31 @@ services:
       echo "All done!";
       '
 
-  tomcat-app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+  ai-food-classification:
+    build: ./api/Food_Classifier
     ports:
-      - "8081:8080"
-    restart: always
+      - 8000:8000
+    depends_on:
+      - sqlserver
+      - sqlserver.configurator
+    networks:
+      - my-network
+
+  # tomcat-app:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "8081:8080"
+  #   restart: always
     # network_mode: host
 
-# networks:
-#   my-network:
-#     driver: bridge
-#     ipam:
-#       config:
-#         - subnet: "192.168.92.0/24"
+networks:
+  my-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: "192.168.92.0/24"
 
 volumes:
   sqlserver_data:
