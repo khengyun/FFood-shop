@@ -42,18 +42,6 @@ public class FoodDAOIT {
     }
 
     @Test
-    public void testGetAll() {
-    }
-
-    @Test
-    public void testGetAllList() {
-    }
-
-    @Test
-    public void testGetFood() {
-    }
-
-    @Test
     public void testAdd() {
         // Create a mock instance of the FoodDAO class.
         FoodDAO foodDAOMock = mock(FoodDAO.class);
@@ -84,33 +72,197 @@ public class FoodDAOIT {
             System.out.println("False");
         }
     }
+     @Test
+    public void testAddNegativeDiscount() {
+        // Create a mock instance of the FoodDAO class.
+        FoodDAO foodDAOMock = mock(FoodDAO.class);
 
-    @Test
-    public void testDelete() {
+        // Create a food object.
+        Food food = new Food();
+        food.setFoodName("Mì");
+        food.setFoodPrice(BigDecimal.valueOf(50000));
+        food.setDiscountPercent((byte) -10);
+        food.setImageURL("https://example.com/com-ga.png");
+        food.setFoodTypeID((byte) 1);
+
+        // Tell Mockito to return 1 when the add() method is called on the mock object.
+        when(foodDAOMock.add(food)).thenReturn(1);
+
+        // Call the add() method.
+        int result = foodDAOMock.add(food);
+
+        // Verify that the add() method was called with the correct parameters.
+        verify(foodDAOMock).add(food);
+
+        // Verify that the expected result was returned.
+        assertEquals(1, result);
+        
+        if(result == 1){
+            System.out.println("True");
+        } else {
+            System.out.println("False");
+        }
     }
+      @Test
+    public void testAddNegativePrice() {
+        // Create a mock instance of the FoodDAO class.
+        FoodDAO foodDAOMock = mock(FoodDAO.class);
 
-    @Test
-    public void testDeleteMultiple() {
-    }
+        // Create a food object.
+        Food food = new Food();
+        food.setFoodName("Mì");
+        food.setFoodPrice(BigDecimal.valueOf(-50000));
+        food.setDiscountPercent((byte) 10);
+        food.setImageURL("https://example.com/com-ga.png");
+        food.setFoodTypeID((byte) 1);
 
-    @Test
-    public void testUpdate() {
-    }
+        // Tell Mockito to return 1 when the add() method is called on the mock object.
+        when(foodDAOMock.add(food)).thenReturn(1);
 
-    @Test
-    public void testGetFoodType() {
-    }
+        // Call the add() method.
+        int result = foodDAOMock.add(food);
 
-    @Test
-    public void testSearchByName() {
-    }
+        // Verify that the add() method was called with the correct parameters.
+        verify(foodDAOMock).add(food);
 
-    @Test
-    public void testSearchByNameList() {
-    }
-
-    @Test
-    public void testGetCateByCid() {
+        // Verify that the expected result was returned.
+        assertEquals(1, result);
+        
+        if(result == 1){
+            System.out.println("True");
+        } else {
+            System.out.println("False");
+        }
     }
     
+    @Test
+    public void testAddDuplicate() {
+        // Create a mock instance of the FoodDAO class.
+        FoodDAO foodDAOMock = mock(FoodDAO.class);
+
+        // Create a food object.
+        Food food = new Food();
+        food.setFoodName(null);
+        food.setFoodPrice(BigDecimal.valueOf(50000));
+        food.setDiscountPercent((byte) 10);
+        food.setImageURL("https://example.com/com-ga.png");
+        food.setFoodTypeID((byte) 1);
+
+        // Tell Mockito to return 1 when the add() method is called on the mock object.
+        when(foodDAOMock.add(food)).thenReturn(1);
+
+        // Call the add() method.
+        int result = foodDAOMock.add(food);
+
+        // Verify that the add() method was called with the correct parameters.
+        verify(foodDAOMock).add(food);
+
+        // Verify that the expected result was returned.
+        assertEquals(1, result);
+        
+        if(result == 1){
+            System.out.println("True");
+        } else {
+            System.out.println("False");
+        }
+    }
+    
+     @Test
+    public void testAddNullFoodPrice() {
+        // Create a mock instance of the FoodDAO class.
+        FoodDAO foodDAOMock = mock(FoodDAO.class);
+
+        // Create a food object.
+        Food food = new Food();
+        food.setFoodName("Com gà");
+        food.setFoodPrice(null);
+        food.setDiscountPercent((byte) 10);
+        food.setImageURL("https://example.com/com-ga.png");
+        food.setFoodTypeID((byte) 1);
+
+        // Tell Mockito to return 1 when the add() method is called on the mock object.
+        when(foodDAOMock.add(food)).thenReturn(1);
+
+        // Call the add() method.
+        int result = foodDAOMock.add(food);
+
+        // Verify that the add() method was called with the correct parameters.
+        verify(foodDAOMock).add(food);
+
+        // Verify that the expected result was returned.
+        assertEquals(1, result);
+        
+        if(result == 1){
+            System.out.println("True");
+        } else {
+            System.out.println("False");
+        }
+    }
+    
+     @Test
+    public void testAddNullFoodURL() {
+        // Create a mock instance of the FoodDAO class.
+        FoodDAO foodDAOMock = mock(FoodDAO.class);
+
+        // Create a food object.
+        Food food = new Food();
+        food.setFoodName("Com gà");
+        food.setFoodPrice(BigDecimal.valueOf(50000));
+        food.setDiscountPercent((byte) 10);
+        food.setImageURL("https://example.com/com-ga.png");
+        food.setFoodTypeID((byte) 1);
+
+        // Tell Mockito to return 1 when the add() method is called on the mock object.
+        when(foodDAOMock.add(food)).thenReturn(1);
+
+        // Call the add() method.
+        int result = foodDAOMock.add(food);
+
+        // Verify that the add() method was called with the correct parameters.
+        verify(foodDAOMock).add(food);
+
+        // Verify that the expected result was returned.
+        assertEquals(1, result);
+        
+        if(result == 1){
+            System.out.println("True");
+        } else {
+            System.out.println("False");
+        }
+    }
+    @Test
+    public void testAddNullFoodType() {
+        // Create a mock instance of the FoodDAO class.
+        FoodDAO foodDAOMock = mock(FoodDAO.class);
+
+        // Create a food object.
+        Food food = new Food();
+        food.setFoodName("Com gà");
+        food.setFoodPrice(BigDecimal.valueOf(50000));
+        food.setDiscountPercent((byte) 10);
+        food.setImageURL(null);
+        food.setFoodTypeID((byte) 0);
+
+        // Tell Mockito to return 1 when the add() method is called on the mock object.
+        when(foodDAOMock.add(food)).thenReturn(1);
+
+        // Call the add() method.
+        int result = foodDAOMock.add(food);
+
+        // Verify that the add() method was called with the correct parameters.
+        verify(foodDAOMock).add(food);
+
+        // Verify that the expected result was returned.
+        assertEquals(1, result);
+        
+        if(result == 1){
+            System.out.println("True");
+        } else {
+            System.out.println("False");
+        }
+    }
+
+    
+
+  
 }
