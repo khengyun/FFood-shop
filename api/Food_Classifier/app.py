@@ -40,7 +40,7 @@ async def predict_dish(url: str):
     
     response_time = end_time - start_time
     
-    html_content = f'<html><body><h2>Pred: {predicted_dish}</h2><p>Inference time: {response_time} seconds</p><img style="width:500px;" src="{img_url}" alt="Image"></body></html>'
+    html_content = f'<html><body><h2>Pred: {predicted_dish}</h2><p>Mean-AUC: 0.8897322416305542</p><p>Inference time: {response_time} seconds</p><img style="width:500px;" src="{img_url}" alt="Image"></body></html>'
     
     return HTMLResponse(content=html_content)
 
