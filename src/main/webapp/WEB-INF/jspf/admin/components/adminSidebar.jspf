@@ -69,10 +69,6 @@
       <i class="ph ph-user-circle"></i>
     </button>
     <ul class="dropdown-menu text-small shadow">
-      <li><a class="dropdown-item" href="/home">Trang chủ</a></li>
-      <li>
-        <hr class="dropdown-divider">
-      </li>
       <li><a class="dropdown-item" href="/admin/help">Trợ giúp</a></li>
       <li>
         <hr class="dropdown-divider">
@@ -162,10 +158,6 @@
       <div class="flex-grow-0"></div>
     </button>
     <ul class="dropdown-menu text-small shadow">
-        <li><a class="dropdown-item" href="/home">Trang chủ</a></li>
-        <li>
-        <hr class="dropdown-divider">
-      </li>
       <li><a class="dropdown-item" href="/admin/help">Trợ giúp</a></li>
       <li>
         <hr class="dropdown-divider">
@@ -175,70 +167,72 @@
   </div>
 </div>
 
-    <script>
-        <!-- Add hover interactivity to minimized sidebar -->
-$(document).ready(function () {
-                var timeoutId;
-        var sidebar = $('#minimizedSidebar');
-        var offcanvas = $('#maximizedSidebar');
-        sidebar.hover(function () {
-        timeoutId = setTimeout(function () {
+<script>
+  <!-- Add hover interactivity to minimized sidebar -->
+  $(document).ready(function () {
+    var timeoutId;
+    var sidebar = $('#minimizedSidebar');
+    var offcanvas = $('#maximizedSidebar');
+
+    sidebar.hover(function () {
+      timeoutId = setTimeout(function () {
         offcanvas.addClass('show');
-        }, 150);
-        }, function () {
-        clearTimeout(timeoutId);
-        timeoutId = setTimeout(function () {
+      }, 150);
+    }, function () {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(function () {
         offcanvas.removeClass('show');
-        }, 250);
-        });
-        offcanvas.hover(function () {
-        clearTimeout(timeoutId);
-        }, function () {
-        timeoutId = setTimeout(function () {
+      }, 250);
+    });
+
+    offcanvas.hover(function () {
+      clearTimeout(timeoutId);
+    }, function () {
+      timeoutId = setTimeout(function () {
         offcanvas.removeClass('show');
-        }, 150);
-        });
+      }, 150);
+    });
+  });
+
+  // Add event listener to buttons in minimized sidebar
+  const minButtons = document.querySelectorAll('#minimizedSidebar button[data-bs-toggle="tab"]');
+  minButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      // Remove "active" class from all buttons in maximized sidebar
+      const maxButtons = document.querySelectorAll('#maximizedSidebar button[data-bs-toggle="tab"]');
+      maxButtons.forEach(maxButton => {
+        if (maxButton) {
+          maxButton.classList.remove('active');
+        }
       });
-
-      // Add event listener to buttons in minimized sidebar
-              const minButtons = document.querySelectorAll('#minimizedSidebar button[data-bs-toggle="tab"]');
-              minButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                // Remove "active" class from all buttons in maximized sidebar
-                const maxButtons = document.querySelectorAll('#maximizedSidebar button[data-bs-toggle="tab"]');
-                maxButtons.forEach(maxButton => {
-                if (maxButton) {
-                maxButton.classList.remove('active');
-                }
-                });
-                // Add "active" class to corresponding button in maximized sidebar
-                const target = button.getAttribute('data-bs-target');
-                const maxButton = document.querySelector('#maximizedSidebar button[data-bs-target="' + target + '"]');
-                if (maxButton) {
-                maxButton.classList.add('active');
-                }
-                });
-              });
-
-              // Add event listener to buttons in maximized sidebar
-        const maxButtons = document.querySelectorAll('#maximizedSidebar button[data-bs-toggle="tab"]');
-      maxButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                // Remove "active" class from all buttons in minimized sidebar
-                const minButtons = document.querySelectorAll('#minimizedSidebar button[data-bs-toggle="tab"]');
-                minButtons.forEach(minButton => {
-                if (minButton) {
-                minButton.classList.remove('active');
-                }
-                });
-                // Add "active" class to corresponding button in minimized sidebar
-                const target = button.getAttribute('data-bs-target');
-                const minButton = document.querySelector('#minimizedSidebar button[data-bs-target="' + target + '"]');
-                if (minButton) {
-                minButton.classList.add('active');
+      // Add "active" class to corresponding button in maximized sidebar
+      const target = button.getAttribute('data-bs-target');
+      const maxButton = document.querySelector('#maximizedSidebar button[data-bs-target="' + target + '"]');
+      if (maxButton) {
+        maxButton.classList.add('active');
       }
     });
+  });
+
+  // Add event listener to buttons in maximized sidebar
+  const maxButtons = document.querySelectorAll('#maximizedSidebar button[data-bs-toggle="tab"]');
+  maxButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      // Remove "active" class from all buttons in minimized sidebar
+      const minButtons = document.querySelectorAll('#minimizedSidebar button[data-bs-toggle="tab"]');
+      minButtons.forEach(minButton => {
+        if (minButton) {
+          minButton.classList.remove('active');
+        }
+      });
+      // Add "active" class to corresponding button in minimized sidebar
+      const target = button.getAttribute('data-bs-target');
+      const minButton = document.querySelector('#minimizedSidebar button[data-bs-target="' + target + '"]');
+      if (minButton) {
+        minButton.classList.add('active');
+      }
     });
+  });
 </script>
 <!-- Animations -->
 <style>
