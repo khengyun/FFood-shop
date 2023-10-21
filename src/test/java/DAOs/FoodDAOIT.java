@@ -98,9 +98,10 @@ public class FoodDAOIT {
         assertEquals(1, result);
         
         if(result == 1){
-            System.out.println("True");
+            
+            System.out.println("Discount is Negative");
         } else {
-            System.out.println("False");
+            System.out.println("True");
         }
     }
       @Test
@@ -129,9 +130,9 @@ public class FoodDAOIT {
         assertEquals(1, result);
         
         if(result == 1){
-            System.out.println("True");
+            System.out.println("Price is Negative");
         } else {
-            System.out.println("False");
+            System.out.println("True");
         }
     }
     
@@ -142,7 +143,7 @@ public class FoodDAOIT {
 
         // Create a food object.
         Food food = new Food();
-        food.setFoodName(null);
+        food.setFoodName("Mì");
         food.setFoodPrice(BigDecimal.valueOf(50000));
         food.setDiscountPercent((byte) 10);
         food.setImageURL("https://example.com/com-ga.png");
@@ -161,7 +162,8 @@ public class FoodDAOIT {
         assertEquals(1, result);
         
         if(result == 1){
-            System.out.println("True");
+            
+            System.out.println("Food already exsist");
         } else {
             System.out.println("False");
         }
@@ -193,45 +195,14 @@ public class FoodDAOIT {
         assertEquals(1, result);
         
         if(result == 1){
-            System.out.println("True");
+            System.out.println("Price is null");
         } else {
-            System.out.println("False");
+            System.out.println("True");
         }
     }
     
      @Test
     public void testAddNullFoodURL() {
-        // Create a mock instance of the FoodDAO class.
-        FoodDAO foodDAOMock = mock(FoodDAO.class);
-
-        // Create a food object.
-        Food food = new Food();
-        food.setFoodName("Com gà");
-        food.setFoodPrice(BigDecimal.valueOf(50000));
-        food.setDiscountPercent((byte) 10);
-        food.setImageURL("https://example.com/com-ga.png");
-        food.setFoodTypeID((byte) 1);
-
-        // Tell Mockito to return 1 when the add() method is called on the mock object.
-        when(foodDAOMock.add(food)).thenReturn(1);
-
-        // Call the add() method.
-        int result = foodDAOMock.add(food);
-
-        // Verify that the add() method was called with the correct parameters.
-        verify(foodDAOMock).add(food);
-
-        // Verify that the expected result was returned.
-        assertEquals(1, result);
-        
-        if(result == 1){
-            System.out.println("True");
-        } else {
-            System.out.println("False");
-        }
-    }
-    @Test
-    public void testAddNullFoodType() {
         // Create a mock instance of the FoodDAO class.
         FoodDAO foodDAOMock = mock(FoodDAO.class);
 
@@ -256,7 +227,38 @@ public class FoodDAOIT {
         assertEquals(1, result);
         
         if(result == 1){
-            System.out.println("True");
+            System.out.println("URL is null");
+        } else {
+            System.out.println("False");
+        }
+    }
+    @Test
+    public void testAddNullFoodType() {
+        // Create a mock instance of the FoodDAO class.
+        FoodDAO foodDAOMock = mock(FoodDAO.class);
+
+        // Create a food object.
+        Food food = new Food();
+        food.setFoodName(null);
+        food.setFoodPrice(BigDecimal.valueOf(50000));
+        food.setDiscountPercent((byte) 10);
+        food.setImageURL("https://example.com/com-ga.png");
+        food.setFoodTypeID((byte) 1);
+
+        // Tell Mockito to return 1 when the add() method is called on the mock object.
+        when(foodDAOMock.add(food)).thenReturn(1);
+
+        // Call the add() method.
+        int result = foodDAOMock.add(food);
+
+        // Verify that the add() method was called with the correct parameters.
+        verify(foodDAOMock).add(food);
+
+        // Verify that the expected result was returned.
+        assertEquals(1, result);
+        
+        if(result == 1){
+            System.out.println("name is null");
         } else {
             System.out.println("False");
         }

@@ -221,3 +221,13 @@ $(document).ready(function () {
 //  $('#orders-table').DataTable();
 })
 ;
+
+let roleTable = $('#roles-table').DataTable({
+    columnDefs: [
+      {
+        searchable: false,
+        orderable: false,
+        targets: [-1] // "Image" columns
+      }
+    ]
+  });

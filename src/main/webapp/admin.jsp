@@ -38,6 +38,8 @@
                         <%@ include file="WEB-INF/jspf/admin/home.jspf" %>
                         <!-- Food & Drinks Tab Content -->
                         <%@ include file="WEB-INF/jspf/admin/foods.jspf" %>
+                        
+                        <%@ include file="WEB-INF/jspf/admin/orders.jspf" %>
 
                         <!-- Users Tab Content -->
                         <div class="tab-pane fade" id="users">
@@ -93,62 +95,7 @@
 
 
                         <!-- Roles Tab Content -->
-                        <div class="tab-pane fade" id="roles">
-                            <div class="container-fluid p-2">
-                                <table id="roles-table" class="table table-bordered table-striped" >
-                                    <h1 class="text-center fw-bold fs-3">Quản lý Admin</h1>
-                                    <button 
-                                        style="color: white;border-color: rgba(207, 126, 0, 1); background-color: rgba(207, 126, 0, 1);" 
-                                        "height: 40px;"
-                                        type="button" class="btn btn-sm btn-success py-1 my-2 me-2" data-bs-toggle="modal" data-bs-target="#add-admin-modal">
-                                        Tạo Tài khoản Admin
-                                    </button>
-
-                                    <thead>
-                                        <tr>
-                                            <th class="col-sm-3 col-gap-5" >Mã TK</th>                                   
-                                            <th >Tên Admin</th>
-                                            <th >Email</th>
-                                            <th >Loại TK</th>
-                                            <th >Thao tác</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <c:forEach items="${adminstaffList}" var="a">
-                                            <tr>
-                                                <td>${a.accountID}</td>
-                                                <td >${a.username}</td>
-                                                <td >${a.email}</td>
-                                                <td>${a.accountType}</td>
-                                                <td>
-                                                    <button 
-                                                        style="color: white;border-color: rgba(207, 126, 0, 1); background-color: rgba(207, 126, 0, 1);" 
-                                                        type="button" id="btn-update-admin"
-                                                        "height: 26px;"
-                                                        class="btn btn-sm btn-success py-1 m-1"
-                                                        data-account-id="${a.accountID}"
-                                                        data-username="${a.username}"
-                                                        data-email="${a.email}"
-                                                        data-bs-toggle="modal" data-bs-target="#update-admin-modal">
-                                                        Cập nhật
-                                                    </button>
-                                                    <button style="color: white;border-color: rgba(207, 126, 0, 1); background-color: rgba(207, 126, 0, 1);" 
-                                                            type="button" id="btn-delete-admin"
-                                                            "height: 26px;"
-                                                            class="btn btn-sm btn-danger py-1 m-1"
-                                                            data-account-id="${a.accountID}"
-                                                            data-username="${a.username}"
-                                                            data-bs-toggle="modal" data-bs-target="#delete-admin-modal">
-                                                        Đổi Password
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        </c:forEach>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
+                      
                         <!-- Orders Tab Content -->
                         <div class="tab-pane fade" id="orders">
                             <div class="container-fluid p-2">

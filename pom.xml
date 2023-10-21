@@ -12,10 +12,15 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+             <exec.args>/c java -classpath %classpath wshackle.mavenproject2.Main</exec.args>
+            <exec.executable>cmd</exec.executable>
     </properties>
+    
+ 
     
 
     <dependencies>
+        
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
