@@ -241,7 +241,7 @@ public class FoodDAOIT {
         food.setFoodPrice(BigDecimal.valueOf(50000));
         food.setDiscountPercent((byte) 10);
         food.setImageURL(null);
-        food.setFoodTypeID((byte) 0);
+        food.setFoodTypeID((byte) 1);
 
         // Tell Mockito to return 1 when the add() method is called on the mock object.
         when(foodDAOMock.add(food)).thenReturn(1);
@@ -261,6 +261,8 @@ public class FoodDAOIT {
             System.out.println("False");
         }
     }
+    
+    
 
     
 
