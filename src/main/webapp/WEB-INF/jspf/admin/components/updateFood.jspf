@@ -43,19 +43,19 @@
                         <label for="txtFoodStatus" class="form-label">Trạng thái</label>
                         <select class="form-select" id="txtFoodStatus" name="txtFoodStatus" required>
                             <option value="1" selected>Còn</option>
-                            <option value="2">Hết</option>
+                            <option value="0">Hết</option>
                         </select>
                     </div>
                     <!--Food Rate-->
                     <div class="mb-3">
                         <label for="txtFoodRate" class="form-label">Đánh giá</label>
                         <select class="form-select" id="txtFoodRate" name="txtFoodRate" required>
-                            <option value="0" selected>0 Sao</option>
+                            <option value="0">0 Sao</option>
                             <option value="1">1 Sao</option>
-                            <option value="2" selected>2 Sao</option>
+                            <option value="2">2 Sao</option>
                             <option value="3">3 Sao</option>
                             <option value="4">4 Sao</option>
-                            <option value="5">5 Sao</option>
+                            <option value="5" selected>5 Sao</option>
                         </select>
                     </div>
                     <!-- Discount Percentage -->

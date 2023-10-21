@@ -103,7 +103,6 @@ public class AdminController extends HttpServlet {
         byte foodRate = Byte.parseByte(request.getParameter("txtFoodRate"));
         byte foodStatus = Byte.parseByte(request.getParameter("txtFoodStatus"));
         String imageURL = (String) request.getAttribute("txtImageURL");
-
         FoodDAO foodDAO = new FoodDAO();
         Food food = new Food(foodName, foodDescription, foodPrice, foodStatus, foodRate, discountPercent, imageURL, foodTypeID);
         int result = foodDAO.add(food);

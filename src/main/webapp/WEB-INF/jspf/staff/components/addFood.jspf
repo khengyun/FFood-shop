@@ -3,7 +3,7 @@
 <div class="modal" tabindex="-1" id="add-food-modal">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form class="add-food-form" method="POST" action="/admin">
+            <form class="add-food-form" method="POST" action="/staff">
                 <div class="modal-header">
                     <h5 class="modal-title">Thêm Món</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -45,18 +45,18 @@
                         <label for="txtFoodStatus" class="form-label">Trạng thái</label>
                         <select class="form-select" id="txtFoodStatus" name="txtFoodStatus" required>
                             <option value="1" selected>Còn</option>
-                            <option value="2">Hết</option>
+                            <option value="0">Hết</option>
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="txtFoodRate" class="form-label">Đánh giá</label>
                         <select class="form-select" id="txtFoodRate" name="txtFoodRate" required>
-                            <option value="0" selected>0 Sao</option>
+                            <option value="0">0 Sao</option>
                             <option value="1">1 Sao</option>
-                            <option value="2" selected>2 Sao</option>
+                            <option value="2">2 Sao</option>
                             <option value="3">3 Sao</option>
                             <option value="4">4 Sao</option>
-                            <option value="5">5 Sao</option>
+                            <option value="5" selected>5 Sao</option>
                         </select>
                     </div>
 

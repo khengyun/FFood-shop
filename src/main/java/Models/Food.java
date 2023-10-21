@@ -35,6 +35,17 @@ public class Food {
         this.foodType = foodType;
     }
     
+    public Food(String foodName, String description, BigDecimal foodPrice, byte status, byte rate, byte discountPercent, String imageURL, byte foodTypeID) {
+        this.foodName = foodName;
+        this.description = description;
+        this.foodPrice = foodPrice;
+        this.status = status;
+        this.rate = rate;
+        this.discountPercent = discountPercent;
+        this.imageURL = imageURL;
+        this.foodTypeID = foodTypeID;
+    }
+    
     public Food(short foodID, String foodName, String description, BigDecimal foodPrice, byte status, byte rate, byte discountPercent, String imageURL, byte foodTypeID) {
         this.foodID = foodID;
         this.foodName = foodName;
@@ -60,9 +71,8 @@ public class Food {
         this.foodType = foodType;
     }
 
-    public Food(String foodName, String foodDescription, BigDecimal foodPrice, byte foodStatus, byte foodRate, byte discountPercent, String imageURL, byte foodTypeID) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
+
 
     public short getFoodID() {
         return foodID;

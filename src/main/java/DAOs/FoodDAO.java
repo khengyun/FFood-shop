@@ -87,8 +87,9 @@ public class FoodDAO {
     }
 
     public int add(Food food) {
-        String sql = "insert into Food (food_name, food_description, food_price, food_status, food_rate, discount_percent, food_img_url, food_type_id) values (?, ?, ?, ?, ? ?, ?, ?)";
+        String sql = "insert into Food (food_name, food_description, food_price, food_status, food_rate, discount_percent, food_img_url, food_type_id) values (?, ?, ?, ?, ?, ?, ?, ?)";
         int result = 0;
+        System.out.println("url: " + food.getImageURL());
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, food.getFoodName());
@@ -120,6 +121,8 @@ public class FoodDAO {
     }
 
     public int deleteMultiple(List<Short> foodIDs) {
+        System.out.println("Delete 3");
+
         int result = 0;
         try {
             conn.setAutoCommit(false); // Start transaction
