@@ -22,6 +22,10 @@ function validateForm() {
                 required: true,
                 maxlength: 100
             },
+            txtFoodDescription: {
+                required: true,
+                maxlength: 500
+            },
             txtFoodPrice: {
                 required: true,
                 number: true,
@@ -46,16 +50,14 @@ function validateForm() {
                 required: "Tên món không được để trống",
                 maxlength: "Tên món không dài quá 100 kí tự"
             },
+            txtFoodDescription: {
+                required: "Tên món không được để trống",
+                maxlength: "Tên món không dài quá 500 kí tự"
+            },
             txtFoodPrice: {
                 required: "Vui lòng nhập Đơn giá",
                 number: "Đơn giá phải là định dạng số",
                 min: "Đơn giá phải là số dương"
-            },
-            txtDiscountPercent: {
-                required: "Vui lòng nhập Giá trị giảm giá",
-                digits: "Giá trị giảm giá phải là số nguyên",
-                min: "Giá trị giảm giá không được dưới 0",
-                max: "Giá trị giảm giá không được quá 100"
             },
             txtImageURL: {
                 required: "Vui lòng nhập Đường dẫn ảnh",
@@ -84,6 +86,10 @@ function validateForm() {
                 required: true,
                 maxlength: 100
             },
+            txtFoodDescription: {
+                required: true,
+                maxlength: 500
+            },
             txtFoodPrice: {
                 required: true,
                 number: true,
@@ -109,6 +115,10 @@ function validateForm() {
             txtFoodName: {
                 required: "Tên món không được để trống",
                 maxlength: "Tên món không dài quá 100 kí tự"
+            },
+            txtFoodDescription: {
+                required: "Tên món không được để trống",
+                maxlength: "Tên món không dài quá 500 kí tự"
             },
             txtFoodPrice: {
                 required: "Vui lòng nhập Đơn giá",

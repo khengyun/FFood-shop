@@ -62,16 +62,19 @@ public class StaffController extends HttpServlet {
         }
     }
      
-    private void doPostAddFood(HttpServletRequest request, HttpServletResponse response)
+     private void doPostAddFood(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         byte foodTypeID = Byte.parseByte(request.getParameter("txtFoodTypeID"));
         String foodName = request.getParameter("txtFoodName");
+        String foodDescription = (String) request.getParameter("txtFoodDescription");
         BigDecimal foodPrice = BigDecimal.valueOf(Double.parseDouble(request.getParameter("txtFoodPrice")));
         byte discountPercent = Byte.parseByte(request.getParameter("txtDiscountPercent"));
+        byte foodRate = Byte.parseByte(request.getParameter("txtFoodRate"));
+        byte foodStatus = Byte.parseByte(request.getParameter("txtFoodStatus"));
         String imageURL = (String) request.getAttribute("txtImageURL");
 
         FoodDAO foodDAO = new FoodDAO();
-        Food food = new Food(foodName, foodPrice, discountPercent, imageURL, foodTypeID);
+        Food food = new Food(foodName, foodDescription, foodPrice, foodStatus, foodRate, discountPercent, imageURL, foodTypeID);
         int result = foodDAO.add(food);
 
         if (result == 1) {
@@ -88,12 +91,15 @@ public class StaffController extends HttpServlet {
         short foodID = Short.parseShort(request.getParameter("txtFoodID"));
         byte foodTypeID = Byte.parseByte(request.getParameter("txtFoodTypeID"));
         String foodName = request.getParameter("txtFoodName");
+        String foodDescription = (String) request.getParameter("txtFoodDescription");
         BigDecimal foodPrice = BigDecimal.valueOf(Double.parseDouble(request.getParameter("txtFoodPrice")));
+        byte foodRate = Byte.parseByte(request.getParameter("txtFoodRate"));
+        byte foodStatus = Byte.parseByte(request.getParameter("txtFoodStatus"));
         byte discountPercent = Byte.parseByte(request.getParameter("txtDiscountPercent"));
         String imageURL = (String) request.getAttribute("txtImageURL");
 
         FoodDAO foodDAO = new FoodDAO();
-        Food food = new Food(foodID, foodName, foodPrice, discountPercent, imageURL, foodTypeID);
+        Food food = new Food(foodID, foodName, foodDescription, foodPrice, foodStatus, foodRate, discountPercent, imageURL, foodTypeID);
         int result = foodDAO.update(food);
 
         if (result == 1) {
