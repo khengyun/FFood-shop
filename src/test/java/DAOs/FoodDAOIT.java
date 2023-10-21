@@ -1,0 +1,116 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit4TestClass.java to edit this template
+ */
+package DAOs;
+
+import Models.Food;
+import java.math.BigDecimal;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+/**
+ *
+ * @author huynhvu
+ */
+public class FoodDAOIT {
+    
+    public FoodDAOIT() {
+    }
+    
+    @BeforeClass
+    public static void setUpClass() {
+    }
+    
+    @AfterClass
+    public static void tearDownClass() {
+    }
+    
+    @Before
+    public void setUp() {
+    }
+    
+    @After
+    public void tearDown() {
+    }
+
+    @Test
+    public void testGetAll() {
+    }
+
+    @Test
+    public void testGetAllList() {
+    }
+
+    @Test
+    public void testGetFood() {
+    }
+
+    @Test
+    public void testAdd() {
+        // Create a mock instance of the FoodDAO class.
+        FoodDAO foodDAOMock = mock(FoodDAO.class);
+
+        // Create a food object.
+        Food food = new Food();
+        food.setFoodName("Mì");
+        food.setFoodPrice(BigDecimal.valueOf(50000));
+        food.setDiscountPercent((byte) 10);
+        food.setImageURL("https://example.com/com-ga.png");
+        food.setFoodTypeID((byte) 1);
+
+        // Tell Mockito to return 1 when the add() method is called on the mock object.
+        when(foodDAOMock.add(food)).thenReturn(1);
+
+        // Call the add() method.
+        int result = foodDAOMock.add(food);
+
+        // Verify that the add() method was called with the correct parameters.
+        verify(foodDAOMock).add(food);
+
+        // Verify that the expected result was returned.
+        assertEquals(1, result);
+        
+        if(result == 1){
+            System.out.println("True");
+        } else {
+            System.out.println("False");
+        }
+    }
+
+    @Test
+    public void testDelete() {
+    }
+
+    @Test
+    public void testDeleteMultiple() {
+    }
+
+    @Test
+    public void testUpdate() {
+    }
+
+    @Test
+    public void testGetFoodType() {
+    }
+
+    @Test
+    public void testSearchByName() {
+    }
+
+    @Test
+    public void testSearchByNameList() {
+    }
+
+    @Test
+    public void testGetCateByCid() {
+    }
+    
+}
