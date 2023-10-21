@@ -19,6 +19,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class StaffController extends HttpServlet {
@@ -46,6 +48,84 @@ public class StaffController extends HttpServlet {
             out.println("</html>");
         }
     } 
+    
+     private void doGetFood(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String path = request.getRequestURI();
+        if (path.startsWith("/staff/food/delete")) {
+            String[] s = path.split("/");
+            short foodID = Short.parseShort(s[s.length - 1]);
+            FoodDAO dao = new FoodDAO();
+            dao.delete(foodID);
+            request.setAttribute("tabID", 3);
+            response.sendRedirect("/staff");
+        }
+    }
+     
+    private void doPostAddFood(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        byte foodTypeID = Byte.parseByte(request.getParameter("txtFoodTypeID"));
+        String foodName = request.getParameter("txtFoodName");
+        BigDecimal foodPrice = BigDecimal.valueOf(Double.parseDouble(request.getParameter("txtFoodPrice")));
+        byte discountPercent = Byte.parseByte(request.getParameter("txtDiscountPercent"));
+        String imageURL = (String) request.getAttribute("txtImageURL");
+
+        FoodDAO foodDAO = new FoodDAO();
+        Food food = new Food(foodName, foodPrice, discountPercent, imageURL, foodTypeID);
+        int result = foodDAO.add(food);
+
+        if (result == 1) {
+            response.sendRedirect("/staff");
+            return;
+        } else {
+            response.sendRedirect("/staff");
+            return;
+        }
+    }
+
+    private void doPostUpdateFood(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        short foodID = Short.parseShort(request.getParameter("txtFoodID"));
+        byte foodTypeID = Byte.parseByte(request.getParameter("txtFoodTypeID"));
+        String foodName = request.getParameter("txtFoodName");
+        BigDecimal foodPrice = BigDecimal.valueOf(Double.parseDouble(request.getParameter("txtFoodPrice")));
+        byte discountPercent = Byte.parseByte(request.getParameter("txtDiscountPercent"));
+        String imageURL = (String) request.getAttribute("txtImageURL");
+
+        FoodDAO foodDAO = new FoodDAO();
+        Food food = new Food(foodID, foodName, foodPrice, discountPercent, imageURL, foodTypeID);
+        int result = foodDAO.update(food);
+
+        if (result == 1) {
+            response.sendRedirect("/staff");
+            return;
+        } else {
+            response.sendRedirect("/staff");
+            return;
+        }
+    }
+    
+    private void doPostDeleteFood(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        // Get the string of food IDs from the request
+        String[] foodIDs = request.getParameter("foodData").split(",");
+
+        // Convert the strings to numbers
+        List<Short> foodIDList = new ArrayList<>();
+        for (int i = 0; i < foodIDs.length; i++) {
+            foodIDList.add(Short.parseShort(foodIDs[i]));
+        }
+
+        // Delete each food item, and count deleted items
+        FoodDAO dao = new FoodDAO();
+        int count = dao.deleteMultiple(foodIDList);
+
+        // TODO implement a deletion status message after page reload
+        // Redirect or forward to another page if necessary
+        request.setAttribute("tabID", 3);
+        response.sendRedirect("/staff");
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
@@ -58,7 +138,25 @@ public class StaffController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        request.getRequestDispatcher("/staff.jsp").forward(request, response);
+        String path = request.getRequestURI();
+        if (path.endsWith("/staff")) {
+            FoodDAO foodDAO = new FoodDAO();
+            List<Food> foodList = foodDAO.getAllList();
+            
+            OrderDAO orderDAO = new OrderDAO();
+            List<Order> orderList = orderDAO.getAllList();                      
+            request.setAttribute("foodList", foodList);
+            request.setAttribute("orderList", orderList);
+            request.getRequestDispatcher("/staff.jsp").forward(request, response);
+        } else if (path.endsWith("/staff/")) {
+            response.sendRedirect("/staff");
+        } else if (path.startsWith("/staff/food")) {
+            doGetFood(request, response);
+        } else {
+            // response.setContentType("text/css");
+            request.getRequestDispatcher("/staff.jsp").forward(request, response);
+        }
+        
     } 
 
     /** 
@@ -71,7 +169,21 @@ public class StaffController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        if (request.getParameter("btnSubmit") != null) {
+            switch (request.getParameter("btnSubmit")) {
+                case "SubmitAddFood":
+                    doPostAddFood(request, response);
+                    break;
+                case "SubmitUpdateFood":
+                    doPostUpdateFood(request, response);
+                    break;
+                case "SubmitDeleteFood":
+                    doPostDeleteFood(request, response);
+                    break;               
+                default:
+                    break;
+            }
+        }
     }
 
     /** 

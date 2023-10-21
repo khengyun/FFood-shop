@@ -100,7 +100,7 @@
             class="d-flex flex-shrink-0 btn text-start align-items-center px-2 py-1 mt-1 link-body-emphasis text-decoration-none dropdown-toggle"
             data-bs-toggle="dropdown" aria-expanded="false">
       <i class="ph ph-user-circle me-3"></i>
-      <strong>${adminName}</strong>
+      <strong>${StaffName}</strong>
       <div class="flex-grow-0"></div>
     </button>
     <ul class="dropdown-menu text-small shadow">
