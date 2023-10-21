@@ -159,9 +159,9 @@ public class LoginController extends HttpServlet {
                         account = dao.getAccount(email);
                         String username = account.getUsername();
                         session = request.getSession();
-                        session.setAttribute("admin", username);
+                        session.setAttribute("staff", username);
                         response.sendRedirect("/staff");
-                    } else if (accountType.equals("staff")) {
+                    } else if (accountType.equals("promotionManager")) {
                         account = dao.getAccount(email);
                         String username = account.getUsername();
                         session = request.getSession();

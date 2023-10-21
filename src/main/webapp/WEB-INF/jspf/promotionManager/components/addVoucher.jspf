@@ -3,7 +3,7 @@
 <div class="modal" tabindex="-1" id="add-voucher-modal">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      <form class="add-vouhcer-form" method="POST" action="/admin">
+      <form class="add-vouhcer-form" method="POST" action="/promotionManager">
         <div class="modal-header">
           <h5 class="modal-title">Thêm Voucher </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -18,7 +18,7 @@
           <!-- Discount Percentage -->
           <div class="mb-3">
             <label for="txtvoucher-discount-percent" class="form-label">Giảm giá (%)</label>
-            <input type="number" class="form-control" id="txtvoucher-discount-percent" name="txtvoucher-discount-percent" min="0" max="100" required>
+            <input type="number" class="form-control" id="txtvoucher-discount-percent" name="txtAddVoucher_discount_percent" min="0" max="100" required>
           </div>
 
         </div>

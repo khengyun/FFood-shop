@@ -5,17 +5,22 @@
 
 package Controllers;
 
+import DAOs.AccountDAO;
+import DAOs.FoodDAO;
+import DAOs.OrderDAO;
+import DAOs.VoucherDAO;
+import Models.Account;
+import Models.Food;
+import Models.Order;
+import Models.Voucher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 
-/**
- *
- * @author kaiso
- */
 public class PromotionManagerController extends HttpServlet {
    
     /** 
@@ -41,6 +46,59 @@ public class PromotionManagerController extends HttpServlet {
             out.println("</html>");
         }
     } 
+    
+    private void doGetVoucher(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String path = request.getRequestURI();
+        if (path.startsWith("/promotionManager/voucher/delete")) {
+            String[] s = path.split("/");
+            byte voucherID = Byte.parseByte(s[s.length - 1]);
+            VoucherDAO dao = new VoucherDAO();
+            dao.delete(voucherID);
+            response.sendRedirect("/promotionManager");
+        }
+        response.sendRedirect("/promotionManager");
+    }
+    
+    private void doPostAddVoucher(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String voucherName = (String) request.getParameter("txtvoucher_name");
+        byte voucher_discount_percent = Byte.parseByte(request.getParameter("txtAddVoucher_discount_percent"));
+
+        VoucherDAO voucherDAO = new VoucherDAO();
+        Voucher voucher = new Voucher(voucherName, voucher_discount_percent);
+
+        int result = voucherDAO.add(voucher);
+
+        if (result == 1) {
+            response.sendRedirect("/promotionManager");
+            return;
+        } else {
+            response.sendRedirect("/promotionManager");
+            return;
+        }
+    }
+    
+     private void doPostUpdateVoucher(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        byte voucherID =  Byte.parseByte(request.getParameter("txtvoucher_id"));      
+        String voucherName = (String) request.getParameter("txtvoucher_name");
+        byte voucher_discount_percent = Byte.parseByte(request.getParameter("txtvoucher_discount_percent"));
+
+        VoucherDAO voucherDAO = new VoucherDAO();
+        Voucher voucher = new Voucher(voucherName, voucher_discount_percent);
+        voucher.setVoucherID(voucherID);
+
+        int result = voucherDAO.update(voucher);
+
+        if (result == 1) {
+            response.sendRedirect("/promotionManager");
+            return;
+        } else {
+            response.sendRedirect("/promotionManager");
+            return;
+        }
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
@@ -53,7 +111,22 @@ public class PromotionManagerController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        request.getRequestDispatcher("/promotionManager.jsp").forward(request, response);
+        String path = request.getRequestURI();
+        if (path.endsWith("/promotionManager")) {
+           
+            VoucherDAO voucherDAO = new VoucherDAO();
+            List<Voucher> voucherList = voucherDAO.getAllList();
+
+            request.setAttribute("voucherList", voucherList);
+            request.getRequestDispatcher("/promotionManager.jsp").forward(request, response);
+        } else if (path.endsWith("/promotionManager/")) {
+            response.sendRedirect("/promotionManager");
+        } else if (path.startsWith("/promotionManager/voucher")) {
+            doGetVoucher(request, response);
+        } else {
+            // response.setContentType("text/css");
+            request.getRequestDispatcher("/promotionManager.jsp").forward(request, response);
+        }
     } 
 
     /** 
@@ -66,7 +139,18 @@ public class PromotionManagerController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        if (request.getParameter("btnSubmit") != null) {
+            switch (request.getParameter("btnSubmit")) {               
+                case "SubmitAddVoucher":
+                    doPostAddVoucher(request, response);
+                    break;
+                case "SubmitUpdateVoucher":
+                    doPostUpdateVoucher(request, response);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     /** 

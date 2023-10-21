@@ -12,7 +12,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-success" data-bs-dismiss="modal">Không</button>
-        <a id="deleteVoucherLink" href="/admin" class="btn btn-danger">Có</a>
+        <a id="deleteVoucherLink" href="/promotionManager" class="btn btn-danger">Có</a>
       </div>
     </div>
   </div>

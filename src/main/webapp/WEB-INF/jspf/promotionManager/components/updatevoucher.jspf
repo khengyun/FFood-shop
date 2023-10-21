@@ -3,7 +3,7 @@
 <div class="modal" tabindex="-1" id="update-voucher-modal">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      <form class="update-voucher-form" method="POST" action="/admin">
+      <form class="update-voucher-form" method="POST" action="/promotionManager">
         <div class="modal-header">
           <h5 class="modal-title">Cập nhật Voucher</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -20,7 +20,7 @@
           <!-- Discount Percentage -->
           <div class="mb-3">
             <label for="txtvoucher-discount-percent" class="form-label">Giảm giá (%)</label>
-            <input type="number" class="form-control" id="txtvoucher-discount-percent" name="txtvoucher-discount-percent" min="0" max="100" required value="">
+            <input type="number" class="form-control" id="txtvoucher_discount_percent" name="txtvoucher_discount_percent" min="0" max="100" required value="">
           </div>
 
         </div>
