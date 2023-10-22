@@ -22,6 +22,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -209,10 +211,17 @@ public class AdminController extends HttpServlet {
             throws ServletException, IOException {
 
         String voucherName = (String) request.getParameter("txtvoucher_name");
-        byte voucher_discount_percent = Byte.parseByte(request.getParameter("txtAddVoucher_discount_percent"));
-
+        String voucherCode = (String) request.getParameter("txtvoucher_code");
+        Byte voucher_discount_percent = Byte.parseByte(request.getParameter("txtvoucher_discount_percent"));
+        Byte voucher_quantity = Byte.parseByte(request.getParameter("txtvoucher_quantity"));
+        Byte voucher_status = Byte.parseByte(request.getParameter("txtvoucher_status"));
+        // Lấy thời gian hiện tại
+        LocalDateTime currentTime = LocalDateTime.now();
+        // Chuyển đổi thời gian hiện tại thành Timestamp
+        Timestamp datetime = Timestamp.valueOf(currentTime);
+        
         VoucherDAO voucherDAO = new VoucherDAO();
-        Voucher voucher = new Voucher(voucherName, voucher_discount_percent);
+        Voucher voucher = new Voucher(voucherName, voucherCode, voucher_discount_percent, voucher_quantity, voucher_status, datetime);
 
         int result = voucherDAO.add(voucher);
 
@@ -229,10 +238,18 @@ public class AdminController extends HttpServlet {
             throws ServletException, IOException {
         byte voucherID =  Byte.parseByte(request.getParameter("txtvoucher_id"));      
         String voucherName = (String) request.getParameter("txtvoucher_name");
-        byte voucher_discount_percent = Byte.parseByte(request.getParameter("txtvoucher_discount_percent"));
-
+        String voucherCode = (String) request.getParameter("txtvoucher_code");
+        Byte voucher_discount_percent = Byte.parseByte(request.getParameter("txtvoucher_discount_percent"));
+        Byte voucher_quantity = Byte.parseByte(request.getParameter("txtvoucher_quantity"));
+        Byte voucher_status = Byte.parseByte(request.getParameter("txtvoucher_status"));
+        
+        // Lấy thời gian hiện tại
+        LocalDateTime currentTime = LocalDateTime.now();
+        // Chuyển đổi thời gian hiện tại thành Timestamp
+        Timestamp datetime = Timestamp.valueOf(currentTime);
+        
         VoucherDAO voucherDAO = new VoucherDAO();
-        Voucher voucher = new Voucher(voucherName, voucher_discount_percent);
+        Voucher voucher = new Voucher(voucherName, voucherCode, voucher_discount_percent, voucher_quantity, voucher_status, datetime);
         voucher.setVoucherID(voucherID);
 
         int result = voucherDAO.update(voucher);

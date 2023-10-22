@@ -1,40 +1,57 @@
 <%-- any content can be specified here e.g.: --%>
 <%@ page pageEncoding="UTF-8" %>
 <div class="modal" tabindex="-1" id="update-voucher-modal">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <form class="update-voucher-form" method="POST" action="/promotionManager">
-        <div class="modal-header">
-          <h5 class="modal-title">Cập nhật Voucher</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body px-5">
-          <!-- Hidden - Food ID -->
-          <input type="hidden" id="txtvoucher_id" name="txtvoucher_id" value=""/>
-          <!-- Food Name -->
-          <div class="mb-3">
-            <label for="txtvoucher_name" class="form-label">Tên voucher</label>
-            <input type="text" class="form-control" id="txtvoucher_name" name="txtvoucher_name" maxlength="50" required value="">
-          </div>
-         
-          <!-- Discount Percentage -->
-          <div class="mb-3">
-            <label for="txtvoucher-discount-percent" class="form-label">Giảm giá (%)</label>
-            <input type="number" class="form-control" id="txtvoucher_discount_percent" name="txtvoucher_discount_percent" min="0" max="100" required value="">
-          </div>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form class="update-voucher-form" method="POST" action="/promotionManager">
+                <div class="modal-header">
+                    <h5 class="modal-title">Cập nhật Voucher</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body px-5">
+                    <!-- Hidden - Food ID -->
+                    <input type="hidden" id="txtvoucher_id" name="txtvoucher_id" value=""/>
+                    <!-- Food Name -->
+                    <div class="mb-3">
+                        <label for="txtvoucher_name" class="form-label">Tên voucher</label>
+                        <input type="text" class="form-control" id="txtvoucher_name" name="txtvoucher_name" maxlength="50" required value="">
+                    </div>         
+                    <!--Voucher code-->
+                    <div class="mb-3">
+                        <label for="txtvoucher_code" class="form-label">Mã Code</label>
+                        <input type="text" class="form-control" id="txtvoucher_code" name="txtvoucher_code" maxlength="16" required>
+                    </div>
+                    <!-- Discount Percentage -->
+                    <div class="mb-3">
+                        <label for="txtvoucher-discount-percent" class="form-label">Giảm giá (%)</label>
+                        <input type="number" class="form-control" id="txtvoucher_discount_percent" name="txtvoucher_discount_percent" min="0" max="100" required value="">
+                    </div>
+                    <!--Voucher quantity-->
+                    <div class="mb-3">
+                        <label for="txtvoucher_quantity" class="form-label">Số lượng</label>
+                        <input type="number" class="form-control" id="txtvoucher_quantity" name="txtvoucher_quantity" required>
+                    </div>
+                    <!--Voucher status-->
+                    <div class="mb-3">
+                        <label for="txtvoucher_status" class="form-label">Trạng thái</label>
+                        <select class="form-select" id="txtvoucher_status" name="txtvoucher_status" required>
+                            <option value="1" selected>Còn</option>
+                            <option value="0">Hết</option>
+                        </select>
+                    </div>
 
+                </div>
+                <div class="modal-footer">
+                    <!-- Submit Button -->
+                    <button style="color: white;border-color: rgba(207, 126, 0, 1); background-color: rgba(207, 126, 0, 1);"
+                            type="button" class="btn btn-danger" data-bs-dismiss="modal">Hủy</button>
+                    <button style="color: white;border-color: rgba(207, 126, 0, 1); background-color: rgba(207, 126, 0, 1);"
+                            type="submit" class="btn btn-success" onclick="validateForm()">Cập nhật</button>
+                    <!-- Hidden Submit Value -->
+                    <input style="color: white;border-color: rgba(207, 126, 0, 1); background-color: rgba(207, 126, 0, 1);"
+                           type="hidden" id="btnSubmit" name="btnSubmit" value="SubmitUpdateVoucher">
+                </div>
+            </form>
         </div>
-        <div class="modal-footer">
-          <!-- Submit Button -->
-          <button style="color: white;border-color: rgba(207, 126, 0, 1); background-color: rgba(207, 126, 0, 1);"
-                  type="button" class="btn btn-danger" data-bs-dismiss="modal">Hủy</button>
-          <button style="color: white;border-color: rgba(207, 126, 0, 1); background-color: rgba(207, 126, 0, 1);"
-                  type="submit" class="btn btn-success" onclick="validateForm()">Cập nhật</button>
-          <!-- Hidden Submit Value -->
-          <input style="color: white;border-color: rgba(207, 126, 0, 1); background-color: rgba(207, 126, 0, 1);"
-                 type="hidden" id="btnSubmit" name="btnSubmit" value="SubmitUpdateVoucher">
-        </div>
-      </form>
     </div>
-  </div>
 </div>

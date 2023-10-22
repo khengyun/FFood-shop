@@ -196,20 +196,24 @@
                             </div>
                         </div>
 
-                        <!-- Promotion Tab Content -->
+                        <!-- Voucher Tab Content -->
                         <div class="tab-pane fade" id="promotions">
                             <div class="container-fluid p-2">
                                 <table id="users-table" class="table table-bordered table-striped">
                                     <h1 class="text-center fw-bold fs-3" align="left">Khuyến mãi</h1>
                                     <button style="color: white;border-color: rgba(207, 126, 0, 1); background-color: rgba(207, 126, 0, 1);"
-                                            type="button" class="btn btn-sm btn-success py-1 my-2 me-2" data-bs-toggle="modal" data-bs-target="#add-voucher-modal">
+                                            type="button" id="btn-add-voucher" class="btn btn-sm btn-success py-1 my-2 me-2" data-bs-toggle="modal" data-bs-target="#add-voucher-modal">
                                         Tạo Khuyến mãi
                                     </button>
                                     <thead>
                                         <tr>
                                             <th class="col-sm-3 col-gap-5">Mã Khuyến mãi</th>  
                                             <th>Tên Khuyến mãi</th>
-                                            <th>Voucher</th>
+                                            <th>Mã Code</th>
+                                            <th>Phần trăm KM</th>
+                                            <th>Số lượng</th>
+                                            <th>Trạng thái</th>
+                                            <th>Thời gian</th>
                                             <th >Thao tác</th>
 
                                         </tr>
@@ -218,16 +222,23 @@
                                         <c:forEach items="${voucherList}" var="v">
                                             <tr>
                                                 <td>${v.voucherID}</td>
-                                                <td>${v.name}</td>
-
+                                                <td>${v.voucher_name}</td>
+                                                <td>${v.voucher_code}</td>
                                                 <td>${(v.voucher_discount_percent == null) ? 0 : v.voucher_discount_percent}%</td>                                 
+                                                <td>${v.voucher_quantity}</td>
+                                                <td>${v.voucher_status eq 0 ? 'Hết' : 'Còn'}</td>
+                                                <td>${v.voucher_date}</td>
                                                 <td>
                                                     <button style="color: white;border-color: rgba(207, 126, 0, 1); background-color: rgba(207, 126, 0, 1);"
                                                             type="button" id="btn-update-voucher"
                                                             class="btn btn-sm btn-success py-1 m-1"
                                                             data-voucher-id="${v.voucherID}"
-                                                            data-voucher-name="${v.name}"
+                                                            data-voucher-name="${v.voucher_name}"
+                                                            data-voucher-code ="${v.voucher_code}"
                                                             data-voucher-discount-percent="${v.voucher_discount_percent}"
+                                                            data-voucher-quantity ="${v.voucher_quantity}"
+                                                            data-voucher-status ="${v.voucher_status}"
+                                                            data-voucher-date ="${v.voucher_date}"
                                                             data-bs-toggle="modal" data-bs-target="#update-voucher-modal">
                                                         Cập nhật
                                                     </button>
@@ -235,7 +246,7 @@
                                                             type="button" id="btn-delete-voucher"
                                                             class="btn btn-sm btn-danger py-1 m-1"
                                                             data-voucher-id="${v.voucherID}"
-                                                            data-voucher-name="${v.name}"
+                                                            data-voucher-name="${v.voucher_name}"
                                                             data-bs-toggle="modal" data-bs-target="#delete-voucher-modal">
                                                         Xóa
                                                     </button>

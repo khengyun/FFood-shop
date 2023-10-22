@@ -1,35 +1,53 @@
 <%-- any content can be specified here e.g.: --%>
 <%@ page pageEncoding="UTF-8" %>
-<div class="modal" tabindex="-1" id="add-voucher-modal">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <form class="add-vouhcer-form" method="POST" action="/promotionManager">
-        <div class="modal-header">
-          <h5 class="modal-title">Thêm Voucher </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body px-5">
-         
-          <!-- Food Name -->
-          <div class="mb-3">
-            <label for="txtvoucher_name" class="form-label">Tên Voucher</label>
-            <input type="text" class="form-control" id="txtvoucher_name" name="txtvoucher_name" maxlength="50" required>
-          </div>
-          <!-- Discount Percentage -->
-          <div class="mb-3">
-            <label for="txtvoucher-discount-percent" class="form-label">Giảm giá (%)</label>
-            <input type="number" class="form-control" id="txtvoucher-discount-percent" name="txtAddVoucher_discount_percent" min="0" max="100" required>
-          </div>
+<div class="modal" tabindex="-1" id="add-voucher-modal" onshow="generateRandomCode()">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form class="add-voucher-form" method="POST" action="/promotionManager">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thêm Voucher </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body px-5">
 
+                    <!-- Voucher Name -->
+                    <div class="mb-3">
+                        <label for="txtvoucher_name" class="form-label">Tên Voucher</label>
+                        <input type="text" class="form-control" id="txtvoucher_name" name="txtvoucher_name" maxlength="50" required>
+                    </div>
+                    <!--Voucher code-->
+                    <div class="mb-3">
+                        <label for="txtvoucher_code" class="form-label">Mã Code</label>
+                        <input type="text" class="form-control" id="txtvoucher_code" name="txtvoucher_code" maxlength="16" required>
+                    </div>
+                    <!-- Discount Percentage -->
+                    <div class="mb-3">
+                        <label for="txtvoucher_discount_percent" class="form-label">Giảm giá (%)</label>
+                        <input type="number" class="form-control" id="txtvoucher_discount_percent" name="txtvoucher_discount_percent" required>
+                    </div>
+                    <!--Voucher quantity-->
+                    <div class="mb-3">
+                        <label for="txtvoucher_quantity" class="form-label">Số lượng</label>
+                        <input type="number" class="form-control" id="txtvoucher_quantity" name="txtvoucher_quantity" required>
+                    </div>
+                    <!--Voucher status-->
+                    <div class="mb-3">
+                        <label for="txtvoucher_status" class="form-label">Trạng thái</label>
+                        <select class="form-select" id="txtvoucher_status" name="txtvoucher_status" required>
+                            <option value="1" selected>Còn</option>
+                            <option value="0">Hết</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <!-- Submit Button -->
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-success" onclick="validateForm()">Thêm</button>
+                    <!-- Hidden Submit Value -->
+                    <input type="hidden" id="btnSubmit" name="btnSubmit" value="SubmitAddVoucher">
+                </div>
+            </form>
         </div>
-        <div class="modal-footer">
-          <!-- Submit Button -->
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Hủy</button>
-          <button type="submit" class="btn btn-success">Thêm</button>
-          <!-- Hidden Submit Value -->
-          <input type="hidden" id="btnSubmit" name="btnSubmit" value="SubmitAddVoucher">
-        </div>
-      </form>
     </div>
-  </div>
 </div>
