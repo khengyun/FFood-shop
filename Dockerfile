@@ -26,8 +26,8 @@ WORKDIR /usr/local/tomcat/webapps
 # RUN rm -rf ROOT && rm -rf examples && rm -rf docs && rm -rf manager && rm -rf host-manager
 
 # Copy the WAR file from the build stage to the container
-# COPY --from=build /app/target/FFood-shop-1.0-SNAPSHOT.war ROOT.war
-COPY  target/FFood-shop-1.0-SNAPSHOT.war ROOT.war
+COPY --from=build /app/target/FFood-shop-1.0-SNAPSHOT.war ROOT.war
+# COPY  target/FFood-shop-1.0-SNAPSHOT.war ROOT.war
 
 # Expose the default Tomcat port
 EXPOSE 8080

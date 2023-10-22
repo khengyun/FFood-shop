@@ -9,7 +9,6 @@ services:
       - MSSQL_PID=Developer
     ports:
       - "1450:1433"
-
     volumes:
       - sqlserver_data:/var/opt/mssql
     restart: always
@@ -19,6 +18,8 @@ services:
       retries: 10
       start_period: 10s
       timeout: 3s
+    networks:
+      - my-network
 
   sqlserver.configurator:
     image: mcr.microsoft.com/mssql/server:2019-latest
@@ -32,6 +33,9 @@ services:
       /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P sa@123456  -i docker-entrypoint-initdb.d/full.sql;
       echo "All done!";
       '
+    networks:
+      - my-network
+
 
   ai-food-classification:
     build: ./api/Food_Classifier
@@ -43,21 +47,23 @@ services:
     networks:
       - my-network
 
-  # tomcat-app:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "8081:8080"
-  #   restart: always
-    # network_mode: host
+  tomcat-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8080"
+    restart: always
+    networks:
+      - my-network
+    depends_on:
+      - sqlserver
+      - sqlserver.configurator
 
 networks:
   my-network:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: "192.168.92.0/24"
+    name: my-network
+
 
 volumes:
   sqlserver_data:
