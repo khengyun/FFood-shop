@@ -2,7 +2,10 @@ $(document).on("click", "#btn-update-food", function () {
   let foodID = $(this).attr("data-food-id");
   let foodType = $(this).attr("data-food-type");
   let foodName = $(this).attr("data-food-name");
+  let foodDescription = $(this).attr("data-food-description");
   let foodPrice = $(this).attr("data-food-price");
+  let foodStatus = $(this).attr("data-food-status");
+  let foodRate = $(this).attr("data-food-rate");
   let discountPercent = $(this).attr("data-discount-percent");
   let imageURL = $(this).attr("data-image-url");
 
@@ -10,7 +13,13 @@ $(document).on("click", "#btn-update-food", function () {
   let modal = $("#update-food-modal");
   modal.find("input[name='txtFoodID']").attr("value", foodID);
   modal.find("#txtFoodName").attr("value", foodName);
+  modal.find("#txtFoodDescription").val(foodDescription);
   modal.find("#txtFoodPrice").attr("value", Number(foodPrice).toFixed(2));
+  modal.find("#txtFoodStatus").val( foodStatus);
+  console.log(foodStatus);
+  modal.find("#txtFoodRate").val( foodRate);
+  console.log(foodRate);
+
   modal.find("#txtDiscountPercent").attr("value", discountPercent);
   modal.find("#txtImageURL").attr("value", imageURL);
   for (let i = 1; i < 7; i++) {
