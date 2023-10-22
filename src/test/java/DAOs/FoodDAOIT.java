@@ -4,8 +4,10 @@
  */
 package DAOs;
 
+import DBConnection.DBConnection;
 import Models.Food;
 import java.math.BigDecimal;
+import java.sql.PreparedStatement;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -21,22 +23,22 @@ import static org.mockito.Mockito.when;
  * @author huynhvu
  */
 public class FoodDAOIT {
-    
+
     public FoodDAOIT() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -65,14 +67,15 @@ public class FoodDAOIT {
 
         // Verify that the expected result was returned.
         assertEquals(1, result);
-        
-        if(result == 1){
+
+        if (result == 1) {
             System.out.println("True");
         } else {
             System.out.println("False");
         }
     }
-     @Test
+
+    @Test
     public void testAddNegativeDiscount() {
         // Create a mock instance of the FoodDAO class.
         FoodDAO foodDAOMock = mock(FoodDAO.class);
@@ -96,15 +99,16 @@ public class FoodDAOIT {
 
         // Verify that the expected result was returned.
         assertEquals(1, result);
-        
-        if(result != 1){
-            
+
+        if (result != 1) {
+
             System.out.println("Discount is Negative");
         } else {
-            System.out.println("True");
+            System.out.println("Success");
         }
     }
-      @Test
+
+    @Test
     public void testAddNegativePrice() {
         // Create a mock instance of the FoodDAO class.
         FoodDAO foodDAOMock = mock(FoodDAO.class);
@@ -128,14 +132,15 @@ public class FoodDAOIT {
 
         // Verify that the expected result was returned.
         assertEquals(1, result);
-        
-        if(result != 1){
+
+        if (result != 1) {
             System.out.println("Price is Negative");
+            return;
         } else {
-            System.out.println("True");
+            System.out.println("Success");
         }
     }
-    
+
     @Test
     public void testAddDuplicate() {
         // Create a mock instance of the FoodDAO class.
@@ -160,24 +165,25 @@ public class FoodDAOIT {
 
         // Verify that the expected result was returned.
         assertEquals(1, result);
-        
-        if(result != 1){
-            
+
+        if (result != 1) {
+
             System.out.println("Food already exsist");
         } else {
             System.out.println("False");
         }
     }
-    
-     @Test
+
+    @Test
     public void testAddNullFoodPrice() {
         // Create a mock instance of the FoodDAO class.
         FoodDAO foodDAOMock = mock(FoodDAO.class);
 
         // Create a food object.
         Food food = new Food();
+        food.setFoodID((short) 21);
         food.setFoodName("Com gà");
-        food.setFoodPrice(null);
+       food.setFoodPrice(null);
         food.setDiscountPercent((byte) 10);
         food.setImageURL("https://example.com/com-ga.png");
         food.setFoodTypeID((byte) 1);
@@ -193,15 +199,22 @@ public class FoodDAOIT {
 
         // Verify that the expected result was returned.
         assertEquals(1, result);
-        
-        if(result != 1){
+
+        if (result != 1) {
             System.out.println("Price is null");
         } else {
             System.out.println("True");
+            System.out.println("Food ID: " + food.getFoodID());
+            System.out.println("Food name: " + food.getFoodName());
+            System.out.println("Food price: " + food.getFoodPrice());
+            System.out.println("Discount percent: " + food.getDiscountPercent());
+            System.out.println("Image URL: " + food.getImageURL());
+            System.out.println("Food type ID: " + food.getFoodTypeID());
+            System.out.println();
         }
     }
-    
-     @Test
+
+    @Test
     public void testAddNullFoodURL() {
         // Create a mock instance of the FoodDAO class.
         FoodDAO foodDAOMock = mock(FoodDAO.class);
@@ -225,13 +238,14 @@ public class FoodDAOIT {
 
         // Verify that the expected result was returned.
         assertEquals(1, result);
-        
-        if(result != 1){
+
+        if (result != 1) {
             System.out.println("URL is null");
         } else {
             System.out.println("False");
         }
     }
+
     @Test
     public void testAddNullFoodType() {
         // Create a mock instance of the FoodDAO class.
@@ -256,17 +270,12 @@ public class FoodDAOIT {
 
         // Verify that the expected result was returned.
         assertEquals(1, result);
-        
-        if(result != 1){
+
+        if (result != 1) {
             System.out.println("name is null");
         } else {
             System.out.println("False");
         }
     }
-    
-    
 
-    
-
-  
 }
