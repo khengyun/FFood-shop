@@ -107,14 +107,14 @@
                                     <thead>
                                         <tr>
                                             <th class="col-sm-3 col-gap-5" >Mã TK</th>                                   
-                                            <th >Tên Admin</th>
+                                            <th >Tên</th>
                                             <th >Email</th>
                                             <th >Loại TK</th>
                                             <th >Thao tác</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:forEach items="${adminstaffList}" var="a">
+                                        <c:forEach items="${StaffPromotionList}" var="a">
                                             <tr>
                                                 <td>${a.accountID}</td>
                                                 <td >${a.username}</td>

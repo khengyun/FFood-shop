@@ -4,6 +4,7 @@
  */
 package DAOs;
 
+import Models.Account;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -33,6 +34,23 @@ public class StaffDAO {
         }
         return null;
     }
+    
+    public Staff getNewStaff() {
+        Staff staff = null;
+        String sql = "SELECT TOP 1 * FROM Staff ORDER BY staff_id DESC;";
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                staff = new Staff(rs.getByte("staff_id"),rs.getString("staff_fullname"));
+            }
+            return staff;
+        } catch (SQLException ex) {
+            Logger.getLogger(StaffDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+   
 
     public Staff getStaff(byte id) {
         Staff staff = null;

@@ -8,11 +8,15 @@ import DAOs.AccountDAO;
 import DAOs.AdminDAO;
 import DAOs.FoodDAO;
 import DAOs.OrderDAO;
+import DAOs.PromotionManagerDAO;
+import DAOs.StaffDAO;
 import DAOs.VoucherDAO;
 import Models.Account;
 import Models.Admin;
 import Models.Food;
 import Models.Order;
+import Models.PromotionManager;
+import Models.Staff;
 import Models.Voucher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -82,7 +86,7 @@ public class AdminController extends HttpServlet {
             response.sendRedirect("/admin");
         }
     }
-    
+
     private void doGetVoucher(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String path = request.getRequestURI();
@@ -185,6 +189,56 @@ public class AdminController extends HttpServlet {
         }
     }
 
+    private void doPostAddStaffPromotion(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String username = request.getParameter("txtAccountUsername");
+        String fullname = request.getParameter("txtAccountFullname");
+        String email = request.getParameter("txtEmail");
+        String role = request.getParameter("txtAccountRole");
+        String password = (String) request.getAttribute("txtAccountPassword");
+        AccountDAO accountDAO = new AccountDAO();
+        Account account = new Account(username, email, password, role);
+        if (role.equals("staff")) {
+            Staff newstaff = new Staff(fullname);
+            StaffDAO staffDAO = new StaffDAO();
+            int result = staffDAO.add(newstaff);
+            
+            if (result == 1) {
+                account.setStaffID(staffDAO.getNewStaff().getStaffID());
+                int result1 = accountDAO.add(account);
+                if (result1 == 1) {
+                    response.sendRedirect("/admin");
+                    return;
+                } else {
+                    response.sendRedirect("/admin");
+                    return;
+                }
+            } else {
+                response.sendRedirect("/admin");
+                return;
+            }
+        } else if (role.equals("promotionManager")) {
+            PromotionManager newPromotionManager = new PromotionManager(fullname);
+            PromotionManagerDAO promotionManagerDAO = new PromotionManagerDAO();
+            int result = promotionManagerDAO.add(newPromotionManager);
+            
+            if (result == 1) {
+                account.setProID(promotionManagerDAO.getNewPromotionManager().getProID());
+                int result1 = accountDAO.add(account);
+                if (result1 == 1) {
+                    response.sendRedirect("/admin");
+                    return;
+                } else {
+                    response.sendRedirect("/admin");
+                    return;
+                }
+            } else {
+                response.sendRedirect("/admin");
+                return;
+            }
+        }
+    }
+
     private void doPostUpdateUser(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int accountID = Integer.parseInt(request.getParameter("txtAccountID"));
@@ -206,7 +260,7 @@ public class AdminController extends HttpServlet {
             return;
         }
     }
-    
+
     private void doPostAddVoucher(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -219,7 +273,7 @@ public class AdminController extends HttpServlet {
         LocalDateTime currentTime = LocalDateTime.now();
         // Chuyển đổi thời gian hiện tại thành Timestamp
         Timestamp datetime = Timestamp.valueOf(currentTime);
-        
+
         VoucherDAO voucherDAO = new VoucherDAO();
         Voucher voucher = new Voucher(voucherName, voucherCode, voucher_discount_percent, voucher_quantity, voucher_status, datetime);
 
@@ -233,21 +287,21 @@ public class AdminController extends HttpServlet {
             return;
         }
     }
-    
-     private void doPostUpdateVoucher(HttpServletRequest request, HttpServletResponse response)
+
+    private void doPostUpdateVoucher(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        byte voucherID =  Byte.parseByte(request.getParameter("txtvoucher_id"));      
+        byte voucherID = Byte.parseByte(request.getParameter("txtvoucher_id"));
         String voucherName = (String) request.getParameter("txtvoucher_name");
         String voucherCode = (String) request.getParameter("txtvoucher_code");
         Byte voucher_discount_percent = Byte.parseByte(request.getParameter("txtvoucher_discount_percent"));
         Byte voucher_quantity = Byte.parseByte(request.getParameter("txtvoucher_quantity"));
         Byte voucher_status = Byte.parseByte(request.getParameter("txtvoucher_status"));
-        
+
         // Lấy thời gian hiện tại
         LocalDateTime currentTime = LocalDateTime.now();
         // Chuyển đổi thời gian hiện tại thành Timestamp
         Timestamp datetime = Timestamp.valueOf(currentTime);
-        
+
         VoucherDAO voucherDAO = new VoucherDAO();
         Voucher voucher = new Voucher(voucherName, voucherCode, voucher_discount_percent, voucher_quantity, voucher_status, datetime);
         voucher.setVoucherID(voucherID);
@@ -280,8 +334,11 @@ public class AdminController extends HttpServlet {
         if (path.endsWith("/admin")) {
             FoodDAO foodDAO = new FoodDAO();
             List<Food> foodList = foodDAO.getAllList();
+
             AccountDAO accountDAO = new AccountDAO();
             List<Account> userAccountList = accountDAO.getAllUser();
+
+            List<Account> StaffPromotionList = accountDAO.getAllStaffPromotion();
 
             OrderDAO orderDAO = new OrderDAO();
             List<Order> orderList = orderDAO.getAllList();
@@ -291,6 +348,7 @@ public class AdminController extends HttpServlet {
 
             request.setAttribute("foodList", foodList);
             request.setAttribute("userAccountList", userAccountList);
+            request.setAttribute("StaffPromotionList", StaffPromotionList);
             request.setAttribute("orderList", orderList);
             request.setAttribute("voucherList", voucherList);
             request.getRequestDispatcher("/admin.jsp").forward(request, response);
@@ -341,6 +399,9 @@ public class AdminController extends HttpServlet {
                     break;
                 case "SubmitUpdateVoucher":
                     doPostUpdateVoucher(request, response);
+                    break;
+                case "SubmitAddAdmin":
+                    doPostAddStaffPromotion(request, response);
                     break;
                 default:
                     break;

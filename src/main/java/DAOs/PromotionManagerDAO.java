@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import Models.PromotionManager;
+import Models.Staff;
 
 public class PromotionManagerDAO {
 
@@ -47,6 +48,22 @@ public class PromotionManagerDAO {
             Logger.getLogger(PromotionManagerDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return pro;
+    }
+    
+    public PromotionManager getNewPromotionManager() {
+        PromotionManager promotionManager = null;
+        String sql = "SELECT TOP 1 * FROM PromotionManager ORDER BY pro_id DESC;";
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                promotionManager = new PromotionManager(rs.getByte("pro_id"),rs.getString("pro_fullname"));
+            }
+            return promotionManager;
+        } catch (SQLException ex) {
+            Logger.getLogger(StaffDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     public int add(PromotionManager pro) {
