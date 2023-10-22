@@ -97,7 +97,7 @@ public class FoodDAOIT {
         // Verify that the expected result was returned.
         assertEquals(1, result);
         
-        if(result == 1){
+        if(result != 1){
             
             System.out.println("Discount is Negative");
         } else {
@@ -129,7 +129,7 @@ public class FoodDAOIT {
         // Verify that the expected result was returned.
         assertEquals(1, result);
         
-        if(result == 1){
+        if(result != 1){
             System.out.println("Price is Negative");
         } else {
             System.out.println("True");
@@ -161,7 +161,7 @@ public class FoodDAOIT {
         // Verify that the expected result was returned.
         assertEquals(1, result);
         
-        if(result == 1){
+        if(result != 1){
             
             System.out.println("Food already exsist");
         } else {
@@ -194,7 +194,7 @@ public class FoodDAOIT {
         // Verify that the expected result was returned.
         assertEquals(1, result);
         
-        if(result == 1){
+        if(result != 1){
             System.out.println("Price is null");
         } else {
             System.out.println("True");
@@ -226,7 +226,7 @@ public class FoodDAOIT {
         // Verify that the expected result was returned.
         assertEquals(1, result);
         
-        if(result == 1){
+        if(result != 1){
             System.out.println("URL is null");
         } else {
             System.out.println("False");
@@ -257,7 +257,7 @@ public class FoodDAOIT {
         // Verify that the expected result was returned.
         assertEquals(1, result);
         
-        if(result == 1){
+        if(result != 1){
             System.out.println("name is null");
         } else {
             System.out.println("False");
