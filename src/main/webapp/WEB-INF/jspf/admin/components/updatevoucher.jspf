@@ -37,7 +37,7 @@
                     <!-- exp date -->
                     <div class="mb-3">
                         <label for="txtVoucherExpDate" class="form-label">Ngày hết hạn</label>
-                        <input type="date" class="form-control" id="txtVoucherExpDate" name="txtVoucherExpDate" required>
+                        <input type="date" format="yyyy/mm/dd" class="form-control" id="txtVoucherExpDate" name="txtVoucherExpDate" required>
                     </div>
                     <!-- comment -->
                     <div class="mb-3">
@@ -54,7 +54,7 @@
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Hủy</button>
                     <button type="submit" class="btn btn-success">Thêm</button>
                     <!-- Hidden Submit Value -->
-                    <input type="hidden" id="btnSubmit" name="btnSubmit" value="SubmitAddFood">
+                    <input type="hidden" id="btnSubmit" name="btnSubmit" value="SubmitUpdateVoucher">
                 </div>
             </form>
         </div>

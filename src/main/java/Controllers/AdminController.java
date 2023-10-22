@@ -25,6 +25,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author CE171454 Hua Tien Thanh
@@ -82,6 +84,18 @@ public class AdminController extends HttpServlet {
         }
     }
 
+    private void doGetVoucher(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String path = request.getRequestURI();
+        if (path.startsWith("/admin/user/delete")) {
+            String[] s = path.split("/");
+            int voucherID = Integer.parseInt(s[s.length - 1]);
+            VoucherDAO dao = new VoucherDAO();
+            dao.delete(voucherID);
+            response.sendRedirect("/admin");
+        }
+    }
+
     private void doPostAddFood(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         byte foodTypeID = Byte.parseByte(request.getParameter("txtFoodTypeID"));
@@ -111,7 +125,7 @@ public class AdminController extends HttpServlet {
         int quantity = Integer.parseInt(request.getParameter("txtVoucherQuantity"));
         int condition = Integer.parseInt(request.getParameter("txtVoucherCondition"));
         String dateString = request.getParameter("txtVoucherExpDate");
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
         Date date = sdf.parse(dateString);
         String status = request.getParameter("txtVoucherStatus");
         VoucherDAO voucherDAO = new VoucherDAO();
@@ -248,6 +262,8 @@ public class AdminController extends HttpServlet {
             doGetFood(request, response);
         } else if (path.startsWith("/admin/user")) {
             doGetUser(request, response);
+        } else if (path.startsWith("/admin/promotions")) {
+            doGetVoucher(request, response);
         } else {
             // response.setContentType("text/css");
             request.getRequestDispatcher("/admin.jsp").forward(request, response);
@@ -281,6 +297,14 @@ public class AdminController extends HttpServlet {
                     break;
                 case "SubmitUpdateUser":
                     doPostUpdateUser(request, response);
+                    break;
+                case "SubmitAddVoucher": {
+                    try {
+                        doPostAddVoucher(request, response);
+                    } catch (ParseException ex) {
+                        Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
                     break;
                 default:
                     break;

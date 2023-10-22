@@ -54,7 +54,7 @@
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Hủy</button>
                     <button type="submit" class="btn btn-success">Thêm</button>
                     <!-- Hidden Submit Value -->
-                    <input type="hidden" id="btnSubmit" name="btnSubmit" value="SubmitAddFood">
+                    <input type="hidden" id="btnSubmit" name="btnSubmit" value="SubmitAddVoucher">
                 </div>
             </form>
         </div>

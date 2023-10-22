@@ -21,7 +21,7 @@
 
           <!-- Hidden Submit Value -->
           <input type="hidden" name="voucherData" value='{"key":"value"}'>
-          <input type="hidden" id="btnSubmit" name="btnSubmit" value="SubmitDeleteFood">
+          <input type="hidden" id="btnSubmit" name="btnSubmit" value="SubmitDeleteVoucher">
         </div>
       </form>
     </div>
