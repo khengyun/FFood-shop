@@ -1,23 +1,5 @@
 <%-- any content can be specified here e.g.: --%>
 <%@ page pageEncoding="UTF-8" %>
-<!--<div class="modal" tabindex="-1" id="delete-voucher-modal">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Xóa Voucher</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>Bạn có muốn xóa <span id="voucher_name"></span>không?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-success" data-bs-dismiss="modal">Không</button>
-        <a id="deleteVoucherLink" href="/admin" class="btn btn-danger">Có</a>
-      </div>
-    </div>
-  </div>
-</div>-->
-
 <div class="modal" tabindex="-1" id="delete-voucher-modal">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">

@@ -108,20 +108,6 @@ $(document).on("click", "#btn-add-voucher", function () {
 
 });
 
-//$(document).on("click", "#btn-delete-voucher", function () {
-//    let voucherName = $(this).data("voucher-name");
-//    let voucherID = $(this).data("voucher-id");
-//    let deleteVoucherLink = "";
-//    if (voucherID === null) {
-//        deleteVoucherLink = "/admin";
-//    } else {
-//        deleteVoucherLink = "/admin/voucher/delete/" + voucherID;
-//    }
-//    // Set the values of the corresponding form inputs in the modal
-//    $("#delete-voucher-modal").find("#voucher_name").html(voucherName + " ");
-//    $("#delete-voucher-modal").find("#deleteVoucherLink").attr("href", deleteVoucherLink);
-//});
-
 $(document).on("click", "#btn-delete-voucher", function () {
     let modal = $("#delete-voucher-modal");
     // Clear the list of foods in the modal every time the button is clicked
