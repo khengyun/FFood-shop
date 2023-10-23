@@ -1,7 +1,4 @@
-<<<<<<< Updated upstream
-=======
 <%@ page pageEncoding="UTF-8" %>
->>>>>>> Stashed changes
 <!-- Camera -->
 <div class="modal fade" tabindex="-1" id="camera-modal" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl">
