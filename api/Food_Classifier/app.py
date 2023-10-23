@@ -1,12 +1,25 @@
 from fastapi import FastAPI
-from src.predict import predict_dish_onnx
+from src.predict import predict_dish_onnx, predict_dish_onnx_from_base64
 from starlette.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
+from fastapi.middleware.cors import CORSMiddleware
+import logging
 import onnxruntime
 import uvicorn
 import time
+from pydantic import BaseModel
 
 app = FastAPI()
+class ImageBase64Request(BaseModel):
+    image_base64: str
+# Thêm CORS Middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Thay đổi thành nguồn của ứng dụng JavaScript của bạn
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # mount data
 app.mount("/images", StaticFiles(directory="images"), name="images")
@@ -43,6 +56,27 @@ async def predict_dish(url: str):
     html_content = f'<html><body><h2>Pred: {predicted_dish}</h2><p>Mean-AUC: 0.8897322416305542</p><p>Inference time: {response_time} seconds</p><img style="width:500px;" src="{img_url}" alt="Image"></body></html>'
     
     return HTMLResponse(content=html_content)
+
+
+
+@app.post("/predict_dish")
+async def predict_dish(request_data: ImageBase64Request):
+    class_list_file = "model/food_model_labels.txt"
+    
+    logging.info(f"Received image_base64: {request_data.image_base64}")
+    
+    start_time = time.time()
+
+    predicted_dish = predict_dish_onnx_from_base64(request_data.image_base64, session_onnx, class_list_file)
+    end_time = time.time()
+    
+    response_time = end_time - start_time
+    
+    return {
+        "predicted_dish": predicted_dish,
+        "inference_time": response_time,
+    }
+
 
 if __name__ == '__main__':
     uvicorn.run('app:app', port=8000, host='0.0.0.0', reload=True)

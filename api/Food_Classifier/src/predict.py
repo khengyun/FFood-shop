@@ -4,7 +4,7 @@ from PIL import Image
 import numpy as np
 import tensorflow as tf
 import onnxruntime
-
+import base64
 
 
 def predict_dish_onnx(url, session, class_list_file):
@@ -32,6 +32,32 @@ def predict_dish_onnx(url, session, class_list_file):
 
     return predicted_class, url
 
+def predict_dish_onnx_from_base64(image_base64, session, class_list_file):
+    # image_base64 = image_base64.split(';')[1]
+    # Decode the base64 image data and convert it to a NumPy array
+    image_bytes = base64.b64decode(image_base64)
+    image = Image.open(io.BytesIO(image_bytes))
+
+
+    image = image.convert('RGB')
+
+    image = image.resize((224, 224))
+    image = np.array(image).astype(np.float32)
+    image = image / 255.0
+
+    input_name = session.get_inputs()[0].name
+    output_name = session.get_outputs()[0].name
+
+    input_data = np.expand_dims(image, axis=0)
+    predictions = session.run([output_name], {input_name: input_data})[0][0]
+
+    with open(class_list_file, 'r') as file:
+        class_list = file.read().split('\n')
+
+    predicted_class_index = np.argmax(predictions)
+    predicted_class = class_list[predicted_class_index]
+
+    return predicted_class
 
 # convert code to __main__
 
