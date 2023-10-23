@@ -43,7 +43,7 @@ public class VoucherDAO {
             ps.setByte(1, id);
             rs = ps.executeQuery();
             if (rs.next()) {
-                voucher = new Voucher(rs.getByte("voucher_id"), rs.getString("voucher_name"), rs.getByte("voucher_discount_percent"));
+                voucher = new Voucher(rs.getByte("voucher_id"), rs.getString("voucher_name"), rs.getString("voucher_code"),rs.getByte("voucher_discount_percent"),rs.getByte("voucher_quantity"), rs.getByte("voucher_status"), rs.getTimestamp("voucher_date"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(VoucherDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -58,8 +58,13 @@ public class VoucherDAO {
             while (voucherRS.next()) {
                 Voucher voucher = new Voucher(
                         voucherRS.getByte("voucher_id"),
-                        voucherRS.getString("voucher_name"),                      
-                        voucherRS.getByte("voucher_discount_percent"));
+                        voucherRS.getString("voucher_name"),   
+                        voucherRS.getString("voucher_code"),    
+                        voucherRS.getByte("voucher_discount_percent"),
+                        voucherRS.getByte("voucher_quantity"),
+                        voucherRS.getByte("voucher_status"),
+                        voucherRS.getTimestamp("voucher_date")
+                );                
                 voucherList.add(voucher);
             }
         } catch (SQLException ex) {
@@ -69,12 +74,16 @@ public class VoucherDAO {
     }
 
     public int add(Voucher voucher) {
-        String sql = "insert into Voucher values (?,?)";
+        String sql = "insert into Voucher values (?,?,?,?,?,?)";
         int result = 0;
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, voucher.getName());
-            ps.setInt(2, voucher.getVoucher_discount_percent());
+            ps.setString(1, voucher.getVoucher_name());
+            ps.setString(2, voucher.getVoucher_code());
+            ps.setByte(3, voucher.getVoucher_discount_percent());
+            ps.setByte(4, voucher.getVoucher_quantity());
+            ps.setByte(5, voucher.getVoucher_status());
+            ps.setTimestamp(6, voucher.getVoucher_date());
             result = ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(VoucherDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -96,13 +105,17 @@ public class VoucherDAO {
     }
 
     public int update(Voucher voucher) {
-        String sql = "update Voucher set voucher_name = ?, voucher_discount_percent = ? where voucher_id = ?";
+        String sql = "update Voucher set voucher_name = ?, voucher_code = ?,voucher_discount_percent = ?, voucher_quantity = ?, voucher_status = ?, voucher_date = ? where voucher_id = ?";
         int result = 0;
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, voucher.getName());
-            ps.setByte(2, voucher.getVoucher_discount_percent());
-            ps.setByte(3, voucher.getVoucherID());
+            ps.setString(1, voucher.getVoucher_name());
+            ps.setString(2, voucher.getVoucher_code());           
+            ps.setByte(3, voucher.getVoucher_discount_percent());
+            ps.setByte(4, voucher.getVoucher_quantity());
+            ps.setByte(5, voucher.getVoucher_status());
+            ps.setTimestamp(6, voucher.getVoucher_date());
+            ps.setByte(7, voucher.getVoucherID());
             result = ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(VoucherDAO.class.getName()).log(Level.SEVERE, null, ex);

@@ -22,6 +22,10 @@ function validateForm() {
                 required: true,
                 maxlength: 100
             },
+            txtFoodDescription: {
+                required: true,
+                maxlength: 500
+            },
             txtFoodPrice: {
                 required: true,
                 number: true,
@@ -46,16 +50,14 @@ function validateForm() {
                 required: "Tên món không được để trống",
                 maxlength: "Tên món không dài quá 100 kí tự"
             },
+            txtFoodDescription: {
+                required: "Tên món không được để trống",
+                maxlength: "Tên món không dài quá 500 kí tự"
+            },
             txtFoodPrice: {
                 required: "Vui lòng nhập Đơn giá",
                 number: "Đơn giá phải là định dạng số",
                 min: "Đơn giá phải là số dương"
-            },
-            txtDiscountPercent: {
-                required: "Vui lòng nhập Giá trị giảm giá",
-                digits: "Giá trị giảm giá phải là số nguyên",
-                min: "Giá trị giảm giá không được dưới 0",
-                max: "Giá trị giảm giá không được quá 100"
             },
             txtImageURL: {
                 required: "Vui lòng nhập Đường dẫn ảnh",
@@ -84,6 +86,10 @@ function validateForm() {
                 required: true,
                 maxlength: 100
             },
+            txtFoodDescription: {
+                required: true,
+                maxlength: 500
+            },
             txtFoodPrice: {
                 required: true,
                 number: true,
@@ -109,6 +115,10 @@ function validateForm() {
             txtFoodName: {
                 required: "Tên món không được để trống",
                 maxlength: "Tên món không dài quá 100 kí tự"
+            },
+            txtFoodDescription: {
+                required: "Tên món không được để trống",
+                maxlength: "Tên món không dài quá 500 kí tự"
             },
             txtFoodPrice: {
                 required: "Vui lòng nhập Đơn giá",
@@ -230,27 +240,40 @@ function validateForm() {
             form.submit();
         }
     });
-    
-    $(".add-vouhcer-form").validate({
+   
+    $(".add-voucher-form").validate({
         rules: {
             txtvoucher_name: {
                 required: true,
                 maxlength: 100,
             },
+            txtvoucher_code: {
+                required: true,
+                maxlength: 16,
+            },
             txtvoucher_discount_percent: {
                 required: true,
                 range: [0, 100]
+            },
+            txtvoucher_quantity: {
+                required: true,
             }
-
         },
         messages: {
             txtvoucher_name: {
                 required: "Vui lòng nhập tên Voucher",
                 maxlength: "Tên Voucher không được vượt quá 100 ký tự"
             },
+            txtvoucher_code: {
+                required: "Vui lòng nhập mã code",
+                maxlength: "Tên Voucher không được vượt quá 16 ký tự"
+            },
             txtvoucher_discount_percent: {
                 required: "Vui lòng nhập phần trăm giảm giá",
                 range: "Vui lòng nhập từ 0% đến 100%"
+            },
+            txtvoucher_quantity: {
+                required: "Vui lòng nhập số lượng giảm giá",
             }
         },
         submitHandler: function (form) {
@@ -258,16 +281,23 @@ function validateForm() {
             form.submit();
         }
     });
-    
-    $(".update-vouhcer-form").validate({
+  
+    $(".update-voucher-form").validate({
         rules: {
             txtvoucher_name: {
                 required: true,
                 maxlength: 100,
             },
+            txtvoucher_code: {
+                required: true,
+                maxlength: 16,
+            },
             txtvoucher_discount_percent: {
                 required: true,
                 range: [0, 100]
+            },
+            txtvoucher_quantity: {
+                required: true,
             }
         },
         messages: {
@@ -275,9 +305,16 @@ function validateForm() {
                 required: "Vui lòng nhập tên Voucher",
                 maxlength: "Tên Voucher không được vượt quá 100 ký tự"
             },
+            txtvoucher_code: {
+                required: "Vui lòng nhập mã code",
+                maxlength: "Tên Voucher không được vượt quá 16 ký tự"
+            },
             txtvoucher_discount_percent: {
                 required: "Vui lòng nhập phần trăm giảm giá",
                 range: "Vui lòng nhập từ 0% đến 100%"
+            },
+            txtvoucher_quantity: {
+                required: "Vui lòng nhập số lượng giảm giá",
             }
         },
         submitHandler: function (form) {

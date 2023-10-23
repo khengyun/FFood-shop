@@ -157,7 +157,6 @@ addToCartButtons.forEach(function(button) {
   button.addEventListener('click', function() {
     var foodId = this.getAttribute('data-foodid');
     var quantity = this.getAttribute('data-quantity');
-
     // Send AJAX request to addToCart servlet endpoint
     $.ajax({
         type: "GET",

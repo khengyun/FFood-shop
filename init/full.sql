@@ -22,7 +22,7 @@ create table Food (
 	food_status			bit not null,
 	food_rate			tinyint not null,
 	discount_percent	tinyint not null,
-	food_img_url		varchar(255) null,
+	food_img_url		varchar(255) not null,
 	food_type_id		tinyint not null foreign key references FoodType(food_type_id)
 );
 
@@ -52,7 +52,11 @@ go
 create table Voucher (
 	voucher_id					tinyint identity(1,1) not null primary key,
 	voucher_name				nvarchar(200) not null,
-	voucher_discount_percent	tinyint not null
+	voucher_code				char(16) not null,
+	voucher_discount_percent	tinyint not null,
+	voucher_quantity			tinyint not null,
+	voucher_status				bit not null,
+	voucher_date				datetime not null
 );
 
 go
@@ -378,12 +382,10 @@ insert into OrderStatus (order_status) values (N'Đã giao');
 insert into OrderStatus (order_status) values (N'Đã hủy');
 
 -- Voucher
-insert into Voucher (voucher_name , voucher_discount_percent) values ( N'Quốc tế phụ nữ', 30);
-insert into Voucher (voucher_name , voucher_discount_percent) values ( N'Khách hàng may mắn', 20);
-insert into Voucher (voucher_name , voucher_discount_percent) values (N'Quà tặng Noel', 40);
-insert into Voucher (voucher_name , voucher_discount_percent) values ( N'Người đặc biệt', 50);
-
-
+insert into Voucher (voucher_name, voucher_code, voucher_discount_percent, voucher_quantity, voucher_status, voucher_date) values ( N'Quốc tế phụ nữ', 'ADASD2FD23123DBE', 30, 100, 0,'20231019 00:00:01 AM' );
+insert into Voucher (voucher_name, voucher_code, voucher_discount_percent, voucher_quantity, voucher_status, voucher_date) values ( N'Khách hàng may mắn', 'ADEF38BDYOQM875V', 20, 10, 0,'20230808 00:00:01 AM');
+insert into Voucher (voucher_name, voucher_code, voucher_discount_percent, voucher_quantity, voucher_status, voucher_date) values (N'Quà tặng Noel', 'DUEMAHWOPUNH62GH', 40, 50, 1,'20231215 00:00:01 AM' );
+insert into Voucher (voucher_name, voucher_code, voucher_discount_percent, voucher_quantity, voucher_status, voucher_date) values ( N'Người đặc biệt', 'DJWOA975N4B92BH6', 50, 5, 1,'20231108 00:00:01 AM' );
 
 -- Cart, CartItem, Order test data
 insert into Cart (customer_id) values (1);

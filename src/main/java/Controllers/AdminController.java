@@ -22,7 +22,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -97,12 +100,14 @@ public class AdminController extends HttpServlet {
             throws ServletException, IOException {
         byte foodTypeID = Byte.parseByte(request.getParameter("txtFoodTypeID"));
         String foodName = request.getParameter("txtFoodName");
+        String foodDescription = (String) request.getParameter("txtFoodDescription");
         BigDecimal foodPrice = BigDecimal.valueOf(Double.parseDouble(request.getParameter("txtFoodPrice")));
         byte discountPercent = Byte.parseByte(request.getParameter("txtDiscountPercent"));
+        byte foodRate = Byte.parseByte(request.getParameter("txtFoodRate"));
+        byte foodStatus = Byte.parseByte(request.getParameter("txtFoodStatus"));
         String imageURL = (String) request.getAttribute("txtImageURL");
-
         FoodDAO foodDAO = new FoodDAO();
-        Food food = new Food(foodName, foodPrice, discountPercent, imageURL, foodTypeID);
+        Food food = new Food(foodName, foodDescription, foodPrice, foodStatus, foodRate, discountPercent, imageURL, foodTypeID);
         int result = foodDAO.add(food);
 
         if (result == 1) {
@@ -119,12 +124,15 @@ public class AdminController extends HttpServlet {
         short foodID = Short.parseShort(request.getParameter("txtFoodID"));
         byte foodTypeID = Byte.parseByte(request.getParameter("txtFoodTypeID"));
         String foodName = request.getParameter("txtFoodName");
+        String foodDescription = (String) request.getParameter("txtFoodDescription");
         BigDecimal foodPrice = BigDecimal.valueOf(Double.parseDouble(request.getParameter("txtFoodPrice")));
+        byte foodRate = Byte.parseByte(request.getParameter("txtFoodRate"));
+        byte foodStatus = Byte.parseByte(request.getParameter("txtFoodStatus"));
         byte discountPercent = Byte.parseByte(request.getParameter("txtDiscountPercent"));
         String imageURL = (String) request.getAttribute("txtImageURL");
 
         FoodDAO foodDAO = new FoodDAO();
-        Food food = new Food(foodID, foodName, foodPrice, discountPercent, imageURL, foodTypeID);
+        Food food = new Food(foodID, foodName, foodDescription, foodPrice, foodStatus, foodRate, discountPercent, imageURL, foodTypeID);
         int result = foodDAO.update(food);
 
         if (result == 1) {
@@ -191,6 +199,7 @@ public class AdminController extends HttpServlet {
 
         int result = accountDAO.update(account);
 
+
         if (result == 1) {
             response.sendRedirect("/admin");
             return;
@@ -204,10 +213,16 @@ public class AdminController extends HttpServlet {
             throws ServletException, IOException {
 
         String voucherName = (String) request.getParameter("txtvoucher_name");
-        byte voucher_discount_percent = Byte.parseByte(request.getParameter("txtAddVoucher_discount_percent"));
-
+        String voucherCode = (String) request.getParameter("txtvoucher_code");
+        Byte voucher_discount_percent = Byte.parseByte(request.getParameter("txtvoucher_discount_percent"));
+        Byte voucher_quantity = Byte.parseByte(request.getParameter("txtvoucher_quantity"));
+        Byte voucher_status = Byte.parseByte(request.getParameter("txtvoucher_status"));
+        String datetimelocal = request.getParameter("txtvoucher_time");
+       
+        Timestamp datetime = Timestamp.valueOf(datetimelocal.replace("T"," ")+":00");
+        
         VoucherDAO voucherDAO = new VoucherDAO();
-        Voucher voucher = new Voucher(voucherName, voucher_discount_percent);
+        Voucher voucher = new Voucher(voucherName, voucherCode, voucher_discount_percent, voucher_quantity, voucher_status, datetime);
 
         int result = voucherDAO.add(voucher);
 
@@ -222,12 +237,19 @@ public class AdminController extends HttpServlet {
     
      private void doPostUpdateVoucher(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        byte voucherID =  Byte.parseByte(request.getParameter("txtvoucher_id"));      
+        Byte voucherID =  Byte.parseByte(request.getParameter("txtvoucher_id"));      
         String voucherName = (String) request.getParameter("txtvoucher_name");
-        byte voucher_discount_percent = Byte.parseByte(request.getParameter("txtvoucher_discount_percent"));
-
+        String voucherCode = (String) request.getParameter("txtvoucher_code");
+        Byte voucher_discount_percent = Byte.parseByte(request.getParameter("txtvoucher_discount_percent"));
+        Byte voucher_quantity = Byte.parseByte(request.getParameter("txtvoucher_quantity"));
+        Byte voucher_status = Byte.parseByte(request.getParameter("txtvoucher_status"));
+        
+        String datetimelocal = request.getParameter("txtvoucher_time");
+       
+        Timestamp datetime = Timestamp.valueOf(datetimelocal.replace("T"," ")+":00");
+        
         VoucherDAO voucherDAO = new VoucherDAO();
-        Voucher voucher = new Voucher(voucherName, voucher_discount_percent);
+        Voucher voucher = new Voucher(voucherName, voucherCode, voucher_discount_percent, voucher_quantity, voucher_status, datetime);
         voucher.setVoucherID(voucherID);
 
         int result = voucherDAO.update(voucher);

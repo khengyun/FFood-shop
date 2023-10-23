@@ -42,9 +42,13 @@ public class FoodDAO {
         List<Food> foodList = new ArrayList<>();
         try {
             while (foodRS.next()) {
-                Food food = new Food(foodRS.getShort("food_id"),
+                Food food = new Food(
+                        foodRS.getShort("food_id"),
                         foodRS.getString("food_name"),
+                        foodRS.getString("food_description"),
                         foodRS.getBigDecimal("food_price"),
+                        foodRS.getByte("food_status"),
+                        foodRS.getByte("food_rate"),
                         foodRS.getByte("discount_percent"),
                         foodRS.getString("food_img_url"),
                         foodRS.getByte("food_type_id"),
@@ -64,9 +68,13 @@ public class FoodDAO {
             ps.setShort(1, foodID);
             rs = ps.executeQuery();
             if (rs.next()) {
-                food = new Food(rs.getShort("food_id"),
+                food = new Food(
+                        rs.getShort("food_id"),
                         rs.getString("food_name"),
+                        rs.getString("food_description"),
                         rs.getBigDecimal("food_price"),
+                        rs.getByte("food_status"),
+                        rs.getByte("food_rate"),
                         rs.getByte("discount_percent"),
                         rs.getString("food_img_url"),
                         rs.getByte("food_type_id"),
@@ -79,15 +87,19 @@ public class FoodDAO {
     }
 
     public int add(Food food) {
-        String sql = "insert into Food (food_name, food_price, discount_percent, food_img_url, food_type_id) values (?, ?, ?, ?, ?)";
+        String sql = "insert into Food (food_name, food_description, food_price, food_status, food_rate, discount_percent, food_img_url, food_type_id) values (?, ?, ?, ?, ?, ?, ?, ?)";
         int result = 0;
+        System.out.println("url: " + food.getImageURL());
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, food.getFoodName());
-            ps.setBigDecimal(2, food.getFoodPrice());
-            ps.setByte(3, food.getDiscountPercent());
-            ps.setString(4, food.getImageURL());
-            ps.setByte(5, food.getFoodTypeID());
+            ps.setString(2, food.getDescription());
+            ps.setBigDecimal(3, food.getFoodPrice());
+            ps.setByte(4, food.getStatus());
+            ps.setByte(5, food.getRate());
+            ps.setByte(6, food.getDiscountPercent());
+            ps.setString(7, food.getImageURL());
+            ps.setByte(8, food.getFoodTypeID());
             result = ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(FoodDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -109,6 +121,8 @@ public class FoodDAO {
     }
 
     public int deleteMultiple(List<Short> foodIDs) {
+        System.out.println("Delete 3");
+
         int result = 0;
         try {
             conn.setAutoCommit(false); // Start transaction
@@ -140,16 +154,19 @@ public class FoodDAO {
     }
 
     public int update(Food food) {
-        String sql = "update Food set food_name = ?, food_price = ?, discount_percent = ?, food_img_url = ?, food_type_id = ? where food_id = ?";
+        String sql = "update Food set food_name = ?, food_description = ?, food_price = ?, food_status = ?, food_rate = ?, discount_percent = ?, food_img_url = ?, food_type_id = ? where food_id = ?";
         int result = 0;
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, food.getFoodName());
-            ps.setBigDecimal(2, food.getFoodPrice());
-            ps.setByte(3, food.getDiscountPercent());
-            ps.setString(4, food.getImageURL());
-            ps.setByte(5, food.getFoodTypeID());
-            ps.setShort(6, food.getFoodID());
+             ps.setString(2, food.getDescription());
+            ps.setBigDecimal(3, food.getFoodPrice());
+            ps.setByte(4, food.getStatus());
+            ps.setByte(5, food.getRate());
+            ps.setByte(6, food.getDiscountPercent());
+            ps.setString(7, food.getImageURL());
+            ps.setByte(8, food.getFoodTypeID());
+            ps.setShort(9, food.getFoodID());
             result = ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(FoodDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -194,9 +211,13 @@ public class FoodDAO {
                 + "where [food_name] like ?";
         try {
             while (searchRS.next()) {
-                Food food = new Food(searchRS.getShort("food_id"),
+                Food food = new Food(
+                        searchRS.getShort("food_id"),
                         searchRS.getString("food_name"),
+                        searchRS.getString("food_description"),
                         searchRS.getBigDecimal("food_price"),
+                        searchRS.getByte("food_status"),
+                        searchRS.getByte("food_rate"),
                         searchRS.getByte("discount_percent"),
                         searchRS.getString("food_img_url"),
                         searchRS.getByte("food_type_id"),
@@ -218,9 +239,13 @@ public class FoodDAO {
             ps.setString(1, cid);
             rs = ps.executeQuery();
             while (rs.next()) {
-                list.add(new Food(rs.getShort("food_id"),
+                list.add(new Food(
+                        rs.getShort("food_id"),
                         rs.getString("food_name"),
+                        rs.getString("food_description"),
                         rs.getBigDecimal("food_price"),
+                        rs.getByte("food_status"),
+                        rs.getByte("food_rate"),
                         rs.getByte("discount_percent"),
                         rs.getString("food_img_url"),
                         rs.getByte("food_type_id")));

@@ -129,7 +129,6 @@
         const rows = document.querySelectorAll("#cart-table tbody tr");
         rows.forEach(function (row) {
             const productPriceText = row.querySelector("td:nth-child(4)").textContent.trim();
-            console.log(productPriceText)
             const productPrice = parseFloat(productPriceText.replace("đ", "").replace(",", ""));
             totalPrice += productPrice;
         });

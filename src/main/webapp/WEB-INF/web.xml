@@ -8,6 +8,10 @@
         <filter-name>GDriveFilter</filter-name>
         <servlet-name>AdminController</servlet-name>
     </filter-mapping>
+     <filter-mapping>
+        <filter-name>GDriveFilter</filter-name>
+        <servlet-name>StaffController</servlet-name>
+    </filter-mapping>
     <filter>
         <filter-name>MD5Filter</filter-name>
         <filter-class>Filters.MD5Filter</filter-class>
@@ -23,6 +27,14 @@
     <filter-mapping>
         <filter-name>MD5Filter</filter-name>
         <url-pattern>/admin</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>MD5Filter</filter-name>
+        <url-pattern>/staff</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>MD5Filter</filter-name>
+        <url-pattern>/promotionManager</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>MD5Filter</filter-name>
@@ -201,8 +213,16 @@
         <url-pattern>/staff</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>StaffController</servlet-name>
+        <url-pattern>/staff/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>PromotionManagerController</servlet-name>
         <url-pattern>/promotionManager</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PromotionManagerController</servlet-name>
+        <url-pattern>/promotionManager/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
