@@ -5,10 +5,12 @@
 package Controllers;
 
 import DAOs.AccountDAO;
+import DAOs.AdminDAO;
 import DAOs.FoodDAO;
 import DAOs.OrderDAO;
 import DAOs.VoucherDAO;
 import Models.Account;
+import Models.Admin;
 import Models.Food;
 import Models.Order;
 import Models.Voucher;
@@ -20,13 +22,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @author CE171454 Hua Tien Thanh
@@ -83,13 +80,13 @@ public class AdminController extends HttpServlet {
             response.sendRedirect("/admin");
         }
     }
-
+    
     private void doGetVoucher(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String path = request.getRequestURI();
-        if (path.startsWith("/admin/user/delete")) {
+        if (path.startsWith("/admin/voucher/delete")) {
             String[] s = path.split("/");
-            int voucherID = Integer.parseInt(s[s.length - 1]);
+            byte voucherID = Byte.parseByte(s[s.length - 1]);
             VoucherDAO dao = new VoucherDAO();
             dao.delete(voucherID);
             response.sendRedirect("/admin");
@@ -100,37 +97,15 @@ public class AdminController extends HttpServlet {
             throws ServletException, IOException {
         byte foodTypeID = Byte.parseByte(request.getParameter("txtFoodTypeID"));
         String foodName = request.getParameter("txtFoodName");
+        String foodDescription = (String) request.getParameter("txtFoodDescription");
         BigDecimal foodPrice = BigDecimal.valueOf(Double.parseDouble(request.getParameter("txtFoodPrice")));
         byte discountPercent = Byte.parseByte(request.getParameter("txtDiscountPercent"));
+        byte foodRate = Byte.parseByte(request.getParameter("txtFoodRate"));
+        byte foodStatus = Byte.parseByte(request.getParameter("txtFoodStatus"));
         String imageURL = (String) request.getAttribute("txtImageURL");
-
         FoodDAO foodDAO = new FoodDAO();
-        Food food = new Food(foodName, foodPrice, discountPercent, imageURL, foodTypeID);
+        Food food = new Food(foodName, foodDescription, foodPrice, foodStatus, foodRate, discountPercent, imageURL, foodTypeID);
         int result = foodDAO.add(food);
-
-        if (result == 1) {
-            response.sendRedirect("/admin");
-            return;
-        } else {
-            response.sendRedirect("/admin");
-            return;
-        }
-    }
-
-    private void doPostAddVoucher(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ParseException {
-        String ID = request.getParameter("txtVoucherID");
-        String Code = request.getParameter("txtVoucherCode");
-        Float Value = Float.parseFloat(request.getParameter("txtVoucherValue"));
-        int quantity = Integer.parseInt(request.getParameter("txtVoucherQuantity"));
-        int condition = Integer.parseInt(request.getParameter("txtVoucherCondition"));
-        String dateString = request.getParameter("txtVoucherExpDate");
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-        Date date = sdf.parse(dateString);
-        String status = request.getParameter("txtVoucherStatus");
-        VoucherDAO voucherDAO = new VoucherDAO();
-        Voucher voucher = new Voucher(ID, Code, Value, quantity, condition, date, status);
-        int result = voucherDAO.add(voucher);
 
         if (result == 1) {
             response.sendRedirect("/admin");
@@ -146,12 +121,15 @@ public class AdminController extends HttpServlet {
         short foodID = Short.parseShort(request.getParameter("txtFoodID"));
         byte foodTypeID = Byte.parseByte(request.getParameter("txtFoodTypeID"));
         String foodName = request.getParameter("txtFoodName");
+        String foodDescription = (String) request.getParameter("txtFoodDescription");
         BigDecimal foodPrice = BigDecimal.valueOf(Double.parseDouble(request.getParameter("txtFoodPrice")));
+        byte foodRate = Byte.parseByte(request.getParameter("txtFoodRate"));
+        byte foodStatus = Byte.parseByte(request.getParameter("txtFoodStatus"));
         byte discountPercent = Byte.parseByte(request.getParameter("txtDiscountPercent"));
         String imageURL = (String) request.getAttribute("txtImageURL");
 
         FoodDAO foodDAO = new FoodDAO();
-        Food food = new Food(foodID, foodName, foodPrice, discountPercent, imageURL, foodTypeID);
+        Food food = new Food(foodID, foodName, foodDescription, foodPrice, foodStatus, foodRate, discountPercent, imageURL, foodTypeID);
         int result = foodDAO.update(food);
 
         if (result == 1) {
@@ -226,6 +204,47 @@ public class AdminController extends HttpServlet {
             return;
         }
     }
+    
+    private void doPostAddVoucher(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String voucherName = (String) request.getParameter("txtvoucher_name");
+        byte voucher_discount_percent = Byte.parseByte(request.getParameter("txtAddVoucher_discount_percent"));
+
+        VoucherDAO voucherDAO = new VoucherDAO();
+        Voucher voucher = new Voucher(voucherName, voucher_discount_percent);
+
+        int result = voucherDAO.add(voucher);
+
+        if (result == 1) {
+            response.sendRedirect("/admin");
+            return;
+        } else {
+            response.sendRedirect("/admin");
+            return;
+        }
+    }
+    
+     private void doPostUpdateVoucher(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        byte voucherID =  Byte.parseByte(request.getParameter("txtvoucher_id"));      
+        String voucherName = (String) request.getParameter("txtvoucher_name");
+        byte voucher_discount_percent = Byte.parseByte(request.getParameter("txtvoucher_discount_percent"));
+
+        VoucherDAO voucherDAO = new VoucherDAO();
+        Voucher voucher = new Voucher(voucherName, voucher_discount_percent);
+        voucher.setVoucherID(voucherID);
+
+        int result = voucherDAO.update(voucher);
+
+        if (result == 1) {
+            response.sendRedirect("/admin");
+            return;
+        } else {
+            response.sendRedirect("/admin");
+            return;
+        }
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
     // + sign on the left to edit the code.">
@@ -246,8 +265,10 @@ public class AdminController extends HttpServlet {
             List<Food> foodList = foodDAO.getAllList();
             AccountDAO accountDAO = new AccountDAO();
             List<Account> userAccountList = accountDAO.getAllUser();
+
             OrderDAO orderDAO = new OrderDAO();
             List<Order> orderList = orderDAO.getAllList();
+
             VoucherDAO voucherDAO = new VoucherDAO();
             List<Voucher> voucherList = voucherDAO.getAllList();
 
@@ -262,7 +283,7 @@ public class AdminController extends HttpServlet {
             doGetFood(request, response);
         } else if (path.startsWith("/admin/user")) {
             doGetUser(request, response);
-        } else if (path.startsWith("/admin/promotions")) {
+        } else if (path.startsWith("/admin/voucher")) {
             doGetVoucher(request, response);
         } else {
             // response.setContentType("text/css");
@@ -298,13 +319,11 @@ public class AdminController extends HttpServlet {
                 case "SubmitUpdateUser":
                     doPostUpdateUser(request, response);
                     break;
-                case "SubmitAddVoucher": {
-                    try {
-                        doPostAddVoucher(request, response);
-                    } catch (ParseException ex) {
-                        Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
+                case "SubmitAddVoucher":
+                    doPostAddVoucher(request, response);
+                    break;
+                case "SubmitUpdateVoucher":
+                    doPostUpdateVoucher(request, response);
                     break;
                 default:
                     break;

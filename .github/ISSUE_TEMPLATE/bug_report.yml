@@ -1,0 +1,110 @@
+name: "Bug report"
+description: Report errors or unexpected behaviors
+labels: 
+- bug
+projects:
+- "FFood-shop"
+title: "[Bug]"
+
+body:
+- type: markdown
+  attributes:
+    value: "# Basic information"
+    
+- type: textarea
+  id: description
+  attributes:
+    label: Description
+    placeholder: Screen scrolls up every time I press a key on the search bar
+    description: A clear and concise description of what the bug is. Images and videos are supported.
+  validations:
+    required: true
+
+- type: dropdown
+  id: severity
+  attributes:
+    label: Severity
+    description: How impactful is the issue?
+    options:
+      - Critical
+      - Major
+      - Minor
+  validations:
+    required: true
+
+- type: textarea
+  id: reproduce-steps
+  attributes:
+    label: Steps to reproduce
+    description: Having detailed steps helps us reproduce the bug. Images and videos are supported.
+    placeholder: |
+      1. Go to '...'
+      2. Click on '....'
+      3. See error
+
+      Add images and videos here for better reproduction
+  validations:
+    required: true
+
+- type: textarea
+  id: expected-behavior
+  attributes:
+    label: Expected behavior (Optional)
+    description: A clear and concise description of what you expected to happen (if the bug was not there). Images and videos are supported.
+    placeholder: |
+      The entire website is frozen, probably due to memory overflow
+
+- type: markdown
+  attributes:
+    value: "# Environment"
+
+- type: dropdown
+  id: os-name
+  attributes:
+    label: Operating system
+    description: What is your mobile/desktop OS?
+    options:
+      - Windows
+      - macOS
+      - Android
+      - iOS
+      - Linux
+  validations:
+    required: true
+- type: input
+  id: os-version
+  attributes:
+    label: Operating system version (Optional)
+    placeholder: "11 22H2 (build 22621.2428)"
+    description: The version and build number (optional) of your OS. If you are using a distro of Linux, include the distro name before the version.
+    
+- type: dropdown
+  id: browser-name
+  attributes:
+    label: Browser
+    description: Name of your web browser
+    multiple: true
+    options:
+      - Firefox
+      - Microsoft Edge
+      - Chrome
+      - Coc Coc
+      - Safari
+      - Opera
+      - Brave
+      - Internet Explorer
+      - Stock Android browser
+  validations:
+    required: true
+- type: input
+  id: browser-version
+  attributes:
+    label: Browser Version (Optional)
+    placeholder: "117.0.2045.60"
+    description: The version (or build number) of your browser. If there is more than 1 browser, list the version of the most frequently used browser.
+
+- type: textarea
+  attributes:
+    label: Additional context (Optional)
+    description: Add any other context about the problem here. Images and videos are supported.
+    placeholder: "I'll also fix the search-by-image function after the search issue is resolved"

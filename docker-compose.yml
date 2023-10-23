@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=sa@123456
+      - MSSQL_PID=Developer
+    ports:
+      - "1450:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P sa@123456 -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      retries: 10
+      start_period: 10s
+      timeout: 3s
+    networks:
+      - my-network
+
+  sqlserver.configurator:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    command: >
+      bash -c '
+      /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P sa@123456  -i docker-entrypoint-initdb.d/full.sql;
+      echo "All done!";
+      '
+    networks:
+      - my-network
+
+
+  ai-food-classification:
+    build: ./api/Food_Classifier
+    ports:
+      - 8000:8000
+    depends_on:
+      - sqlserver
+      - sqlserver.configurator
+    networks:
+      - my-network
+
+  tomcat-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    restart: always
+    networks:
+      - my-network
+    depends_on:
+      - sqlserver
+      - sqlserver.configurator
+
+networks:
+  my-network:
+    name: my-network
+
+
+volumes:
+  sqlserver_data:
+
+

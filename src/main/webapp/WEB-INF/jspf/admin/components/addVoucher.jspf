@@ -1,62 +1,35 @@
 <%-- any content can be specified here e.g.: --%>
 <%@ page pageEncoding="UTF-8" %>
 <div class="modal" tabindex="-1" id="add-voucher-modal">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <form class="add-voucher-form" method="POST" action="/admin">
-                <div class="modal-header">
-                    <h5 class="modal-title">Tạo voucher</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body px-5">
-                    <!-- id -->
-                    <div class="mb-3">
-                        <label for="txtVoucherID" class="form-label">ID</label>
-                        <input type="text" class="form-control" id="txtVoucherID" name="txtVoucherID" maxlength="50" required>
-                    </div>
-                    <!-- code -->
-                    <div class="mb-3">
-                        <label for="txtVoucherCode" class="form-label">Code</label>
-                        <input type="text" class="form-control" id="txtVoucherCode" name="txtVoucherCode" maxlength="50" required>
-                    </div>
-                    <!-- value -->
-                    <div class="mb-3">
-                        <label for="txtVoucherValue" class="form-label">Giá trị(%)</label>
-                        <input type="number" class="form-control" id="txtVoucherValue" name="txtVoucherValue" min="0" max="100" required>
-                    </div>
-                    <!-- quantity -->
-                    <div class="mb-3">
-                        <label for="txtVoucherQuantity" class="form-label">Số lượng</label>
-                        <input type="number" class="form-control" id="txtVoucherQuantity" name="txtVoucherQuantity" min="0" required>
-                    </div>
-                    <!-- condition -->
-                    <div class="mb-3">
-                        <label for="txtVoucherCondition" class="form-label">Điều kiện áp dụng (VND)</label>
-                        <input type="number" step="1000" class="form-control" id="txtVoucherCondition" name="txtVoucherCondition" min="0" required>
-                    </div>
-                    <!-- exp date -->
-                    <div class="mb-3">
-                        <label for="txtVoucherExpDate" class="form-label">Ngày hết hạn</label>
-                        <input type="date" class="form-control" id="txtVoucherExpDate" name="txtVoucherExpDate" required>
-                    </div>
-                    <!-- comment -->
-                    <div class="mb-3">
-                        <label for="txtVoucherStatus" class="form-label">Trạng thái</label>
-                        <select class="form-select" id="txtVoucherStatus" name="txtVoucherStatus" required>
-                            <option value="1" selected>Active</option>
-                            <option value="2">Inactive</option>
-                            <option value="3">Expired</option>
-                        </select>
-                    </div>  
-                </div>
-                <div class="modal-footer">
-                    <!-- Submit Button -->
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Hủy</button>
-                    <button type="submit" class="btn btn-success">Thêm</button>
-                    <!-- Hidden Submit Value -->
-                    <input type="hidden" id="btnSubmit" name="btnSubmit" value="SubmitAddVoucher">
-                </div>
-            </form>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form class="add-vouhcer-form" method="POST" action="/admin">
+        <div class="modal-header">
+          <h5 class="modal-title">Thêm Voucher </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <div class="modal-body px-5">
+         
+          <!-- Food Name -->
+          <div class="mb-3">
+            <label for="txtvoucher_name" class="form-label">Tên Voucher</label>
+            <input type="text" class="form-control" id="txtvoucher_name" name="txtvoucher_name" maxlength="50" required>
+          </div>
+          <!-- Discount Percentage -->
+          <div class="mb-3">
+            <label for="txtAddVoucher_discount_percent" class="form-label">Giảm giá (%)</label>
+            <input type="number" class="form-control" id="txtAddVoucher_discount_percent" name="txtAddVoucher_discount_percent" required>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <!-- Submit Button -->
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Hủy</button>
+          <button type="submit" class="btn btn-success" onclick="validateForm()">Thêm</button>
+          <!-- Hidden Submit Value -->
+          <input type="hidden" id="btnSubmit" name="btnSubmit" value="SubmitAddVoucher">
+        </div>
+      </form>
     </div>
-</div>    
+  </div>
+</div>

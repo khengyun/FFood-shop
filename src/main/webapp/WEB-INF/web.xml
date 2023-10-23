@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
-    <context-param>
-        <param-name>javax.faces.PROJECT_STAGE</param-name>
-        <param-value>Development</param-value>
-    </context-param>
     <filter>
         <filter-name>GDriveFilter</filter-name>
         <filter-class>Filters.GDriveFilter</filter-class>
@@ -11,6 +7,10 @@
     <filter-mapping>
         <filter-name>GDriveFilter</filter-name>
         <servlet-name>AdminController</servlet-name>
+    </filter-mapping>
+     <filter-mapping>
+        <filter-name>GDriveFilter</filter-name>
+        <servlet-name>StaffController</servlet-name>
     </filter-mapping>
     <filter>
         <filter-name>MD5Filter</filter-name>
@@ -27,6 +27,14 @@
     <filter-mapping>
         <filter-name>MD5Filter</filter-name>
         <url-pattern>/admin</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>MD5Filter</filter-name>
+        <url-pattern>/staff</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>MD5Filter</filter-name>
+        <url-pattern>/promotionManager</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>MD5Filter</filter-name>
@@ -77,9 +85,24 @@
         <servlet-class>Controllers.SignUpController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Faces Servlet</servlet-name>
-        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
+        <servlet-name>VerifyOTPController</servlet-name>
+        <servlet-class>Controllers.EmailVerifyController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ForgetController</servlet-name>
+        <servlet-class>Controllers.ForgetController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangePasswordController</servlet-name>
+        <servlet-class>Controllers.ChangePasswordController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StaffController</servlet-name>
+        <servlet-class>Controllers.StaffController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PromotionManagerController</servlet-name>
+        <servlet-class>Controllers.PromotionManagerController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>default</servlet-name>
@@ -174,20 +197,44 @@
         <url-pattern>/signup</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>/faces/*</url-pattern>
+        <servlet-name>VerifyOTPController</servlet-name>
+        <url-pattern>/verifyOTP</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ForgetController</servlet-name>
+        <url-pattern>/forget</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangePasswordController</servlet-name>
+        <url-pattern>/changePassword</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StaffController</servlet-name>
+        <url-pattern>/staff</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StaffController</servlet-name>
+        <url-pattern>/staff/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PromotionManagerController</servlet-name>
+        <url-pattern>/promotionManager</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PromotionManagerController</servlet-name>
+        <url-pattern>/promotionManager/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
       30
     </session-timeout>
     </session-config>
-    <welcome-file-list>
-        <welcome-file>home</welcome-file>
-    </welcome-file-list>
     <jsp-config>
         <jsp-property-group>
             <url-pattern>*.jspf</url-pattern>
         </jsp-property-group>
     </jsp-config>
+    <welcome-file-list>
+        <welcome-file>home</welcome-file>
+    </welcome-file-list>
 </web-app>

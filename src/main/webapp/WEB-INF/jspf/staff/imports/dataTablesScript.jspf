@@ -1,0 +1,33 @@
+<%@ page pageEncoding="UTF-8" %>
+<!-- DataTables JS -->
+<script src="<%= request.getContextPath() %>/vendors/DataTables/DataTables-1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="<%= request.getContextPath() %>/vendors/DataTables/DataTables-1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+<script src="<%= request.getContextPath() %>/vendors/DataTables/FixedHeader-3.4.0/js/dataTables.fixedHeader.min.js"></script>
+<script src="<%= request.getContextPath() %>/vendors/DataTables/FixedHeader-3.4.0/js/fixedHeader.bootstrap5.js"></script>
+
+<script src="<%= request.getContextPath() %>/vendors/DataTables/FixedColumns-4.3.0/js/dataTables.fixedColumns.min.js"></script>
+<script src="<%= request.getContextPath() %>/vendors/DataTables/FixedColumns-4.3.0/js/fixedColumns.bootstrap5.js"></script>
+
+<script src="<%= request.getContextPath() %>/vendors/DataTables/Select-1.7.0/js/dataTables.select.min.js"></script>
+
+<script src="<%= request.getContextPath() %>/vendors/DataTables/Buttons-2.4.2/js/dataTables.buttons.min.js"></script>
+<script src="<%= request.getContextPath() %>/vendors/DataTables/Buttons-2.4.2/js/buttons.bootstrap5.min.js"></script>
+<script src="<%= request.getContextPath() %>/vendors/DataTables/Buttons-2.4.2/js/buttons.colVis.min.js"></script>
+<script src="<%= request.getContextPath() %>/vendors/DataTables/Buttons-2.4.2/js/buttons.html5.min.js"></script>
+<script src="<%= request.getContextPath() %>/vendors/DataTables/Buttons-2.4.2/js/buttons.print.min.js"></script>
+
+<script src="<%= request.getContextPath() %>/vendors/DataTables/ColReorder-1.7.0/js/colReorder.bootstrap5.min.js"></script>
+<script src="<%= request.getContextPath() %>/vendors/DataTables/ColReorder-1.7.0/js/dataTables.colReorder.min.js"></script>
+
+<!-- TODO replace this version once version 2.3.0+ is released -->
+<script src="<%= request.getContextPath() %>/vendors/DataTables/SearchPanes-2.2.0/nightly/js/dataTables.searchPanes.min.js"></script>
+<script src="<%= request.getContextPath() %>/vendors/DataTables/SearchPanes-2.2.0/nightly/js/searchPanes.bootstrap5.min.js"></script>
+
+<script src="<%= request.getContextPath() %>/vendors/DataTables/JSZip-3.10.1/jszip.min.js"></script>
+<script src="<%= request.getContextPath() %>/vendors/DataTables/pdfmake-0.2.7/pdfmake.min.js"></script>
+<script src="<%= request.getContextPath() %>/vendors/DataTables/pdfmake-0.2.7/vfs_fonts.js"></script>
+
+<script src="<%= request.getContextPath() %>/assets/js/staff.js"></script>
+
+<script src="<%= request.getContextPath() %>/assets/js/dataTablesConfig.js"></script>

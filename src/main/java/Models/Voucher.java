@@ -1,90 +1,51 @@
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package Models;
 
-import java.util.Date;
-
-/**
- *
- * @author ADMIN
- */
 public class Voucher {
-    private String voucherID;
-    private String voucherCode;
-    private float voucherValue;
-    private int voucherQuantity;
-    private int voucherCondition;
-    private Date voucherExpDate;
-    private String voucherStatus;
+    private byte voucherID;
+    private String name;
+    private byte voucher_discount_percent;
+   
 
     public Voucher() {
     }
-
-    public Voucher(String voucherID, String voucherCode, float voucherValue, int voucherQuantity, int voucherCondition, Date voucherExpDate, String voucherStatus) {
+    public Voucher(byte voucherID, String name, byte voucher_discount_percent) {
         this.voucherID = voucherID;
-        this.voucherCode = voucherCode;
-        this.voucherValue = voucherValue;
-        this.voucherQuantity = voucherQuantity;
-        this.voucherCondition = voucherCondition;
-        this.voucherExpDate = voucherExpDate;
-        this.voucherStatus = voucherStatus;
+        this.name = name;
+        this.voucher_discount_percent = voucher_discount_percent;
+    }
+    
+    public Voucher(String name, byte voucher_discount_percent) {
+        this.name = name;
+        this.voucher_discount_percent = voucher_discount_percent;
     }
 
-    public String getVoucherID() {
+    public byte getVoucher_discount_percent() {
+        return voucher_discount_percent;
+    }
+
+    public void setVoucher_discount_percent(byte voucher_discount_percent) {
+        this.voucher_discount_percent = voucher_discount_percent;
+    }
+
+    public byte getVoucherID() {
         return voucherID;
     }
 
-    public String getVoucherCode() {
-        return voucherCode;
-    }
-
-    public float getVoucherValue() {
-        return voucherValue;
-    }
-
-    public int getVoucherQuantity() {
-        return voucherQuantity;
-    }
-
-    public int getVoucherCondition() {
-        return voucherCondition;
-    }
-
-    public Date getVoucherExpDate() {
-        return voucherExpDate;
-    }
-
-    public String getVoucherStatus() {
-        return voucherStatus;
-    }
-
-    public void setVoucherID(String voucherID) {
+    public void setVoucherID(byte voucherID) {
         this.voucherID = voucherID;
     }
 
-    public void setVoucherCode(String voucherCode) {
-        this.voucherCode = voucherCode;
+    public String getName() {
+        return name;
     }
 
-    public void setVoucherValue(float voucherValue) {
-        this.voucherValue = voucherValue;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setVoucherQuantity(int voucherQuantity) {
-        this.voucherQuantity = voucherQuantity;
-    }
-
-    public void setVoucherCondition(int voucherCondition) {
-        this.voucherCondition = voucherCondition;
-    }
-
-    public void setVoucherExpDate(Date voucherExpDate) {
-        this.voucherExpDate = voucherExpDate;
-    }
-
-    public void setVoucherStatus(String voucherStatus) {
-        this.voucherStatus = voucherStatus;
-    }
-
-    
-    
 }
+
