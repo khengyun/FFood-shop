@@ -5,19 +5,21 @@
             <h1 class="text-start fw-bold fs-3 mb-3">Quản lý Khuyến mãi</h1>
             <div id="voucher-button-container" class="row mb-2">
                 <div class="col-sm-12 col-lg-5 mt-sm-2 mt-lg-0 d-flex flex-wrap gap-2 justify-content-lg-end">
-                    <button type="button" class="btn btn-success d-flex  align-items-center flex-shrink-0" data-bs-toggle="modal"
+                    <button type="button" class="btn btn-success d-flex  align-items-center flex-shrink-0" 
+                            id="btn-add-voucher"
+                            data-bs-toggle="modal"
                             data-bs-target="#add-voucher-modal">
                         <i class="ph-bold ph-plus fs-1 me-2"></i>
                         Thêm Voucher
                     </button>
                     <button type="button" id="btn-update-voucher"
-                            class="btn btn-primary btn-update disabled d-flex  align-items-center flex-shrink-0" data-bs-toggle="modal"
+                            class="btn btn-primary btn-update d-flex  align-items-center flex-shrink-0" data-bs-toggle="modal"
                             data-bs-target="#update-voucher-modal">
                         <i class="ph-bold ph-pencil fs-1 me-2"></i>
                         Cập nhật
                     </button>
                     <button type="button" id="btn-delete-voucher"
-                            class="btn btn-danger btn-delete disabled d-flex align-items-center flex-shrink-0" data-bs-toggle="modal"
+                            class="btn btn-danger btn-delete d-flex align-items-center flex-shrink-0" data-bs-toggle="modal"
                             data-bs-target="#delete-voucher-modal">
                         <i class="ph-bold ph-trash fs-1 me-2"></i>
                         Xoá Voucher
@@ -28,8 +30,12 @@
                 <tr>
                     <th class="col-sm-3 col-gap-5">Mã Khuyến mãi</th>  
                     <th>Tên Khuyến mãi</th>
-                    <th>Voucher</th>
-                   
+                    <th>Mã Code</th>
+                    <th>Phần trăm KM</th>
+                    <th>Số lượng</th>
+                    <th>Trạng thái</th>
+                    <th>Thời gian</th>
+                    <!--<th >Thao tác</th>-->
 
                 </tr>
             </thead>
@@ -37,13 +43,16 @@
             <c:forEach items="${voucherList}" var="v">
                 <tr>
                     <td>${v.voucherID}</td>
-                    <td>${v.name}</td>
-
+                    <td>${v.voucher_name}</td>
+                    <td>${v.voucher_code}</td>
                     <td>${(v.voucher_discount_percent == null) ? 0 : v.voucher_discount_percent}%</td>                                 
-
+                    <td>${v.voucher_quantity}</td>
+                    <td>${v.voucher_status eq 0 ? 'Hết' : 'Còn'}</td>
+                    <td>${v.voucher_date}</td>
                 </tr>
             </c:forEach>
             </tbody>
         </table>
     </div>
 </div>
+
