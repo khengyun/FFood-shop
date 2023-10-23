@@ -14,21 +14,17 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+             <exec.args>/c java -classpath %classpath wshackle.mavenproject2.Main</exec.args>
+            <exec.executable>cmd</exec.executable>
     </properties>
 
-
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat -->
-        <!-- <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>tomcat</artifactId>
-            <version>10.0.23</version>
-            <type>pom</type>
-            
-        </dependency> -->
-
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>3.12.4</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

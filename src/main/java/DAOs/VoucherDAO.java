@@ -103,6 +103,37 @@ public class VoucherDAO {
         }
         return result;
     }
+    
+    public int deleteMultiple(List<Byte> voucherIDs) {
+        int result = 0;
+        try {
+            conn.setAutoCommit(false); // Start transaction
+            for (Byte voucherID : voucherIDs) {
+                if (delete(voucherID) == 1) {
+                    result++; // Count number of successful deletions
+                } else {
+                    conn.rollback(); // Rollback transaction if deletion fails
+                    return 0;
+                }
+            }
+            conn.commit(); // Commit transaction if all deletions succeed
+        } catch (SQLException ex) {
+            Logger.getLogger(FoodDAO.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                conn.rollback(); // Rollback transaction if any exception occurs
+            } catch (SQLException rollbackEx) {
+                Logger.getLogger(VoucherDAO.class.getName()).log(Level.SEVERE, null, rollbackEx);
+            }
+            return 0;
+        } finally {
+            try {
+                conn.setAutoCommit(true); // Reset auto commit
+            } catch (SQLException finalEx) {
+                Logger.getLogger(VoucherDAO.class.getName()).log(Level.SEVERE, null, finalEx);
+            }
+        }
+        return result;
+    }
 
     public int update(Voucher voucher) {
         String sql = "update Voucher set voucher_name = ?, voucher_code = ?,voucher_discount_percent = ?, voucher_quantity = ?, voucher_status = ?, voucher_date = ? where voucher_id = ?";
@@ -122,4 +153,6 @@ public class VoucherDAO {
         }
         return result;
     }
+    
+    
 }

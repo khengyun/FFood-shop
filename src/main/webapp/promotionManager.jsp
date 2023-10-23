@@ -32,16 +32,34 @@
                         <!-- Home Tab Content -->
                         <%@ include file="WEB-INF/jspf/promotionManager/home.jspf" %>
 
-
                         <!-- Voucher Tab Content -->
-                        <div class="tab-pane fade" id="promotions">
-                            <div class="container-fluid p-2">
-                                <table id="users-table" class="table table-bordered table-striped">
-                                    <h1 class="text-center fw-bold fs-3" align="left">Khuyến mãi</h1>
-                                    <button style="color: white;border-color: rgba(207, 126, 0, 1); background-color: rgba(207, 126, 0, 1);"
-                                            type="button" id="btn-add-voucher" class="btn btn-sm btn-success py-1 my-2 me-2" data-bs-toggle="modal" data-bs-target="#add-voucher-modal">
-                                        Tạo Khuyến mãi
-                                    </button>
+                        <div class="tab-pane fade" id="vouchers">
+                            <div class="container-fluid p-4 shadow rounded-4 bg-white">
+                                <table id="vouchers-table" class="table table-hover nowrap align-middle" style="width: 100%;">
+                                    <h1 class="text-start fw-bold fs-3 mb-3">Quản lý Khuyến mãi</h1>
+                                    <div id="voucher-button-container" class="row mb-2">
+                                        <div class="col-sm-12 col-lg-5 mt-sm-2 mt-lg-0 d-flex flex-wrap gap-2 justify-content-lg-end">
+                                            <button type="button" class="btn btn-success d-flex  align-items-center flex-shrink-0" 
+                                                    id="btn-add-voucher"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#add-voucher-modal">
+                                                <i class="ph-bold ph-plus fs-1 me-2"></i>
+                                                Thêm Voucher
+                                            </button>
+                                            <button type="button" id="btn-update-voucher"
+                                                    class="btn btn-primary btn-update d-flex  align-items-center flex-shrink-0" data-bs-toggle="modal"
+                                                    data-bs-target="#update-voucher-modal">
+                                                <i class="ph-bold ph-pencil fs-1 me-2"></i>
+                                                Cập nhật
+                                            </button>
+                                            <button type="button" id="btn-delete-voucher"
+                                                    class="btn btn-danger btn-delete d-flex align-items-center flex-shrink-0" data-bs-toggle="modal"
+                                                    data-bs-target="#delete-voucher-modal">
+                                                <i class="ph-bold ph-trash fs-1 me-2"></i>
+                                                Xoá Voucher
+                                            </button>
+                                        </div>
+                                    </div>
                                     <thead>
                                         <tr>
                                             <th class="col-sm-3 col-gap-5">Mã Khuyến mãi</th>  
@@ -51,7 +69,7 @@
                                             <th>Số lượng</th>
                                             <th>Trạng thái</th>
                                             <th>Thời gian</th>
-                                            <th>Thao tác</th>
+                                            <!--<th >Thao tác</th>-->
 
                                         </tr>
                                     </thead>
@@ -65,29 +83,6 @@
                                                 <td>${v.voucher_quantity}</td>
                                                 <td>${v.voucher_status eq 0 ? 'Hết' : 'Còn'}</td>
                                                 <td>${v.voucher_date}</td>
-                                                <td>
-                                                    <button style="color: white;border-color: rgba(207, 126, 0, 1); background-color: rgba(207, 126, 0, 1);"
-                                                            type="button" id="btn-update-voucher"
-                                                            class="btn btn-sm btn-success py-1 m-1"
-                                                            data-voucher-id="${v.voucherID}"
-                                                            data-voucher-name="${v.voucher_name}"
-                                                            data-voucher-code ="${v.voucher_code}"
-                                                            data-voucher-discount-percent="${v.voucher_discount_percent}"
-                                                            data-voucher-quantity ="${v.voucher_quantity}"
-                                                            data-voucher-status ="${v.voucher_status}"
-                                                            data-voucher-date ="${v.voucher_date}"
-                                                            data-bs-toggle="modal" data-bs-target="#update-voucher-modal">
-                                                        Cập nhật
-                                                    </button>
-                                                    <button style="color: white;border-color: rgba(207, 126, 0, 1); background-color: rgba(207, 126, 0, 1);"
-                                                            type="button" id="btn-delete-voucher"
-                                                            class="btn btn-sm btn-danger py-1 m-1"
-                                                            data-voucher-id="${v.voucherID}"
-                                                            data-voucher-name="${v.voucher_name}"
-                                                            data-bs-toggle="modal" data-bs-target="#delete-voucher-modal">
-                                                        Xóa
-                                                    </button>
-                                                </td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>

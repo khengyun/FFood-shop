@@ -241,8 +241,9 @@ function validateForm() {
             form.submit();
         }
     });
-    
-    $(".add-admin-form").validate({
+
+   
+    $(".add-voucher-form").validate({
         rules: {
             txtAccountUsername: {
                 required: true,
@@ -298,48 +299,8 @@ function validateForm() {
             form.submit();
         }
     });
-    
-    $(".add-voucher-form").validate({
-        rules: {
-            txtvoucher_name: {
-                required: true,
-                maxlength: 100,
-            },
-            txtvoucher_code: {
-                required: true,
-                maxlength: 16,
-            },
-            txtvoucher_discount_percent: {
-                required: true,
-                range: [0, 100]
-            },
-            txtvoucher_quantity: {
-                required: true,
-            }
-        },
-        messages: {
-            txtvoucher_name: {
-                required: "Vui lòng nhập tên Voucher",
-                maxlength: "Tên Voucher không được vượt quá 100 ký tự"
-            },
-            txtvoucher_code: {
-                required: "Vui lòng nhập mã code",
-                maxlength: "Tên Voucher không được vượt quá 16 ký tự"
-            },
-            txtvoucher_discount_percent: {
-                required: "Vui lòng nhập phần trăm giảm giá",
-                range: "Vui lòng nhập từ 0% đến 100%"
-            },
-            txtvoucher_quantity: {
-                required: "Vui lòng nhập số lượng giảm giá",
-            }
-        },
-        submitHandler: function (form) {
-            // Handle form submission here
-            form.submit();
-        }
-    });
-    
+
+  
     $(".update-voucher-form").validate({
         rules: {
             txtvoucher_name: {

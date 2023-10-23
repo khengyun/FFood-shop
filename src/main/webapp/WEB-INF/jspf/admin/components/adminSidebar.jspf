@@ -26,7 +26,7 @@
       </button>
     </li>
     <li class="nav-item">
-      <button data-bs-target="#promotions"
+      <button data-bs-target="#vouchers"
               class="nav-link ${(tabID == 2) ? "active show" : ""} link-body-emphasis text-start d-flex justify-content-center p-2 mx-auto"
               data-bs-toggle="tab">
         <i class="ph ph-megaphone"></i>
@@ -107,7 +107,7 @@
       </button>
     </li>
     <li class="nav-item d-grid gap-1 px-1">
-      <button data-bs-target="#promotions"
+      <button data-bs-target="#vouchers"
               class="nav-link ${(tabID == 2) ? "active show" : ""} link-body-emphasis text-start w-100 d-flex justify-content-start p-2 mx-auto"
               data-bs-toggle="tab">
         <i class="ph ph-megaphone me-3"></i>

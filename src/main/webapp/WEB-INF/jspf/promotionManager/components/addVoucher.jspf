@@ -9,7 +9,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body px-5">
-
                     <!-- Voucher Name -->
                     <div class="mb-3">
                         <label for="txtvoucher_name" class="form-label">Tên Voucher</label>
@@ -38,7 +37,10 @@
                             <option value="0">Hết</option>
                         </select>
                     </div>
-
+                    <div class="mb-3">
+                        <label for="txtvoucher_time" class="form-label">Thời hạn</label>
+                        <input type="datetime-local" class="form-control" id="txtvoucher_time" name="txtvoucher_date" required>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <!-- Submit Button -->
@@ -51,3 +53,4 @@
         </div>
     </div>
 </div>
+

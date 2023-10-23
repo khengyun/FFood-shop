@@ -121,7 +121,6 @@ public class FoodDAO {
     }
 
     public int deleteMultiple(List<Short> foodIDs) {
-        System.out.println("Delete 3");
 
         int result = 0;
         try {

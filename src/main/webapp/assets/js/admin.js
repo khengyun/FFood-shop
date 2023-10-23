@@ -16,9 +16,7 @@ $(document).on("click", "#btn-update-food", function () {
     modal.find("#txtFoodDescription").val(foodDescription);
     modal.find("#txtFoodPrice").attr("value", Number(foodPrice).toFixed(2));
     modal.find("#txtFoodStatus").val(foodStatus);
-    console.log(foodStatus);
     modal.find("#txtFoodRate").val(foodRate);
-    console.log(foodRate);
 
     modal.find("#txtDiscountPercent").attr("value", discountPercent);
     modal.find("#txtImageURL").attr("value", imageURL);
@@ -78,13 +76,14 @@ $(document).on("click", "#btn-delete-user", function () {
 });
 
 $(document).on("click", "#btn-update-voucher", function () {
-    let voucherID = $(this).data("voucher-id");
-    let voucherName = $(this).data("voucher-name");
-    let voucherCode = $(this).data("voucher-code");
-    let discount_percent = $(this).data("voucher-discount-percent");
-    let voucherQuantity = $(this).data("voucher-quantity");
-    let voucherStatus = $(this).data("voucher-status");
-//  let voucherDate = $(this).data("voucher-date");
+    let voucherID = $(this).attr("data-voucher-id");
+    let voucherName = $(this).attr("data-voucher-name");
+    let voucherCode = $(this).attr("data-voucher-code");
+    let discount_percent = $(this).attr("data-voucher-discount-percent");
+    let voucherQuantity = $(this).attr("data-voucher-quantity");
+    let voucherStatus = $(this).attr("data-voucher-status");
+    let voucherDate = $(this).attr("data-voucher-date");
+
 
     // Set the values of the corresponding form inputs in the modal
     $("#update-voucher-modal").find("input[name='txtvoucher_id']").attr("value", voucherID);
@@ -92,7 +91,9 @@ $(document).on("click", "#btn-update-voucher", function () {
     $("#update-voucher-modal").find("#txtvoucher_code").attr("value", voucherCode);
     $("#update-voucher-modal").find("#txtvoucher_discount_percent").attr("value", discount_percent);
     $("#update-voucher-modal").find("#txtvoucher_quantity").attr("value", voucherQuantity);
-    $("#update-voucher-modal").find("#txtvoucher_status").attr("value", voucherStatus);
+    $("#update-voucher-modal").find("#txtvoucher_status").val(voucherStatus);
+    $("#update-voucher-modal").find("#txtvoucher_date").val(voucherDate);
+
 });
 
 
@@ -109,16 +110,22 @@ $(document).on("click", "#btn-add-voucher", function () {
 });
 
 $(document).on("click", "#btn-delete-voucher", function () {
-    let voucherName = $(this).data("voucher-name");
-    let voucherID = $(this).data("voucher-id");
-    let deleteVoucherLink = "";
-    if (voucherID === null) {
-        deleteVoucherLink = "/admin";
-    } else {
-        deleteVoucherLink = "/admin/voucher/delete/" + voucherID;
-    }
-    // Set the values of the corresponding form inputs in the modal
-    $("#delete-voucher-modal").find("#voucher_name").html(voucherName + " ");
-    $("#delete-voucher-modal").find("#deleteVoucherLink").attr("href", deleteVoucherLink);
-});
+    let modal = $("#delete-voucher-modal");
+    // Clear the list of foods in the modal every time the button is clicked
+    modal.find(".modal-body ul").empty();
 
+    // Retrieves selected rows' data in JSON format, so that it can be iterated
+    let vouchers = JSON.parse($(this).attr("data-vouchers"));
+
+    // Populate the list of foods in the modal
+    for (let voucherId in vouchers) {
+        let voucheName = vouchers[voucherId];
+        modal.find("#delete-voucher-list").append("<li>" + voucheName + "</li>");
+    }
+
+    // Keep food IDs as strings
+    let voucherIds = Object.keys(vouchers).toString();
+
+    // Set the values to the hidden input in the modal
+    modal.find("input[name='voucherData']").attr("value", voucherIds);
+});

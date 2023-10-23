@@ -20,6 +20,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PromotionManagerController extends HttpServlet {
@@ -65,17 +66,14 @@ public class PromotionManagerController extends HttpServlet {
 
     private void doPostAddVoucher(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         String voucherName = (String) request.getParameter("txtvoucher_name");
         String voucherCode = (String) request.getParameter("txtvoucher_code");
         Byte voucher_discount_percent = Byte.parseByte(request.getParameter("txtvoucher_discount_percent"));
         Byte voucher_quantity = Byte.parseByte(request.getParameter("txtvoucher_quantity"));
         Byte voucher_status = Byte.parseByte(request.getParameter("txtvoucher_status"));
-        // Lấy thời gian hiện tại
-        LocalDateTime currentTime = LocalDateTime.now();
-        // Chuyển đổi thời gian hiện tại thành Timestamp
-        Timestamp datetime = Timestamp.valueOf(currentTime);
-
+        String datetimelocal = request.getParameter("txtvoucher_date");      
+        Timestamp datetime = Timestamp.valueOf(datetimelocal.replace("T"," ")+":00");
+        
         VoucherDAO voucherDAO = new VoucherDAO();
         Voucher voucher = new Voucher(voucherName, voucherCode, voucher_discount_percent, voucher_quantity, voucher_status, datetime);
 
@@ -92,17 +90,14 @@ public class PromotionManagerController extends HttpServlet {
 
     private void doPostUpdateVoucher(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        byte voucherID = Byte.parseByte(request.getParameter("txtvoucher_id"));
+        Byte voucherID =  Byte.parseByte(request.getParameter("txtvoucher_id"));      
         String voucherName = (String) request.getParameter("txtvoucher_name");
         String voucherCode = (String) request.getParameter("txtvoucher_code");
         Byte voucher_discount_percent = Byte.parseByte(request.getParameter("txtvoucher_discount_percent"));
         Byte voucher_quantity = Byte.parseByte(request.getParameter("txtvoucher_quantity"));
-        Byte voucher_status = Byte.parseByte(request.getParameter("txtvoucher_status"));
-
-        // Lấy thời gian hiện tại
-        LocalDateTime currentTime = LocalDateTime.now();
-        // Chuyển đổi thời gian hiện tại thành Timestamp
-        Timestamp datetime = Timestamp.valueOf(currentTime);
+        Byte voucher_status = Byte.parseByte(request.getParameter("txtvoucher_status"));        
+        String datetimelocal = request.getParameter("txtvoucher_date");
+        Timestamp datetime = Timestamp.valueOf(datetimelocal.replace("T"," ")+":00");
 
         VoucherDAO voucherDAO = new VoucherDAO();
         Voucher voucher = new Voucher(voucherName, voucherCode, voucher_discount_percent, voucher_quantity, voucher_status, datetime);
@@ -117,6 +112,28 @@ public class PromotionManagerController extends HttpServlet {
             response.sendRedirect("/promotionManager");
             return;
         }
+    }
+     
+    private void doPostDeleteVoucher(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        // Get the string of food IDs from the request
+        String[] voucherIDs = request.getParameter("voucherData").split(",");
+
+        // Convert the strings to numbers
+        List<Byte> voucherIDList = new ArrayList<>();
+        for (int i = 0; i < voucherIDs.length; i++) {
+            voucherIDList.add(Byte.parseByte(voucherIDs[i]));
+        }
+
+        // Delete each food item, and count deleted items
+        VoucherDAO dao = new VoucherDAO();
+        int count = dao.deleteMultiple(voucherIDList);
+
+        // TODO implement a deletion status message after page reload
+        // Redirect or forward to another page if necessary
+        request.setAttribute("tabID", 3);
+        response.sendRedirect("/promotionManager");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -167,6 +184,9 @@ public class PromotionManagerController extends HttpServlet {
                     break;
                 case "SubmitUpdateVoucher":
                     doPostUpdateVoucher(request, response);
+                    break;
+                case "SubmitDeleteVoucher":
+                    doPostDeleteVoucher(request, response);
                     break;
                 default:
                     break;
