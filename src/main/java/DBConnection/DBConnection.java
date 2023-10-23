@@ -20,7 +20,7 @@ public class DBConnection {
                         // Enter your SSMS login username
                         + "user=sa;"
                         // Enter your SSMS login password
-                        + "password=sa123456;"
+                        + "password=sa@123456;"
                         + "encrypt=true;"
                         + "trustServerCertificate= true;");
             } catch (SQLException ex) {
