@@ -20,7 +20,7 @@
     </li>
     
     <li class="nav-item">
-      <button data-bs-target="#promotions"
+      <button data-bs-target="#vouchers"
               class="nav-link link-body-emphasis text-start d-flex justify-content-center p-2 mx-auto"
               data-bs-toggle="tab">
         <i class="ph ph-megaphone"></i>
