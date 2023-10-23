@@ -39,7 +39,6 @@
                             <option value="0">Hết</option>
                         </select>
                     </div>
-
                 </div>
                 <div class="modal-footer">
                     <!-- Submit Button -->

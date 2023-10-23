@@ -32,7 +32,6 @@
                         <!-- Home Tab Content -->
                         <%@ include file="WEB-INF/jspf/promotionManager/home.jspf" %>
 
-
                         <!-- Voucher Tab Content -->
                         <div class="tab-pane fade" id="promotions">
                             <div class="container-fluid p-2">
@@ -94,7 +93,6 @@
                                 </table>
                             </div>
                         </div>
-
                     </div>
                 </main>
             </div>

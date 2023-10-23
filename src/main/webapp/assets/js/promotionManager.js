@@ -39,6 +39,5 @@ $(document).on("click", "#btn-add-voucher", function () {
     }
     // Set the values of the corresponding form inputs in the modal
     $("#add-voucher-modal").find("#txtvoucher_code").attr("value", randomCode);
-
 });
 

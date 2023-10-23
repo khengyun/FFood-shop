@@ -240,7 +240,7 @@ function validateForm() {
             form.submit();
         }
     });
-    
+   
     $(".add-voucher-form").validate({
         rules: {
             txtvoucher_name: {
@@ -281,7 +281,7 @@ function validateForm() {
             form.submit();
         }
     });
-    
+  
     $(".update-voucher-form").validate({
         rules: {
             txtvoucher_name: {

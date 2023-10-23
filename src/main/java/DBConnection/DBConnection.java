@@ -15,12 +15,12 @@ public class DBConnection {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             try {
                 conn = DriverManager.getConnection("jdbc:sqlserver://"
-                        + "DESKTOP-EVLE55V:1433;"
+                        + "sqlserver:1433;"
                         + "databaseName=ffood;"
                         // Enter your SSMS login username
                         + "user=sa;"
                         // Enter your SSMS login password
-                        + "password=khanhkhanh2012;"
+                        + "password=sa123456;"
                         + "encrypt=true;"
                         + "trustServerCertificate= true;");
             } catch (SQLException ex) {

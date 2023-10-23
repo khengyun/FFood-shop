@@ -16,9 +16,7 @@ $(document).on("click", "#btn-update-food", function () {
     modal.find("#txtFoodDescription").val(foodDescription);
     modal.find("#txtFoodPrice").attr("value", Number(foodPrice).toFixed(2));
     modal.find("#txtFoodStatus").val(foodStatus);
-    console.log(foodStatus);
     modal.find("#txtFoodRate").val(foodRate);
-    console.log(foodRate);
 
     modal.find("#txtDiscountPercent").attr("value", discountPercent);
     modal.find("#txtImageURL").attr("value", imageURL);

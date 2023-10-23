@@ -9,7 +9,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body px-5">
-
                     <!-- Voucher Name -->
                     <div class="mb-3">
                         <label for="txtvoucher_name" class="form-label">Tên Voucher</label>

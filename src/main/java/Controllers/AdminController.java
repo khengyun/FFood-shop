@@ -199,6 +199,7 @@ public class AdminController extends HttpServlet {
 
         int result = accountDAO.update(account);
 
+
         if (result == 1) {
             response.sendRedirect("/admin");
             return;
@@ -236,7 +237,7 @@ public class AdminController extends HttpServlet {
     
      private void doPostUpdateVoucher(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        byte voucherID =  Byte.parseByte(request.getParameter("txtvoucher_id"));      
+        Byte voucherID =  Byte.parseByte(request.getParameter("txtvoucher_id"));      
         String voucherName = (String) request.getParameter("txtvoucher_name");
         String voucherCode = (String) request.getParameter("txtvoucher_code");
         Byte voucher_discount_percent = Byte.parseByte(request.getParameter("txtvoucher_discount_percent"));
