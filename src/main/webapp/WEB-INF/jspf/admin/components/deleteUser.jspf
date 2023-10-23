@@ -8,7 +8,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p>Bạn có muốn xóa Tài khoản <span id="username" class="fw-bolder"></span>này không?</p>
+        <p>Bạn có muốn xóa Tài khoản <span id="username"></span>này không?</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-success" data-bs-dismiss="modal">Không</button>
