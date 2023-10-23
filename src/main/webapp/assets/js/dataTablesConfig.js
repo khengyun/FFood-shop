@@ -89,7 +89,10 @@ $(document).ready(function () {
             btnUpdate.removeAttr("data-food-id");
             btnUpdate.removeAttr("data-food-type");
             btnUpdate.removeAttr("data-food-name");
+            btnUpdate.removeAttr("data-food-description");
             btnUpdate.removeAttr("data-food-price");
+            btnUpdate.removeAttr("data-food-status");
+            btnUpdate.removeAttr("data-food-rate");
             btnUpdate.removeAttr("data-discount-percent");
             btnUpdate.removeAttr("data-image-url");
             btnUpdate.addClass("disabled");
@@ -116,7 +119,6 @@ $(document).ready(function () {
 
             // Retrieves selected rows
             let data = foodTable.rows({selected: true}).data();
-
             // Only allows update for exactly 1 row
             if (data.length === 1) {
 
@@ -125,16 +127,27 @@ $(document).ready(function () {
                 btnUpdate.attr("data-food-id", data[0][0]);
                 btnUpdate.attr("data-food-type", data[0][1]);
                 btnUpdate.attr("data-food-name", data[0][2]);
+                btnUpdate.attr("data-food-description", data[0][3]);
 
-                let price = data[0][3]
-                        .substring(0, data[0][3].length - 1) // Removes currency symbol
+
+                let price = data[0][4]
+                        .substring(0, data[0][4].length - 1) // Removes currency symbol
                         .replace(',', '') // Removes thousand separators
                         .concat(".0000"); // Adds optional decimals
                 btnUpdate.attr("data-food-price", price);
 
-                btnUpdate.attr("data-discount-percent", data[0][4].substring(0, data[0][4].length - 1)); // Removes percent symbol
+                let status = 0
+                if (data[0][6] == "Hết") {
+                    status = 0
+                } else {
+                    status = 1
+                }
+                btnUpdate.attr("data-food-status", status);
+                let rate = parseInt(data[0][5].split(' ')[0]);
+                btnUpdate.attr("data-food-rate", rate);
+                btnUpdate.attr("data-discount-percent", data[0][7].substring(0, data[0][7].length - 1)); // Removes percent symbol
 
-                let url = data[0][5].match(/src="([^"]*)"/)[1];
+                let url = data[0][8].match(/src="([^"]*)"/)[1];
                 btnUpdate.attr("data-image-url", url); // Keeps the image URL as the original string is the entire <img> tag
 
                 btnUpdate.removeClass("disabled");
@@ -216,169 +229,277 @@ $(document).ready(function () {
         // Fix table headers not resized on page load
         $('#food-table').resize();
     });
-
-//  $('#users-table').DataTable();
-//  $('#orders-table').DataTable();
-})
-        ;
-let voucherTable = $('#vouchers-table').DataTable({
-    columnDefs: [
-        {
-            searchable: false,
-            orderable: false,
-            targets: [-1] // "Image" columns
-        }
-    ]
-});
-
-voucherTable.on('mouseenter', 'td', function () {
-    let columnIndex = voucherTable.cell(this).index().column;
-
-    voucherTable.cells()
-            .nodes()
-            .each((element) => element.classList.remove('highlight'));
-
-    voucherTable
-            .column(columnIndex)
-            .nodes()
-            .each((element) => element.classList.add('highlight'));
-});
-
-
-let roleTable = $('#roles-table').DataTable({
-    columnDefs: [
-        {
-            searchable: false,
-            orderable: false,
-            targets: [-1] // "Image" columns
-        }
-    ]
-});
-
-roleTable.on('mouseenter', 'td', function () {
-    let columnIndex = roleTable.cell(this).index().column;
-
-    roleTable.cells()
-            .nodes()
-            .each((element) => element.classList.remove('highlight'));
-
-    roleTable
-            .column(columnIndex)
-            .nodes()
-            .each((element) => element.classList.add('highlight'));
-});
-
-function disableUpdateRoleBtn() {
-    let btnUpdate = $('#btn-update-role');
-    if (btnUpdate) {
-        btnUpdate.removeAttr("data-role-id");
-
-        btnUpdate.removeAttr("data-role-name");
-        btnUpdate.removeAttr("data-role-type");
-
-        btnUpdate.addClass("disabled");
-    }
-}
-
-function disableDeleteRoleBtn() {
-    let btnDelete = $('#btn-delete-role');
-    if (btnDelete) {
-        btnDelete.removeAttr("data-role-id");
-        btnDelete.removeAttr("data-role-name");
-        btnDelete.addClass("disabled");
-    }
-}
-
-roleTable.on('select selectItems deselect', function (e, dt, type, indexes) {
-    if (type === 'row' && indexes && Array.isArray(indexes)) {
-        let btnUpdate = $('#btn-update-role');
-        let btnDelete = $('#btn-delete-role');
-
-        // Retrieves selected rows
-        let data = roleTable.rows({selected: true}).data();
-
-        // Only allows update for exactly 1 row
-        if (data.length === 1) {
-
-            // data's type is a 2D array since the table's data is DOM-sourced
-            // https://datatables.net/reference/api/row().data()
-            btnUpdate.attr("data-role-id", data[0][0]);
-            btnUpdate.attr("data-role-type", data[0][2]);
-            btnUpdate.attr("data-role-name", data[0][1]);
-
-
-
-
-            btnUpdate.removeClass("disabled");
-
-            let roles = {};
-            roles[data[0][0]] = data[0][2]; // food[id] = food name
-            btnDelete.attr("data-roles", JSON.stringify(roles));
-            btnDelete.removeClass("disabled");
-        } else if (data.length > 1) {
-            let roles = {};
-            for (let i = 0; i < data.length; i++) {
-                let roleId = data[i][0];
-                roles[roleId] = data[i][2]; // Food name
+//    ================================================ END FOR FOOD ==============================
+    let voucherTable = $('#vouchers-table').DataTable({
+        columnDefs: [
+            {
+                searchable: false,
+                orderable: false,
+                targets: [-1] // "Image" columns
             }
-            btnDelete.attr("data-roles", JSON.stringify(foods));
-            btnDelete.removeClass("disabled");
-            disableUpdateRoleBtn();
+        ]
+    });
+
+    voucherTable.on('mouseenter', 'td', function () {
+        let columnIndex = voucherTable.cell(this).index().column;
+
+        voucherTable.cells()
+                .nodes()
+                .each((element) => element.classList.remove('highlight'));
+
+        voucherTable
+                .column(columnIndex)
+                .nodes()
+                .each((element) => element.classList.add('highlight'));
+    });
+
+    function disableUpdateVoucherBtn() {
+        let btnUpdate = $('#btn-update-voucher');
+        if (btnUpdate) {
+            btnUpdate.removeAttr("data-voucher-id");
+            btnUpdate.removeAttr("data-voucher-name");
+            btnUpdate.removeAttr("data-voucher-code");
+            btnUpdate.removeAttr("data-voucher-discount-percent");
+            btnUpdate.removeAttr("data-voucher-quantity");
+            btnUpdate.removeAttr("data-voucher-status");
+            btnUpdate.removeAttr("data-voucher-date");
+            btnUpdate.addClass("disabled");
+        }
+    }
+
+    function disableDeleteVoucherBtn() {
+        let btnDelete = $('#btn-delete-voucher');
+        if (btnDelete) {
+            btnDelete.removeAttr("data-voucher-id");
+            btnDelete.removeAttr("data-voucher-name");
+            btnDelete.addClass("disabled");
+        }
+    }
+
+    /*
+     Enables/Disables the Update button whenever user selects/deselects row(s)
+     Requires Select extension enabled
+     */
+    voucherTable.on('select selectItems deselect', function (e, dt, type, indexes) {
+        if (type === 'row' && indexes && Array.isArray(indexes)) {
+            let btnUpdate = $('#btn-update-voucher');
+            let btnDelete = $('#btn-delete-voucher');
+
+            // Retrieves selected rows
+            let data1 = voucherTable.rows({selected: true}).data();
+            // Only allows update for exactly 1 row
+            if (data1.length === 1) {
+                disableUpdateVoucherBtn();
+                // data's type is a 2D array since the table's data is DOM-sourced
+                // https://datatables.net/reference/api/row().data()
+                btnUpdate.attr("data-voucher-id", data1[0][0]);
+                btnUpdate.attr("data-voucher-name", data1[0][1]);
+                btnUpdate.attr("data-voucher-code", data1[0][2]);
+                let percentageValue = parseFloat(data1[0][3].replace('%', ''));
+                btnUpdate.attr("data-voucher-discount-percent", percentageValue);
+                btnUpdate.attr("data-voucher-quantity", data1[0][4]);
+                let status = 0
+                if (data1[0][5] === "Hết") {
+                    status = 0
+                } else {
+                    status = 1
+                }
+                btnUpdate.attr("data-voucher-status", status);
+                btnUpdate.attr("data-voucher-date", data1[0][6]);
+                btnUpdate.removeClass("disabled");
+
+                let vouchers = {};
+                vouchers[data1[0][0]] = data1[0][1]; // vouchers[id] = voucher name
+                btnDelete.attr("data-vouchers", JSON.stringify(vouchers));
+                btnDelete.removeClass("disabled");
+            } else if (data1.length > 1) {
+                let vouchers = {};
+                for (let i = 0; i < data1.length; i++) {
+                    let voucherId = data1[i][0];
+                    vouchers[voucherId] = data1[i][1]; // Voucher name
+                }
+                btnDelete.attr("data-vouchers", JSON.stringify(vouchers));
+                btnDelete.removeClass("disabled");
+                
+                disableUpdateVoucherBtn();
+            } else {
+                disableUpdateVoucherBtn();
+                disableDeleteVoucherBtn();
+            }
+        }
+    });
+
+    voucherTable.on('select-blur', function (e, dt, target, originalEvent) {
+        // Ignores blur event if user clicks on update/delete/cancel/confirm buttons, or the background of a modal dialog
+        if (target.classList.contains("btn-update")
+                || target.classList.contains("btn-delete")
+                || target.classList.contains("btn-cancel")
+                || target.classList.contains("btn-confirm")
+                || target.id === "update-voucher-modal"
+                || target.id === "delete-voucher-modal") {
+            e.preventDefault();
+        } else {
+            disableUpdateVoucherBtn();
+            disableDeleteVoucherBtn();
+        }
+    })
+    
+    $("[data-bs-target='#vouchers']").on('shown.bs.tab', function () {
+        // Remove searchPanes' expand and collapse all panes button
+        $('.dtsp-showAll').remove();
+        $('.dtsp-collapseAll').remove();
+
+        // Additional custom styling for searchPane's title row
+        $('.dtsp-titleRow').addClass("d-flex flex-wrap align-items-center gap-2 mt-1");
+        $('.dtsp-titleRow > div').addClass("py-0").after("<div class='flex-grow-1'>");
+        $('.dtsp-titleRow > button').addClass("d-flex align-items-center btn-sm py-2");
+
+        // Insert the table's button group to existing button container with Add, Update, Delete buttons
+        foodTable.buttons().container().prependTo("#vouchers-button-container");
+        // Manually configure classes for the newly inserted button group
+        let tableButtons = $("#vouchers-button-container > div.dt-buttons");
+        tableButtons.removeClass("btn-group");
+        tableButtons.addClass("col-sm-12 col-lg-7 d-flex gap-2");
+        /*$("#foods-button-container > div.dt-buttons > *").addClass("me-1");*/
+
+        // Fix table headers not resized on page load
+        $('#vouchers-table').resize();
+    });
+
+//    ============================================= END VOUCHER =========================
+
+    let roleTable = $('#roles-table').DataTable({
+        columnDefs: [
+            {
+                searchable: false,
+                orderable: false,
+                targets: [-1] // "Image" columns
+            }
+        ]
+    });
+
+    roleTable.on('mouseenter', 'td', function () {
+        let columnIndex = roleTable.cell(this).index().column;
+
+        roleTable.cells()
+                .nodes()
+                .each((element) => element.classList.remove('highlight'));
+
+        roleTable
+                .column(columnIndex)
+                .nodes()
+                .each((element) => element.classList.add('highlight'));
+    });
+
+    function disableUpdateRoleBtn() {
+        let btnUpdate = $('#btn-update-role');
+        if (btnUpdate) {
+            btnUpdate.removeAttr("data-role-id");
+
+            btnUpdate.removeAttr("data-role-name");
+            btnUpdate.removeAttr("data-role-type");
+
+            btnUpdate.addClass("disabled");
+        }
+    }
+
+    function disableDeleteRoleBtn() {
+        let btnDelete = $('#btn-delete-role');
+        if (btnDelete) {
+            btnDelete.removeAttr("data-role-id");
+            btnDelete.removeAttr("data-role-name");
+            btnDelete.addClass("disabled");
+        }
+    }
+
+    roleTable.on('select selectItems deselect', function (e, dt, type, indexes) {
+        if (type === 'row' && indexes && Array.isArray(indexes)) {
+            let btnUpdate = $('#btn-update-role');
+            let btnDelete = $('#btn-delete-role');
+
+            // Retrieves selected rows
+            let data2 = roleTable.rows({selected: true}).data();
+
+            // Only allows update for exactly 1 row
+            if (data2.length === 1) {
+
+                // data's type is a 2D array since the table's data is DOM-sourced
+                // https://datatables.net/reference/api/row().data()
+                btnUpdate.attr("data-role-id", data2[0][0]);
+                btnUpdate.attr("data-role-type", data2[0][2]);
+                btnUpdate.attr("data-role-name", data2[0][1]);
+
+                btnUpdate.removeClass("disabled");
+
+                let roles = {};
+                roles[data2[0][0]] = data2[0][2]; // food[id] = food name
+                btnDelete.attr("data-roles", JSON.stringify(roles));
+                btnDelete.removeClass("disabled");
+            } else if (data2.length > 1) {
+                let roles = {};
+                for (let i = 0; i < data2.length; i++) {
+                    let roleId = data2[i][0];
+                    roles[roleId] = data2[i][2]; // Food name
+                }
+                btnDelete.attr("data-roles", JSON.stringify(roles));
+                btnDelete.removeClass("disabled");
+                disableUpdateRoleBtn();
+            } else {
+                disableUpdateRoleBtn();
+                disableDeleteRoleBtn();
+            }
+        }
+    });
+
+    roleTable.on('select-blur', function (e, dt, target, originalEvent) {
+        // Ignores blur event if user clicks on update/delete/cancel/confirm buttons, or the background of a modal dialog
+        if (target.classList.contains("btn-update")
+                || target.classList.contains("btn-delete")
+                || target.classList.contains("btn-cancel")
+                || target.classList.contains("btn-confirm")
+                || target.id === "update-role-modal"
+                || target.id === "delete-role-modal") {
+            e.preventDefault();
         } else {
             disableUpdateRoleBtn();
             disableDeleteRoleBtn();
         }
-    }
+    });
+    roleTable.on('select-blur', function (e, dt, target, originalEvent) {
+        // Ignores blur event if user clicks on update/delete/cancel/confirm buttons, or the background of a modal dialog
+        if (target.classList.contains("btn-update")
+                || target.classList.contains("btn-delete")
+                || target.classList.contains("btn-cancel")
+                || target.classList.contains("btn-confirm")
+                || target.id === "update-role-modal"
+                || target.id === "delete-role-modal") {
+            e.preventDefault();
+        } else {
+            disableUpdateRoleBtn();
+            disableDeleteRoleBtn();
+        }
+    });
+
+    $("[data-bs-target='#vouchers']").on('shown.bs.tab', function () {
+        // Remove searchPanes' expand and collapse all panes button
+        $('.dtsp-showAll').remove();
+        $('.dtsp-collapseAll').remove();
+
+        // Additional custom styling for searchPane's title row
+        $('.dtsp-titleRow').addClass("d-flex flex-wrap align-items-center gap-2 mt-1");
+        $('.dtsp-titleRow > div').addClass("py-0").after("<div class='flex-grow-1'>");
+        $('.dtsp-titleRow > button').addClass("d-flex align-items-center btn-sm py-2");
+
+        // Insert the table's button group to existing button container with Add, Update, Delete buttons
+        foodTable.buttons().container().prependTo("#role-button-container");
+        // Manually configure classes for the newly inserted button group
+        let tableButtons = $("#role-button-container > div.dt-buttons");
+        tableButtons.removeClass("btn-group");
+        tableButtons.addClass("col-sm-12 col-lg-7 d-flex gap-2");
+        /*$("#foods-button-container > div.dt-buttons > *").addClass("me-1");*/
+
+        // Fix table headers not resized on page load
+        $('#roles-table').resize();
+    });
+
 });
-
-roleTable.on('select-blur', function (e, dt, target, originalEvent) {
-    // Ignores blur event if user clicks on update/delete/cancel/confirm buttons, or the background of a modal dialog
-    if (target.classList.contains("btn-update")
-            || target.classList.contains("btn-delete")
-            || target.classList.contains("btn-cancel")
-            || target.classList.contains("btn-confirm")
-            || target.id === "update-role-modal"
-            || target.id === "delete-role-modal") {
-        e.preventDefault();
-    } else {
-        disableUpdateRoleBtn();
-        disableDeleteRoleBtn();
-    }
-});
-roleTable.on('select-blur', function (e, dt, target, originalEvent) {
-    // Ignores blur event if user clicks on update/delete/cancel/confirm buttons, or the background of a modal dialog
-    if (target.classList.contains("btn-update")
-            || target.classList.contains("btn-delete")
-            || target.classList.contains("btn-cancel")
-            || target.classList.contains("btn-confirm")
-            || target.id === "update-role-modal"
-            || target.id === "delete-role-modal") {
-        e.preventDefault();
-    } else {
-        disableUpdateRoleBtn();
-        disableDeleteRoleBtn();
-    }
-});
-
-$("[data-bs-target='#vouchers']").on('shown.bs.tab', function () {
-    // Remove searchPanes' expand and collapse all panes button
-    $('.dtsp-showAll').remove();
-    $('.dtsp-collapseAll').remove();
-
-    // Additional custom styling for searchPane's title row
-    $('.dtsp-titleRow').addClass("d-flex flex-wrap align-items-center gap-2 mt-1");
-    $('.dtsp-titleRow > div').addClass("py-0").after("<div class='flex-grow-1'>");
-    $('.dtsp-titleRow > button').addClass("d-flex align-items-center btn-sm py-2");
-
-    // Insert the table's button group to existing button container with Add, Update, Delete buttons
-    foodTable.buttons().container().prependTo("#voucher-button-container");
-    // Manually configure classes for the newly inserted button group
-    let tableButtons = $("#voucher-button-container > div.dt-buttons");
-    tableButtons.removeClass("btn-group");
-    tableButtons.addClass("col-sm-12 col-lg-7 d-flex gap-2");
-    /*$("#foods-button-container > div.dt-buttons > *").addClass("me-1");*/
-
-    // Fix table headers not resized on page load
-    $('#vouchers-table').resize();
-});
-

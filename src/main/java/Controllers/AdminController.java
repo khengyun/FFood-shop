@@ -244,8 +244,7 @@ public class AdminController extends HttpServlet {
         Byte voucher_quantity = Byte.parseByte(request.getParameter("txtvoucher_quantity"));
         Byte voucher_status = Byte.parseByte(request.getParameter("txtvoucher_status"));
         
-        String datetimelocal = request.getParameter("txtvoucher_time");
-       
+        String datetimelocal = request.getParameter("txtvoucher_date");
         Timestamp datetime = Timestamp.valueOf(datetimelocal.replace("T"," ")+":00");
         
         VoucherDAO voucherDAO = new VoucherDAO();
@@ -261,6 +260,28 @@ public class AdminController extends HttpServlet {
             response.sendRedirect("/admin");
             return;
         }
+    }
+     
+    private void doPostDeleteVoucher(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        // Get the string of food IDs from the request
+        String[] voucherIDs = request.getParameter("voucherData").split(",");
+
+        // Convert the strings to numbers
+        List<Byte> voucherIDList = new ArrayList<>();
+        for (int i = 0; i < voucherIDs.length; i++) {
+            voucherIDList.add(Byte.parseByte(voucherIDs[i]));
+        }
+
+        // Delete each food item, and count deleted items
+        VoucherDAO dao = new VoucherDAO();
+        int count = dao.deleteMultiple(voucherIDList);
+
+        // TODO implement a deletion status message after page reload
+        // Redirect or forward to another page if necessary
+        request.setAttribute("tabID", 3);
+        response.sendRedirect("/admin");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
@@ -341,6 +362,9 @@ public class AdminController extends HttpServlet {
                     break;
                 case "SubmitUpdateVoucher":
                     doPostUpdateVoucher(request, response);
+                    break;
+                case "SubmitDeleteVoucher":
+                    doPostDeleteVoucher(request, response);
                     break;
                 default:
                     break;
