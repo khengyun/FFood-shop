@@ -11,7 +11,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>FFood | Dashboard</title>
+        <title>FFood | Admin Dashboard</title>
         <%@ include file="WEB-INF/jspf/common/imports/resources.jspf" %>
         <%@ include file="WEB-INF/jspf/admin/imports/dataTablesStyle.jspf" %>
 
@@ -38,8 +38,8 @@
                         <%@ include file="WEB-INF/jspf/admin/home.jspf" %>
                         <!-- Food & Drinks Tab Content -->
                         <%@ include file="WEB-INF/jspf/admin/foods.jspf" %>
-                        
-                        <%@ include file="WEB-INF/jspf/admin/orders.jspf" %>
+                        <%@ include file="WEB-INF/jspf/admin/roles.jspf" %>
+                         <%@ include file="WEB-INF/jspf/admin/voucher.jspf" %>
 
                         <!-- Users Tab Content -->
                         <div class="tab-pane fade" id="users">
@@ -94,7 +94,6 @@
 
 
 
-                        <!-- Roles Tab Content -->
                       
                         <!-- Orders Tab Content -->
                         <div class="tab-pane fade" id="orders">
@@ -143,56 +142,7 @@
                             </div>
                         </div>
 
-                        <!-- Promotion Tab Content -->
-                        <div class="tab-pane fade" id="promotions">
-                            <div class="container-fluid p-2">
-                                <table id="users-table" class="table table-bordered table-striped">
-                                    <h1 class="text-center fw-bold fs-3" align="left">Khuyến mãi</h1>
-                                    <button style="color: white;border-color: rgba(207, 126, 0, 1); background-color: rgba(207, 126, 0, 1);"
-                                            type="button" class="btn btn-sm btn-success py-1 my-2 me-2" data-bs-toggle="modal" data-bs-target="#add-voucher-modal">
-                                        Tạo Khuyến mãi
-                                    </button>
-                                    <thead>
-                                        <tr>
-                                            <th class="col-sm-3 col-gap-5">Mã Khuyến mãi</th>  
-                                            <th>Tên Khuyến mãi</th>
-                                            <th>Voucher</th>
-                                            <th >Thao tác</th>
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <c:forEach items="${voucherList}" var="v">
-                                            <tr>
-                                                <td>${v.voucherID}</td>
-                                                <td>${v.name}</td>
-
-                                                <td>${(v.voucher_discount_percent == null) ? 0 : v.voucher_discount_percent}%</td>                                 
-                                                <td>
-                                                    <button style="color: white;border-color: rgba(207, 126, 0, 1); background-color: rgba(207, 126, 0, 1);"
-                                                            type="button" id="btn-update-voucher"
-                                                            class="btn btn-sm btn-success py-1 m-1"
-                                                            data-voucher-id="${v.voucherID}"
-                                                            data-voucher-name="${v.name}"
-                                                            data-voucher-discount-percent="${v.voucher_discount_percent}"
-                                                            data-bs-toggle="modal" data-bs-target="#update-voucher-modal">
-                                                        Cập nhật
-                                                    </button>
-                                                    <button style="color: white;border-color: rgba(207, 126, 0, 1); background-color: rgba(207, 126, 0, 1);"
-                                                            type="button" id="btn-delete-voucher"
-                                                            class="btn btn-sm btn-danger py-1 m-1"
-                                                            data-voucher-id="${v.voucherID}"
-                                                            data-voucher-name="${v.name}"
-                                                            data-bs-toggle="modal" data-bs-target="#delete-voucher-modal">
-                                                        Xóa
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        </c:forEach>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                      
 
                     </div>
                 </main>
