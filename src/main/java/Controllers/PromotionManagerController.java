@@ -66,14 +66,12 @@ public class PromotionManagerController extends HttpServlet {
 
     private void doPostAddVoucher(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         String voucherName = (String) request.getParameter("txtvoucher_name");
         String voucherCode = (String) request.getParameter("txtvoucher_code");
         Byte voucher_discount_percent = Byte.parseByte(request.getParameter("txtvoucher_discount_percent"));
         Byte voucher_quantity = Byte.parseByte(request.getParameter("txtvoucher_quantity"));
         Byte voucher_status = Byte.parseByte(request.getParameter("txtvoucher_status"));
-        String datetimelocal = request.getParameter("txtvoucher_time");
-       
+        String datetimelocal = request.getParameter("txtvoucher_date");      
         Timestamp datetime = Timestamp.valueOf(datetimelocal.replace("T"," ")+":00");
         
         VoucherDAO voucherDAO = new VoucherDAO();
@@ -89,19 +87,18 @@ public class PromotionManagerController extends HttpServlet {
             return;
         }
     }
-    
-     private void doPostUpdateVoucher(HttpServletRequest request, HttpServletResponse response)
+
+    private void doPostUpdateVoucher(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Byte voucherID =  Byte.parseByte(request.getParameter("txtvoucher_id"));      
         String voucherName = (String) request.getParameter("txtvoucher_name");
         String voucherCode = (String) request.getParameter("txtvoucher_code");
         Byte voucher_discount_percent = Byte.parseByte(request.getParameter("txtvoucher_discount_percent"));
         Byte voucher_quantity = Byte.parseByte(request.getParameter("txtvoucher_quantity"));
-        Byte voucher_status = Byte.parseByte(request.getParameter("txtvoucher_status"));
-        
+        Byte voucher_status = Byte.parseByte(request.getParameter("txtvoucher_status"));        
         String datetimelocal = request.getParameter("txtvoucher_date");
         Timestamp datetime = Timestamp.valueOf(datetimelocal.replace("T"," ")+":00");
-        
+
         VoucherDAO voucherDAO = new VoucherDAO();
         Voucher voucher = new Voucher(voucherName, voucherCode, voucher_discount_percent, voucher_quantity, voucher_status, datetime);
         voucher.setVoucherID(voucherID);

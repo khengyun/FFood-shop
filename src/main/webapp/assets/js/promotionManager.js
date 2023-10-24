@@ -1,4 +1,5 @@
 $(document).on("click", "#btn-update-voucher", function () {
+
     let voucherID = $(this).attr("data-voucher-id");
     let voucherName = $(this).attr("data-voucher-name");
     let voucherCode = $(this).attr("data-voucher-code");

@@ -85,6 +85,31 @@ public class FoodDAO {
         }
         return food;
     }
+    
+    public Food getFood(String food_name) {
+        Food food = null;
+        try {
+            ps = conn.prepareStatement("select * from Food where food_name = ?");
+            ps.setString(1, food_name);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                food = new Food(
+                        rs.getShort("food_id"),
+                        rs.getString("food_name"),
+                        rs.getString("food_description"),
+                        rs.getBigDecimal("food_price"),
+                        rs.getByte("food_status"),
+                        rs.getByte("food_rate"),
+                        rs.getByte("discount_percent"),
+                        rs.getString("food_img_url"),
+                        rs.getByte("food_type_id"),
+                        this.getFoodType(rs.getByte("food_type_id")));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FoodDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return food;
+    }
 
     public int add(Food food) {
         String sql = "insert into Food (food_name, food_description, food_price, food_status, food_rate, discount_percent, food_img_url, food_type_id) values (?, ?, ?, ?, ?, ?, ?, ?)";

@@ -11,6 +11,10 @@ public class Staff {
 
     public Staff() {
     }
+    
+    public Staff(String fullName) {
+        this.fullName = fullName;
+    }
 
     public Staff(byte staffID, String fullName) {
         this.staffID = staffID;

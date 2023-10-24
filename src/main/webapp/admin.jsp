@@ -26,8 +26,9 @@
                 <%@ include file="WEB-INF/jspf/admin/components/updateUser.jspf" %>
                 <%@ include file="WEB-INF/jspf/admin/components/deleteUser.jspf" %>
                 <%@ include file="WEB-INF/jspf/admin/components/adminSidebar.jspf" %>
-                <%@ include file="WEB-INF/jspf/admin/components/addadmin.jspf" %>
-                <%@ include file="WEB-INF/jspf/admin/components/updateAdmin.jspf" %>
+                <%@ include file="WEB-INF/jspf/admin/components/addRole.jspf" %>
+                <%@ include file="WEB-INF/jspf/admin/components/updateRole.jspf" %>
+                <%@ include file="WEB-INF/jspf/admin/components/deleteRole.jspf" %>
                 <%@ include file="WEB-INF/jspf/admin/components/addVoucher.jspf" %>
                 <%@ include file="WEB-INF/jspf/admin/components/deleteVoucher.jspf" %>
                 <%@ include file="WEB-INF/jspf/admin/components/updatevoucher.jspf" %>
@@ -141,9 +142,6 @@
                                 </table>
                             </div>
                         </div>
-
-
-
 
                     </div>
                 </main>

@@ -5,19 +5,20 @@
             <h1 class="text-start fw-bold fs-3 mb-3">Quản lý Staff & Promotion Manager</h1>
             <div id="roles-button-container" class="row mb-2">
                 <div class="col-sm-12 col-lg-5 mt-sm-2 mt-lg-0 d-flex flex-wrap gap-2 justify-content-lg-end">
-                    <button type="button" class="btn btn-success d-flex  align-items-center flex-shrink-0" data-bs-toggle="modal"
+                    <button type="button" class="btn btn-success d-flex align-items-center flex-shrink-0" 
+                            data-bs-toggle="modal"
                             data-bs-target="#add-role-modal">
                         <i class="ph-bold ph-plus fs-1 me-2"></i>
                         Thêm Account
                     </button>
                     <button type="button" id="btn-update-role"
-                            class="btn btn-primary btn-update disabled d-flex  align-items-center flex-shrink-0" data-bs-toggle="modal"
+                            class="btn btn-primary btn-update d-flex  align-items-center flex-shrink-0" data-bs-toggle="modal"
                             data-bs-target="#update-role-modal">
                         <i class="ph-bold ph-pencil fs-1 me-2"></i>
                         Cập nhật
                     </button>
                     <button type="button" id="btn-delete-role"
-                            class="btn btn-danger btn-delete disabled d-flex align-items-center flex-shrink-0" data-bs-toggle="modal"
+                            class="btn btn-danger btn-delete d-flex align-items-center flex-shrink-0" data-bs-toggle="modal"
                             data-bs-target="#delete-role-modal">
                         <i class="ph-bold ph-trash fs-1 me-2"></i>
                         Xoá Account
@@ -27,21 +28,23 @@
 
             <thead>
                 <tr>
-                    <th class="col-sm-3 col-gap-5" >Mã TK</th>                                   
-                    <th >Tên Admin</th>
-                    <th >Email</th>
-                    <th >Loại TK</th>
-                   
+                    <th>Mã TK</th>  
+                    <th>Mã Role</th> 
+                    <th>Username</th>
+                    <th>Tên đầy đủ</th>
+                    <th>Email</th>
+                    <th>Loại TK</th>
                 </tr>
             </thead>
             <tbody>
-            <c:forEach items="${adminstaffList}" var="a">
+            <c:forEach items="${roleList}" var="r">
                 <tr>
-                    <td>${a.accountID}</td>
-                    <td >${a.username}</td>
-                    <td >${a.email}</td>
-                    <td>${a.accountType}</td>
-
+                    <td>${r.accountID}</td>
+                    <td >${r.roleID}</td>
+                    <td >${r.fullname}</td>
+                    <td >${r.username}</td>
+                    <td >${r.email}</td>
+                    <td>${r.accountType eq 'staff' ? 'Staff' : 'Promotion Manager'}</td>
                 </tr>
             </c:forEach>
             </tbody>

@@ -39,7 +39,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="txtvoucher_time" class="form-label">Thời hạn</label>
-                        <input type="datetime-local" class="form-control" id="txtvoucher_time" name="txtvoucher_time" required>
+                        <input type="datetime-local" class="form-control" id="txtvoucher_time" name="txtvoucher_date" required>
                     </div>
                 </div>
                 <div class="modal-footer">
