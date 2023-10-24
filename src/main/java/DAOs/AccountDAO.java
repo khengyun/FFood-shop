@@ -124,11 +124,11 @@ public class AccountDAO {
         return result;
     }
     
-    public int deleteMultiple(List<Integer> accountIDs) {
+    public int deleteMultiple(List<Byte> accountIDs) {
         int result = 0;
         try {
             conn.setAutoCommit(false); // Start transaction
-            for (Integer accountID : accountIDs) {
+            for (Byte accountID : accountIDs) {
                 if (delete(accountID) == 1) {
                     result++; // Count number of successful deletions
                 } else {

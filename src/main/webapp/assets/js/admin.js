@@ -161,10 +161,10 @@ $(document).on("click", "#btn-delete-role", function () {
     // Retrieves selected rows' data in JSON format, so that it can be iterated
     let accounts = JSON.parse($(this).attr("data-accounts")); //accounts contain accountID of username
     let roles = JSON.parse($(this).attr("data-roles")); // roles contain ID and fullname of this role
-    let temp1s = JSON.parse($(this).attr("data-temps")); // temp1s contain the account_type "staff" of roleID
-    let temp2s = JSON.parse($(this).attr("data-temps")); // temp2s contain the account_type "promotionManager" of roleID
-
-    // Populate the list of accounts in the modal
+    let temp1s = JSON.parse($(this).attr("data-temp1s")); // temp1s contain the account_type "staff" of roleID
+    let temp2s = JSON.parse($(this).attr("data-temp2s")); // temp2s contain the account_type "promotionManager" of roleID
+    
+    //     Populate the list of accounts in the modal
     for (let accountId in accounts) {
         let accountName = accounts[accountId];
         modal.find("#delete-account-list").append("<li>" + accountName + "</li>");

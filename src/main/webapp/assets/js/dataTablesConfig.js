@@ -310,6 +310,7 @@ $(document).ready(function () {
 
                 let vouchers = {};
                 vouchers[data1[0][0]] = data1[0][1]; // vouchers[id] = voucher name
+                console.log(vouchers);
                 btnDelete.attr("data-vouchers", JSON.stringify(vouchers));
                 btnDelete.removeClass("disabled");
             } else if (data1.length > 1) {
@@ -409,7 +410,8 @@ $(document).ready(function () {
         if (btnDelete) {
             btnDelete.removeAttr("data-role-accountid");
             btnDelete.removeAttr("data-role-roleid");
-            btnDelete.removeAttr("data-role-name");
+            btnDelete.removeAttr("data-role-fullname");
+            btnDelete.removeAttr("data-role-username");
             btnDelete.addClass("disabled");
         }
     }
@@ -443,10 +445,26 @@ $(document).ready(function () {
 
                 let roles = {};
                 let accounts = {};
-                roles[data2[0][1]] = data2[0][3]; // role[id] = role name
+                let temp1s = {};
+                let temp2s = {};
+                
+                roles[data2[0][1]] = data2[0][3];
                 accounts[data2[0][0]] = data2[0][2];
+                account_type = "";
+                if (data2[0][5] === "Staff") {
+                    account_type = "staff";
+                    temp1s[data2[0][1]] = account_type; 
+                
+                    btnDelete.attr("data-temp1s", JSON.stringify(temp1s));
+                } else {
+                    account_type = "promotionManager";
+                    temp2s[data2[0][1]] = account_type; 
+                    btnDelete.attr("data-temp2s", JSON.stringify(temp2s));
+                } 
                 btnDelete.attr("data-roles", JSON.stringify(roles));
                 btnDelete.attr("data-accounts", JSON.stringify(accounts));
+                
+                
                 btnDelete.removeClass("disabled");
             } else if (data2.length > 1) {
                 let roles = {};
@@ -456,7 +474,8 @@ $(document).ready(function () {
                 for (let i = 0; i < data2.length; i++) {
                     let roleId = data2[i][1];
                     let accountId = data2[i][0];
-                    roles[roleId] = data2[i][3]; 
+                    roles[i] = data2[i][3];
+                    accounts[accountId] = data2[i][2]; 
                     
                     let account_type = "";
                     if (data2[i][5] === "Staff") {
@@ -465,14 +484,12 @@ $(document).ready(function () {
                     } else {
                         account_type = "promotionManager";
                         temp2s[roleId] = account_type; 
-                    } 
-                    
-                    accounts[accountId] = account_type; 
+                    }  
                 }
                 btnDelete.attr("data-roles", JSON.stringify(roles));
                 btnDelete.attr("data-temp1s", JSON.stringify(temp1s));
                 btnDelete.attr("data-temp2s", JSON.stringify(temp2s));
-                btnDelete.attr("data-accounts", JSON.stringify(roles));
+                btnDelete.attr("data-accounts", JSON.stringify(accounts));
                 btnDelete.removeClass("disabled");
                 disableUpdateRoleBtn();
             } else {

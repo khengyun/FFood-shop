@@ -111,18 +111,16 @@ public class AdminController extends HttpServlet {
 
         StaffDAO staffDAO = new StaffDAO();
         PromotionManagerDAO promotionManagerDAO = new PromotionManagerDAO();
+        
         List<Account> accountList = accountDAO.getAllRole();
-
         List<Staff> StaffList = staffDAO.getAllStaff();
         List<PromotionManager> PromotionManagerList = promotionManagerDAO.getAllPromotionManager();
 
-        List<Role> roleList = new ArrayList<Role>();
+        List<Role> roleList = new ArrayList<>();
         for (Account a : accountList) {
-            System.out.println("roleID " + a.getStaffID());
             if (a.getAccountType().equals("staff")) {
                 String fullname = "";
                 for (Staff s : StaffList) {
-                    System.out.println("StaffID " + s.getStaffID());
                     if (s.getStaffID() == a.getStaffID()) {
                         fullname = s.getFullName();
                         Role newRole = new Role(a.getAccountID(), a.getStaffID(), a.getUsername(), fullname, a.getEmail(), a.getAccountType());
@@ -133,7 +131,6 @@ public class AdminController extends HttpServlet {
             } else if (a.getAccountType().equals("promotionManager")) {
                 String fullname = "";
                 for (PromotionManager p : PromotionManagerList) {
-                    System.out.println("ProID " + p.getProID());
                     if (p.getProID() == a.getProID()) {
                         fullname = p.getFullName();
                         Role newRole = new Role(a.getAccountID(), a.getProID(), a.getUsername(), fullname, a.getEmail(), a.getAccountType());
@@ -373,12 +370,8 @@ public class AdminController extends HttpServlet {
         String[] roleIDs = request.getParameter("roleData").split(",");
         String[] temp1IDs = request.getParameter("temp1Data").split(",");
         String[] temp2IDs = request.getParameter("temp2Data").split(",");
-
-        // Convert the strings to numbers
-        List<Integer> accountIDList = new ArrayList<>();
-        for (int i = 0; i < accountIDs.length; i++) {
-            accountIDList.add(Integer.parseInt(accountIDs[i]));
-        }
+        
+        
         
         // Convert the strings to numbers
         List<Byte> roleIDList = new ArrayList<>();
@@ -386,7 +379,13 @@ public class AdminController extends HttpServlet {
             roleIDList.add(Byte.parseByte(roleIDs[i]));
         }
         
-        // Convert the strings to numbers
+//        // Convert the strings to numbers
+        List<Byte> accountIDList = new ArrayList<>();
+        for (int i = 0; i < accountIDs.length; i++) {
+            accountIDList.add(Byte.parseByte(accountIDs[i]));
+        }
+//        
+//        // Convert the strings to numbers
         List<Byte> StaffIDList = new ArrayList<>();
         for (int i = 0; i < temp1IDs.length; i++) {
             StaffIDList.add(Byte.parseByte(temp1IDs[i]));
@@ -401,11 +400,13 @@ public class AdminController extends HttpServlet {
         AccountDAO accountDAO = new AccountDAO();
         int result1 = accountDAO.deleteMultiple(accountIDList);
         
-        StaffDAO staffDAO = new StaffDAO();
-        int result2 = staffDAO.deleteMultiple(StaffIDList);
-        
-        PromotionManagerDAO proDAO = new PromotionManagerDAO();
-        int result3 = proDAO.deleteMultiple(ProIDList);
+        if (StaffIDList.size() != 0) {
+            StaffDAO staffDAO = new StaffDAO();
+            int result2 = staffDAO.deleteMultiple(StaffIDList);
+        } else {
+            PromotionManagerDAO proDAO = new PromotionManagerDAO();
+            int result3 = proDAO.deleteMultiple(ProIDList);
+        }
         
         // TODO implement a deletion status message after page reload
         // Redirect or forward to another page if necessary
