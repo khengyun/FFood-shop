@@ -27,6 +27,8 @@
     <%@ include file="WEB-INF/jspf/guest/components/verify.jspf" %>
     <%@ include file="WEB-INF/jspf/guest/components/success.jspf" %>
     <%@ include file="WEB-INF/jspf/guest/components/failure.jspf" %>
+    <%@ include file="WEB-INF/jspf/guest/components/camera.jspf" %>
+
     <!-- Main Content -->
     <main class="main" id="top">
 

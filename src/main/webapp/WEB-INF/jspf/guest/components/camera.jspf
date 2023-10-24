@@ -1,0 +1,97 @@
+<%@ page pageEncoding="UTF-8" %>
+<!-- Camera -->
+<div class="modal fade" tabindex="-1" id="camera-modal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div id="my_camera"></div>
+        <div id="results"></div>
+        <form>
+          <input type=button value="Take Snapshot" onClick="take_snapshot()">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- A button for taking snaps -->
+
+<!-- Configure a few settings and attach camera -->
+<script>
+  function setcamera() {
+    Webcam.set({
+      width: 320,
+      height: 240,
+      image_format: 'jpeg',
+      jpeg_quality: 100,
+      fps: 60
+    });
+    Webcam.attach('#my_camera');
+  }
+
+
+//   var myModalEl = document.getElementById('camera-modal')
+// myModalEl.addEventListener('hide.bs.modal', function (event) {
+//   console.log("hide.bs.modal")
+//   stop_camera()
+// })
+
+var myModalEl = document.getElementById('camera-modal')
+myModalEl.addEventListener('hide.bs.modal', function (event) {
+  console.log("hidden.bs.modal")
+  stop_camera()
+})
+
+var myModalEl = document.getElementById('camera-modal')
+myModalEl.addEventListener('show.bs.modal', function (event) {
+  console.log("show.bs.modal")
+
+  setcamera()
+})
+
+
+  // Các hàm stop_camera() và take_snapshot() của bạn
+  function stop_camera() {
+    Webcam.snap(function (data_uri) {
+      // display results in page
+      Webcam.reset();
+    });
+  }
+
+  async function predict(imageBase64, data_uri) {
+    // Gửi dữ liệu hình ảnh base64 lên máy chủ FastAPI
+    const response = await fetch("http://localhost:8000/predict_dish", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json", // Set the content type to JSON
+      },
+      body: JSON.stringify({ "image_base64": imageBase64.split(";base64,")[1] }),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data);
+      console.log(data.predicted_dish);
+      console.log(data.inference_time);
+      predicted_dish = data.predicted_dish;
+      inference_time = data.inference_time;
+      document.getElementById("results").innerHTML =
+        `<p>Predicted Dish: ${predicted_dish}</p>
+        <p>Inference Time: ${inference_time} seconds</p>
+        `;
+    } else {
+      // resultDiv.textContent = "Error while making the prediction.";
+      response.json().then((data) => {
+        console.log(data);
+      });
+    }
+  }
+
+  function take_snapshot() {
+    // take snapshot and get image data
+    Webcam.snap(function (data_uri) {
+      // display results in page
+      predict(data_uri, data_uri);
+    });
+  }
+</script>
