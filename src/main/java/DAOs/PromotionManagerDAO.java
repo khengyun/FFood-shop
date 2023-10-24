@@ -12,6 +12,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import Models.PromotionManager;
 import Models.Staff;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PromotionManagerDAO {
 
@@ -29,6 +31,25 @@ public class PromotionManagerDAO {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
             return rs;
+        } catch (SQLException ex) {
+            Logger.getLogger(PromotionManagerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+     public List<PromotionManager> getAllPromotionManager() {
+        ResultSet promotionManagerRS = this.getAll();
+        try {
+            List<PromotionManager> promotionManagerList = new ArrayList<>();
+            while (promotionManagerRS.next()) {
+                // Selected account is of User type               
+                PromotionManager promotionManager = new PromotionManager(
+                        promotionManagerRS.getByte("pro_id"),
+                        promotionManagerRS.getString("pro_fullname")
+                );              
+                promotionManagerList.add(promotionManager);               
+            }
+            return promotionManagerList;
         } catch (SQLException ex) {
             Logger.getLogger(PromotionManagerDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -88,6 +109,37 @@ public class PromotionManagerDAO {
             result = ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(PromotionManagerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
+    
+    public int deleteMultiple(List<Byte> proIDs) {
+        int result = 0;
+        try {
+            conn.setAutoCommit(false); // Start transaction
+            for (Byte proID : proIDs) {
+                if (delete(proID) == 1) {
+                    result++; // Count number of successful deletions
+                } else {
+                    conn.rollback(); // Rollback transaction if deletion fails
+                    return 0;
+                }
+            }
+            conn.commit(); // Commit transaction if all deletions succeed
+        } catch (SQLException ex) {
+            Logger.getLogger(PromotionManagerDAO.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                conn.rollback(); // Rollback transaction if any exception occurs
+            } catch (SQLException rollbackEx) {
+                Logger.getLogger(PromotionManagerDAO.class.getName()).log(Level.SEVERE, null, rollbackEx);
+            }
+            return 0;
+        } finally {
+            try {
+                conn.setAutoCommit(true); // Reset auto commit
+            } catch (SQLException finalEx) {
+                Logger.getLogger(PromotionManagerDAO.class.getName()).log(Level.SEVERE, null, finalEx);
+            }
         }
         return result;
     }

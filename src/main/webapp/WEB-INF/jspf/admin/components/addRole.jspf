@@ -1,0 +1,50 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="modal" tabindex="-1" id="add-role-modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form class="add-role-form" method="POST" action="/admin">
+                <div class="modal-header">
+                    <h5 class="modal-title">Tạo Tài khoản cho Admin</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body px-5">
+                    <div class="mb-3">
+                        <label for="txtAccountUsername" class="form-label">Tên Tài khoản</label>
+                        <input type="text" class="form-control" id="txtAccountUsername" name="txtAccountUsername">
+                    </div>
+                    <div class="mb-3">
+                        <label for="txtAccountFullname" class="form-label">Tên đầy đủ</label>
+                        <input type="text" class="form-control" id="txtAccountFullname" name="txtAccountFullname">
+                    </div>
+                    <div class="mb-3">
+                        <label for="txtEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="txtEmail" name="txtEmail">
+                    </div>
+                    <div class="mb-3">
+                        <label for="txtAccountRole" class="form-label">Role</label>
+                        <select class="form-select" id="txtAccountRole" name="txtAccountRole" required>
+                            <option value="staff" selected>Staff</option>
+                            <option value="promotionManager">Promotion Manager</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="txtAccountPassword" class="form-label">Mật khẩu</label>
+                        <input type="password" class="form-control" id="txtAdminAccountPassword" name="txtAccountPassword">
+                    </div>
+                    <div class="mb-3">
+                        <label for="txtReAccountPassword" class="form-label">Nhập lại Mật khẩu</label>
+                        <input type="password" class="form-control" id="txtReAccountPassword" name="txtReAccountPassword">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <!-- Submit Button -->
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-success" onclick="validateForm()">Tạo</button>
+                    <!-- Hidden Submit Value -->
+                    <input type="hidden" id="btnSubmit" name="btnSubmit" value="SubmitAddRole">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

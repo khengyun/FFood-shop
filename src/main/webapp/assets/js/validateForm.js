@@ -508,4 +508,114 @@ function validateForm() {
             form.submit();
         }
     });
+    
+    $(".add-role-form").validate({
+        rules: {
+            txtAccountUsername: {
+                required: true,
+                maxlength: 100,
+                pattern: /^[a-zA-Z0-9-'_]+$/
+            },
+            txtAccountFullname: {
+                required: true,
+                maxlength: 100,
+                pattern: /^[\p{L}\s]+$/u
+            },
+            txtEmail: {
+                required: true,
+                maxlength: 255,
+                email: true
+            },
+            txtAccountPassword: {
+                required: true,
+                minlength: 8
+            },
+            txtReAccountPassword: {
+                required: true,
+                equalTo: "#txtAdminAccountPassword"
+            }
+        },
+        messages: {
+            txtAccountUsername: {
+                required: "Vui lòng nhập Tên Tài khoản Người dùng",
+                maxlength: "Tên Tài khoản Người dùng không được vượt quá 100 ký tự",
+                pattern: "Tên Tài khoản chỉ chấp nhận chữ, số, dấu gạch ngang, gạch dưới, nháy đơn và không chứa khoảng trắng"
+            },
+            txtAccountFullname: {
+                required: "Vui lòng nhập tên đầy đủ",
+                maxlength: "Tên đầy đủ không được vượt quá 100 ký tự",
+                pattern: "Tên Tài khoản chỉ chấp nhận chữ, khoảng trắng"
+            },
+            txtEmail: {
+                required: "Vui lòng nhập Email",
+                maxlength: "Email không được vượt quá 255 ký tự",
+                email: "Vui lòng nhập địa chỉ Email hợp lệ"
+            },
+            txtAccountPassword: {
+                required: "Vui lòng nhập Mật khẩu",
+                minlength: "Mật khẩu phải có ít nhất 8 ký tự"
+            },
+            txtReAccountPassword: {
+                required: "Vui lòng nhập lại Mật khẩu",
+                equalTo: "Mật khẩu không khớp"
+            }
+        },
+        submitHandler: function (form) {
+            // Handle form submission here
+            form.submit();
+        }
+    });
+    
+    $(".update-role-form").validate({
+        rules: {
+            txtAccountUsername: {
+                required: true,
+                maxlength: 100,
+                pattern: /^[a-zA-Z0-9-'_]+$/
+            },
+            txtAccountFullname: {
+                required: true,
+                maxlength: 100,
+                pattern: /^[\p{L}\s]+$/u
+            },
+            txtEmail: {
+                required: true,
+                maxlength: 255,
+                email: true
+            },
+            txtAccountPassword: {
+                minlength: 8
+            },
+            txtReAccountPassword: {
+                equalTo: "#txtUpdateRoleAccountPassword"
+            }
+        },
+        messages: {
+            txtAccountUsername: {
+                required: "Vui lòng nhập Tên Tài khoản Người dùng",
+                maxlength: "Tên Tài khoản Người dùng không được vượt quá 100 ký tự",
+                pattern: "Tên Tài khoản chỉ chấp nhận chữ, số, dấu gạch ngang, gạch dưới, nháy đơn và không chứa khoảng trắng"
+            },
+            txtAccountFullname: {
+                required: "Vui lòng nhập tên đầy đủ",
+                maxlength: "Tên đầy đủ không được vượt quá 100 ký tự",
+                pattern: "Tên Tài khoản chỉ chấp nhận chữ, khoảng trắng"
+            },
+            txtEmail: {
+                required: "Vui lòng nhập Email",
+                maxlength: "Email không được vượt quá 255 ký tự",
+                email: "Vui lòng nhập địa chỉ Email hợp lệ"
+            },
+            txtAccountPassword: {
+                minlength: "Mật khẩu phải có ít nhất 8 ký tự"
+            },
+            txtReAccountPassword: {
+                equalTo: "Mật khẩu không khớp"
+            }
+        },
+        submitHandler: function (form) {
+            // Handle form submission here
+            form.submit();
+        }
+    });
 }

@@ -48,7 +48,7 @@ public class AccountDAO {
                 result = ps.executeUpdate();
             } else if (account.getAccountType().equals("promotionManager")){
                 //  Account is of Admin type (no customerID)
-                String sql = "insert into Account (account_username, account_email, account_password, account_type) values (?, ?, ?, ?, ?)";
+                String sql = "insert into Account (pro_id, account_username, account_email, account_password, account_type) values (?, ?, ?, ?, ?)";
                 PreparedStatement ps = conn.prepareStatement(sql);
                 ps.setByte(1, account.getProID());
                 ps.setString(2, account.getUsername());
@@ -123,6 +123,37 @@ public class AccountDAO {
         }
         return result;
     }
+    
+    public int deleteMultiple(List<Integer> accountIDs) {
+        int result = 0;
+        try {
+            conn.setAutoCommit(false); // Start transaction
+            for (Integer accountID : accountIDs) {
+                if (delete(accountID) == 1) {
+                    result++; // Count number of successful deletions
+                } else {
+                    conn.rollback(); // Rollback transaction if deletion fails
+                    return 0;
+                }
+            }
+            conn.commit(); // Commit transaction if all deletions succeed
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                conn.rollback(); // Rollback transaction if any exception occurs
+            } catch (SQLException rollbackEx) {
+                Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, rollbackEx);
+            }
+            return 0;
+        } finally {
+            try {
+                conn.setAutoCommit(true); // Reset auto commit
+            } catch (SQLException finalEx) {
+                Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, finalEx);
+            }
+        }
+        return result;
+    }
 
     public ResultSet getAll() {
         try {
@@ -165,12 +196,13 @@ public class AccountDAO {
             while (accountRS.next()) {
                 // Selected account is of Admin type
                 if (accountRS.getString("account_type").equals("staff")) {
-                    Account account = new Account(accountRS.getInt("account_id"),
-                            accountRS.getByte("admin_id"),
+                    Account account = new Account(                           
                             accountRS.getString("account_username"),
                             accountRS.getString("account_email"),
                             accountRS.getString("account_password"),
                             accountRS.getString("account_type"));
+                    account.setAccountID(accountRS.getInt("account_id"));
+                    account.setStaffID(accountRS.getByte("staff_id"));
                     accountList.add(account);
                 }
             }
@@ -188,12 +220,13 @@ public class AccountDAO {
             while (accountRS.next()) {
                 // Selected account is of Admin type
                 if (accountRS.getString("account_type").equals("promotionManager")) {
-                    Account account = new Account(accountRS.getInt("account_id"),
-                            accountRS.getByte("admin_id"),
+                    Account account = new Account(             
                             accountRS.getString("account_username"),
                             accountRS.getString("account_email"),
                             accountRS.getString("account_password"),
                             accountRS.getString("account_type"));
+                    account.setAccountID(accountRS.getInt("account_id"));
+                    account.setProID(accountRS.getByte("pro_id"));
                     accountList.add(account);
                 }
             }
@@ -227,7 +260,7 @@ public class AccountDAO {
         return null;
     }
 
-    public List<Account> getAllStaffPromotion() {
+    public List<Account> getAllRole() {
         List<Account> StaffList = new ArrayList<>();
         List<Account> PromotionManagerList = new ArrayList<>();
         StaffList = this.getAllStaff();
