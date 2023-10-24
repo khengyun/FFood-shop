@@ -1,7 +1,5 @@
 <%-- any content can be specified here e.g.: --%>
 <%@ include file="../imports/base.jspf" %>
-
-
 <%@ page pageEncoding="UTF-8" %>
 
 <!-- SUB NAVBAR -->
@@ -16,11 +14,11 @@
                
             </div>
             <div>
-                <a class="text-light px-3" href="https://github.com/tien-thanh-hua/FFood" target="_blank">
+                <a class="text-light px-3" href="https://github.com/khengyun/FFood-shop" target="_blank">
 <!--                    <i class="fab fa-facebook fa-sm fa-fw me-2"></i>-->
                     Facebook
                 </a>
-                <a class="text-light" href="https://github.com/tien-thanh-hua/FFood" target="_blank">
+                <a class="text-light" href="https://github.com/khengyun/FFood-shop" target="_blank">
 <!--                    <i class="fab fa-facebook fa-sm fa-fw me-2"></i>-->
                     Zalo
                 </a>
@@ -48,16 +46,18 @@
           <input class="form-control border-1 input-box bg-100" type="search" placeholder="Tìm món ăn" aria-label="Tìm món ăn" id="search-bar"
                  value="" onblur="searchFoodByKeyword()"/>
         </div>
-        
+        <%@ include file="../../hyperfeat/fooddetechbutton.jspf" %>
         <!-- Cart button -->
         <button type="button" class="btn ps-1 pe-2 py-0 position-relative nav-icon text-decoration-none my-auto text-primary fs-2 me-4"
                 data-bs-toggle="modal" data-bs-target="#cart-modal">
           <i class="fas fa-fw fa-cart-arrow-down"></i>
           <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle px-2 fs-0 bg-danger rounded-pill text-white">
             <span class="visually-hidden">Giỏ hàng</span>
-          </span>
+          <!-- </span> -->
         </button>
-          <%@ include file="../../LangOption/langviewbutton.jspf" %>
+
+          <%@ include file="../../hyperfeat/langviewbutton.jspf" %>
+
 
         
         <!-- Login button -->  

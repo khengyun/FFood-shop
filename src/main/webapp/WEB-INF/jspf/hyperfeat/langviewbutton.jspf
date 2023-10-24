@@ -1,0 +1,135 @@
+<%@ page pageEncoding="UTF-8" %>
+
+
+    <style>
+        .skiptranslate {
+            display: none !important;
+        }
+
+        body {
+            top: 0px !important;
+        }
+
+        .VIpgJd-ZVi9od-aZ2wEe-wOHMyf {
+            display: none !important;
+        }
+
+        .lang_capitalize {
+            text-transform: capitalize;
+        }
+    </style>
+
+
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <img src="https://cdn-icons-png.flaticon.com/512/197/197473.png" width="20" height="20"
+                alt="vietnam" />&nbsp; VI
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+            <li><a class="dropdown-item lang-select lang_capitalize" data-lang="vi" href="#googtrans(vi|vi)"><img
+                        src="https://cdn-icons-png.flaticon.com/512/197/197473.png " width="20" height="20"
+                        alt="vietnam" /> &nbsp;Vietnamese </a></li>
+            <li><a class="dropdown-item lang-select lang_capitalize" data-lang="en" href="#googtrans(vi|en)"><img
+                        src="https://cdn-icons-png.flaticon.com/512/323/323310.png " width="20" height="20"
+                        alt="america" />&nbsp; English </a></li>
+            <li><a class="dropdown-item lang-select lang_capitalize" data-lang="fr" href="#googtrans(vi|fr)"><img
+                        src="https://cdn-icons-png.flaticon.com/512/330/330490.png" width="20" height="20"
+                        alt="france" />&nbsp;French</a></li>
+            <li><a class="dropdown-item lang-select lang_capitalize" data-lang="zh-CN" href="#googtrans(vi|zh-CN)"><img
+                        src="https://cdn-icons-png.flaticon.com/512/197/197375.png" width="20" height="20"
+                        alt="china" />&nbsp;Chinese</a></li>
+            <li><a class="dropdown-item lang-select lang_capitalize" data-lang="ja" href="#googtrans(vi|ja)"><img
+                        src="https://cdn-icons-png.flaticon.com/512/555/555646.png" width="20" height="20"
+                        alt="japan" />&nbsp;Japanese</a></li>
+        </ul>
+    </div>
+
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'vi',
+                layout: google.translate.TranslateElement.FloatPosition.TOP_LEFT
+            }, 'google_translate_element');
+        }
+
+        // Function to check the cookie and update language
+        function checkAndSetLanguageFromCookie() {
+            var googtransCookie = getCookie('googtrans');
+            if (googtransCookie) {
+                var languageHref = convertCookieToLanguageHref(googtransCookie);
+                updateLanguageDropdownContent(languageHref);
+            }
+        }
+
+        function getCookie(name) {
+            var value = "; " + document.cookie;
+            var parts = value.split("; " + name + "=");
+            if (parts.length === 2)
+                return parts.pop().split(";").shift();
+            return null;
+        }
+
+        function convertCookieToLanguageHref(cookieValue) {
+            switch (cookieValue) {
+                case '/vi/fr':
+                    return '#googtrans(vi|fr)';
+                case '/vi/en':
+                    return '#googtrans(vi|en)';
+                case '/vi/zh-CN':
+                    return '#googtrans(vi|zh-CN)';
+                case '/vi/ja':
+                    return '#googtrans(vi|ja)';
+                default:
+                    return '#googtrans(vi|vi)';
+            }
+        }
+
+        function updateLanguageDropdownContent(selectedLangHref) {
+            var langButton = $('#languageDropdown');
+            var CheckHref = selectedLangHref.split("#")[1];
+            selectedLangHref = "#" + CheckHref;
+
+            switch (selectedLangHref) {
+                case '#googtrans(vi|vi)':
+                    langButton.html('<img src="https://cdn-icons-png.flaticon.com/512/197/197473.png" width="20" height="20" alt="vietnam"/>&nbsp; VI');
+                    break;
+                case '#googtrans(vi|en)':
+                    langButton.html('<img src="https://cdn-icons-png.flaticon.com/512/323/323310.png" width="20" height="20" alt="america"/>&nbsp; EN');
+                    break;
+                case '#googtrans(vi|fr)':
+                    langButton.html('<img src="https://cdn-icons-png.flaticon.com/512/330/330490.png" width="20" height="20" alt="france"/>&nbsp; FR');
+                    break;
+                case '#googtrans(vi|zh-CN)':
+                    langButton.html('<img src="https://cdn-icons-png.flaticon.com/512/197/197375.png" width="20" height="20" alt="china"/>&nbsp; zh-CN');
+                    break;
+                case '#googtrans(vi|ja)':
+                    langButton.html('<img src="https://cdn-icons-png.flaticon.com/512/555/555646.png" width="20" height="20" alt="japan"/>&nbsp; JA');
+                    break;
+                default:
+                    checkAndSetLanguageFromCookie();
+            }
+        }
+
+        var currentURL = window.location.href;
+        updateLanguageDropdownContent(currentURL);
+
+        $(document).ready(function () {
+            $('.lang-select').click(function () {
+                var theLang = $(this).data('lang');
+                $('.goog-te-combo').val(theLang);
+                if ($(this).attr('href') === "" || $(this).attr('href') === '#googtrans(vi|vi)') {
+                    document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                }
+                var newURL = $(this).attr('href');
+                updateLanguageDropdownContent(newURL);
+                window.location = $(this).attr('href');
+                location.reload();
+            });
+        });
+    </script>
+
+    <!-- Include Google Translate API -->
+    <script type="text/javascript"
+        src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
