@@ -1,0 +1,31 @@
+<%@ page pageEncoding="UTF-8" %>
+<h2 class="text-start fs-2">Doanh thu theo món</h2>
+<div class="chart-container">
+  <canvas id="chart-revenue-by-food-category"></canvas>
+</div>
+
+<script>  
+  const chart = document.getElementById('chart-revenue-by-food-category');
+  
+  // Gets the list of top 5 best selling food categories
+  const categories = ["Bánh mì", "Bánh mì", "Bánh mì", "Bánh mì", "Bánh mì"];
+  // TODO add implementation
+
+  const categoriesRevenue = [12012000, 19000000, 30000000, 5000000, 22000000];
+
+  new Chart(chart, {
+    type: 'doughnut',
+    data: {
+      labels: categories,
+      datasets: [{
+        data: categoriesRevenue,
+        hoverOffset: 10
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false
+    }
+  });
+
+</script>
