@@ -1,2 +1,5 @@
 <%@ page pageEncoding="UTF-8" %>
 <script src="<%= request.getContextPath() %>/node_modules/chart.js/dist/chart.umd.js"></script>
+<script>
+  Chart.overrides['doughnut'].plugins.legend.position = 'right';
+</script>

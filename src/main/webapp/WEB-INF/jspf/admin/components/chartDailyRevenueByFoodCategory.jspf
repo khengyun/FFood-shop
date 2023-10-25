@@ -1,6 +1,6 @@
 <%@ page pageEncoding="UTF-8" %>
 <h2 class="text-start fs-2">Doanh thu theo món</h2>
-<div class="chart-container">
+<div class="chart-container mt-3">
   <canvas id="chart-revenue-by-food-category"></canvas>
 </div>
 

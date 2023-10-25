@@ -20,7 +20,7 @@
   <!-- Daily statistics -->
   <div class="container-fluid p-4 shadow rounded-4 bg-white mb-3">
     <h2 class="text-start fs-2">Số liệu hôm nay</h2>
-    <div class="d-flex flex-row flex-between-center mt-3">
+    <div class="d-flex flex-row flex-wrap flex-between-center gap-3 mt-3">
       <div>
         <p class="fs-4 fw-bold mb-1">20.035.000đ</p>
         <h6>Doanh thu bán hàng</h6>
@@ -45,24 +45,20 @@
   </div>
   
   <!-- First row -->
-  <div class="col-12 d-flex flex-row flex-between-center">
-    <div class="flex-grow-1 p-4 me-3 shadow rounded-4 bg-white">
+  <div class="col-12 d-flex flex-row flex-wrap flex-between-center gap-3">
+    <div class="flex-grow-1 col-7 flex-lg-grow-0 p-4 shadow rounded-4 bg-white">
       <!-- Revenue chart by food category -->
       <%@ include file="components/chartDailyRevenueByFoodCategory.jspf" %>
     </div>
-    <div class="p-4 col-5 shadow rounded-4 bg-white align-self-stretch">
+    <div class="p-4 flex-grow-1 shadow rounded-4 bg-white align-self-stretch">
       <!-- Top 5 most selling foods -->
       <%@ include file="components/tableTopSellingFoods.jspf" %>
     </div>
-  </div>
-  
-  <!-- Second row -->
-  <div class="d-flex flex-row flex-between-center mt-3">
-    <div class="flex-grow-1 p-4 me-3 shadow rounded-4 bg-white">
+    <div class="col-12 col-lg-6 p-4 shadow rounded-4 bg-white">
       <!-- Week revenue chart by day -->
       <%@ include file="components/chartRevenueByDay.jspf" %>
     </div>
-    <div class="p-4 col-5 shadow rounded-4 bg-white">
+    <div class="p-4 col-4 flex-fill shadow rounded-4 bg-white">
       <!-- Monthly target chart -->
       <%@ include file="components/chartMonthlyTarget.jspf" %>
     </div>
