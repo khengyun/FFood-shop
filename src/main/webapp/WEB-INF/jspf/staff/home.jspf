@@ -15,7 +15,7 @@
       greeting = "Chào buổi tối";
     }
   %>
-  <p class="fw-bolder fs-3 mb-4"><%= greeting %>, ${adminName}!</p>
+  <p class="fw-bolder fs-3 mb-4"><%= greeting %>, ${StaffName}!</p>
   <div class="container-fluid p-4 shadow rounded-4 bg-white mb-3">
     <h2 class="text-start fs-2">Số liệu hôm nay</h2>
     <div class="d-flex flex-row flex-between-center mt-3">

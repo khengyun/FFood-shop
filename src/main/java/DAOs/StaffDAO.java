@@ -4,6 +4,7 @@
  */
 package DAOs;
 
+import Models.Account;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,6 +12,8 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import Models.Staff;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StaffDAO {
 
@@ -33,6 +36,43 @@ public class StaffDAO {
         }
         return null;
     }
+    
+    public List<Staff> getAllStaff() {
+        ResultSet staffRS = this.getAll();
+        try {
+            List<Staff> staffList = new ArrayList<>();
+            while (staffRS.next()) {
+                // Selected account is of User type               
+                Staff staff = new Staff(
+                        staffRS.getByte("staff_id"),
+                        staffRS.getString("staff_fullname")
+                );              
+                staffList.add(staff);               
+            }
+            return staffList;
+        } catch (SQLException ex) {
+            Logger.getLogger(StaffDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    
+    public Staff getNewStaff() {
+        Staff staff = null;
+        String sql = "SELECT TOP 1 * FROM Staff ORDER BY staff_id DESC;";
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                staff = new Staff(rs.getByte("staff_id"),rs.getString("staff_fullname"));
+            }
+            return staff;
+        } catch (SQLException ex) {
+            Logger.getLogger(StaffDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+   
 
     public Staff getStaff(byte id) {
         Staff staff = null;
@@ -71,6 +111,37 @@ public class StaffDAO {
             result = ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(StaffDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
+    
+    public int deleteMultiple(List<Byte> staffIDs) {
+        int result = 0;
+        try {
+            conn.setAutoCommit(false); // Start transaction
+            for (Byte staffID : staffIDs) {
+                if (delete(staffID) == 1) {
+                    result++; // Count number of successful deletions
+                } else {
+                    conn.rollback(); // Rollback transaction if deletion fails
+                    return 0;
+                }
+            }
+            conn.commit(); // Commit transaction if all deletions succeed
+        } catch (SQLException ex) {
+            Logger.getLogger(StaffDAO.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                conn.rollback(); // Rollback transaction if any exception occurs
+            } catch (SQLException rollbackEx) {
+                Logger.getLogger(StaffDAO.class.getName()).log(Level.SEVERE, null, rollbackEx);
+            }
+            return 0;
+        } finally {
+            try {
+                conn.setAutoCommit(true); // Reset auto commit
+            } catch (SQLException finalEx) {
+                Logger.getLogger(StaffDAO.class.getName()).log(Level.SEVERE, null, finalEx);
+            }
         }
         return result;
     }

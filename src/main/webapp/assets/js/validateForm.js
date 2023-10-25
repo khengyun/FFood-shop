@@ -22,6 +22,10 @@ function validateForm() {
                 required: true,
                 maxlength: 100
             },
+            txtFoodDescription: {
+                required: true,
+                maxlength: 500
+            },
             txtFoodPrice: {
                 required: true,
                 number: true,
@@ -46,16 +50,14 @@ function validateForm() {
                 required: "Tên món không được để trống",
                 maxlength: "Tên món không dài quá 100 kí tự"
             },
+            txtFoodDescription: {
+                required: "Tên món không được để trống",
+                maxlength: "Tên món không dài quá 500 kí tự"
+            },
             txtFoodPrice: {
                 required: "Vui lòng nhập Đơn giá",
                 number: "Đơn giá phải là định dạng số",
                 min: "Đơn giá phải là số dương"
-            },
-            txtDiscountPercent: {
-                required: "Vui lòng nhập Giá trị giảm giá",
-                digits: "Giá trị giảm giá phải là số nguyên",
-                min: "Giá trị giảm giá không được dưới 0",
-                max: "Giá trị giảm giá không được quá 100"
             },
             txtImageURL: {
                 required: "Vui lòng nhập Đường dẫn ảnh",
@@ -84,6 +86,10 @@ function validateForm() {
                 required: true,
                 maxlength: 100
             },
+            txtFoodDescription: {
+                required: true,
+                maxlength: 500
+            },
             txtFoodPrice: {
                 required: true,
                 number: true,
@@ -109,6 +115,10 @@ function validateForm() {
             txtFoodName: {
                 required: "Tên món không được để trống",
                 maxlength: "Tên món không dài quá 100 kí tự"
+            },
+            txtFoodDescription: {
+                required: "Tên món không được để trống",
+                maxlength: "Tên món không dài quá 500 kí tự"
             },
             txtFoodPrice: {
                 required: "Vui lòng nhập Đơn giá",
@@ -187,6 +197,7 @@ function validateForm() {
             form.submit();
         }
     });
+    
 
     $(".update-user-form").validate({
         rules: {
@@ -230,27 +241,57 @@ function validateForm() {
             form.submit();
         }
     });
-    
-    $(".add-vouhcer-form").validate({
+
+   
+    $(".add-voucher-form").validate({
         rules: {
-            txtvoucher_name: {
+            txtAccountUsername: {
                 required: true,
                 maxlength: 100,
+                pattern: /^[a-zA-Z0-9-'_]+$/
             },
-            txtvoucher_discount_percent: {
+            txtAccountFullname: {
                 required: true,
-                range: [0, 100]
+                maxlength: 100,
+                pattern: /^[\p{L}\s]+$/u
+            },
+            txtEmail: {
+                required: true,
+                maxlength: 255,
+                email: true
+            },
+            txtAccountPassword: {
+                required: true,
+                minlength: 8
+            },
+            txtReAccountPassword: {
+                required: true,
+                equalTo: "#txtAdminAccountPassword"
             }
-
         },
         messages: {
-            txtvoucher_name: {
-                required: "Vui lòng nhập tên Voucher",
-                maxlength: "Tên Voucher không được vượt quá 100 ký tự"
+            txtAccountUsername: {
+                required: "Vui lòng nhập Tên Tài khoản Người dùng",
+                maxlength: "Tên Tài khoản Người dùng không được vượt quá 100 ký tự",
+                pattern: "Tên Tài khoản chỉ chấp nhận chữ, số, dấu gạch ngang, gạch dưới, nháy đơn và không chứa khoảng trắng"
             },
-            txtvoucher_discount_percent: {
-                required: "Vui lòng nhập phần trăm giảm giá",
-                range: "Vui lòng nhập từ 0% đến 100%"
+            txtAccountFullname: {
+                required: "Vui lòng nhập tên đầy đủ",
+                maxlength: "Tên đầy đủ không được vượt quá 100 ký tự",
+                pattern: "Tên Tài khoản chỉ chấp nhận chữ, khoảng trắng"
+            },
+            txtEmail: {
+                required: "Vui lòng nhập Email",
+                maxlength: "Email không được vượt quá 255 ký tự",
+                email: "Vui lòng nhập địa chỉ Email hợp lệ"
+            },
+            txtAccountPassword: {
+                required: "Vui lòng nhập Mật khẩu",
+                minlength: "Mật khẩu phải có ít nhất 8 ký tự"
+            },
+            txtReAccountPassword: {
+                required: "Vui lòng nhập lại Mật khẩu",
+                equalTo: "Mật khẩu không khớp"
             }
         },
         submitHandler: function (form) {
@@ -258,16 +299,24 @@ function validateForm() {
             form.submit();
         }
     });
-    
-    $(".update-vouhcer-form").validate({
+
+  
+    $(".update-voucher-form").validate({
         rules: {
             txtvoucher_name: {
                 required: true,
                 maxlength: 100,
             },
+            txtvoucher_code: {
+                required: true,
+                maxlength: 16,
+            },
             txtvoucher_discount_percent: {
                 required: true,
                 range: [0, 100]
+            },
+            txtvoucher_quantity: {
+                required: true,
             }
         },
         messages: {
@@ -275,9 +324,16 @@ function validateForm() {
                 required: "Vui lòng nhập tên Voucher",
                 maxlength: "Tên Voucher không được vượt quá 100 ký tự"
             },
+            txtvoucher_code: {
+                required: "Vui lòng nhập mã code",
+                maxlength: "Tên Voucher không được vượt quá 16 ký tự"
+            },
             txtvoucher_discount_percent: {
                 required: "Vui lòng nhập phần trăm giảm giá",
                 range: "Vui lòng nhập từ 0% đến 100%"
+            },
+            txtvoucher_quantity: {
+                required: "Vui lòng nhập số lượng giảm giá",
             }
         },
         submitHandler: function (form) {
@@ -446,6 +502,116 @@ function validateForm() {
                 equalTo: "Mật khẩu không khớp"
             }
 
+        },
+        submitHandler: function (form) {
+            // Handle form submission here
+            form.submit();
+        }
+    });
+    
+    $(".add-role-form").validate({
+        rules: {
+            txtAccountUsername: {
+                required: true,
+                maxlength: 100,
+                pattern: /^[a-zA-Z0-9-'_]+$/
+            },
+            txtAccountFullname: {
+                required: true,
+                maxlength: 100,
+                pattern: /^[\p{L}\s]+$/u
+            },
+            txtEmail: {
+                required: true,
+                maxlength: 255,
+                email: true
+            },
+            txtAccountPassword: {
+                required: true,
+                minlength: 8
+            },
+            txtReAccountPassword: {
+                required: true,
+                equalTo: "#txtAdminAccountPassword"
+            }
+        },
+        messages: {
+            txtAccountUsername: {
+                required: "Vui lòng nhập Tên Tài khoản Người dùng",
+                maxlength: "Tên Tài khoản Người dùng không được vượt quá 100 ký tự",
+                pattern: "Tên Tài khoản chỉ chấp nhận chữ, số, dấu gạch ngang, gạch dưới, nháy đơn và không chứa khoảng trắng"
+            },
+            txtAccountFullname: {
+                required: "Vui lòng nhập tên đầy đủ",
+                maxlength: "Tên đầy đủ không được vượt quá 100 ký tự",
+                pattern: "Tên Tài khoản chỉ chấp nhận chữ, khoảng trắng"
+            },
+            txtEmail: {
+                required: "Vui lòng nhập Email",
+                maxlength: "Email không được vượt quá 255 ký tự",
+                email: "Vui lòng nhập địa chỉ Email hợp lệ"
+            },
+            txtAccountPassword: {
+                required: "Vui lòng nhập Mật khẩu",
+                minlength: "Mật khẩu phải có ít nhất 8 ký tự"
+            },
+            txtReAccountPassword: {
+                required: "Vui lòng nhập lại Mật khẩu",
+                equalTo: "Mật khẩu không khớp"
+            }
+        },
+        submitHandler: function (form) {
+            // Handle form submission here
+            form.submit();
+        }
+    });
+    
+    $(".update-role-form").validate({
+        rules: {
+            txtAccountUsername: {
+                required: true,
+                maxlength: 100,
+                pattern: /^[a-zA-Z0-9-'_]+$/
+            },
+            txtAccountFullname: {
+                required: true,
+                maxlength: 100,
+                pattern: /^[\p{L}\s]+$/u
+            },
+            txtEmail: {
+                required: true,
+                maxlength: 255,
+                email: true
+            },
+            txtAccountPassword: {
+                minlength: 8
+            },
+            txtReAccountPassword: {
+                equalTo: "#txtUpdateRoleAccountPassword"
+            }
+        },
+        messages: {
+            txtAccountUsername: {
+                required: "Vui lòng nhập Tên Tài khoản Người dùng",
+                maxlength: "Tên Tài khoản Người dùng không được vượt quá 100 ký tự",
+                pattern: "Tên Tài khoản chỉ chấp nhận chữ, số, dấu gạch ngang, gạch dưới, nháy đơn và không chứa khoảng trắng"
+            },
+            txtAccountFullname: {
+                required: "Vui lòng nhập tên đầy đủ",
+                maxlength: "Tên đầy đủ không được vượt quá 100 ký tự",
+                pattern: "Tên Tài khoản chỉ chấp nhận chữ, khoảng trắng"
+            },
+            txtEmail: {
+                required: "Vui lòng nhập Email",
+                maxlength: "Email không được vượt quá 255 ký tự",
+                email: "Vui lòng nhập địa chỉ Email hợp lệ"
+            },
+            txtAccountPassword: {
+                minlength: "Mật khẩu phải có ít nhất 8 ký tự"
+            },
+            txtReAccountPassword: {
+                equalTo: "Mật khẩu không khớp"
+            }
         },
         submitHandler: function (form) {
             // Handle form submission here

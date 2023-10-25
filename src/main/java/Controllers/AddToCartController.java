@@ -77,7 +77,6 @@ public class AddToCartController extends HttpServlet {
         FoodDAO fdao = new FoodDAO();
         Food food = fdao.getFood(Short.parseShort(foodId));
         CartItem item = new CartItem(food, Integer.parseInt(quantity));
-
         cart.addItem(item);
         session.setAttribute("cart", cart);
         response.sendRedirect("home");

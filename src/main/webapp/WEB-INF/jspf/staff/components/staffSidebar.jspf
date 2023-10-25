@@ -44,11 +44,11 @@
       <i class="ph ph-user-circle"></i>
     </button>
     <ul class="dropdown-menu text-small shadow">
-      <li><a class="dropdown-item" href="/admin/help">Trợ giúp</a></li>
+      <li><a class="dropdown-item" href="/staff/help">Trợ giúp</a></li>
       <li>
         <hr class="dropdown-divider">
       </li>
-      <li><a class="dropdown-item" href="/admin/logout">Đăng xuất</a></li>
+      <li><a class="dropdown-item" href="/staff/logout">Đăng xuất</a></li>
     </ul>
   </div>
 </div>
@@ -100,15 +100,15 @@
             class="d-flex flex-shrink-0 btn text-start align-items-center px-2 py-1 mt-1 link-body-emphasis text-decoration-none dropdown-toggle"
             data-bs-toggle="dropdown" aria-expanded="false">
       <i class="ph ph-user-circle me-3"></i>
-      <strong>${adminName}</strong>
+      <strong>${StaffName}</strong>
       <div class="flex-grow-0"></div>
     </button>
     <ul class="dropdown-menu text-small shadow">
-      <li><a class="dropdown-item" href="/admin/help">Trợ giúp</a></li>
+      <li><a class="dropdown-item" href="/staff/help">Trợ giúp</a></li>
       <li>
         <hr class="dropdown-divider">
       </li>
-      <li><a class="dropdown-item" href="/admin/logout">Đăng xuất</a></li>
+      <li><a class="dropdown-item" href="/staff/logout">Đăng xuất</a></li>
     </ul>
   </div>
 </div>

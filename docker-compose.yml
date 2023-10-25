@@ -44,6 +44,7 @@ services:
     depends_on:
       - sqlserver
       - sqlserver.configurator
+    restart: always
     networks:
       - my-network
 
