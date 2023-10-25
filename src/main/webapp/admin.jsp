@@ -150,5 +150,6 @@
         <%@ include file="WEB-INF/jspf/common/imports/validation.jspf" %>
         <%@ include file="WEB-INF/jspf/common/imports/javascript.jspf" %>
         <%@ include file="WEB-INF/jspf/admin/imports/dataTablesScript.jspf" %>
+        <%@ include file="WEB-INF/jspf/admin/imports/chartjs.jspf" %>
     </body>
 </html>

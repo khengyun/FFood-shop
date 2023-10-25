@@ -1,0 +1,85 @@
+<%@ page pageEncoding="UTF-8" %>
+<script src="<%= request.getContextPath() %>/node_modules/chart.js/dist/chart.umd.js"></script>
+<script>
+  const weeklyRevenueChart = document.getElementById('chart-weekly-revenue');
+  
+  const week = ["6 ngày trước", "5 ngày trước", "4 ngày trước", "3 ngày trước", "Hôm kia", "Hôm qua", "Hôm nay"];
+
+  // Gets the last 7 days (including today) as Date objects
+  for (let i = 0; i < 6; i++) {
+    // Subtract i from today's date
+    const date = new Date();
+    date.setDate(date.getUTCDate() - 6 + i); // Example: week[0] = 6 days ago, week[5] = yesterday, week[6] = today
+    
+    // Gets the date string
+    const dayOfMonth = date.getUTCDate();
+    const month = date.getUTCMonth() + 1; // January is 0
+    const dateString = dayOfMonth + "/" + month;
+    week[i] = dateString;
+  }
+
+  // Gets the weekly revenue
+  const weeklyRevenue = [12012000, 19000000, 30000000, 5000000, 22000000, 3000000, 12000000];
+  
+  new Chart(weeklyRevenueChart, {
+    type: 'line',
+    data: {
+      labels: week,
+      datasets: [{
+        label: 'Doanh thu',
+        data: weeklyRevenue,
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      },
+      responsive: true,
+      maintainAspectRatio: false
+    }
+  });
+
+  const monthlyGoalChart = document.getElementById('chart-monthly-goal');
+  const monthlyTarget = 50000000;
+  const currentRevenue = 12012000;
+
+  // If the current revenue exceeds the monthly target, the monthly goal will be 0 (completed)
+  const monthlyGoal = (monthlyTarget > currentRevenue) ? monthlyTarget - currentRevenue : 0;
+  
+  new Chart(monthlyGoalChart, {
+    type: 'bar',
+    data: {
+      labels: [''],
+      datasets: [
+        {
+          label: 'Doanh thu hiện tại',
+          data: [currentRevenue],
+          borderWidth: 1
+        },
+        {
+          label: 'Doanh thu cần đạt',
+          data: [monthlyGoal],
+          borderWidth: 1
+        }
+      ]
+    },
+    options: {
+      scales: {
+        x: {
+          stacked: true
+        },
+        y: {
+          beginAtZero: true,
+          stacked: true
+        }
+      },
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false
+    }
+  });
+
+</script>
