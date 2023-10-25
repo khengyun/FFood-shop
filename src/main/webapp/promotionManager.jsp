@@ -23,7 +23,8 @@
                 <%@ include file="WEB-INF/jspf/promotionManager/components/addVoucher.jspf" %>
                 <%@ include file="WEB-INF/jspf/promotionManager/components/updatevoucher.jspf" %>
                 <%@ include file="WEB-INF/jspf/promotionManager/components/deleteVoucher.jspf" %>
-
+                <%@ include file="WEB-INF/jspf/promotionManager/components/failure.jspf" %>
+                <%@ include file="WEB-INF/jspf/promotionManager/components/success.jspf" %>
                 <%@ include file="WEB-INF/jspf/promotionManager/components/promotionManagerSidebar.jspf" %>
 
                 <!-- Main Content -->
