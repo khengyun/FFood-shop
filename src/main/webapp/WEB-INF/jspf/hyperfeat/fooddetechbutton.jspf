@@ -1,4 +1,11 @@
 <%@ page pageEncoding="UTF-8" %>
-<button class="btn ps-1 pe-2 py-0 position-relative nav-icon text-decoration-none my-auto text-primary fs-2 me-4" data-bs-toggle="modal" id="camera-button" data-bs-target="#camera-modal" type="button">
-  <img src="   https://cdn-icons-png.flaticon.com/512/2956/2956596.png " width="25" height="25" alt="" title="" class="img-small">
-</button>
+
+
+  <button id="openCameraModal" type="button" class="btn btn-primary" data-bs-toggle="modal"
+    data-bs-target="#cameraModal">Open
+    Camera Modal</button>
+  <!-- <button class="btn ps-1 pe-2 py-0 position-relative nav-icon text-decoration-none my-auto text-primary fs-2 me-4"
+    data-bs-toggle="modal" id="camera-button" data-bs-target="#camera-modal" type="button">
+    <img src="   https://cdn-icons-png.flaticon.com/512/2956/2956596.png " width="25" height="25" alt="" title=""
+      class="img-small">
+  </button> -->
