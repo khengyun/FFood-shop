@@ -83,7 +83,7 @@ public class EmailVerifyController extends HttpServlet {
             session.removeAttribute("otp");
             String type_otp = (String) session.getAttribute("type_otp");
             if (type_otp.equals("sign_up")){
-                Account account = (Account) session.getAttribute("registerUser");
+                Account account = (Account) session.getAttribute("registerUser");               
                 int result = accountDAO.add(account);
                 session.removeAttribute("registerUser");
                 if (result == 1) {

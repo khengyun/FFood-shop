@@ -173,7 +173,7 @@ public class LoginController extends HttpServlet {
                     }
                 }
             } else {
-                response.sendRedirect("/home#failure_login");
+                response.sendRedirect("/home#failure_login_info");
             }
                    
         }

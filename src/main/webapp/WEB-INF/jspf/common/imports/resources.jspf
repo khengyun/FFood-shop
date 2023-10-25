@@ -13,8 +13,7 @@
             <link href="<%= request.getContextPath() + " assets/img/favicons/favicon.ico"%>" rel="shortcut icon"
             type="image/x-icon">
             <link href="<%= request.getContextPath() + " assets/img/favicons/manifest.json"%>" rel="manifest">
-            <meta name="msapplication-TileImage" content="<%= request.getContextPath() + "
-                  assets/img/favicons/mstile-150x150.png"%>">
+            <meta name="msapplication-TileImage" content="<%= request.getContextPath() + "assets/img/favicons/mstile-150x150.png"%>">
             <meta name="theme-color" content="#ffffff">
 
             <!-- Stylesheets -->

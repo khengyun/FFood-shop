@@ -1,0 +1,184 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+
+<!-- ++++++++++++++++++ Voucher +++++++++++++++++ -->
+<div class="modal fade" id="failure_add_voucher" tabindex="-1" role="dialog" aria-labelledby="failureLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h3 class="text-center p-3">Thêm voucher không thành công!</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="failure_add_voucher_exist" tabindex="-1" role="dialog" aria-labelledby="failureLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h3 class="text-center p-3">Tên Voucher đã tồn tại!</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="failure_update_voucher" tabindex="-1" role="dialog" aria-labelledby="failureLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h3 class="text-center p-3">Cập nhật voucher không thành công!</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="failure_delete_voucher" tabindex="-1" role="dialog" aria-labelledby="failureLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h3 class="text-center p-3">Xóa voucher không thành công!</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ++++++++++++++++++ Food +++++++++++++++++ -->
+<div class="modal fade" id="failure_add_food" tabindex="-1" role="dialog" aria-labelledby="failureLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h3 class="text-center p-3">Thêm món ăn không thành công!</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="failure_add_food_exist" tabindex="-1" role="dialog" aria-labelledby="failureLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h3 class="text-center p-3">Món ăn đã tồn tại!</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="failure_update_food" tabindex="-1" role="dialog" aria-labelledby="failureLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h3 class="text-center p-3">Cập nhật món ăn không thành công!</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="failure_delete_food" tabindex="-1" role="dialog" aria-labelledby="failureLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h3 class="text-center p-3">Xóa món ăn không thành công!</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ++++++++++++++++++ User +++++++++++++++++ -->
+<div class="modal fade" id="failure_add_user" tabindex="-1" role="dialog" aria-labelledby="failureLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h3 class="text-center p-3">Thêm người dùng không thành công!</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="failure_add_user_exist" tabindex="-1" role="dialog" aria-labelledby="failureLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h3 class="text-center p-3">Người dùng đã tồn tại!</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="failure_update_user" tabindex="-1" role="dialog" aria-labelledby="failureLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h3 class="text-center p-3">Cập nhật người dùng không thành công!</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="failure_delete_user" tabindex="-1" role="dialog" aria-labelledby="failureLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h3 class="text-center p-3">Xóa người dùng không thành công!</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ++++++++++++++++++ Role +++++++++++++++++ -->
+<div class="modal fade" id="failure_add_role" tabindex="-1" role="dialog" aria-labelledby="failureLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h3 class="text-center p-3">Thêm vai trò không thành công!</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="failure_add_role_exist" tabindex="-1" role="dialog" aria-labelledby="failureLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h3 class="text-center p-3">Vai trò đã tồn tại!</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="failure_update_role" tabindex="-1" role="dialog" aria-labelledby="failureLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h3 class="text-center p-3">Cập nhật vai trò không thành công!</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="failure_delete_role" tabindex="-1" role="dialog" aria-labelledby="failureLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h3 class="text-center p-3">Xóa vai trò không thành công!</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
