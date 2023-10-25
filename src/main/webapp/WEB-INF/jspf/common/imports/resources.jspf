@@ -1,32 +1,22 @@
 <%-- any content can be specified here e.g.: --%>
-      <%@ page pageEncoding="UTF-8" %>
-            <!-- Favicons -->
-            <link href="<%= request.getContextPath() + " assets/img/favicons/apple-touch-icon.png"%>"
-            rel="apple-touch-icon"
-            sizes="180x180">
-            <link href="<%= request.getContextPath() + " assets/img/favicons/favicon-32x32.png"%>" rel="icon"
-            type="image/png"
-            sizes="32x32">
-            <link href="<%= request.getContextPath() + " assets/img/favicons/favicon-16x16.png"%>" rel="icon"
-            type="image/png"
-            sizes="16x16">
-            <link href="<%= request.getContextPath() + " assets/img/favicons/favicon.ico"%>" rel="shortcut icon"
-            type="image/x-icon">
-            <link href="<%= request.getContextPath() + " assets/img/favicons/manifest.json"%>" rel="manifest">
-            <meta name="msapplication-TileImage" content="<%= request.getContextPath() + "
-                  assets/img/favicons/mstile-150x150.png"%>">
-            <meta name="theme-color" content="#ffffff">
+<%@ page pageEncoding="UTF-8" %>
 
-            <!-- Stylesheets -->
-            <link href="<%= request.getContextPath() + " vendors/bootstrap-5.3.0-dist/css/bootstrap.min.css"%>"
-            rel="stylesheet">
-            <link href="<%= request.getContextPath() + " assets/css/theme.css"%>" rel="stylesheet"/>
-            <link href="<%= request.getContextPath() + " assets/css/style.css"%>" rel="stylesheet"/>
-            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500..800">
-            <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400;600;700;900&amp;display=swap"
-                  rel="stylesheet">
+<!-- Favicons -->
+<link href="<%= request.getContextPath() + " assets/img/favicons/apple-touch-icon.png"%>" rel="apple-touch-icon" sizes="180x180">
+<link href="<%= request.getContextPath() + " assets/img/favicons/favicon-32x32.png"%>" rel="icon" type="image/png" sizes="32x32">
+<link href="<%= request.getContextPath() + " assets/img/favicons/favicon-16x16.png"%>" rel="icon" type="image/png" sizes="16x16">
+<link href="<%= request.getContextPath() + " assets/img/favicons/favicon.ico"%>" rel="shortcut icon" type="image/x-icon">
+<link href="<%= request.getContextPath() + " assets/img/favicons/manifest.json"%>" rel="manifest">
+<meta name="msapplication-TileImage" content="<%= request.getContextPath() + "assets/img/favicons/mstile-150x150.png"%>">
+<meta name="theme-color" content="#ffffff">
 
-            <!-- JavaScript -->
-            <script src="<%= request.getContextPath() + " vendors/jquery-3.7.0.js"%>"></script>
+<!-- Stylesheets -->
+<link href="<%= request.getContextPath() + " vendors/bootstrap-5.3.0-dist/css/bootstrap.min.css"%>" rel="stylesheet">
+<link href="<%= request.getContextPath() + " assets/css/theme.css"%>" rel="stylesheet"/>
+<link href="<%= request.getContextPath() + " assets/css/style.css"%>" rel="stylesheet"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500..800">
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400;600;700;900&amp;display=swap" rel="stylesheet">
 
-            <script src="https://unpkg.com/@phosphor-icons/web"></script>
+<!-- JavaScript -->
+<script src="<%= request.getContextPath() + " vendors/jquery-3.7.0.js"%>"></script>
+<script src="https://unpkg.com/@phosphor-icons/web"></script>
