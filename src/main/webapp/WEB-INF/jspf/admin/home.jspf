@@ -16,6 +16,8 @@
     }
   %>
   <p class="fw-bolder fs-3 mb-4"><%= greeting %>, ${adminName}!</p>
+  
+  <!-- Daily statistics -->
   <div class="container-fluid p-4 shadow rounded-4 bg-white mb-3">
     <h2 class="text-start fs-2">Số liệu hôm nay</h2>
     <div class="d-flex flex-row flex-between-center mt-3">
@@ -41,33 +43,28 @@
       </div>
     </div>
   </div>
+  
+  <!-- First row -->
   <div class="col-12 d-flex flex-row flex-between-center">
     <div class="flex-grow-1 p-4 me-3 shadow rounded-4 bg-white">
-      <h2 class="text-start fs-2">Chương trình Khuyến mãi</h2>
-      <div class="d-flex flex-row">
-
-      </div>
+      <!-- Revenue chart by food category -->
+      <%@ include file="components/chartDailyRevenueByFoodCategory.jspf" %>
     </div>
-    <div class="p-4 col-5 shadow rounded-4 bg-white">
-      <h2 class="text-start fs-2">Các món bán chạy</h2>
-      <div class="d-flex flex-row">
-
-      </div>
+    <div class="p-4 col-5 shadow rounded-4 bg-white align-self-stretch">
+      <!-- Top 5 most selling foods -->
+      <%@ include file="components/tableTopSellingFoods.jspf" %>
     </div>
-
   </div>
+  
+  <!-- Second row -->
   <div class="d-flex flex-row flex-between-center mt-3">
     <div class="flex-grow-1 p-4 me-3 shadow rounded-4 bg-white">
-      <h2 class="text-start fs-2">Doanh thu theo tuần</h2>
-      <div class="chart-container">
-        <canvas id="chart-weekly-revenue"></canvas>
-      </div>
+      <!-- Week revenue chart by day -->
+      <%@ include file="components/chartRevenueByDay.jspf" %>
     </div>
     <div class="p-4 col-5 shadow rounded-4 bg-white">
-      <h2 class="text-start fs-2">Mục tiêu tháng này</h2>
-      <div class="chart-container">
-        <canvas id="chart-monthly-goal"></canvas>
-      </div>
+      <!-- Monthly target chart -->
+      <%@ include file="components/chartMonthlyTarget.jspf" %>
     </div>
   </div>
 </div>
