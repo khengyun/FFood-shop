@@ -81,7 +81,7 @@ public class SignUpController extends HttpServlet {
         AccountDAO accountDAO = new AccountDAO();
         Account account = new Account(username, email, pass, "user");
         if (accountDAO.getAccount(email) != null) {
-            response.sendRedirect("/home#failure_register");
+            response.sendRedirect("/home#failure_register_exist");
             return;
         }
         try {
