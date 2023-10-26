@@ -18593,7 +18593,7 @@ html {
   font-size: 16px;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: smooth;
-  scroll-padding-top: 6.3125rem;
+  /* scroll-padding-top: 6.3125rem; */
 }
 
 header {
