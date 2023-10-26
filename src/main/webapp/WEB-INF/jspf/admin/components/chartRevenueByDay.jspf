@@ -1,0 +1,48 @@
+<%@ page pageEncoding="UTF-8" %>
+<h2 class="text-start fs-2">Doanh thu theo ngày</h2>
+<div class="chart-container">
+  <canvas id="chart-revenue-by-day"></canvas>
+</div>
+
+<script>
+  const weeklyRevenueChart = document.getElementById('chart-revenue-by-day');
+  
+  const week = ["6 ngày trước", "5 ngày trước", "4 ngày trước", "3 ngày trước", "Hôm kia", "Hôm qua", "Hôm nay"];
+
+  // Gets the last 7 days (including today) as Date objects
+  for (let i = 0; i < 6; i++) {
+    // Subtract i from today's date
+    const date = new Date();
+    date.setDate(date.getUTCDate() - 6 + i); // Example: week[0] = 6 days ago, week[5] = yesterday, week[6] = today
+    
+    // Gets the date string
+    const dayOfMonth = date.getUTCDate();
+    const month = date.getUTCMonth() + 1; // January is 0
+    const dateString = dayOfMonth + "/" + month;
+    week[i] = dateString;
+  }
+
+  // Gets the weekly revenue
+  const weeklyRevenue = [12012000, 19000000, 30000000, 5000000, 22000000, 3000000, 12000000];
+  
+  new Chart(weeklyRevenueChart, {
+    type: 'line',
+    data: {
+      labels: week,
+      datasets: [{
+        label: 'Doanh thu',
+        data: weeklyRevenue,
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: false
+        }
+      },
+      responsive: true,
+      maintainAspectRatio: false
+    }
+  });
+</script>

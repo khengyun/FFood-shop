@@ -14,6 +14,7 @@
         <title>FFood | Admin Dashboard</title>
         <%@ include file="WEB-INF/jspf/common/imports/resources.jspf" %>
         <%@ include file="WEB-INF/jspf/admin/imports/dataTablesStyle.jspf" %>
+        <%@ include file="WEB-INF/jspf/admin/imports/chartjs.jspf" %>
 
     </head>
     <body>

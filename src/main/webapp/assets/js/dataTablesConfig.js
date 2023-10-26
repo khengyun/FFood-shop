@@ -207,17 +207,23 @@ $(document).ready(function () {
      https://getbootstrap.com/docs/5.3/components/navs-tabs/#events
      
      DO NOT USE ON CLICK EVENTS, this will cause a memory issue that freezes the page if the user clicks on the tab repeatedly.
+     UPDATE: This problem can still occur even when using shown.bs.tab event, due to the function being called too many times.
      */
+    
+     // Ensures that the function is called only once for Food & Drinks tab to prevent memory issues
+    let isFoodInitialized = false;
+    
     $("[data-bs-target='#foods']").on('shown.bs.tab', function () {
+      if (!isFoodInitialized) {
         // Remove searchPanes' expand and collapse all panes button
         $('.dtsp-showAll').remove();
         $('.dtsp-collapseAll').remove();
-
+    
         // Additional custom styling for searchPane's title row
         $('.dtsp-titleRow').addClass("d-flex flex-wrap align-items-center gap-2 mt-1");
         $('.dtsp-titleRow > div').addClass("py-0").after("<div class='flex-grow-1'>");
         $('.dtsp-titleRow > button').addClass("d-flex align-items-center btn-sm py-2");
-
+    
         // Insert the table's button group to existing button container with Add, Update, Delete buttons
         foodTable.buttons().container().prependTo("#foods-button-container");
         // Manually configure classes for the newly inserted button group
@@ -225,9 +231,12 @@ $(document).ready(function () {
         tableButtons.removeClass("btn-group");
         tableButtons.addClass("col-sm-12 col-lg-7 d-flex gap-2");
         /*$("#foods-button-container > div.dt-buttons > *").addClass("me-1");*/
-
+    
         // Fix table headers not resized on page load
         $('#food-table').resize();
+    
+        isFoodInitialized = true;
+      }
     });
 //    ================================================ END FOR FOOD ==============================
     let voucherTable = $('#vouchers-table').DataTable({
