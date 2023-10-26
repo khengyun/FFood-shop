@@ -6,7 +6,7 @@
             <div class="col-6 col-md-4 col-lg-3 col-xxl-3 mb-3">
                 <h5 class="lh-lg fw-bold text-white">THÔNG TIN CHUNG</h5>
                 <ul class="list-unstyled mb-md-4 mb-lg-0">
-                    <li class="lh-lg"><a class="text-200 text-decoration-none" href="https://github.com/tien-thanh-hua/FFood">Về chúng tôi</a></li>
+                    <li class="lh-lg"><a class="text-200 text-decoration-none" href="https://github.com/khengyun/FFood-shop">Về chúng tôi</a></li>
                 </ul>
             </div>
             <div class="col-6 col-md-4 col-lg-3 col-xxl-3 col-lg-3 mb-3">
@@ -14,13 +14,18 @@
                 <ul class="list-unstyled mb-md-4 mb-lg-0">
                     <li class="lh-lg text-200 text-decoration-none">
                         <a href="tel:0017-001-1704" class="navbar-sm-brand text-light text-decoration-none">
-                            Số điện thoại: 0017-001-1704
+                            Số điện thoại: 0914-875-606
                         </a>
 
                     </li>
                     <li class="lh-lg text-200 text-decoration-none">
                         <a href="mailto:ffood.shop.cantho@gmail.com" class="navbar-sm-brand text-light text-decoration-none">
                             Email: ffood.shop.cantho@gmail.com
+                        </a>
+                    </li>
+                    <li class="lh-lg text-200 text-decoration-none">
+                        <a href="https://www.facebook.com/ffood" class="navbar-sm-brand text-light text-decoration-none">
+                            Facebook: FFood Shop
                         </a>
                     </li>
                 </ul>
@@ -34,7 +39,7 @@
             <div class="col-6 col-md-4 col-lg-3 col-xxl-3 mb-3">
                 <h5 class="lh-lg fw-bold text-white">HÃY THEO DÕI CHÚNG TÔI</h5>
                 <div class="text-start my-3"> 
-                    <a class="text-500" href="https://github.com/tien-thanh-hua/FFood" target="_blank">
+                    <a class="text-500" href="https://github.com/khengyun/FFood-shop" target="_blank">
                         <i class="fab fa-github fa-lg fa-fw me-2"></i>
                     </a>
                     <a class="text-500" href="https://www.linkedin.com/in/tien-thanh-hua/" target="_blank">
