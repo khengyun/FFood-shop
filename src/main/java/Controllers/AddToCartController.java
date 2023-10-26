@@ -18,10 +18,6 @@ import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author LEGION
- */
 public class AddToCartController extends HttpServlet {
 
     /**

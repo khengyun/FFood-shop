@@ -52,12 +52,11 @@
                 <!-- Cart button -->
                 <button type="button"
                   class="btn ps-1 pe-2 py-0 position-relative nav-icon text-decoration-none my-auto text-primary fs-2 me-4"
-                  data-bs-toggle="modal" data-bs-target="#cart-modal">
+                  data-bs-toggle="modal" 
+                  data-bs-target="#cart-modal">
                   <i class="fas fa-fw fa-cart-arrow-down"></i>
-                  <span id="cart-badge"
-                    class="position-absolute top-0 start-100 translate-middle px-2 fs-0 bg-danger rounded-pill text-white">
-                    <span class="visually-hidden">Giỏ hàng</span>
-                    <!-- </span> -->
+                  <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle px-2 fs-0 bg-danger rounded-pill text-white">
+                  <span class="visually-hidden">Giỏ hàng</span>
                 </button>
 
                 <%@ include file="../../hyperfeat/langviewbutton.jspf" %>

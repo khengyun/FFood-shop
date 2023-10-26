@@ -14,10 +14,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-/**
- *
- * @author LEGION
- */
 public class DeleteCartController extends HttpServlet {
    
     /** 
