@@ -1,0 +1,40 @@
+<%@ page pageEncoding="UTF-8" %>
+<h2 class="text-start fs-2">Các món bán chạy</h2>
+<div class="d-flex flex-row">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">STT</th>
+        <th scope="col">Tên món</th>
+        <th scope="col">Doanh thu</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Cơm gà xối mỡ</td>
+        <td>20.035.000đ</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Cơm gà xối mỡ</td>
+        <td>20.035.000đ</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Cặm gà xối mỡ</td>
+        <td>20.035.000đ</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Cặm gà xối mỡ</td>
+        <td>20.035.000đ</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>Cặm gà xối mỡ</td>
+        <td>20.035.000đ</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

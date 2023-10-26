@@ -100,7 +100,6 @@ public class CheckoutController extends HttpServlet {
     String quantityParam = "";
     for (CartItem cartItem : cart.getItems()) {
       Short foodId = cartItem.getFood().getFoodID();
-
       if (request.getParameter("quantity-" + foodId) != null) {
         // Thông thường nếu truy cập /checkout thì sẽ có 2 cách truy cập:
         // 1 là từ nút Thanh toán (từ modal Giỏ hàng)
@@ -123,9 +122,7 @@ public class CheckoutController extends HttpServlet {
       session.setAttribute("quantity-" + foodId, quantityParam);
     }
     session.setAttribute("cart", cart);
-
     request.getRequestDispatcher("checkout.jsp").forward(request, response);
-
   }
 
   /**
@@ -179,14 +176,23 @@ public class CheckoutController extends HttpServlet {
               // không lấy được customer từ database -> đá về
               request.getRequestDispatcher("checkout.jsp").forward(request, response);
               return;
+            } else {
+                account.setCustomerID(customer.getCustomerID());
+                accountDAO.updateCustomerID(account);
+                customerID = customer.getCustomerID();
             }
             //</editor-fold>
           } else {
             //<editor-fold defaultstate="collapsed" desc="Nếu không có: thêm customer vào db">
             result = customerdao.add(customer);
-            if (result != 1) {
-              request.getRequestDispatcher("checkout.jsp").forward(request, response);
-              return;
+            if (result == 1) {
+              Customer lastestCustomer = customerdao.getLatestCustomer();
+              account.setCustomerID(lastestCustomer.getCustomerID());
+              accountDAO.updateCustomerID(account);
+              customerID = lastestCustomer.getCustomerID(); 
+            } else {
+                response.sendRedirect("/home#failure");
+                return;
             }
 
             // Lấy customer mới nhất (tức là customer vừa tạo được
@@ -287,8 +293,6 @@ public class CheckoutController extends HttpServlet {
 
     } else if (request.getParameter("btnSubmit") != null
             && request.getParameter("btnSubmit").equals("Checkout")) {
-      System.out.println("tesst222");
-      System.out.println("Chạy vào phần else if");
 
       HttpSession session = request.getSession();
 

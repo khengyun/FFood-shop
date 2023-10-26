@@ -1,0 +1,51 @@
+<%@ page pageEncoding="UTF-8" %>
+<h2 class="text-start fs-2">Mục tiêu tháng này</h2>
+<div class="chart-container">
+  <canvas id="chart-monthly-target"></canvas>
+</div>
+
+<script>  
+  const monthlyTargetChart = document.getElementById('chart-monthly-target');
+  
+  // Target = the revenue to be reached for the month
+  const monthlyTarget = 50000000;
+  const currentRevenue = 12012000;
+
+  // Goal = the revenue needed to reach the target
+  // If the current revenue exceeds the monthly target, the monthly goal will be 0 (completed)
+  const monthlyGoal = (monthlyTarget > currentRevenue) ? monthlyTarget - currentRevenue : 0;
+
+  new Chart(monthlyTargetChart, {
+    type: 'bar',
+    data: {
+      labels: [''],
+      datasets: [
+        {
+          label: 'Doanh thu hiện tại',
+          data: [currentRevenue],
+          borderWidth: 1
+        },
+        {
+          label: 'Doanh thu cần đạt',
+          data: [monthlyGoal],
+          borderWidth: 1
+        }
+      ]
+    },
+    options: {
+      scales: {
+        x: {
+          stacked: true
+        },
+        y: {
+          beginAtZero: true,
+          stacked: true
+        }
+      },
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false
+    }
+  });
+
+</script>

@@ -190,23 +190,6 @@ END
 
 go
 
--- Update order status
-
-CREATE TRIGGER tr_update_order_status_cancel
-ON [Order]
-AFTER UPDATE
-AS
-BEGIN
-    IF UPDATE(order_cancel_time)
-    BEGIN
-        UPDATE [Order]
-        SET order_status_id = (SELECT order_status_id FROM OrderStatus WHERE order_status = 'Đã hủy')
-        WHERE order_id = (SELECT order_id FROM inserted);
-    END
-END
-
-go
-
 -- Don't delete when still have order
 CREATE TRIGGER tr_prevent_delete_customer
 ON Customer

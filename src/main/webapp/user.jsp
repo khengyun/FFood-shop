@@ -20,6 +20,7 @@
     <%@ include file="WEB-INF/jspf/common/imports/base.jspf" %>
     <%@ include file="WEB-INF/jspf/common/components/header.jspf" %>
     <%@ include file="WEB-INF/jspf/guest/components/cart.jspf" %>
+    
     <div class="container my-5">
       <!-- Nav tabs -->
       <ul id="user-tab" class="nav nav-tabs flex-center" role="tablist">
@@ -138,9 +139,9 @@
               </c:if>
               <c:forEach items="${orderList}" var="o">
                 <%@ include file="WEB-INF/jspf/user/cancelOrder.jspf" %>
-                <div class="card">
+                <div class="card mb-3">
                   <div class="card-header d-flex align-items-center">
-                    <div>Dơn #${o.orderID} (Trạng thái: ${o.orderStatus})</div>
+                    <div>Ðơn #${o.hashOrderID}  (Trạng thái: ${o.orderStatus})</div>
                     <div class="flex-grow-1"></div>
                     <c:if test="${o.orderStatus eq 'Chờ xác nhận' || o.orderStatus eq 'Đang chuẩn bị món' || o.orderStatus eq 'Đang giao'}">
                       <button type="button" id="btn-cancel-order"

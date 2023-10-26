@@ -45,7 +45,7 @@
   </div>
 </div>
 
-<div class="modal fade" id="failure_register_email" tabindex="-1" role="dialog" aria-labelledby="failureLabel"
+<div class="modal fade" id="failure_register_exist" tabindex="-1" role="dialog" aria-labelledby="failureLabel"
      aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
