@@ -51,6 +51,21 @@ public class VoucherDAO {
         return voucher;
     }
     
+    public Voucher getVoucher(String voucher_name) {
+        Voucher voucher = null;
+        try {
+            ps = conn.prepareStatement("select * from Voucher where voucher_name = ?");
+            ps.setString(1, voucher_name);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                voucher = new Voucher(rs.getByte("voucher_id"), rs.getString("voucher_name"), rs.getString("voucher_code"),rs.getByte("voucher_discount_percent"),rs.getByte("voucher_quantity"), rs.getByte("voucher_status"), rs.getTimestamp("voucher_date"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(VoucherDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return voucher;
+    }
+    
     public List<Voucher> getAllList() {
         ResultSet voucherRS = this.getAll();
         List<Voucher> voucherList = new ArrayList<>();

@@ -58,9 +58,15 @@ public class StaffController extends HttpServlet {
             String[] s = path.split("/");
             short foodID = Short.parseShort(s[s.length - 1]);
             FoodDAO dao = new FoodDAO();
-            dao.delete(foodID);
+            int result = dao.delete(foodID);
             request.setAttribute("tabID", 3);
-            response.sendRedirect("/staff");
+            if (result == 1) {
+                response.sendRedirect("/staff#success_delete_food");
+            } else {
+                response.sendRedirect("/staff#failure_delete_food");
+            }
+            
+            response.sendRedirect("/staff#failure_delete_food");
         }
     }
 
@@ -77,13 +83,17 @@ public class StaffController extends HttpServlet {
         System.out.println("imageURL"+ imageURL);
         FoodDAO foodDAO = new FoodDAO();
         Food food = new Food(foodName, foodDescription, foodPrice, foodStatus, foodRate, discountPercent, imageURL, foodTypeID);
+        if (foodDAO.getFood(foodName) != null) {
+            response.sendRedirect("/staff#failure_add_food_exist");
+        }
+        
         int result = foodDAO.add(food);
 
         if (result == 1) {
-            response.sendRedirect("/staff");
+            response.sendRedirect("/staff#success_add_food");
             return;
         } else {
-            response.sendRedirect("/staff");
+            response.sendRedirect("/staff#failure_add_food");
             return;
         }
     }
@@ -105,10 +115,10 @@ public class StaffController extends HttpServlet {
         int result = foodDAO.update(food);
 
         if (result == 1) {
-            response.sendRedirect("/staff");
+            response.sendRedirect("/staff#success_update_food");
             return;
         } else {
-            response.sendRedirect("/staff");
+            response.sendRedirect("/staff#failure_update_food");
             return;
         }
     }
@@ -126,12 +136,18 @@ public class StaffController extends HttpServlet {
         }
         // Delete each food item, and count deleted items
         FoodDAO dao = new FoodDAO();
-        int count = dao.deleteMultiple(foodIDList);
+        int result = dao.deleteMultiple(foodIDList);
 
         // TODO implement a deletion status message after page reload
         // Redirect or forward to another page if necessary
         request.setAttribute("tabID", 3);
-        response.sendRedirect("/staff");
+        
+        if (result == 1) {
+            response.sendRedirect("/staff#success_delete_food");
+        }else{
+            response.sendRedirect("/staff#failure_delete_food");
+        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

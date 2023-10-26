@@ -44,11 +44,11 @@
       <i class="ph ph-user-circle"></i>
     </button>
     <ul class="dropdown-menu text-small shadow">
-      <li><a class="dropdown-item" href="/admin/help">Trợ giúp</a></li>
+      <li><a class="dropdown-item" href="/staff/help">Trợ giúp</a></li>
       <li>
         <hr class="dropdown-divider">
       </li>
-      <li><a class="dropdown-item" href="/admin/logout">Đăng xuất</a></li>
+      <li><a class="dropdown-item" href="/staff/logout">Đăng xuất</a></li>
     </ul>
   </div>
 </div>
@@ -104,11 +104,11 @@
       <div class="flex-grow-0"></div>
     </button>
     <ul class="dropdown-menu text-small shadow">
-      <li><a class="dropdown-item" href="/admin/help">Trợ giúp</a></li>
+      <li><a class="dropdown-item" href="/staff/help">Trợ giúp</a></li>
       <li>
         <hr class="dropdown-divider">
       </li>
-      <li><a class="dropdown-item" href="/admin/logout">Đăng xuất</a></li>
+      <li><a class="dropdown-item" href="/staff/logout">Đăng xuất</a></li>
     </ul>
   </div>
 </div>

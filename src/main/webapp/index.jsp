@@ -69,5 +69,6 @@
     <%@ include file="WEB-INF/jspf/common/imports/javascript.jspf" %>
     <%@ include file="WEB-INF/jspf/common/imports/validation.jspf" %>
     <script src="assets/js/home.js"></script>
+    <script src="assets/js/userNotify.js"></script>
   </body>
 </html>

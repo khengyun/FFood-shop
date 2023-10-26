@@ -35,11 +35,11 @@
       <i class="ph ph-user-circle"></i>
     </button>
     <ul class="dropdown-menu text-small shadow">
-      <li><a class="dropdown-item" href="/admin/help">Trợ giúp</a></li>
+      <li><a class="dropdown-item" href="/promotionManager/help">Trợ giúp</a></li>
       <li>
         <hr class="dropdown-divider">
       </li>
-      <li><a class="dropdown-item" href="/admin/logout">Đăng xuất</a></li>
+      <li><a class="dropdown-item" href="/promotionManager/logout">Đăng xuất</a></li>
     </ul>
   </div>
 </div>
@@ -53,7 +53,7 @@
      class="d-flex flex-row align-items-start justify-content-center px-1 ms-1 me-auto my-3 link-body-emphasis text-decoration-none">
     <img class="img-fluid my-auto" src="<%= request.getContextPath() + "assets/img/gallery/logo.svg"%>"
          alt="logo"/>
-    <h5 class="ms-3 my-auto text-gradient">FFood Admin Dashboard</h5>
+    <h5 class="ms-3 my-auto text-gradient">FFood Dashboard</h5>
   </a>
   <ul class="nav nav-pills d-grid gap-1 mb-auto align-content-start">
     <li class="nav-item d-grid gap-1 px-1">
@@ -66,7 +66,7 @@
     </li>
     
     <li class="nav-item d-grid gap-1 px-1">
-      <button data-bs-target="#promotions"
+      <button data-bs-target="#vouchers"
               class="nav-link link-body-emphasis text-start w-100 d-flex justify-content-start p-2 mx-auto"
               data-bs-toggle="tab">
         <i class="ph ph-megaphone me-3"></i>

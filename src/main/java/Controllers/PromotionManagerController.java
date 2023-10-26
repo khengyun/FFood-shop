@@ -58,10 +58,15 @@ public class PromotionManagerController extends HttpServlet {
             String[] s = path.split("/");
             byte voucherID = Byte.parseByte(s[s.length - 1]);
             VoucherDAO dao = new VoucherDAO();
-            dao.delete(voucherID);
-            response.sendRedirect("/promotionManager");
+            int result = dao.delete(voucherID);
+            
+            if (result == 1) {
+                response.sendRedirect("/promotionManager#success_delete_voucher");
+            } else {
+                response.sendRedirect("/promotionManager#failure_delete_voucher");
+            }
         }
-        response.sendRedirect("/promotionManager");
+        response.sendRedirect("/promotionManager#failure_delete_voucher");
     }
 
     private void doPostAddVoucher(HttpServletRequest request, HttpServletResponse response)
@@ -76,14 +81,19 @@ public class PromotionManagerController extends HttpServlet {
         
         VoucherDAO voucherDAO = new VoucherDAO();
         Voucher voucher = new Voucher(voucherName, voucherCode, voucher_discount_percent, voucher_quantity, voucher_status, datetime);
+        
+        if (voucherDAO.getVoucher(voucherName) != null){
+            response.sendRedirect("/promotionManager#failure_add_voucher_exist");
+            return;
+        }
 
         int result = voucherDAO.add(voucher);
 
         if (result == 1) {
-            response.sendRedirect("/promotionManager");
+            response.sendRedirect("/promotionManager#success_add_voucher");
             return;
         } else {
-            response.sendRedirect("/promotionManager");
+            response.sendRedirect("/promotionManager#failure_add_voucher");
             return;
         }
     }
@@ -106,10 +116,10 @@ public class PromotionManagerController extends HttpServlet {
         int result = voucherDAO.update(voucher);
 
         if (result == 1) {
-            response.sendRedirect("/promotionManager");
+            response.sendRedirect("/promotionManager#success_update_voucher");
             return;
         } else {
-            response.sendRedirect("/promotionManager");
+            response.sendRedirect("/promotionManager#failure_update_voucher");
             return;
         }
     }
@@ -128,12 +138,18 @@ public class PromotionManagerController extends HttpServlet {
 
         // Delete each food item, and count deleted items
         VoucherDAO dao = new VoucherDAO();
-        int count = dao.deleteMultiple(voucherIDList);
+        int result = dao.deleteMultiple(voucherIDList);
 
         // TODO implement a deletion status message after page reload
         // Redirect or forward to another page if necessary
         request.setAttribute("tabID", 3);
-        response.sendRedirect("/promotionManager");
+        
+        if (result == 1) {
+            response.sendRedirect("/promotionManager#success_delete_voucher");
+        } else {
+            response.sendRedirect("/promotionManager#failure_delete_voucher");
+        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -193,15 +209,5 @@ public class PromotionManagerController extends HttpServlet {
             }
         }
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 
 }
