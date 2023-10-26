@@ -78,6 +78,34 @@ public class OrderDAO {
         }
         return orderList;
     }
+    
+    public List<Order> getAllOrderInDay() {
+        ResultSet orderRS = this.getAllInDay();
+        List<Order> orderList = new ArrayList<>();
+        try {
+            while (orderRS.next()) {
+                Order order = new Order(orderRS.getInt("order_id"),
+                        orderRS.getInt("cart_id"),
+                        orderRS.getInt("customer_id"),
+                        orderRS.getByte("order_status_id"),
+                        this.getOrderStatus(orderRS.getByte("order_status_id")),
+                        orderRS.getByte("payment_method_id"),
+                        this.getPaymentMethod(orderRS.getByte("payment_method_id")),
+                        orderRS.getString("contact_phone"),
+                        orderRS.getString("delivery_address"),
+                        this.getOrderItemsList(orderRS.getInt("cart_id")),
+                        orderRS.getBigDecimal("order_total"),
+                        orderRS.getTimestamp("order_time"),
+                        orderRS.getString("order_note"),
+                        orderRS.getTimestamp("delivery_time"),
+                        orderRS.getTimestamp("order_cancel_time"));
+                orderList.add(order);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return orderList;
+    }
 
     public Order getOrder(int orderID) {
         Order order = null;
@@ -153,6 +181,18 @@ public class OrderDAO {
 
     public ResultSet getAll() {
         String sql = "SELECT * FROM [Order]";
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    public ResultSet getAllInDay() {
+        String sql = "SELECT * FROM [Order] WHERE CONVERT(date, order_time) = CONVERT(date, GETDATE()) AND order_status_id = 4;";
         try {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();

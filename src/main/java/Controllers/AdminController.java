@@ -165,7 +165,24 @@ public class AdminController extends HttpServlet {
         request.setAttribute("roleList", roleList);
         request.setAttribute("orderList", orderList);
         request.setAttribute("voucherList", voucherList);
-        request.getRequestDispatcher("/admin.jsp").forward(request, response);
+        
+    }
+    
+    private void doGetDashBoardInfo(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {      
+        OrderDAO orderDAO = new OrderDAO();
+        List<Order> orderList = orderDAO.getAllOrderInDay();
+        
+
+        BigDecimal revenueInDay = BigDecimal.ZERO; // Initialize sum as zero
+        for (Order order : orderList) {
+            revenueInDay = revenueInDay.add(order.getOrderTotal()); // Add each BigDecimal to the sum
+        }
+        
+        int orderInDay = orderList.size();
+
+        request.setAttribute("revenueInDay", revenueInDay);
+        request.setAttribute("orderInDay", orderInDay);
     }
 
     private void doPostAddFood(HttpServletRequest request, HttpServletResponse response)
@@ -570,6 +587,8 @@ public class AdminController extends HttpServlet {
         String path = request.getRequestURI();
         if (path.endsWith("/admin")) {
             doGetList(request, response);
+            doGetDashBoardInfo(request, response);
+            request.getRequestDispatcher("/admin.jsp").forward(request, response);
         } else if (path.endsWith("/admin/")) {
             response.sendRedirect("/admin");
         } else if (path.startsWith("/admin/food")) {
