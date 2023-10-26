@@ -36,7 +36,7 @@
                     <th onclick="sortTable(0)">Mã Tài khoản</th>
                     <th onclick="sortTable(1)">Tên Người dùng</th>
                     <th onclick="sortTable(2)">Email</th>
-                    <th>Thao tác</th>
+                    <!--<th>Thao tác</th>-->
                 </tr>
             </thead>
             <tbody>
@@ -45,7 +45,7 @@
                     <td>${u.accountID}</td>
                     <td>${u.username}</td>
                     <td>${u.email}</td>
-                    <td>
+<!--                    <td>
                         <button type="button" id="btn-update-user"
                                 class="btn btn-sm btn-success py-1 m-1"
                                 data-account-id="${u.accountID}"
@@ -61,7 +61,7 @@
                                 data-bs-toggle="modal" data-bs-target="#delete-user-modal">
                             Xóa
                         </button>
-                    </td>
+                    </td>-->
                 </tr>
             </c:forEach>
             </tbody>

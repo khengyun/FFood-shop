@@ -90,7 +90,6 @@ public class AdminController extends HttpServlet {
             short foodID = Short.parseShort(s[s.length - 1]);
             FoodDAO dao = new FoodDAO();
             int result = dao.delete(foodID);
-            request.setAttribute("tabID", 3);
             if (result == 1) {
                 response.sendRedirect("/admin#success_delete_food");
             } else {
@@ -238,7 +237,6 @@ public class AdminController extends HttpServlet {
         
         // TODO implement a deletion status message after page reload
         // Redirect or forward to another page if necessary
-        request.setAttribute("tabID", 3);
         
         if (result == 1) {
             response.sendRedirect("/admin#success_delete_food");
@@ -419,9 +417,6 @@ public class AdminController extends HttpServlet {
             ProIDList.add(Byte.parseByte(temp2IDs[i]));
         }
         
-        // TODO implement a deletion status message after page reload
-        // Redirect or forward to another page if necessary
-        request.setAttribute("tabID", 3);
         // Delete each food item, and count deleted items
         AccountDAO accountDAO = new AccountDAO();
         int result1 = accountDAO.deleteMultiple(accountIDList);
@@ -543,7 +538,6 @@ public class AdminController extends HttpServlet {
 
         // TODO implement a deletion status message after page reload
         // Redirect or forward to another page if necessary
-        request.setAttribute("tabID", 3);
         
         if (result == 1) {
             response.sendRedirect("/admin#success_delete_voucher");
