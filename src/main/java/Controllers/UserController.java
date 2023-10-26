@@ -17,6 +17,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -167,9 +169,14 @@ public class UserController extends HttpServlet {
         String path = request.getRequestURI();
         String[] s = path.split("/");
         int orderID = Integer.parseInt(s[s.length - 1]);
+        LocalDateTime currentTime = LocalDateTime.now();
+      // Chuyển đổi thời gian hiện tại thành Timestamp
+        Timestamp cancelTime = Timestamp.valueOf(currentTime);
         OrderDAO orderDAO = new OrderDAO();
-        orderDAO.cancelOrder(orderID);
+        orderDAO.cancelOrder(orderID, cancelTime);
         response.sendRedirect("/user#order");
+//        request.setAttribute("tabID", 3);
+//            response.sendRedirect("/user");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -237,8 +244,7 @@ public class UserController extends HttpServlet {
             response.sendRedirect("/user");
         } else if (path.startsWith("/user/cancel")) {
             doGetCancelOrder(request, response);
-            request.setAttribute("tabID", 3);
-            response.sendRedirect("/user");
+            
         } else {
             response.sendRedirect("/user");
         }
