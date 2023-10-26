@@ -36,7 +36,7 @@
                     <th onclick="sortTable(0)">Mã Tài khoản</th>
                     <th onclick="sortTable(1)">Tên Người dùng</th>
                     <th onclick="sortTable(2)">Email</th>
-                    <th>Thao tác</th>
+                    
                 </tr>
             </thead>
             <tbody>
@@ -45,23 +45,6 @@
                     <td>${u.accountID}</td>
                     <td>${u.username}</td>
                     <td>${u.email}</td>
-                    <td>
-                        <button type="button" id="btn-update-user"
-                                class="btn btn-sm btn-success py-1 m-1"
-                                data-account-id="${u.accountID}"
-                                data-username="${u.username}"
-                                data-email="${u.email}"
-                                data-bs-toggle="modal" data-bs-target="#update-user-modal">
-                            Cập nhật
-                        </button>
-                        <button type="button" id="btn-delete-user"
-                                class="btn btn-sm btn-danger py-1 m-1"
-                                data-account-id="${u.accountID}"
-                                data-username="${u.username}"
-                                data-bs-toggle="modal" data-bs-target="#delete-user-modal">
-                            Xóa
-                        </button>
-                    </td>
                 </tr>
             </c:forEach>
             </tbody>

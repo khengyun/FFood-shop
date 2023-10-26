@@ -54,8 +54,7 @@ $(document).on("click", "#btn-delete-food", function () {
 $(document).on("click", "#btn-update-user", function () {
     let accountID = $(this).data("account-id");
     let username = $(this).data("username");
-    let email = $(this).data("email");
-    
+    let email = $(this).data("email");   
     let modal = $("#update-user-modal");
     
     // Set the values of the corresponding form inputs in the modal
@@ -77,14 +76,12 @@ $(document).on("click", "#btn-delete-user", function () {
         let userName = users[userId];
         modal.find("#delete-user-list").append("<li>" + userName + "</li>");
     }
-
-
+    
     // Keep users IDs as strings
     let userIds = Object.keys(users).toString();
 
     // Set the values to the hidden input in the modal
     modal.find("input[name='userData']").attr("value", userIds);
-
 });
 
 $(document).on("click", "#btn-update-voucher", function () {
