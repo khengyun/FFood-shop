@@ -195,7 +195,7 @@ $(document).ready(function () {
             disableUpdateFoodBtn();
             disableDeleteFoodBtn();
         }
-    })
+    });
 
     /*
      Fixes table header not properly sized on tab load.
@@ -310,7 +310,6 @@ $(document).ready(function () {
 
                 let vouchers = {};
                 vouchers[data1[0][0]] = data1[0][1]; // vouchers[id] = voucher name
-                console.log(vouchers);
                 btnDelete.attr("data-vouchers", JSON.stringify(vouchers));
                 btnDelete.removeClass("disabled");
             } else if (data1.length > 1) {
@@ -321,7 +320,7 @@ $(document).ready(function () {
                 }
                 btnDelete.attr("data-vouchers", JSON.stringify(vouchers));
                 btnDelete.removeClass("disabled");
-                
+
                 disableUpdateVoucherBtn();
             } else {
                 disableUpdateVoucherBtn();
@@ -343,8 +342,8 @@ $(document).ready(function () {
             disableUpdateVoucherBtn();
             disableDeleteVoucherBtn();
         }
-    })
-    
+    });
+
     $("[data-bs-target='#vouchers']").on('shown.bs.tab', function () {
         // Remove searchPanes' expand and collapse all panes button
         $('.dtsp-showAll').remove();
@@ -356,7 +355,7 @@ $(document).ready(function () {
         $('.dtsp-titleRow > button').addClass("d-flex align-items-center btn-sm py-2");
 
         // Insert the table's button group to existing button container with Add, Update, Delete buttons
-        foodTable.buttons().container().prependTo("#vouchers-button-container");
+        voucherTable.buttons().container().prependTo("#vouchers-button-container");
         // Manually configure classes for the newly inserted button group
         let tableButtons = $("#vouchers-button-container > div.dt-buttons");
         tableButtons.removeClass("btn-group");
@@ -395,12 +394,11 @@ $(document).ready(function () {
     function disableUpdateRoleBtn() {
         let btnUpdate = $('#btn-update-role');
         if (btnUpdate) {
-            btnUpdate.removeAttr("data-role-accountid");
-            btnUpdate.removeAttr("data-role-roleid");
-            btnUpdate.removeAttr("data-role-username");
-            btnUpdate.removeAttr("data-role-fullname");
-            btnUpdate.removeAttr("data-role-email");
+            btnUpdate.removeAttr("data-role-id");
+
+            btnUpdate.removeAttr("data-role-name");
             btnUpdate.removeAttr("data-role-type");
+
             btnUpdate.addClass("disabled");
         }
     }
@@ -408,10 +406,8 @@ $(document).ready(function () {
     function disableDeleteRoleBtn() {
         let btnDelete = $('#btn-delete-role');
         if (btnDelete) {
-            btnDelete.removeAttr("data-role-accountid");
-            btnDelete.removeAttr("data-role-roleid");
-            btnDelete.removeAttr("data-role-fullname");
-            btnDelete.removeAttr("data-role-username");
+            btnDelete.removeAttr("data-role-id");
+            btnDelete.removeAttr("data-role-name");
             btnDelete.addClass("disabled");
         }
     }
@@ -429,67 +425,23 @@ $(document).ready(function () {
 
                 // data's type is a 2D array since the table's data is DOM-sourced
                 // https://datatables.net/reference/api/row().data()
-                btnUpdate.attr("data-role-accountid", data2[0][0]);
-                btnUpdate.attr("data-role-roleid", data2[0][1]);
-                btnUpdate.attr("data-role-username", data2[0][2]);
-                btnUpdate.attr("data-role-fullname", data2[0][3]);
-                btnUpdate.attr("data-role-email", data2[0][4]);
-                let account_type = "";
-                if (data2[0][5] === "Staff"){
-                    account_type = "staff";
-                } else {
-                    account_type = "promotionManager";
-                }
-                btnUpdate.attr("data-role-type", account_type);
+                btnUpdate.attr("data-role-id", data2[0][0]);
+                btnUpdate.attr("data-role-type", data2[0][2]);
+                btnUpdate.attr("data-role-name", data2[0][1]);
+
                 btnUpdate.removeClass("disabled");
 
                 let roles = {};
-                let accounts = {};
-                let temp1s = {};
-                let temp2s = {};
-                
-                roles[data2[0][1]] = data2[0][3];
-                accounts[data2[0][0]] = data2[0][2];
-                account_type = "";
-                if (data2[0][5] === "Staff") {
-                    account_type = "staff";
-                    temp1s[data2[0][1]] = account_type; 
-                
-                    btnDelete.attr("data-temp1s", JSON.stringify(temp1s));
-                } else {
-                    account_type = "promotionManager";
-                    temp2s[data2[0][1]] = account_type; 
-                    btnDelete.attr("data-temp2s", JSON.stringify(temp2s));
-                } 
+                roles[data2[0][0]] = data2[0][2]; // food[id] = food name
                 btnDelete.attr("data-roles", JSON.stringify(roles));
-                btnDelete.attr("data-accounts", JSON.stringify(accounts));
-                
-                
                 btnDelete.removeClass("disabled");
             } else if (data2.length > 1) {
                 let roles = {};
-                let temp1s = {};
-                let temp2s = {};
-                let accounts = {};
                 for (let i = 0; i < data2.length; i++) {
-                    let roleId = data2[i][1];
-                    let accountId = data2[i][0];
-                    roles[i] = data2[i][3];
-                    accounts[accountId] = data2[i][2]; 
-                    
-                    let account_type = "";
-                    if (data2[i][5] === "Staff") {
-                        account_type = "staff";
-                        temp1s[roleId] = account_type; 
-                    } else {
-                        account_type = "promotionManager";
-                        temp2s[roleId] = account_type; 
-                    }  
+                    let roleId = data2[i][0];
+                    roles[roleId] = data2[i][2]; // Food name
                 }
                 btnDelete.attr("data-roles", JSON.stringify(roles));
-                btnDelete.attr("data-temp1s", JSON.stringify(temp1s));
-                btnDelete.attr("data-temp2s", JSON.stringify(temp2s));
-                btnDelete.attr("data-accounts", JSON.stringify(accounts));
                 btnDelete.removeClass("disabled");
                 disableUpdateRoleBtn();
             } else {
@@ -513,8 +465,22 @@ $(document).ready(function () {
             disableDeleteRoleBtn();
         }
     });
+    roleTable.on('select-blur', function (e, dt, target, originalEvent) {
+        // Ignores blur event if user clicks on update/delete/cancel/confirm buttons, or the background of a modal dialog
+        if (target.classList.contains("btn-update")
+                || target.classList.contains("btn-delete")
+                || target.classList.contains("btn-cancel")
+                || target.classList.contains("btn-confirm")
+                || target.id === "update-role-modal"
+                || target.id === "delete-role-modal") {
+            e.preventDefault();
+        } else {
+            disableUpdateRoleBtn();
+            disableDeleteRoleBtn();
+        }
+    });
 
-    $("[data-bs-target='#roles']").on('shown.bs.tab', function () {
+    $("[data-bs-target='#vouchers']").on('shown.bs.tab', function () {
         // Remove searchPanes' expand and collapse all panes button
         $('.dtsp-showAll').remove();
         $('.dtsp-collapseAll').remove();
@@ -536,4 +502,224 @@ $(document).ready(function () {
         $('#roles-table').resize();
     });
 
+    //    ============================================= END ROLE =========================
+
+    let userTable = $('#user-table').DataTable({
+        columnDefs: [
+            {
+                searchable: false,
+                userable: false,
+                targets: [-1] // "Image" columns
+            }
+        ],
+        dom: "<'row'" +
+                "<'d-row col-sm-12 m-0'" +
+                "<'row'" +
+                "<'col-sm-12 col-lg-6 pt-2'l><'col-sm-12 col-lg-6 pt-1 'f>" + // length and search bar
+                ">" +
+                "<'col-sm-12'tr>" + // table
+                "<'row'" +
+                "<'col-sm-12 col-md-5 mt-1'i><'col-sm-12 col-md-7 mt-2'p>" + // info and pagination
+                ">" +
+                ">" +
+                ">",
+    });
+    /*
+     Highlights current column that the mouse cursor is hovering on
+     This should be used in tandem with default hover option for increased cursor visibility
+     */
+    userTable.on('mouseenter', 'td', function () {
+        let columnIndex = userTable.cell(this).index().column;
+
+        userTable.cells()
+                .nodes()
+                .each((element) => element.classList.remove('highlight'));
+
+        userTable
+                .column(columnIndex)
+                .nodes()
+                .each((element) => element.classList.add('highlight'));
+    });
+
+    function disableUpdateUserBtn() {
+        let btnUpdate = $('#btn-update-user');
+        if (btnUpdate) {
+            btnUpdate.removeAttr("data-account-id");
+            btnUpdate.removeAttr("data-username");
+            btnUpdate.removeAttr("data-email");
+            btnUpdate.addClass("disabled");
+        }
+    }
+
+    function disableDeleteUserBtn() {
+        let btnDelete = $('#btn-delete-user');
+        if (btnDelete) {
+            btnDelete.removeAttr("data-account-id");
+            btnDelete.removeAttr("data-username");
+            btnDelete.removeAttr("data-email");
+            btnDelete.addClass("disabled");
+        }
+    }
+
+    userTable.on('select selectItems deselect', function (e, dt, type, indexes) {
+        if (type === 'row' && indexes && Array.isArray(indexes)) {
+            let btnUpdate = $('#btn-update-user');
+            let btnDelete = $('#btn-delete-user');
+
+            // Retrieves selected rows
+            let data3 = userTable.rows({selected: true}).data();
+
+            // Only allows update for exactly 1 row
+            if (data3.length === 1) {
+
+                // data's type is a 2D array since the table's data is DOM-sourced
+                // https://datatables.net/reference/api/row().data()
+                btnUpdate.attr("data-account-id", data3[0][0]);
+                btnUpdate.attr("data-username", data3[0][1]);
+                btnUpdate.attr("data-email", data3[0][2]);
+                btnUpdate.removeClass("disabled");
+
+                let users = {};
+                users[data3[0][0]] = data3[0][1]; // food[id] = food name
+                btnDelete.attr("data-users", JSON.stringify(users));
+                btnDelete.removeClass("disabled");
+            } else if (data3.length > 1) {
+                let users = {};
+                for (let i = 0; i < data3.length; i++) {
+                    let userId = data3[i][0];
+                    users[userId] = data3[i][1]; // Food name
+                }
+                btnDelete.attr("data-users", JSON.stringify(users));
+                btnDelete.removeClass("disabled");
+                disableUpdateUserBtn();
+            } else {
+                disableUpdateUserBtn();
+                disableDeleteUserBtn();
+            }
+        }
+    });
+
+    userTable.on('select-blur', function (e, dt, target, originalEvent) {
+        // Ignores blur event if user clicks on update/delete/cancel/confirm buttons, or the background of a modal dialog
+        if (target.classList.contains("btn-update")
+                || target.classList.contains("btn-delete")
+                || target.classList.contains("btn-cancel")
+                || target.classList.contains("btn-confirm")
+                || target.id === "update-user-modal"
+                || target.id === "delete-user-modal") {
+            e.preventDefault();
+        } else {
+            disableUpdateUserBtn();
+            disableDeleteUserBtn();
+        }
+    });
+
+    userTable.on('select-blur', function (e, dt, target, originalEvent) {
+        // Ignores blur event if user clicks on update/delete/cancel/confirm buttons, or the background of a modal dialog
+        if (target.classList.contains("btn-update")
+                || target.classList.contains("btn-delete")
+                || target.classList.contains("btn-cancel")
+                || target.classList.contains("btn-confirm")
+                || target.id === "update-user-modal"
+                || target.id === "delete-user-modal") {
+            e.preventDefault();
+        } else {
+            disableUpdateUserBtn();
+            disableDeleteUserBtn();
+        }
+    });
+
+
+    $("[data-bs-target='#users']").click(function () {
+        // Remove searchPanes' expand and collapse all panes button
+        $('.dtsp-showAll').remove();
+        $('.dtsp-collapseAll').remove();
+
+        // Additional custom styling for searchPane's title row
+        $('.dtsp-titleRow').addClass("d-flex flex-wrap align-items-center gap-2 mt-1 ml-3");
+        $('.dtsp-titleRow > div').addClass("py-0").after("<div class='flex-grow-1'>");
+        $('.dtsp-titleRow > button').addClass("d-flex align-items-center btn-sm py-2");
+
+        // Insert the table's button group to existing button container with Add, Update, Delete buttons
+        userTable.buttons().container().prependTo("#users-button-container");
+        // Manually configure classes for the newly inserted button group
+        let tableButtons = $("#users-button-container > div.dt-buttons");
+        tableButtons.removeClass("btn-group");
+        tableButtons.addClass("col-sm-12 col-lg-7 d-flex gap-2");
+        /*$("#users-button-container > div.dt-buttons > *").addClass("me-1");*/
+
+        // Fix table headers not resized on page load
+        $('#user-table').resize();
+    });
+    //    ============================================= END USER =========================
+
+    let orderTable = $('#order-table').DataTable({
+        columnDefs: [
+            {
+                searchable: false,
+                userable: false,
+                targets: [-1] // "Image" columns
+            }
+        ],
+        dom: "<'row'" +
+                "<'d-row col-sm-12 m-0'" +
+                "<'row'" +
+                "<'col-sm-12 col-lg-6 pt-2'l><'col-sm-12 col-lg-6 pt-1 'f>" + // length and search bar
+                ">" +
+                "<'col-sm-12'tr>" + // table
+                "<'row'" +
+                "<'col-sm-12 col-md-5 mt-1'i><'col-sm-12 col-md-7 mt-2'p>" + // info and pagination
+                ">" +
+                ">" +
+                ">",
+    });
+
+    orderTable.on('mouseenter', 'td', function () {
+        let columnIndex = orderTable.cell(this).index().column;
+
+        orderTable.cells()
+                .nodes()
+                .each((element) => element.classList.remove('highlight'));
+
+        orderTable
+                .column(columnIndex)
+                .nodes()
+                .each((element) => element.classList.add('highlight'));
+    });
+
+// Add event listener for opening and closing details
+    orderTable.on('click', 'td.dt-control', function (e) {
+        let tr = e.target.closest('tr');
+        let row = orderTable.row(tr);
+
+        if (row.child.isShown()) {
+            // This row is already open - close it
+            row.child.hide();
+        } else {
+            // Open this row
+            row.child(format(row.data())).show();
+        }
+    });
+
+    $("[data-bs-target='#orders']").click(function () {
+        // Remove searchPanes' expand and collapse all panes button
+        $('.dtsp-showAll').remove();
+        $('.dtsp-collapseAll').remove();
+
+        // Additional custom styling for searchPane's title row
+        $('.dtsp-titleRow').addClass("d-flex flex-wrap align-items-center gap-2 mt-1 ml-3");
+        $('.dtsp-titleRow > div').addClass("py-0").after("<div class='flex-grow-1'>");
+        $('.dtsp-titleRow > button').addClass("d-flex align-items-center btn-sm py-2");
+
+        // Insert the table's button group to existing button container with Add, Update, Delete buttons
+        orderTable.buttons().container().prependTo("#orders-button-container");
+        // Manually configure classes for the newly inserted button group
+        let tableButtons = $("#orders-button-container > div.dt-buttons");
+        tableButtons.removeClass("btn-group");
+        tableButtons.addClass("col-sm-12 col-lg-7 d-flex gap-2");
+        /*$("#users-button-container > div.dt-buttons > *").addClass("me-1");*/
+
+        // Fix table headers not resized on page load
+        $('#order-table').resize();
+    });
 });

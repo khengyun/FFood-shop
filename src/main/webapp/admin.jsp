@@ -41,109 +41,14 @@
                         <%@ include file="WEB-INF/jspf/admin/home.jspf" %>
                         <!-- Food & Drinks Tab Content -->
                         <%@ include file="WEB-INF/jspf/admin/foods.jspf" %>
+                        <!-- Admin&Role Tab Content -->
                         <%@ include file="WEB-INF/jspf/admin/roles.jspf" %>
+                        <!-- Voucher Tab Content -->
                         <%@ include file="WEB-INF/jspf/admin/voucher.jspf" %>
-
                         <!-- Users Tab Content -->
-                        <div class="tab-pane fade" id="users">
-                            <div class="container-fluid p-2">
-                                <table id="users-table" class="table table-bordered table-striped">
-                                    <h1 class="text-center fw-bold fs-3">Quản lý Người dùng</h1>
-                                    <button style="color: white;border-color: rgba(207, 126, 0, 1); background-color: rgba(207, 126, 0, 1);"
-                                            type="button" class="btn btn-sm btn-success py-1 my-2 me-2" data-bs-toggle="modal" data-bs-target="#add-user-modal">
-                                        Tạo Tài khoản Người dùng
-                                    </button>
-                                    <thead>
-                                        <tr>
-                                            <th>Mã TK</th>
-                                            <th>Tên Người dùng</th>
-                                            <th>Email</th>
-                                            <th>Loại TK</th>
-                                            <th>Thao tác</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <c:forEach items="${userAccountList}" var="u">
-                                            <tr>
-                                                <td class="col-sm-3 col-gap-5">${u.accountID}</td>
-                                                <td>${u.username}</td>
-                                                <td>${u.email}</td>
-                                                <td>${u.accountType}</td>
-                                                <td>
-                                                    <button style="color: white;border-color: rgba(207, 126, 0, 1); background-color: rgba(207, 126, 0, 1);"
-                                                            type="button" id="btn-update-user"
-                                                            class="btn btn-sm btn-success py-1 m-1"
-                                                            data-account-id="${u.accountID}"
-                                                            data-username="${u.username}"
-                                                            data-email="${u.email}"
-                                                            data-bs-toggle="modal" data-bs-target="#update-user-modal">
-                                                        Cập nhật
-                                                    </button>
-                                                    <button style="color: white;border-color: rgba(207, 126, 0, 1); background-color: rgba(207, 126, 0, 1);"
-                                                            type="button" id="btn-delete-user"
-                                                            class="btn btn-sm btn-danger py-1 m-1"
-                                                            data-account-id="${u.accountID}"
-                                                            data-username="${u.username}"
-                                                            data-bs-toggle="modal" data-bs-target="#delete-user-modal">
-                                                        Xóa
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        </c:forEach>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-
-
-
+                        <%@ include file="WEB-INF/jspf/admin/users.jspf" %>
                         <!-- Orders Tab Content -->
-                        <div class="tab-pane fade" id="orders">
-                            <div class="container-fluid p-2">
-                                <table id="orders-table" class="table table-bordered table-striped">
-                                    <h1 class="text-center fw-bold fs-3">Quản lý Đơn món</h1>
-                                    <thead>
-                                        <tr>
-                                            <th>Mã Đơn</th>
-                                            <th>Mã KH</th>
-                                            <th>SĐT liên lạc</th>
-                                            <th>Địa chỉ nhận</th>
-                                            <th>Phương thức thanh toán</th>
-                                            <th>Các món đặt</th>
-                                            <th>Ghi chú</th> <!-- contains both customer note and cart details -->
-                                            <th>Thanh toán</th>
-                                            <th>Trạng thái</th>
-                                            <th>Thời gian đặt</th>
-                                            <th>Thời gian nhận</th>
-                                            <th>Thời gian hủy</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <c:forEach items="${orderList}" var="o">
-                                            <tr>
-                                                <td>${o.orderID}</td>
-                                                <td>${o.customerID}</td>
-                                                <td>${o.contactPhone}</td>
-                                                <td>${o.deliveryAddress}</td>
-                                                <td>${o.paymentMethod}</td>
-                                                <td>
-                                                    <c:forEach items="${o.orderItems}" var="orderItem">
-                                                        <p>${orderItem}</p>
-                                                    </c:forEach>
-                                                </td>
-                                                <td>${(o.orderNote == null) ? "" : o.orderNote}</td>
-                                                <td><fmt:formatNumber type="number" pattern="###,###,###.##" value="${o.orderTotal}"/>đ</td>
-                                                <td>${o.orderStatus}</td>
-                                                <td>${o.orderTime}</td>
-                                                <td>${(o.deliveryTime == null) ? "" : o.deliveryTime}</td>
-                                                <td>${(o.orderCancelTime == null) ? "" : o.orderCancelTime}</td>
-                                            </tr>
-                                        </c:forEach>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                        <%@ include file="WEB-INF/jspf/staff/orders.jspf" %>
 
                     </div>
                 </main>
