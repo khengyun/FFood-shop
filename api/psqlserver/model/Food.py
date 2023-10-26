@@ -38,7 +38,6 @@ class FoodOperations:
                     food_url=record[7]
                 )
                 food_data.append(food.dict())
-
             conn.close()
             return food_data
 
@@ -56,7 +55,7 @@ class FoodOperations:
             records = cursor.fetchall()
             food_data = []
 
-            for record in records:                
+            for record in records:
                 food = FoodModel(
                     food_id=record[0],
                     food_name=record[1],
