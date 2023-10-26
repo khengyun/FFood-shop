@@ -1,19 +1,31 @@
 <%-- any content can be specified here e.g.: --%>
 <%@ page pageEncoding="UTF-8" %>
 <div class="modal" tabindex="-1" id="delete-user-modal">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Xóa Tài khoản Người dùng</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>Bạn có muốn xóa Tài khoản <span id="username"></span>này không?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-success" data-bs-dismiss="modal">Không</button>
-        <a id="deleteAccountLink" href="/admin" class="btn btn-danger">Có</a>
-      </div>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form class="delete-food-form" method="POST" action="/admin">
+                <div class="modal-header">
+                    <h5 class="modal-title">Xóa Tài khoản Người dùng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-1">Những người dùng sau đây sẽ bị xoá:</p>
+                    <ul id="delete-user-list"></ul>
+                    <p class="mb-0">Bạn chắc chắn muốn xoá những người dùng này không? <br>
+                        <span class="error fw-bolder">Hành động này không thể hoàn tác.</span>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <!-- Submit Button -->
+                    <button type="button" class="btn btn-success btn-cancel" data-bs-dismiss="modal">Huỷ</button>
+                    <button type="submit" id="btn-confirm-delete-user" href="/admin" class="btn btn-danger btn-confirm">Xoá</button>
+
+                    <!-- Hidden Submit Value -->
+                    <input type="hidden" name="userData" value='{"key":"value"}'>
+                    <input type="hidden" id="btnSubmit" name="btnSubmit" value="SubmitDeleteUser">
+                </div>
+            </form>
+        </div>
     </div>
-  </div>
 </div>
+
