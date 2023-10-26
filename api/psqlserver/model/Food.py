@@ -3,14 +3,16 @@ import pymssql
 from typing import List
 from config import db_config
 
+
 class FoodModel(BaseModel):
     food_id: int
     food_name: str
-    food_description: str
+    food_description: str = None
     food_price: float
     food_rate: int
     food_status: bool
     food_type_id: int
+    food_url: str = None
 
 class FoodOperations:
     def __init__(self):
@@ -32,9 +34,10 @@ class FoodOperations:
                     food_price=float(record[3]),
                     food_rate=int(record[4]),
                     food_status=bool(record[5]),
-                    food_type_id=int(record[6])
+                    food_type_id=int(record[6]),
+                    food_url=record[7]
                 )
-                food_data.append(food)
+                food_data.append(food.dict())
 
             conn.close()
             return food_data
@@ -53,7 +56,7 @@ class FoodOperations:
             records = cursor.fetchall()
             food_data = []
 
-            for record in records:
+            for record in records:                
                 food = FoodModel(
                     food_id=record[0],
                     food_name=record[1],
@@ -61,9 +64,11 @@ class FoodOperations:
                     food_price=float(record[3]),
                     food_rate=int(record[4]),
                     food_status=bool(record[5]),
-                    food_type_id=int(record[6])
+                    food_type_id=int(record[6]),
+                    food_url=record[7]
+                    
                 )
-                food_data.append(food)
+                food_data.append(food.dict())
 
             conn.close()
             return food_data

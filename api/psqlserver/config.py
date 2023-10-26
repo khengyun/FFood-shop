@@ -1,6 +1,6 @@
 # config.py
 db_config = {
-    'server': 'localhost:1450',
+    'server': 'sqlserver:1433',
     'user': 'sa',
     'password': 'sa@123456',
     'database': 'ffood'
