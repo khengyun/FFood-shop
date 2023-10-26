@@ -110,6 +110,22 @@ public class AccountDAO {
         }
         return result;
     }
+    
+    public int updateCustomerID(Account account) {
+        String sql = "";
+        int result = 0;
+
+        try {
+            sql = "update Account set customer_id = ? where account_id = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, account.getCustomerID());
+            ps.setInt(2, account.getAccountID());
+            result = ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
 
     public int delete(int id) {
         int result = 0;

@@ -47,10 +47,10 @@ $(document).ready(function () {
       $('#failure_register').modal('hide');
     }, 2000);
   };
-  if (window.location.hash === '#failure_register_email') {
-    $('#failure_register_email').modal('show');
+  if (window.location.hash === '#failure_register_exist') {
+    $('#failure_register_exist').modal('show');
     setTimeout(function () {
-      $('#failure_register_email').modal('hide');
+      $('#failure_register_exist').modal('hide');
     }, 2000);
   };
   

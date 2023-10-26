@@ -210,13 +210,15 @@ public class OrderDAO {
         return result;
     }
 
-    public int cancelOrder(int orderID) {
-        String sql = "update [Order] set order_status_id = 5, order_cancel_time = ? where order_id = ?";
+    public int cancelOrder(int orderID, Timestamp cancelTime) {
+        String sql = "UPDATE [Order] SET order_status_id = ?, order_cancel_time = ? WHERE order_id = ?";
         int result = 0;
+        byte order_status = 5;
         try {
             ps = conn.prepareStatement(sql);
-            ps.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
-            ps.setInt(2, orderID);
+            ps.setByte(1, order_status);
+            ps.setTimestamp(2, cancelTime);
+            ps.setInt(3, orderID);
             result = ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
