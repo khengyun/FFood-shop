@@ -3,69 +3,88 @@
 <!-- Cart -->
 <div class="modal" tabindex="-1" id="cart-modal">
     <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header border-bottom-0">
-                <h5 class="modal-title" id="exampleModalLabel">Giỏ hàng</h5>
+        <div class="modal-content px-4 py-3">
+            <div class="modal-header pb-0 border-bottom-0">
+                <h4 class="modal-title" id="exampleModalLabel">Giỏ hàng</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <%-- Putting form inside modal body ensures the modal's scrollability --%>
                 <form id="cart-form" action="checkout" method="POST">
                     <div class="table-responsive">
-                        <table id="cart-table" class="table">
+                        <table id="cart-table" class="table table-sm table-hover mb-0">
                             <thead>
                                 <tr>
                                     <th scope="col">Món ăn/Đồ uống</th>
-                                    <th scope="col">Đơn giá</th>
+                                    <th scope="col" style="min-width: 6em">Đơn giá</th>
                                     <th scope="col">Số lượng</th>
-                                    <th scope="col">Số tiền</th>
+                                    <th scope="col" style="min-width: 6em">Số tiền</th>
                                     <th scope="col">Thao tác</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="table-group-divider">
                             <p style="color: red;">${mess}</p>
                             <c:set var="totalPrice" value="0"></c:set>
                             <c:forEach var="cart" items="${sessionScope['cart'].items}">
                                 <input type="text" name="fid" value="${cart.food.foodID}" hidden>
                                 <tr class="align-middle">
+                                    <!-- Image and Food name -->
                                     <td class="table-image-cell">
                                         <img src="${cart.food.imageURL}" alt="${cart.food.foodName}" class="me-3"/>
                                         ${cart.food.foodName}
                                     </td>
-                                    <td>${cart.food.getFoodPriceFormat()}</td>
+                                    <!-- Price -->
+                                    <td class="item-price">${cart.food.getFoodPriceFormat()}</td>
+                                    <!-- Quantity -->
+                                    <!-- https://codepen.io/anitaparmar26/pen/BaLYMeN -->
                                     <td>
-                                        <input type="number" class="quantity-input" name="quantity-${cart.food.foodID}" value="${cart.foodQuantity}" min="1"/>
+                                        <div class="d-flex input-group align-items-center">
+                                          <input type="button" value="-" class="btn btn-outline-dark border border-dark border-1 button-minus px-2 py-1" data-field="quantity-${cart.food.foodID}">
+                                          <input type="number" step="1" min="1" max="10" maxlength="2" style="width: 2em;" class="quantity-input quantity-field border border-dark border-1 border-start-0 border-end-0 text-center py-1" name="quantity-${cart.food.foodID}" value="${cart.foodQuantity}">
+                                          <input type="button" value="+" class="btn btn-outline-dark border border-dark border-1 button-plus px-2 py-1" data-field="quantity-${cart.food.foodID}">
+                                        </div>
                                     </td>
+                                    <!-- Total -->
+                                    <td class="item-total">
+                                      <c:set var="productPrice" value="${Double.parseDouble(cart.food.foodPrice) * cart.foodQuantity}"/>
+                                      <c:set var="totalPrice" value="${totalPrice + productPrice}"/>
+                                      <fmt:formatNumber type="number" pattern="###,###"
+                                                        value="${Double.parseDouble(cart.food.foodPrice) * cart.foodQuantity}"/> đ
+                                    </td>
+                                    <!-- Remove -->
                                     <td>
-                                <c:set var="productPrice" value="${Double.parseDouble(cart.food.foodPrice) * cart.foodQuantity}"/>
-                                <c:set var="totalPrice" value="${totalPrice + productPrice}"/>
-                                <fmt:formatNumber type="number" pattern="###,###"
-                                                  value="${Double.parseDouble(cart.food.foodPrice) * cart.foodQuantity}"/>đ
-                                </td>
-                                <td>
-                                    <a href="deleteCart?fid=${cart.food.foodID}">
-                                        <button type="button" class="btn btn-sm btn-danger"
-                                                onclick="return confirm('Bạn có muốn xóa Món này khỏi Giỏ hàng không?')">Xóa
-                                        </button>
-                                    </a>
-                                </td>
+                                        <a href="deleteCart?fid=${cart.food.foodID}" 
+                                                    class="d-flex btn btn-sm btn-outline-danger align-items-center px-3"
+                                                    style="width:fit-content;"
+                                                    onclick="return confirm('Bạn có muốn xóa Món này khỏi Giỏ hàng không?')">
+                                                    <i class="ph-bold ph-trash fs-1 me-2"></i>
+                                                    Xóa
+                                        </a>
+                                    </td>
                                 </tr>
                             </c:forEach>
                             </tbody>
+                            <tfoot class="table-group-divider">
+                              <th colspan="5" class="text-end">
+                                <h5 id="grand-total" class="mt-2">Tổng thanh toán: <fmt:formatNumber type="number" pattern="###,###"
+                                  value="${totalPrice}"/> đ</h5>
+                              </th>
+                            </tfoot>
                         </table>
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer pt-0">
                 <div class="d-flex flex-row align-items-center justify-content-end w-100">
-                    <div class="col text-end me-3">
-                        <h5 class="m-0">Tổng thanh toán: <fmt:formatNumber type="number" pattern="###,###"
-                                                                           value="${totalPrice}"/>đ</h5>
+                    <div class="me-3">
+                        <button type="button" class="btn btn-outline-dark px-4" data-bs-dismiss="modal" aria-label="Close">
+                          Tiếp tục chọn món
+                        </button>
                     </div>
-                    <div class="col-xl-2 col-lg-3 col-md-4 col-sm-4 align-self-end text-end">
+                    <div class="">
                         <%-- To solve the issue of submit button outside of the form element, just add "form" attribute --%>
-                        <button type="submit" class="btn btn-primary w-100" id="btnSubmit" name="btnSubmit" form="cart-form" value="Checkout">Thanh
-                            toán
+                        <button type="submit" class="btn btn-primary px-5" id="btnSubmit" name="btnSubmit" form="cart-form" value="Checkout">
+                          Thanh toán
                         </button>
                     </div>
                 </div>
@@ -102,25 +121,53 @@
         }
     }
 
+    $('.quantity-input').on('keydown', (e) => {
+      let key = e.key;
+      let isDigit = /^\d$/.test(key);
+      let isException = key === 'ArrowLeft' 
+        || key === 'ArrowRight' 
+        || key === 'Backspace'
+        || key === 'Delete';
+
+      // // TODO fix this mess here
+      // if (isDigit) {
+      //   if (this.val().toString().length >= 2) {
+      //     e.preventDefault();
+      //   }
+      // }
+      
+      // Check if the key is a number
+      if (!isDigit && !isException) {
+        e.preventDefault();
+      }
+    })
+
     // Add event listener for quantity input change event using event delegation
-    document.addEventListener("input", function (event) {
-        // Check if the changed element is a quantity input field
-        if (event.target.classList.contains("quantity-input")) {
-            // Get the parent row of the input field
-            const row = event.target.closest("tr");
-            // Get the price per unit of the food from the data attribute or other source
-            const pricePerUnitText = row.querySelector("td:nth-child(2)").textContent.trim();
-            const pricePerUnit = parseFloat(pricePerUnitText.replace("đ", "").replace(",", ""));
-            // Get the quantity entered by the user
-            const quantity = parseInt(event.target.value, 10);
-            // Calculate the new product price
-            const productPrice = pricePerUnit * quantity;
-            // Update the product price cell in the same row
-            row.querySelector("td:nth-child(4)").textContent = productPrice.toLocaleString() + "đ";
-            // Calculate and update the total price
-            updateTotalPrice();
-        }
-    });
+    $('.quantity-input').on('blur', (e) => {
+      // Get the parent row of the input field
+      const row = event.target.closest("tr");
+      const target = e.target;
+      // Get the price per unit of the food from the data attribute or other source
+      const pricePerUnitText = row.querySelector("td:nth-child(2)").textContent.trim();
+      const pricePerUnit = parseFloat(pricePerUnitText.replace("đ", "").replace(",", ""));
+      
+      // Get the quantity entered by the user
+      const currentQuantity = parseInt(event.target.value, 10);
+
+      // // Validates the user input, making sure it is within 1-10
+      // let newQuantity =
+      //   !isNaN(currentQuantity) && currentQuantity >= 1 && currentQuantity < 10 // user input is valid
+      //     ? currentQuantity
+      //     : 1; // default to 1
+      // target.val(newQuantity); // TODO fix this mess here
+      
+      // Calculate the new product price
+      const productPrice = pricePerUnit * newQuantity;
+      // Update the product price cell in the same row
+      $(tableRow).find(".item-total").html(formattedItemTotal + " đ");
+      // Calculate and update the total price
+      updateTotalPrice();
+    })
 
     // Function to update the total price based on all product prices
     function updateTotalPrice() {
@@ -133,8 +180,99 @@
             totalPrice += productPrice;
         });
         // Update the total price element
-        const totalPriceElement = document.querySelector(".modal-footer h5");
+        const totalPriceElement = document.querySelector("#grand-total");
         totalPriceElement.textContent = "Tổng thanh toán: " + totalPrice.toLocaleString() + "đ";
     }
+
+        /**
+     * Increments the value of a field by 1 when triggered by an event.
+     *
+     * @param {Event} e - The event object.
+     * @return {number} The new value.
+     */
+    function incrementValue(e) {
+      e.preventDefault();
+      let target = $(e.target);
+      let fieldName = target.data("field");
+      let parent = target.closest("div");
+      let quantityInput = parent.find("input[name=" + fieldName + "]");
+      let currentQuantity = parseInt(quantityInput.val(), 10);
+
+      // Set the new value, making sure it is within 1-10
+      let newQuantity =
+        !isNaN(currentQuantity) && currentQuantity >= 1 && currentQuantity < 10
+          ? currentQuantity + 1
+          : 10;
+      quantityInput.val(newQuantity);
+
+      return newQuantity;
+    }
+
+    /**
+     * Decrements the value of an input field by 1.
+     *
+     * @param {Event} e - The event object.
+     * @return {number} The new value.
+     */
+    function decrementValue(e) {
+      e.preventDefault();
+      let target = $(e.target);
+      let fieldName = target.data("field");
+      let parent = target.closest("div");
+      let quantityInput = parent.find("input[name=" + fieldName + "]");
+      let currentQuantity = parseInt(quantityInput.val(), 10);
+
+      // Set the new value, making sure it is within 1-10
+      let newQuantity =
+        !isNaN(currentQuantity) && currentQuantity > 1 && currentQuantity <= 10
+          ? currentQuantity - 1
+          : 1;
+      quantityInput.val(newQuantity);
+
+      return newQuantity;
+    }
+
+    /**
+     * Extracts the price from a string representation of a currency value.
+     *
+     * @param {string} str - The string representation of the currency value.
+     * @return {number} The price as a numeric value.
+     */
+    function getPrice(str) {
+      let trimmedStr = str
+        .substring(0, str.length - 2) // Removes currency symbol and space before it
+        .replace(",", ""); // Removes thousand separators
+      return parseInt(trimmedStr);
+    }
+
+    $(".input-group").on("click", ".button-plus", function (e) {
+      let quantity = incrementValue(e);
+      let target = $(e.target);
+      let tableRow = target.closest("tr");
+      let itemPriceStr = $(tableRow).find(".item-price").html();
+      let itemPrice = getPrice(itemPriceStr);
+      let itemTotal = itemPrice * quantity;
+
+      // Format the total price string so that it can be displayed correctly to the user
+      formattedItemTotal = itemTotal.toLocaleString();
+      $(tableRow).find(".item-total").html(formattedItemTotal + " đ");
+
+      updateTotalPrice();
+    });
+
+    $(".input-group").on("click", ".button-minus", function (e) {
+      let quantity = decrementValue(e);
+      let target = $(e.target);
+      let tableRow = target.closest("tr");
+      let itemPriceStr = $(tableRow).find(".item-price").html();
+      let itemPrice = getPrice(itemPriceStr);
+      let itemTotal = itemPrice * quantity;
+
+      // Format the total price string so that it can be displayed correctly to the user
+      formattedItemTotal = itemTotal.toLocaleString();
+      $(tableRow).find(".item-total").html(formattedItemTotal + " đ");
+
+      updateTotalPrice();
+    });
 
 </script>
