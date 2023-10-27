@@ -2,7 +2,7 @@
 <%@ page pageEncoding="UTF-8" %>
 <!-- Cart -->
 <div class="modal" tabindex="-1" id="cart-modal">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered modal-fullscreen-lg-down">
         <div class="modal-content px-4 py-3">
             <div class="modal-header pb-0 border-bottom-0">
                 <h4 class="modal-title" id="exampleModalLabel">Giỏ hàng</h5>
@@ -85,20 +85,14 @@
                     </div>
                 </form>
             </div>
-            <div class="modal-footer pt-0">
-                <div class="d-flex flex-row align-items-center justify-content-end w-100">
-                    <div class="me-3">
-                        <button type="button" class="btn btn-outline-dark px-4" data-bs-dismiss="modal" aria-label="Close">
-                          Tiếp tục chọn món
-                        </button>
-                    </div>
-                    <div class="">
-                        <%-- To solve the issue of submit button outside of the form element, just add "form" attribute --%>
-                        <button type="submit" class="btn btn-primary px-5" id="btnSubmit" name="btnSubmit" form="cart-form" value="Checkout">
-                          Thanh toán
-                        </button>
-                    </div>
-                </div>
+            <div class="modal-footer flex-wrap pt-0">
+              <button type="button" class="btn w-100 w-sm-auto btn-outline-dark px-4" data-bs-dismiss="modal" aria-label="Close">
+                Tiếp tục chọn món
+              </button>
+              <%-- To solve the issue of submit button outside of the form element, just add "form" attribute --%>
+              <button type="submit" class="btn w-100 w-sm-auto btn-primary px-5" id="btnSubmit" name="btnSubmit" form="cart-form" value="Checkout">
+                Thanh toán
+              </button>
             </div>
         </div>
     </div>
