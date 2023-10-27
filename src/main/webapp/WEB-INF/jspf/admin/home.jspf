@@ -22,11 +22,11 @@
     <h2 class="text-start fs-2">Số liệu hôm nay</h2>
     <div class="d-flex flex-row flex-wrap flex-between-center gap-3 mt-3">
       <div>
-        <p class="fs-4 fw-bold mb-1">${revenueInDay}</p>
+        <p class="fs-4 fw-bold mb-1">20.035.000đ</p>
         <h6>Doanh thu bán hàng</h6>
       </div>
       <div>
-        <p class="fs-4 fw-bold mb-1">${orderInDay}</p>
+        <p class="fs-4 fw-bold mb-1">354</p>
         <h6>Đơn hàng</h6>
       </div>
       <div>
