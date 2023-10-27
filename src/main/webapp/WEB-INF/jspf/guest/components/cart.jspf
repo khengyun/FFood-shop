@@ -29,7 +29,7 @@
                                 <c:when test="${sessionScope['cart'].items.isEmpty() || sessionScope['cart'].items == null}">
                                     <tr>
                                         <td colspan="5" class="text-center">
-                                            <p id="empty-cart-label" class="fs-1 my-1">Giỏ hàng của bạn đang trống</p>
+                                            <p id="empty-cart-label" class="fs-1 my-1">Giỏ hàng của bạn đang trống</p>
                                         </td>
                                     </tr>
                                 </c:when>
@@ -61,13 +61,12 @@
                                     </td>
                                     <!-- Remove -->
                                     <td>
-                                        <a href="deleteCart?fid=${cart.food.foodID}" 
-                                                    class="d-flex btn btn-sm btn-outline-danger align-items-center px-3"
-                                                    style="width:fit-content;"
-                                                    onclick="return confirm('Bạn có muốn xóa Món này khỏi Giỏ hàng không?')">
-                                                    <i class="ph-bold ph-trash fs-1 me-2"></i>
-                                                    Xóa
-                                        </a>
+                                        <button type="button" style="width:fit-content;" 
+                                                class="d-flex btn btn-sm btn-outline-danger align-items-center px-3" 
+                                                onclick="deleteCartItem(${cart.food.foodID})">
+                                             <i class="ph-bold ph-trash fs-1 me-2"></i>
+                                            Xóa
+                                        </button>
                                     </td>
                                 </tr>
                             </c:forEach>
