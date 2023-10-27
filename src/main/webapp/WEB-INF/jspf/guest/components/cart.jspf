@@ -8,7 +8,7 @@
                 <h4 class="modal-title" id="exampleModalLabel">Giỏ hàng</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body py-2">
                 <%-- Putting form inside modal body ensures the modal's scrollability --%>
                 <form id="cart-form" action="checkout" method="POST">
                     <div class="table-responsive">
@@ -23,9 +23,18 @@
                                 </tr>
                             </thead>
                             <tbody class="table-group-divider">
-                            <p style="color: red;">${mess}</p>
+                            <p style="color: red;">${sessionScope.mess}</p>
                             <c:set var="totalPrice" value="0"></c:set>
-                            <c:forEach var="cart" items="${sessionScope['cart'].items}">
+                            <c:choose>
+                                <c:when test="${sessionScope['cart'].items.isEmpty() || sessionScope['cart'].items == null}">
+                                    <tr>
+                                        <td colspan="5" class="text-center">
+                                            <p id="empty-cart-label" class="fs-1 my-1">Giỏ hàng của bạn đang trống</p>
+                                        </td>
+                                    </tr>
+                                </c:when>
+                                <c:otherwise>
+                                  <c:forEach var="cart" items="${sessionScope['cart'].items}">
                                 <input type="text" name="fid" value="${cart.food.foodID}" hidden>
                                 <tr class="align-middle">
                                     <!-- Image and Food name -->
@@ -63,10 +72,12 @@
                                     </td>
                                 </tr>
                             </c:forEach>
+                            </c:otherwise>
+                            </c:choose>
                             </tbody>
                             <tfoot class="table-group-divider">
                               <th colspan="5" class="text-end">
-                                <h5 id="grand-total" class="mt-2">Tổng thanh toán: <fmt:formatNumber type="number" pattern="###,###"
+                                <h4 id="grand-total" class="mt-2">Tổng thanh toán: <fmt:formatNumber type="number" pattern="###,###"
                                   value="${totalPrice}"/> đ</h5>
                               </th>
                             </tfoot>
@@ -111,8 +122,9 @@
     // Get the number of rows in the cart table
     const numRows = cartTable.getElementsByTagName("tbody")[0].getElementsByTagName("tr").length;
 
-    // If there are no rows, disable the submit button and remove the cart badge
-    if (numRows === 0) {
+    // If there are no rows or there is an empty cart label, disable the submit button and remove the cart badge
+    // Otherwise, enable the submit button and add the cart badge
+    if (numRows === 0 || document.getElementById("empty-cart-label")) {
         document.getElementById("btnSubmit").disabled = true;
         cartBadge.classList.add("d-none");
     } else {

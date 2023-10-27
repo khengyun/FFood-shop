@@ -67,35 +67,38 @@ public class CheckoutController extends HttpServlet {
           throws ServletException, IOException {
 
     HttpSession session = request.getSession();
-    int userID = (Integer) session.getAttribute("userID");
-    AccountDAO accountDAO = new AccountDAO();
-    Account currentAccount = accountDAO.getAccount(userID);
+    
+    if (session.getAttribute("userID") != null) {
+        int userID = (Integer) session.getAttribute("userID");
+        // Người dùng có đăng nhập -> lấy thông tin người dùng để autofill
+        AccountDAO accountDAO = new AccountDAO();
+        Account currentAccount = accountDAO.getAccount(userID);
 
-    request.setAttribute("currentAccount", currentAccount);
-    //</editor-fold>
+        request.setAttribute("currentAccount", currentAccount);
+        //<editor-fold defaultstate="collapsed" desc="Lấy thông tin khách hàng nếu có">
+        // This info will be used to preload the "Thông tin của tôi" form
+        // Default int values are assigned 0 instead of null
+        if (currentAccount.getCustomerID() != 0) {
+          //<editor-fold defaultstate="collapsed" desc="Get customer info">
+          int customerID = currentAccount.getCustomerID();
+          CustomerDAO customerDAO = new CustomerDAO();
+          Customer customer = customerDAO.getCustomer(customerID);
 
-    //<editor-fold defaultstate="collapsed" desc="Get customer info if it exists">
-    // This info will be used to preload the "Thông tin của tôi" form
-    // Default int values are assigned 0 instead of null
-    if (currentAccount.getCustomerID() != 0) {
-      int customerID = currentAccount.getCustomerID();
-      CustomerDAO customerDAO = new CustomerDAO();
-      Customer customer = customerDAO.getCustomer(customerID);
+          request.setAttribute("customer", customer);
+          //</editor-fold>
 
-      request.setAttribute("customer", customer);
-    }
-    //</editor-fold>
+        }
+        //</editor-fold>
+      }
 
     // Lưu trữ URL hiện tại vào session attribute
     session.setAttribute("previousUrl", request.getRequestURI());
     Cart cart = (Cart) session.getAttribute("cart");
-    if (cart == null) {
-      request.setAttribute("mess", "Giỏ hàng trống, vui lòng chọn món để thanh toán");
-      request.getRequestDispatcher("home").forward(request, response);
-      return;
-    }
-    if (cart == null) {
+    if (cart == null || cart.getItems().isEmpty()) {
       cart = new Cart();
+      session.setAttribute("mess", "Giỏ hàng của bạn đang trống, vui lòng thêm món để thanh toán.");
+      response.sendRedirect("/");
+      return;
     }
     String quantityParam = "";
     for (CartItem cartItem : cart.getItems()) {
@@ -323,13 +326,11 @@ public class CheckoutController extends HttpServlet {
 //        OrderDAO odao = new OrderDAO();
 //        odao.insertOrderStatusNotCFYet(cart);
       Cart cart = (Cart) session.getAttribute("cart");
-      if (cart == null) {
-        request.setAttribute("mess", "Giỏ hàng trống, vui lòng chọn món để thanh toán");
-        request.getRequestDispatcher("home").forward(request, response);
-        return;
-      }
-      if (cart == null) {
+      if (cart == null || cart.getItems().isEmpty()) {
         cart = new Cart();
+        session.setAttribute("mess", "Giỏ hàng của bạn đang trống, vui lòng thêm món để thanh toán.");
+        response.sendRedirect("/");
+        return;
       }
       String quantityParam = "";
       for (CartItem cartItem : cart.getItems()) {
@@ -357,6 +358,11 @@ public class CheckoutController extends HttpServlet {
         session.setAttribute("quantity-" + foodId, quantityParam);
       }
       session.setAttribute("cart", cart);
+
+      // Remove empty cart message if it exists
+      if (session.getAttribute("mess") != null) {
+        session.removeAttribute("mess");
+      }
 
       request.getRequestDispatcher("checkout.jsp").forward(request, response);
     }
