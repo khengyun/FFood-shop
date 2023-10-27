@@ -46,7 +46,8 @@
               <div class="input-group-icon flex-grow-1 mx-md-5 pe-2">
                 <i class="fas fa-search input-box-icon text-primary"></i>
                 <input class="form-control border-1 input-box bg-100" type="search" placeholder="Tìm món ăn"
-                  aria-label="Tìm món ăn" id="search-bar" value="" onblur="searchFoodByKeyword()" />
+                  aria-label="Tìm món ăn" id="search-bar" oninput="searchFoodByKeyword()" />
+                <div class="list-group search-results" style="position: absolute;" id="search-results-list"></div>
               </div>
               <%@ include file="../../hyperfeat/fooddetechbutton.jspf" %>
                 <!-- Cart button -->
@@ -91,4 +92,4 @@
             </form>
           </div>
         </div>
-      </nav>
+</nav>
