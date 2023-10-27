@@ -3,7 +3,7 @@
 <div class="modal" tabindex="-1" id="delete-user-modal">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form class="delete-food-form" method="POST" action="/admin">
+            <form class="delete-user-form" method="POST" action="/admin">
                 <div class="modal-header">
                     <h5 class="modal-title">Xóa Tài khoản Người dùng</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -22,6 +22,7 @@
 
                     <!-- Hidden Submit Value -->
                     <input type="hidden" name="userData" value='{"key":"value"}'>
+                    <input type="hidden" name="customerData" value='{"key":"value"}'>
                     <input type="hidden" id="btnSubmit" name="btnSubmit" value="SubmitDeleteUser">
                 </div>
             </form>

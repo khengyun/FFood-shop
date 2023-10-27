@@ -40,7 +40,8 @@
                     <div class="tab-content">
                         <!-- Home Tab Content -->
                         <%@ include file="WEB-INF/jspf/admin/home.jspf" %>
-                       
+                       <!-- Insight Tab Content -->
+                        <%@ include file="WEB-INF/jspf/admin/insights.jspf" %>
                         <!-- Food & Drinks Tab Content -->
                         <%@ include file="WEB-INF/jspf/admin/foods.jspf" %>
                         <!-- Admin&Role Tab Content -->
@@ -51,10 +52,6 @@
                         <%@ include file="WEB-INF/jspf/admin/users.jspf" %>
                         <!-- Orders Tab Content -->
                         <%@ include file="WEB-INF/jspf/staff/orders.jspf" %>
-                        
-                         <!-- Insight Tab Content -->
-                        <%@ include file="WEB-INF/jspf/admin/insights.jspf" %>
-
                     </div>
                 </main>
             </div>

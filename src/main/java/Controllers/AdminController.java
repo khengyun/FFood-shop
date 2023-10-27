@@ -6,6 +6,7 @@ package Controllers;
 
 import DAOs.AccountDAO;
 import DAOs.AdminDAO;
+import DAOs.CustomerDAO;
 import DAOs.FoodDAO;
 import DAOs.OrderDAO;
 import DAOs.PromotionManagerDAO;
@@ -13,11 +14,13 @@ import DAOs.StaffDAO;
 import DAOs.VoucherDAO;
 import Models.Account;
 import Models.Admin;
+import Models.Customer;
 import Models.Food;
 import Models.Order;
 import Models.PromotionManager;
 import Models.Role;
 import Models.Staff;
+import Models.User;
 import Models.Voucher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -72,13 +75,13 @@ public class AdminController extends HttpServlet {
             int accountID = Integer.parseInt(s[s.length - 1]);
             AccountDAO dao = new AccountDAO();
             int result = dao.delete(accountID);
-            
+
             if (result == 1) {
                 response.sendRedirect("/admin#success_delete_user");
             } else {
                 response.sendRedirect("/admin#failure_delete_user");
             }
-            
+
         }
     }
 
@@ -121,10 +124,46 @@ public class AdminController extends HttpServlet {
 
         AccountDAO accountDAO = new AccountDAO();
         List<Account> userAccountList = accountDAO.getAllUser();
+        CustomerDAO customerDAO = new CustomerDAO();
+        List<Customer> customerList = customerDAO.getAllCustomer();
+
+        List<User> userList = new ArrayList<>();
+        for (Account account : userAccountList) {
+            if (account.getCustomerID() != 0) {
+                Customer c = customerDAO.getCustomer(account.getCustomerID());
+                User user = new User(
+                        account.getAccountID(),
+                        account.getCustomerID(),
+                        account.getUsername(),
+                        c.getFirstName(),
+                        c.getLastName(),
+                        c.getFullName(),
+                        c.getGender(),
+                        c.getPhone(),
+                        account.getEmail(),
+                        c.getAddress()
+                );
+                userList.add(user);
+            } else {
+                User user = new User(
+                        account.getAccountID(),
+                        0,
+                        account.getUsername(),
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        account.getEmail(),
+                        ""
+                );
+                userList.add(user);
+            }
+        }
 
         StaffDAO staffDAO = new StaffDAO();
         PromotionManagerDAO promotionManagerDAO = new PromotionManagerDAO();
-        
+
         List<Account> accountList = accountDAO.getAllRole();
         List<Staff> StaffList = staffDAO.getAllStaff();
         List<PromotionManager> PromotionManagerList = promotionManagerDAO.getAllPromotionManager();
@@ -160,7 +199,7 @@ public class AdminController extends HttpServlet {
         VoucherDAO voucherDAO = new VoucherDAO();
         List<Voucher> voucherList = voucherDAO.getAllList();
         request.setAttribute("foodList", foodList);
-        request.setAttribute("userAccountList", userAccountList);
+        request.setAttribute("userList", userList);
         request.setAttribute("roleList", roleList);
         request.setAttribute("orderList", orderList);
         request.setAttribute("voucherList", voucherList);
@@ -179,7 +218,7 @@ public class AdminController extends HttpServlet {
         String imageURL = (String) request.getAttribute("txtImageURL");
         FoodDAO foodDAO = new FoodDAO();
         Food food = new Food(foodName, foodDescription, foodPrice, foodStatus, foodRate, discountPercent, imageURL, foodTypeID);
-        if (foodDAO.getFood(foodName) != null){
+        if (foodDAO.getFood(foodName) != null) {
             response.sendRedirect("/admin#failure_add_food_exist");
             return;
         }
@@ -234,10 +273,9 @@ public class AdminController extends HttpServlet {
         // Delete each food item, and count deleted items
         FoodDAO dao = new FoodDAO();
         int result = dao.deleteMultiple(foodIDList);
-        
+
         // TODO implement a deletion status message after page reload
         // Redirect or forward to another page if necessary
-        
         if (result == 1) {
             response.sendRedirect("/admin#success_delete_food");
             return;
@@ -250,25 +288,117 @@ public class AdminController extends HttpServlet {
     private void doPostAddUser(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String username = request.getParameter("txtAccountUsername");
+        String lastname = request.getParameter("txtLastName");
+        String firstname = request.getParameter("txtFirstName");
+        String gender = request.getParameter("txtGender");
+        String phoneNumber = request.getParameter("txtPhoneNumber");
         String email = request.getParameter("txtEmail");
+        String address = request.getParameter("txtAddress");
         String password = (String) request.getAttribute("txtAccountPassword");
 
         AccountDAO accountDAO = new AccountDAO();
         Account account = new Account(username, email, password, "user");
-        
-        if (accountDAO.getAccount(email) != null){
+
+        if (accountDAO.getAccount(email) != null) {
             response.sendRedirect("/admin#failure_add_user_exist");
             return;
         }
-        
-        int result = accountDAO.add(account);
+
+        Customer newCustomer = new Customer(firstname, lastname, gender, phoneNumber, address);
+
+        CustomerDAO customerDAO = new CustomerDAO();
+        int result = customerDAO.add(newCustomer);
 
         if (result == 1) {
-            response.sendRedirect("/admin#success_add_user");
-            return;
+            account.setCustomerID(customerDAO.getLatestCustomer().getCustomerID());
+            System.out.println(account.getCustomerID());
+            int result1 = accountDAO.add(account);
+            if (result == 1) {
+                response.sendRedirect("/admin#success_add_user");
+                return;
+            } else {
+                response.sendRedirect("/admin#failure_add_user");
+                return;
+            }
         } else {
             response.sendRedirect("/admin#failure_add_user");
             return;
+        }
+
+    }
+    
+    private void doPostUpdateUser(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int userID = Integer.parseInt(request.getParameter("txtUserID"));
+        int customerID = Integer.parseInt(request.getParameter("txtCustomerID"));
+        String username = request.getParameter("txtAccountUsername");
+        String lastname = request.getParameter("txtLastName");
+        String firstname = request.getParameter("txtFirstName");
+        String gender = request.getParameter("txtGender");
+        String phoneNumber = request.getParameter("txtPhoneNumber");
+        String email = request.getParameter("txtEmail");
+        String address = request.getParameter("txtAddress");
+        String password = (String) request.getAttribute("txtAccountPassword");
+
+        AccountDAO accountDAO = new AccountDAO();
+        CustomerDAO customerDAO = new CustomerDAO();
+        Account account = new Account(username, email, password, "user");
+        account.setAccountID(userID);
+        Customer customer = new Customer(firstname, lastname, gender, phoneNumber, address);
+        int result1 = 0;
+        if (customerID == 0){
+            result1 = customerDAO.add(customer);
+            account.setCustomerID(customerDAO.getLatestCustomer().getCustomerID());
+        } else {
+            customer.setCustomerID(customerID);
+            result1 = customerDAO.update(customer); 
+        }
+     
+        if (result1 == 1) {
+            int result = accountDAO.update(account);
+            int result2 = accountDAO.updateCustomerID(account);
+            response.sendRedirect("/admin#success_update_user");
+            return;
+        } else {
+            response.sendRedirect("/admin#failure_update_user");
+            return;
+        }
+    }
+    
+    private void doPostDeleteUser(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        // Get the string of food IDs from the request
+        String[] userIDs = request.getParameter("userData").split(",");
+        String[] customerIDs = request.getParameter("customerData").split(",");
+
+        // Convert the strings to numbers
+        List<Integer> userIDList = new ArrayList<>();
+        for (int i = 0; i < userIDs.length; i++) {
+            userIDList.add(Integer.parseInt(userIDs[i]));
+        }
+
+        // Convert the strings to numbers
+        List<Integer> customerIDList = new ArrayList<>();
+        for (int i = 0; i < customerIDs.length; i++) {
+            customerIDList.add(Integer.parseInt(customerIDs[i]));
+        }
+        
+        // Delete each food item, and count deleted items
+        AccountDAO accountDAO = new AccountDAO();
+        int result1 = accountDAO.deleteMultiple(userIDList);
+        int result2 = 0;
+        if (result1 == 1) {
+            CustomerDAO customerDAO = new CustomerDAO();
+            result2 = customerDAO.deleteMultiple(customerIDList);
+            if (result2 == 1) {
+                response.sendRedirect("/admin#success_delete_user");
+            } else {
+                response.sendRedirect("/admin#failure_delete_user");
+            }
+
+        } else {
+            response.sendRedirect("/admin#failure_delete_user");
         }
     }
 
@@ -281,11 +411,11 @@ public class AdminController extends HttpServlet {
         String password = (String) request.getAttribute("txtAccountPassword");
         AccountDAO accountDAO = new AccountDAO();
         Account account = new Account(username, email, password, role);
-        if (accountDAO.getAccount(email) != null){
+        if (accountDAO.getAccount(email) != null) {
             response.sendRedirect("/admin#failure_add_role_exist");
             return;
         }
-        
+
         if (role.equals("staff")) {
             Staff newstaff = new Staff(fullname);
             StaffDAO staffDAO = new StaffDAO();
@@ -326,7 +456,7 @@ public class AdminController extends HttpServlet {
             }
         }
     }
-    
+
     private void doPostUpdateRole(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Integer accountID = Integer.parseInt(request.getParameter("txtAccountID"));
@@ -336,19 +466,18 @@ public class AdminController extends HttpServlet {
         String email = request.getParameter("txtEmail");
         String role = request.getParameter("txtAccountRole");
         String password = (String) request.getAttribute("txtAccountPassword");
-        
+
         AccountDAO accountDAO = new AccountDAO();
         Account account = new Account(username, email, password, role);
         account.setAccountID(accountID);
         if (role.equals("staff")) {
-            Staff updatestaff = new Staff(roleID,fullname);
+            Staff updatestaff = new Staff(roleID, fullname);
             StaffDAO staffDAO = new StaffDAO();
             int result = staffDAO.update(updatestaff);
 
             if (result == 1) {
                 account.setStaffID(roleID);
                 int result1 = accountDAO.update(account);
-                System.out.println(result1);
                 if (result1 == 1) {
                     response.sendRedirect("/admin#success_update_role");
                     return;
@@ -361,7 +490,7 @@ public class AdminController extends HttpServlet {
                 return;
             }
         } else if (role.equals("promotionManager")) {
-            PromotionManager newPromotionManager = new PromotionManager(roleID,fullname);
+            PromotionManager newPromotionManager = new PromotionManager(roleID, fullname);
             PromotionManagerDAO promotionManagerDAO = new PromotionManagerDAO();
             int result = promotionManagerDAO.update(newPromotionManager);
 
@@ -383,7 +512,7 @@ public class AdminController extends HttpServlet {
             }
         }
     }
-    
+
     private void doPostDeleteRole(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -392,19 +521,17 @@ public class AdminController extends HttpServlet {
         String[] roleIDs = request.getParameter("roleData").split(",");
         String[] temp1IDs = request.getParameter("temp1Data").split(",");
         String[] temp2IDs = request.getParameter("temp2Data").split(",");
-        
-        
-        
+
         // Convert the strings to numbers
         List<Byte> roleIDList = new ArrayList<>();
         for (int i = 0; i < roleIDs.length; i++) {
             roleIDList.add(Byte.parseByte(roleIDs[i]));
         }
-        
+
 //        // Convert the strings to numbers
-        List<Byte> accountIDList = new ArrayList<>();
+        List<Integer> accountIDList = new ArrayList<>();
         for (int i = 0; i < accountIDs.length; i++) {
-            accountIDList.add(Byte.parseByte(accountIDs[i]));
+            accountIDList.add(Integer.parseInt(accountIDs[i]));
         }
 //        
 //        // Convert the strings to numbers
@@ -416,7 +543,7 @@ public class AdminController extends HttpServlet {
         for (int i = 0; i < temp2IDs.length; i++) {
             ProIDList.add(Byte.parseByte(temp2IDs[i]));
         }
-        
+
         // Delete each food item, and count deleted items
         AccountDAO accountDAO = new AccountDAO();
         int result1 = accountDAO.deleteMultiple(accountIDList);
@@ -425,42 +552,19 @@ public class AdminController extends HttpServlet {
             if (StaffIDList.size() != 0) {
                 StaffDAO staffDAO = new StaffDAO();
                 result2 = staffDAO.deleteMultiple(StaffIDList);
-                
+
             } else {
                 PromotionManagerDAO proDAO = new PromotionManagerDAO();
                 result2 = proDAO.deleteMultiple(ProIDList);
             }
-            
-            if (result2 == 1){
+
+            if (result2 == 1) {
                 response.sendRedirect("/admin#success_delete_role");
             } else {
                 response.sendRedirect("/admin#failure_delete_role");
             }
-            
         } else {
             response.sendRedirect("/admin#failure_delete_role");
-        }
-    }
-
-    private void doPostUpdateUser(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        int accountID = Integer.parseInt(request.getParameter("txtAccountID"));
-        String username = request.getParameter("txtAccountUsername");
-        String email = request.getParameter("txtEmail");
-        String password = (String) request.getAttribute("txtAccountPassword");
-
-        AccountDAO accountDAO = new AccountDAO();
-        Account account = new Account(username, email, password, "user");
-        account.setAccountID(accountID);
-
-        int result = accountDAO.update(account);
-
-        if (result == 1) {
-            response.sendRedirect("/admin#success_update_user");
-            return;
-        } else {
-            response.sendRedirect("/admin#failure_update_user");
-            return;
         }
     }
 
@@ -477,12 +581,12 @@ public class AdminController extends HttpServlet {
 
         VoucherDAO voucherDAO = new VoucherDAO();
         Voucher voucher = new Voucher(voucherName, voucherCode, voucher_discount_percent, voucher_quantity, voucher_status, datetime);
-        
+
         if (voucherDAO.getVoucher(voucherName) != null) {
             response.sendRedirect("/admin#failure_add_voucher_exist");
             return;
         }
-        
+
         int result = voucherDAO.add(voucher);
 
         if (result == 1) {
@@ -538,7 +642,6 @@ public class AdminController extends HttpServlet {
 
         // TODO implement a deletion status message after page reload
         // Redirect or forward to another page if necessary
-        
         if (result == 1) {
             response.sendRedirect("/admin#success_delete_voucher");
             return;
@@ -605,6 +708,9 @@ public class AdminController extends HttpServlet {
                     break;
                 case "SubmitUpdateUser":
                     doPostUpdateUser(request, response);
+                    break;
+                case "SubmitDeleteUser":
+                    doPostDeleteUser(request, response);
                     break;
                 case "SubmitAddVoucher":
                     doPostAddVoucher(request, response);

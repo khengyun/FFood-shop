@@ -28,15 +28,30 @@ public class AccountDAO {
         int result = 0;
         try {
             if (account.getAccountType().equals("user")) {
-                // Account is of User type (no adminID)
-                String sql = "insert into Account (account_username, account_email, account_password, account_type) values (?, ?, ?, ?)";
-                PreparedStatement ps = conn.prepareStatement(sql);
-                ps.setString(1, account.getUsername());
-                ps.setString(2, account.getEmail());
-                ps.setString(3, account.getPassword());
-                ps.setString(4, account.getAccountType());
-                result = ps.executeUpdate();
-            } else if (account.getAccountType().equals("staff")){
+                if (account.getCustomerID() != 0) {
+                    System.out.println("AAAAAAAAAAAAAAAA");
+                    String sql = "insert into Account (customer_id ,account_username, account_email, account_password, account_type) values (?, ?, ?, ?, ?)";
+                    PreparedStatement ps = conn.prepareStatement(sql);
+                    ps.setInt(1, account.getCustomerID());
+                    ps.setString(2, account.getUsername());
+                    ps.setString(3, account.getEmail());
+                    ps.setString(4, account.getPassword());
+                    ps.setString(5, account.getAccountType());
+                    result = ps.executeUpdate();
+                } else {
+                    System.out.println("BBBBBBBBBBBBBBBBB");
+
+                    // Account is of User type (no adminID)
+                    String sql = "insert into Account (account_username, account_email, account_password, account_type) values (?, ?, ?, ?)";
+                    PreparedStatement ps = conn.prepareStatement(sql);
+                    ps.setString(1, account.getUsername());
+                    ps.setString(2, account.getEmail());
+                    ps.setString(3, account.getPassword());
+                    ps.setString(4, account.getAccountType());
+                    result = ps.executeUpdate();
+                }
+
+            } else if (account.getAccountType().equals("staff")) {
                 //  Account is of Admin type (no customerID)
                 String sql = "insert into Account (staff_id ,account_username, account_email, account_password, account_type) values (?, ?, ?, ?, ?)";
                 PreparedStatement ps = conn.prepareStatement(sql);
@@ -46,7 +61,7 @@ public class AccountDAO {
                 ps.setString(4, account.getPassword());
                 ps.setString(5, account.getAccountType());
                 result = ps.executeUpdate();
-            } else if (account.getAccountType().equals("promotionManager")){
+            } else if (account.getAccountType().equals("promotionManager")) {
                 //  Account is of Admin type (no customerID)
                 String sql = "insert into Account (pro_id, account_username, account_email, account_password, account_type) values (?, ?, ?, ?, ?)";
                 PreparedStatement ps = conn.prepareStatement(sql);
@@ -65,8 +80,6 @@ public class AccountDAO {
                 ps.setString(4, account.getAccountType());
                 result = ps.executeUpdate();
             }
-
-
         } catch (SQLException ex) {
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -110,7 +123,7 @@ public class AccountDAO {
         }
         return result;
     }
-    
+
     public int updateCustomerID(Account account) {
         String sql = "";
         int result = 0;
@@ -139,12 +152,12 @@ public class AccountDAO {
         }
         return result;
     }
-    
-    public int deleteMultiple(List<Byte> accountIDs) {
+
+    public int deleteMultiple(List<Integer> accountIDs) {
         int result = 0;
         try {
             conn.setAutoCommit(false); // Start transaction
-            for (Byte accountID : accountIDs) {
+            for (Integer accountID : accountIDs) {
                 if (delete(accountID) == 1) {
                     result++; // Count number of successful deletions
                 } else {
@@ -212,7 +225,7 @@ public class AccountDAO {
             while (accountRS.next()) {
                 // Selected account is of Admin type
                 if (accountRS.getString("account_type").equals("staff")) {
-                    Account account = new Account(                           
+                    Account account = new Account(
                             accountRS.getString("account_username"),
                             accountRS.getString("account_email"),
                             accountRS.getString("account_password"),
@@ -236,7 +249,7 @@ public class AccountDAO {
             while (accountRS.next()) {
                 // Selected account is of Admin type
                 if (accountRS.getString("account_type").equals("promotionManager")) {
-                    Account account = new Account(             
+                    Account account = new Account(
                             accountRS.getString("account_username"),
                             accountRS.getString("account_email"),
                             accountRS.getString("account_password"),

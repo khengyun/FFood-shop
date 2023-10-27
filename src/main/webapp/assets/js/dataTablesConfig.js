@@ -521,20 +521,6 @@ $(document).ready(function () {
             disableDeleteRoleBtn();
         }
     });
-    roleTable.on('select-blur', function (e, dt, target, originalEvent) {
-        // Ignores blur event if user clicks on update/delete/cancel/confirm buttons, or the background of a modal dialog
-        if (target.classList.contains("btn-update")
-                || target.classList.contains("btn-delete")
-                || target.classList.contains("btn-cancel")
-                || target.classList.contains("btn-confirm")
-                || target.id === "update-role-modal"
-                || target.id === "delete-role-modal") {
-            e.preventDefault();
-        } else {
-            disableUpdateRoleBtn();
-            disableDeleteRoleBtn();
-        }
-    });
 
     $("[data-bs-target='#roles']").on('shown.bs.tab', function () {
         // Remove searchPanes' expand and collapse all panes button
@@ -580,6 +566,7 @@ $(document).ready(function () {
                 ">" +
                 ">",
     });
+    
     /*
      Highlights current column that the mouse cursor is hovering on
      This should be used in tandem with default hover option for increased cursor visibility
@@ -600,9 +587,15 @@ $(document).ready(function () {
     function disableUpdateUserBtn() {
         let btnUpdate = $('#btn-update-user');
         if (btnUpdate) {
-            btnUpdate.removeAttr("data-account-id");
-            btnUpdate.removeAttr("data-username");
-            btnUpdate.removeAttr("data-email");
+            btnUpdate.removeAttr("data-user-id");
+            btnUpdate.removeAttr("data-user-customerid");
+            btnUpdate.removeAttr("data-user-username");
+            btnUpdate.removeAttr("data-user-lastname");
+            btnUpdate.removeAttr("data-user-firstname");
+            btnUpdate.removeAttr("data-user-gender");
+            btnUpdate.removeAttr("data-user-phone");
+            btnUpdate.removeAttr("data-user-email");
+            btnUpdate.removeAttr("data-user-address");
             btnUpdate.addClass("disabled");
         }
     }
@@ -610,9 +603,10 @@ $(document).ready(function () {
     function disableDeleteUserBtn() {
         let btnDelete = $('#btn-delete-user');
         if (btnDelete) {
-            btnDelete.removeAttr("data-account-id");
-            btnDelete.removeAttr("data-username");
-            btnDelete.removeAttr("data-email");
+            btnUpdate.removeAttr("data-user-id");
+            btnUpdate.removeAttr("data-user-customerid");
+            btnUpdate.removeAttr("data-user-username");
+            btnUpdate.removeAttr("data-user-firstname");
             btnDelete.addClass("disabled");
         }
     }
@@ -630,22 +624,36 @@ $(document).ready(function () {
 
                 // data's type is a 2D array since the table's data is DOM-sourced
                 // https://datatables.net/reference/api/row().data()
-                btnUpdate.attr("data-account-id", data3[0][0]);
-                btnUpdate.attr("data-username", data3[0][1]);
-                btnUpdate.attr("data-email", data3[0][2]);
+                btnUpdate.attr("data-user-id", data3[0][0]);
+                btnUpdate.attr("data-user-customerid", data3[0][1]);
+                btnUpdate.attr("data-user-username", data3[0][2]);
+                btnUpdate.attr("data-user-lastname", data3[0][3]);
+                btnUpdate.attr("data-user-firstname", data3[0][4]);
+                btnUpdate.attr("data-user-gender", data3[0][5]);
+                btnUpdate.attr("data-user-phone", data3[0][6]);
+                btnUpdate.attr("data-user-email", data3[0][7]);
+                btnUpdate.attr("data-user-address", data3[0][8]);
                 btnUpdate.removeClass("disabled");
 
                 let users = {};
-                users[data3[0][0]] = data3[0][1]; // food[id] = food name
+                let customers = {};
+
+                users[data3[0][0]] = data3[0][2]; 
+                customers[data3[0][1]] = data3[0][4]; 
                 btnDelete.attr("data-users", JSON.stringify(users));
+                btnDelete.attr("data-customers", JSON.stringify(customers));
                 btnDelete.removeClass("disabled");
             } else if (data3.length > 1) {
                 let users = {};
+                let customers = {};
                 for (let i = 0; i < data3.length; i++) {
                     let userId = data3[i][0];
-                    users[userId] = data3[i][1]; // Food name
+                    let customerId = data3[i][1];
+                    users[userId] = data3[i][1]; 
+                    customers[customerId] = data3[i][4]; 
                 }
                 btnDelete.attr("data-users", JSON.stringify(users));
+                btnDelete.attr("data-customers", JSON.stringify(customers));
                 btnDelete.removeClass("disabled");
                 disableUpdateUserBtn();
             } else {
@@ -669,22 +677,6 @@ $(document).ready(function () {
             disableDeleteUserBtn();
         }
     });
-
-    userTable.on('select-blur', function (e, dt, target, originalEvent) {
-        // Ignores blur event if user clicks on update/delete/cancel/confirm buttons, or the background of a modal dialog
-        if (target.classList.contains("btn-update")
-                || target.classList.contains("btn-delete")
-                || target.classList.contains("btn-cancel")
-                || target.classList.contains("btn-confirm")
-                || target.id === "update-user-modal"
-                || target.id === "delete-user-modal") {
-            e.preventDefault();
-        } else {
-            disableUpdateUserBtn();
-            disableDeleteUserBtn();
-        }
-    });
-
 
     $("[data-bs-target='#users']").click(function () {
         // Remove searchPanes' expand and collapse all panes button
