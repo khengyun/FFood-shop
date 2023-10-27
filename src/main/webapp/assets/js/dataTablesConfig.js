@@ -400,14 +400,15 @@ $(document).ready(function () {
                 .each((element) => element.classList.add('highlight'));
     });
 
-    function disableUpdateRoleBtn() {
+     function disableUpdateRoleBtn() {
         let btnUpdate = $('#btn-update-role');
         if (btnUpdate) {
-            btnUpdate.removeAttr("data-role-id");
-
-            btnUpdate.removeAttr("data-role-name");
+            btnUpdate.removeAttr("data-role-accountid");
+            btnUpdate.removeAttr("data-role-roleid");
+            btnUpdate.removeAttr("data-role-username");
+            btnUpdate.removeAttr("data-role-fullname");
+            btnUpdate.removeAttr("data-role-email");
             btnUpdate.removeAttr("data-role-type");
-
             btnUpdate.addClass("disabled");
         }
     }
@@ -415,8 +416,10 @@ $(document).ready(function () {
     function disableDeleteRoleBtn() {
         let btnDelete = $('#btn-delete-role');
         if (btnDelete) {
-            btnDelete.removeAttr("data-role-id");
-            btnDelete.removeAttr("data-role-name");
+            btnDelete.removeAttr("data-role-accountid");
+            btnDelete.removeAttr("data-role-roleid");
+            btnDelete.removeAttr("data-role-fullname");
+            btnDelete.removeAttr("data-role-username");
             btnDelete.addClass("disabled");
         }
     }
@@ -434,23 +437,67 @@ $(document).ready(function () {
 
                 // data's type is a 2D array since the table's data is DOM-sourced
                 // https://datatables.net/reference/api/row().data()
-                btnUpdate.attr("data-role-id", data2[0][0]);
-                btnUpdate.attr("data-role-type", data2[0][2]);
-                btnUpdate.attr("data-role-name", data2[0][1]);
-
+                btnUpdate.attr("data-role-accountid", data2[0][0]);
+                btnUpdate.attr("data-role-roleid", data2[0][1]);
+                btnUpdate.attr("data-role-username", data2[0][2]);
+                btnUpdate.attr("data-role-fullname", data2[0][3]);
+                btnUpdate.attr("data-role-email", data2[0][4]);
+                let account_type = "";
+                if (data2[0][5] === "Staff"){
+                    account_type = "staff";
+                } else {
+                    account_type = "promotionManager";
+                }
+                btnUpdate.attr("data-role-type", account_type);
                 btnUpdate.removeClass("disabled");
 
                 let roles = {};
-                roles[data2[0][0]] = data2[0][2]; // food[id] = food name
+                let accounts = {};
+                let temp1s = {};
+                let temp2s = {};
+                
+                roles[data2[0][1]] = data2[0][3];
+                accounts[data2[0][0]] = data2[0][2];
+                account_type = "";
+                if (data2[0][5] === "Staff") {
+                    account_type = "staff";
+                    temp1s[data2[0][1]] = account_type; 
+                
+                    btnDelete.attr("data-temp1s", JSON.stringify(temp1s));
+                } else {
+                    account_type = "promotionManager";
+                    temp2s[data2[0][1]] = account_type; 
+                    btnDelete.attr("data-temp2s", JSON.stringify(temp2s));
+                } 
                 btnDelete.attr("data-roles", JSON.stringify(roles));
+                btnDelete.attr("data-accounts", JSON.stringify(accounts));
+                
+                
                 btnDelete.removeClass("disabled");
             } else if (data2.length > 1) {
                 let roles = {};
+                let temp1s = {};
+                let temp2s = {};
+                let accounts = {};
                 for (let i = 0; i < data2.length; i++) {
-                    let roleId = data2[i][0];
-                    roles[roleId] = data2[i][2]; // Food name
+                    let roleId = data2[i][1];
+                    let accountId = data2[i][0];
+                    roles[i] = data2[i][3];
+                    accounts[accountId] = data2[i][2]; 
+                    
+                    let account_type = "";
+                    if (data2[i][5] === "Staff") {
+                        account_type = "staff";
+                        temp1s[roleId] = account_type; 
+                    } else {
+                        account_type = "promotionManager";
+                        temp2s[roleId] = account_type; 
+                    }  
                 }
                 btnDelete.attr("data-roles", JSON.stringify(roles));
+                btnDelete.attr("data-temp1s", JSON.stringify(temp1s));
+                btnDelete.attr("data-temp2s", JSON.stringify(temp2s));
+                btnDelete.attr("data-accounts", JSON.stringify(accounts));
                 btnDelete.removeClass("disabled");
                 disableUpdateRoleBtn();
             } else {
@@ -489,7 +536,7 @@ $(document).ready(function () {
         }
     });
 
-    $("[data-bs-target='#vouchers']").on('shown.bs.tab', function () {
+    $("[data-bs-target='#roles']").on('shown.bs.tab', function () {
         // Remove searchPanes' expand and collapse all panes button
         $('.dtsp-showAll').remove();
         $('.dtsp-collapseAll').remove();
