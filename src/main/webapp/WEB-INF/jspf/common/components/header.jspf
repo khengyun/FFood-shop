@@ -1,94 +1,86 @@
 <%-- any content can be specified here e.g.: --%>
-  <%@ include file="../imports/base.jspf" %>
-    <%@ page pageEncoding="UTF-8" %>
+<%@ include file="../imports/base.jspf" %>
+<%@ page pageEncoding="UTF-8" %>
 
-      <!-- SUB NAVBAR -->
-      <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block">
-        <div class="container text-light">
-          <div class="w-100 d-flex justify-content-between">
+<!-- SUB NAVBAR -->
+<nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block">
+    <div class="container text-light">
+        <div class="w-100 d-flex justify-content-between">
             <div>
-              <i class="fa fa-envelope mx-2"></i>
-              <a href="mailto:ffood.shop.cantho@gmail.com" class="navbar-sm-brand text-light text-decoration-none">
-                ffood.shop.cantho@gmail.com
-              </a>
-
+                <i class="fa fa-envelope mx-2"></i>
+                <a href="mailto:ffood.shop.cantho@gmail.com" class="navbar-sm-brand text-light text-decoration-none">
+                    ffood.shop.cantho@gmail.com
+                </a>
             </div>
             <div>
-              <a class="text-light px-3" href="https://github.com/khengyun/FFood-shop" target="_blank">
-                <!--                    <i class="fab fa-facebook fa-sm fa-fw me-2"></i>-->
-                Facebook
-              </a>
-              <a class="text-light" href="https://github.com/khengyun/FFood-shop" target="_blank">
-                <!--                    <i class="fab fa-facebook fa-sm fa-fw me-2"></i>-->
-                Zalo
-              </a>
+                <i class="fa fa-phone mx-2"></i>
+                <a href="tel:0914-875-606" class="navbar-sm-brand text-light text-decoration-none">
+                    0914-875-606
+                </a>
             </div>
-          </div>
-      </nav>
+        </div>
+</nav>
 
-      <!-- MAIN NAVBAR -->
-      <nav class="navbar navbar-expand-lg navbar-light shadow bg-light sticky-top"
-        data-navbar-on-scroll="data-navbar-on-scroll">
-        <div class="container">
-          <a class="navbar-brand d-inline-flex" href="/">
+<!-- MAIN NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-light shadow bg-light sticky-top"
+     data-navbar-on-scroll="data-navbar-on-scroll">
+    <div class="container">
+        <a class="navbar-brand d-inline-flex" href="/">
             <img class="d-inline-block" src="<%= request.getContextPath() + " assets/img/gallery/logo.svg"%>"
-            alt="logo"/>
+                 alt="logo"/>
             <span class="text-1000 fs-3 fw-bold ms-2 text-gradient">FFood</span>
-          </a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="Toggle navigation">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse pt-3 pb-2 py-lg-2 w-100" id="navbarSupportedContent">
+        </button>
+        <div class="collapse navbar-collapse pt-3 pb-2 py-lg-2 w-100" id="navbarSupportedContent">
             <form class="d-flex col">
-              <!-- Search bar -->
-              <div class="input-group-icon flex-grow-1 mx-md-5 pe-2">
-                <i class="fas fa-search input-box-icon text-primary"></i>
-                <input class="form-control border-1 input-box bg-100" type="search" placeholder="Tìm món ăn"
-                  aria-label="Tìm món ăn" id="search-bar" value="" onblur="searchFoodByKeyword()" />
-              </div>
-              <%@ include file="../../hyperfeat/fooddetechbutton.jspf" %>
+                <!-- Search bar -->
+                <div class="input-group-icon flex-grow-1 mx-md-5 pe-2">
+                    <i class="fas fa-search input-box-icon text-primary"></i>
+                    <input class="form-control border-1 input-box bg-100" type="search" placeholder="Tìm món ăn"
+                           aria-label="Tìm món ăn" id="search-bar" value="" onblur="searchFoodByKeyword()" />
+                </div>
+                <%@ include file="../../hyperfeat/fooddetechbutton.jspf" %>
                 <!-- Cart button -->
                 <button type="button"
-                  class="btn ps-1 pe-2 py-0 position-relative nav-icon text-decoration-none my-auto text-primary fs-2 me-4"
-                  data-bs-toggle="modal" data-bs-target="#cart-modal">
-                  <i class="fas fa-fw fa-cart-arrow-down"></i>
-                  <span id="cart-badge"
-                    class="position-absolute top-0 start-100 translate-middle px-2 fs-0 bg-danger rounded-pill text-white">
-                    <span class="visually-hidden">Giỏ hàng</span>
-                    <!-- </span> -->
+                        class="btn ps-1 pe-2 py-0 position-relative nav-icon text-decoration-none my-auto text-primary fs-2 me-4"
+                        data-bs-toggle="modal" 
+                        data-bs-target="#cart-modal">
+                    <i class="fas fa-fw fa-cart-arrow-down"></i>
+                    <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle px-2 fs-0 bg-danger rounded-pill text-white">
+                        <span class="visually-hidden">Giỏ hàng</span>
                 </button>
 
                 <%@ include file="../../hyperfeat/langviewbutton.jspf" %>
 
-
-
-                  <!-- Login button -->
-                  <c:choose>
+                <!-- Login button -->
+                <c:choose>
                     <c:when test="${isLoggedIn}">
-                      <div class="dropdown">
-                        <button class="btn btn-secondary text-white ms-2 px-3 px-lg-4" data-bs-toggle="dropdown"
-                          aria-expanded="false" type="button">
-                          <i class="fas fa-user me-2"></i>
-                          ${username}
-                        </button>
-                        <ul class="dropdown-menu text-small shadow ms-2 w-100">
-                          <li><a class="dropdown-item" href="/user#info">Tài khoản của tôi</a></li>
-                          <li><a class="dropdown-item" href="/user#order">Đơn món</a></li>
-                          <li><a class="dropdown-item" href="/user/logout">Đăng xuất</a></li>
-                        </ul>
-                      </div>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary text-white ms-2 px-3 px-lg-4" data-bs-toggle="dropdown"
+                                    aria-expanded="false" type="button">
+                                <i class="fas fa-user me-2"></i>
+                                ${username}
+                            </button>
+                            <ul class="dropdown-menu text-small shadow ms-2 w-100">
+                                <li><a class="dropdown-item" href="/user#info">Tài khoản của tôi</a></li>
+                                <li><a class="dropdown-item" href="/user#order">Đơn món</a></li>
+                                <li><a class="dropdown-item" href="/user/logout">Đăng xuất</a></li>
+                            </ul>
+                        </div>
                     </c:when>
                     <c:otherwise>
-                      <button class="btn btn-primary text-white ms-2 px-3 px-lg-4" data-bs-toggle="modal"
-                        data-bs-target="#login-modal" type="button">
-                        <i class="fas fa-user me-2"></i>
-                        Đăng nhập
-                      </button>
+                        <button class="btn btn-primary text-white ms-2 px-3 px-lg-4" data-bs-toggle="modal"
+                                data-bs-target="#login-modal" type="button">
+                            <i class="fas fa-user me-2"></i>
+                            Đăng nhập
+                        </button>
                     </c:otherwise>
-                  </c:choose>
+                </c:choose>
             </form>
-          </div>
         </div>
-      </nav>
+    </div>
+</nav>
