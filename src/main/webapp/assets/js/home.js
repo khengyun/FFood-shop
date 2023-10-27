@@ -68,10 +68,10 @@ $(document).on("click", ".btn-categories", function () {
 var addToCartButtons = document.querySelectorAll(".addToCartBtn");
 
 // Loop each button and add click event
-addToCartButtons.forEach(function(button) {
-  button.addEventListener('click', function() {
-    var foodId = this.getAttribute('data-foodid');
-    var quantity = this.getAttribute('data-quantity');
+addToCartButtons.forEach(function (button) {
+  button.addEventListener("click", function () {
+    let foodId = this.getAttribute("data-foodid");
+    let quantity = this.getAttribute("data-quantity");
     // Send AJAX request to addToCart servlet endpoint
     $.ajax({
       type: "GET",
@@ -113,7 +113,7 @@ function showInitialFoodItems() {
   }
 
   // Show the "show more" button if there are more items to show
-  autoHideButton()
+  autoHideButton();
 }
 
 // Add event listener to the "Xem thêm" button
@@ -146,7 +146,9 @@ function searchFoodByKeyword() {
 
   // Iterate through each food item
   for (let i = 0; i < foodList.length; i++) {
-    let foodName = foodList[i].querySelector(".card-title").textContent.toLowerCase();
+    let foodName = foodList[i]
+      .querySelector(".card-title")
+      .textContent.toLowerCase();
     let foodContainer = foodList[i];
 
     // Check if the search term is empty

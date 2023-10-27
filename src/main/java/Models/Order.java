@@ -8,10 +8,13 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.List;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class Order {
 
     private int orderID;
+    private String hashOrderID;
     private int cartID;
     private int customerID;
     private byte orderStatusID;
@@ -230,6 +233,32 @@ public class Order {
 
     public void setVoucherID(int voucherID) {
         this.voucherID = voucherID;
+    }
+
+    public String getHashOrderID() {
+        return hashOrderID;
+    }
+
+    public void setHashOrderID(String hashOrderID) {
+        this.hashOrderID = hashOrderID;
+    }
+    
+    // Method to hash an integer as a string using MD5
+    public String md5Hash(String input) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] messageDigest = md.digest(input.getBytes());
+            BigInteger no = new BigInteger(1, messageDigest);
+            StringBuilder hashText = new StringBuilder(no.toString(16));
+            
+            // Pad with leading zeros to make it 32 characters
+            while (hashText.length() < 32) {
+                hashText.insert(0, "0");
+            }
+            return hashText.toString().substring(0, 8);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

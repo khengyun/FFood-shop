@@ -79,7 +79,12 @@ public class AddToCartController extends HttpServlet {
         CartItem item = new CartItem(food, Integer.parseInt(quantity));
         cart.addItem(item);
         session.setAttribute("cart", cart);
-        response.sendRedirect("home");
+
+        // Remove empty cart message if it exists
+        if (session.getAttribute("mess") != null) {
+            session.removeAttribute("mess");
+        }
+        response.sendRedirect("/");
 
     }
 
