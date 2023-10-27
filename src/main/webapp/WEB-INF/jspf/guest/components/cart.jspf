@@ -93,6 +93,14 @@
     </div>
 </div>
 
+<style>
+  #cart-modal input[type=number]::-webkit-inner-spin-button, 
+  #cart-modal input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    margin: 0; 
+  }
+</style>
+
 <script>
     // Get the cart table element
     const cartTable = document.getElementById("cart-table");
@@ -121,20 +129,23 @@
         }
     }
 
+    // Restrict user input to reject non-numeric characters
+    // except for navigation keys and backspace/delete
     $('.quantity-input').on('keydown', (e) => {
       let key = e.key;
       let isDigit = /^\d$/.test(key);
-      let isException = key === 'ArrowLeft' 
-        || key === 'ArrowRight' 
-        || key === 'Backspace'
-        || key === 'Delete';
+      let target = $(e.target);
+      let allowedKeys = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Backspace', 'Delete'];
+      let isException = allowedKeys.includes(key);
 
-      // // TODO fix this mess here
-      // if (isDigit) {
-      //   if (this.val().toString().length >= 2) {
-      //     e.preventDefault();
-      //   }
-      // }
+      // Prevents the user from typing more than 2 digits
+      // If target is of HTML input element, use e.target.value
+      // If target is of jQuery object, use $(e.target).val()
+      if (isDigit) {
+        if (target.val().length >= 2) {
+          e.preventDefault();
+        }
+      }
       
       // Check if the key is a number
       if (!isDigit && !isException) {
@@ -142,29 +153,46 @@
       }
     })
 
-    // Add event listener for quantity input change event using event delegation
+    let oldQuantity = 1;
+    // Set the old quantity variable to the value of the input field (before the user types anything), 
+    // so that this will be used to restore the original quantity in case
+    // the new quantity is invalid
+    $('.quantity-input').on('focus', (e) => {
+      const target = $(e.target);      
+      oldQuantity = parseInt(target.val(), 10);
+    })
+
+    // Validates the user quantity input only when the user clicks outside of the input field
+    // instead of immediately upon value change. Because we want the user to safely delete the old number
+    // and input a new one without the price values going crazy
     $('.quantity-input').on('blur', (e) => {
-      // Get the parent row of the input field
-      const row = event.target.closest("tr");
-      const target = e.target;
+      // Get the parent table row of the input field
+      const tableRow = event.target.closest("tr");
+      const target = $(e.target);
       // Get the price per unit of the food from the data attribute or other source
-      const pricePerUnitText = row.querySelector("td:nth-child(2)").textContent.trim();
+      const pricePerUnitText = tableRow.querySelector("td:nth-child(2)").textContent.trim();
       const pricePerUnit = parseFloat(pricePerUnitText.replace("đ", "").replace(",", ""));
       
       // Get the quantity entered by the user
       const currentQuantity = parseInt(event.target.value, 10);
 
-      // // Validates the user input, making sure it is within 1-10
-      // let newQuantity =
-      //   !isNaN(currentQuantity) && currentQuantity >= 1 && currentQuantity < 10 // user input is valid
-      //     ? currentQuantity
-      //     : 1; // default to 1
-      // target.val(newQuantity); // TODO fix this mess here
+      // Validates the user input, making sure it is within 1-10
+      let newQuantity =
+        !isNaN(currentQuantity) && currentQuantity >= 1 && currentQuantity <= 10 // user input is valid
+          ? currentQuantity
+          : oldQuantity; // This is retrieve before the user typed anything, so this acts as the backup value
+
+      // https://stackoverflow.com/questions/45069106/jquery-doesnt-handle-event-target-properly-why
+      target.val(newQuantity);
       
       // Calculate the new product price
-      const productPrice = pricePerUnit * newQuantity;
+      const itemTotal = pricePerUnit * newQuantity;
+      
       // Update the product price cell in the same row
+      // Format the total price string so that it can be displayed correctly to the user
+      formattedItemTotal = itemTotal.toLocaleString();
       $(tableRow).find(".item-total").html(formattedItemTotal + " đ");
+      
       // Calculate and update the total price
       updateTotalPrice();
     })
@@ -184,7 +212,7 @@
         totalPriceElement.textContent = "Tổng thanh toán: " + totalPrice.toLocaleString() + "đ";
     }
 
-        /**
+    /**
      * Increments the value of a field by 1 when triggered by an event.
      *
      * @param {Event} e - The event object.
@@ -240,12 +268,12 @@
      */
     function getPrice(str) {
       let trimmedStr = str
-        .substring(0, str.length - 2) // Removes currency symbol and space before it
+        .replace(" đ", "") // Removes currency symbol and space before it
         .replace(",", ""); // Removes thousand separators
       return parseInt(trimmedStr);
     }
 
-    $(".input-group").on("click", ".button-plus", function (e) {
+    $(".input-group").on("click", ".button-plus", (e) => {
       let quantity = incrementValue(e);
       let target = $(e.target);
       let tableRow = target.closest("tr");
@@ -260,7 +288,7 @@
       updateTotalPrice();
     });
 
-    $(".input-group").on("click", ".button-minus", function (e) {
+    $(".input-group").on("click", ".button-minus", (e) => {
       let quantity = decrementValue(e);
       let target = $(e.target);
       let tableRow = target.closest("tr");
