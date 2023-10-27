@@ -78,30 +78,52 @@ class FoodOperations:
         
     def get_daily_revenue(self):
         try:
-            today = date.today()
             with pymssql.connect(**self.db_config) as conn:
                 cursor = conn.cursor()
-
                 cursor.execute("""
-                    SELECT SUM(CI.food_quantity * F.food_price) AS daily_revenue
-                    FROM [Order] AS O
-                    INNER JOIN CartItem AS CI ON O.cart_id = CI.cart_id
-                    INNER JOIN Food AS F ON CI.food_id = F.food_id
-                    WHERE CAST(O.order_time AS DATE) = %s
-                """, (today,))
-                row = cursor.fetchone()
-                daily_revenue = float(row[0]) if row else 0.0
+                WITH DailySales AS (
+                SELECT
+                    A.account_username,
+                    CI.food_id,
+                    SUM(CI.food_quantity) AS total_items_sold
+                FROM [Order] AS O
+                INNER JOIN CartItem AS CI ON O.cart_id = CI.cart_id
+                INNER JOIN Account AS A ON O.customer_id = A.customer_id
+                WHERE CAST(CONVERT(DATE, O.order_time) AS DATE) = CAST(GETDATE() AS DATE)
+                GROUP BY A.account_username, CI.food_id
+                )
 
-                return daily_revenue
+
+
+                SELECT
+                SUM(CI.food_quantity * F.food_price) AS daily_revenue,
+                COUNT(O.order_id) AS daily_orders,
+                A.account_username AS customer_with_most_orders
+                FROM [Order] AS O
+                INNER JOIN CartItem AS CI ON O.cart_id = CI.cart_id
+                INNER JOIN Food AS F ON CI.food_id = F.food_id
+                INNER JOIN Account AS A ON O.customer_id = A.customer_id
+                WHERE CAST(CONVERT(DATE, O.order_time) AS DATE) = CAST(GETDATE() AS DATE)
+                GROUP BY A.account_username;
+
+                """)
+                row = cursor.fetchone()
+
+                result = {
+                    'daily_revenue': float(row[0]) if row else 0.0,
+                    'daily_orders': int(row[1]) if row else 0,
+                    'customer_with_most_orders': row[2] if row else 0
+                }
+
+                return result
 
         except Exception as e:
-            return str(e)
+            return {'error': str(e)}
 
     def get_top_selling_foods(self):
         try:
             with pymssql.connect(**self.db_config) as conn:
                 cursor = conn.cursor()
-
                 cursor.execute("""
                 SELECT TOP 5
                     F.food_id,
