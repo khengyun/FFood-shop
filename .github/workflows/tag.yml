@@ -19,6 +19,4 @@ jobs:
       - name: 'Auto-assign issue'
         uses: pozil/auto-assign-issue@v1
         with:
-          
-          numOfAssignee: 1 
           allowSelfAssign: true
