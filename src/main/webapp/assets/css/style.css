@@ -17,16 +17,22 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     color: red;
 }
 
-.btn-cate {
+.btn-categories {
     display: contents;
 }
 
 /* DataTables custom styling */
 td.highlight {
-    background-color: whitesmoke;
-!important;
+    background-color: whitesmoke !important;
 }
 
 .dataTables_scrollHead {
     user-select: none;
+}
+
+.chart-container {
+  position: relative;
+  margin: auto;
+  height: 100%;
+  width: 99%; /* 100% breaks the chart responsiveness*/
 }

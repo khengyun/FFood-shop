@@ -29,5 +29,6 @@
 <script src="<%= request.getContextPath() %>/vendors/DataTables/pdfmake-0.2.7/vfs_fonts.js"></script>
 
 <script src="<%= request.getContextPath() %>/assets/js/admin.js"></script>
+<script src="<%= request.getContextPath() %>/assets/js/adminNotify.js"></script>
 
 <script src="<%= request.getContextPath() %>/assets/js/dataTablesConfig.js"></script>

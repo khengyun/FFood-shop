@@ -80,6 +80,10 @@ public class SignUpController extends HttpServlet {
         
         AccountDAO accountDAO = new AccountDAO();
         Account account = new Account(username, email, pass, "user");
+        if (accountDAO.getAccount(email) != null) {
+            response.sendRedirect("/home#failure_register_exist");
+            return;
+        }
         try {
             if (accountDAO.login(account)) {
                 if (previousUrl != null) {
@@ -138,8 +142,7 @@ public class SignUpController extends HttpServlet {
                     }
 
                 } catch (IOException e) {
-                    System.out.println("Could not send user register");
-                    request.getRequestDispatcher("/index.jsp").forward(request, response);
+                    response.sendRedirect("/home#failure_register");
                 }
 //              
             }

@@ -148,5 +148,4 @@ public class Account {
     public void setStaffID(byte staffID) {
         this.staffID = staffID;
     }
-
 }

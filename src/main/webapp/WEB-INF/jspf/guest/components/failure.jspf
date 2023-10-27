@@ -23,12 +23,34 @@
   </div>
 </div>
 
+<div class="modal fade" id="failure_login_info" tabindex="-1" role="dialog" aria-labelledby="failureLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h3 class="text-center p-3">Thông tin Email hoặc mật khẩu không chính xác!!</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="modal fade" id="failure_register" tabindex="-1" role="dialog" aria-labelledby="failureLabel"
      aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-body">
         <h3 class="text-center p-3">Đăng ký không thành công!</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="failure_register_exist" tabindex="-1" role="dialog" aria-labelledby="failureLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h3 class="text-center p-3">Tài khoản đã tồn tại!</h3>
       </div>
     </div>
   </div>

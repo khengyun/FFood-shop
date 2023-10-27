@@ -1,0 +1,42 @@
+name: "Feature request"
+description: Suggest an idea for this project
+labels: 
+- enhancement
+projects:
+- "FFood-shop"
+title: "[Feature]"
+
+body:
+    
+- type: textarea
+  id: description
+  attributes:
+    label: Problem description
+    placeholder: "I'm wasting time having to manually enter credentials while logging in..."
+    description: A clear and concise description of what the problem is. Images and videos are supported.
+  validations:
+    required: true
+
+- type: textarea
+  id: preferred-solution
+  attributes:
+    label: Preferred solution
+    description: How you would like to solve the problem. Images and videos are supported.
+    placeholder: |
+      I would add several buttons, each linked to different social media platforms so that I can log in within seconds. Those platforms could be Google, Facebook, X/Twitter, etc.
+  validations:
+    required: true
+
+- type: textarea
+  id: alternative-solutions
+  attributes:
+    label: Alternative solutions (Optional)
+    description: How else you could solve this problem, in case the preferred solution is not possible. Images and videos are supported.
+    placeholder: |
+      I could use face recognition technology to automatically scan my face when I click the dedicated log in button...
+
+- type: textarea
+  attributes:
+    label: Additional context (Optional)
+    description: Add any other context about the feature request and/or its related problem here. Images and videos are supported.
+    placeholder: "I'll also add the ability to automatically sign up a new account if the logged in account (through 3rd party accounts) does not exist in our system..."

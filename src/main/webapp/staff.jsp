@@ -12,10 +12,10 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>FFood | Admin Dashboard</title>
+        <title>FFood | Staff Dashboard</title>
 
-    <%@ include file="WEB-INF/jspf/common/imports/resources.jspf" %>
-    <%@ include file="WEB-INF/jspf/admin/imports/dataTablesStyle.jspf" %>
+        <%@ include file="WEB-INF/jspf/common/imports/resources.jspf" %>
+        <%@ include file="WEB-INF/jspf/admin/imports/dataTablesStyle.jspf" %>
     </head>
     <body>
         <div class="container-fluid m-0 p-0">
@@ -23,7 +23,8 @@
                 <%@ include file="WEB-INF/jspf/staff/components/addFood.jspf" %>
                 <%@ include file="WEB-INF/jspf/staff/components/updateFood.jspf" %>
                 <%@ include file="WEB-INF/jspf/staff/components/deleteFood.jspf" %>
-                
+                <%@ include file="WEB-INF/jspf/staff/components/failure.jspf" %>
+                <%@ include file="WEB-INF/jspf/staff/components/success.jspf" %>
                 <%@ include file="WEB-INF/jspf/staff/components/staffSidebar.jspf" %>
 
                 <!-- Main Content -->
@@ -33,7 +34,7 @@
                         <%@ include file="WEB-INF/jspf/staff/home.jspf" %>
                         <!-- Food & Drinks Tab Content -->
                         <%@ include file="WEB-INF/jspf/staff/foods.jspf" %>
-                        
+
                         <!-- Orders Tab Content -->
                         <div class="tab-pane fade" id="orders">
                             <div class="container-fluid p-2">
@@ -82,8 +83,6 @@
                         </div>
 
 
-                 
-
 
                     </div>
                 </main>
@@ -91,5 +90,6 @@
         </div>
         <%@ include file="WEB-INF/jspf/common/imports/validation.jspf" %>
         <%@ include file="WEB-INF/jspf/common/imports/javascript.jspf" %>
+        <%@ include file="WEB-INF/jspf/staff/imports/dataTablesScript.jspf" %>
     </body>
 </html>

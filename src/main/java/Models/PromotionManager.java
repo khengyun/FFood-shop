@@ -11,6 +11,10 @@ public class PromotionManager {
 
     public PromotionManager() {
     }
+    
+    public PromotionManager(String fullName) {
+        this.fullName = fullName;
+    }
 
     public PromotionManager(byte proID, String fullName) {
         this.proID = proID;
