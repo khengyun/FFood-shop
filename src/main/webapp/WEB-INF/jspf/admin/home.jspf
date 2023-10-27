@@ -7,33 +7,10 @@
   14) { greeting = "Chào buổi trưa"; } else if (hour >= 14 && hour < 18) {
   greeting = "Chào buổi chiều"; } else { greeting = "Chào buổi tối"; } %>
   <p class="fw-bolder fs-3 mb-4"><%= greeting %>, ${adminName}!</p>
-  
+
   <!-- Daily statistics -->
-  <div class="container-fluid p-4 shadow rounded-4 bg-white mb-3">
-    <h2 class="text-start fs-2">Số liệu hôm nay</h2>
-    <div class="d-flex flex-row flex-wrap flex-between-center gap-3 mt-3">
-      <div>
-        <p class="fs-4 fw-bold mb-1">20.035.000đ</p>
-        <h6>Doanh thu bán hàng</h6>
-      </div>
-      <div>
-        <p class="fs-4 fw-bold mb-1">354</p>
-        <h6>Đơn hàng</h6>
-      </div>
-      <div>
-        <p class="fs-4 fw-bold mb-1">2.138</p>
-        <h6>Khách thăm</h6>
-      </div>
-      <div>
-        <p class="fs-4 fw-bold mb-1">21</p>
-        <h6>Khách hàng mới</h6>
-      </div>
-      <div>
-        <p class="fs-4 fw-bold mb-1">Cơm gà xối mỡ</p>
-        <h6>Món bán chạy nhất</h6>
-      </div>
-    </div>
-  </div>
+  <%@ include file="components/todayview.jspf" %>
+
   <!-- First row -->
   <div class="col-12 d-flex flex-row flex-wrap flex-between-center gap-3">
     <div class="flex-grow-1 col-7 flex-lg-grow-0 p-4 shadow rounded-4 bg-white">
@@ -53,5 +30,4 @@
       <%@ include file="components/chartMonthlyTarget.jspf" %>
     </div>
   </div>
-
 </div>
