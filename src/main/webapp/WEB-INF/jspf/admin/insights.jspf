@@ -1,0 +1,295 @@
+<%@ page pageEncoding="UTF-8" %>
+<%@page import="Models.MenuItem"%>
+<%@page import="java.util.Collections"%>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.List" %>
+<div class="tab-pane fade" id="insights">
+    <%
+        // Giả định bạn đã có một danh sách dữ liệu doanh thu hàng tuần từ Java
+        List<Integer> weeklyRevenueData = new ArrayList<Integer>();
+        weeklyRevenueData.add(100); // Th2
+        weeklyRevenueData.add(200); // Th3
+        weeklyRevenueData.add(150); // Th4
+        weeklyRevenueData.add(300); // Th5
+        weeklyRevenueData.add(240); // Th6
+        weeklyRevenueData.add(400); // Th7
+        weeklyRevenueData.add(500); //CN
+        int maxRevenue = 0;
+        int maxRevenueIndex = -1; // Lưu trữ chỉ mục của giá trị cao nhất
+        for (int i = 0; i < weeklyRevenueData.size(); i++) {
+            int revenue = weeklyRevenueData.get(i);
+            if (revenue > maxRevenue) {
+                maxRevenue = revenue;
+                maxRevenueIndex = i;
+            }
+        }
+
+        List<Double> weeklyAverageOrderData = new ArrayList<Double>();
+        weeklyAverageOrderData.add(100.0); // Th2
+        weeklyAverageOrderData.add(60.0); // Th3
+        weeklyAverageOrderData.add(30.0); // Th4
+        weeklyAverageOrderData.add(65.0); // Th5
+        weeklyAverageOrderData.add(70.0); // Th6
+        weeklyAverageOrderData.add(45.0); // Th7
+        weeklyAverageOrderData.add(80.0); // CN
+
+        // Tìm giá trị đơn hàng trung bình cao nhất và chỉ mục tương ứng
+        double maxAverageOrder = Collections.max(weeklyAverageOrderData);
+        int maxAverageOrderIndex = weeklyAverageOrderData.indexOf(maxAverageOrder);
+
+        List<Integer> registeredCustomers = new ArrayList<Integer>();
+        registeredCustomers.add(100); // Th2
+        registeredCustomers.add(120); // Th3
+        registeredCustomers.add(110); // Th4
+        registeredCustomers.add(130); // Th5
+        registeredCustomers.add(140); // Th6
+        registeredCustomers.add(150); // Th7
+        registeredCustomers.add(160); // CN
+
+        List<Integer> walkInCustomers = new ArrayList<Integer>();
+        walkInCustomers.add(50); // Th2
+        walkInCustomers.add(60); // Th3
+        walkInCustomers.add(10);
+        walkInCustomers.add(70); // Th5
+        walkInCustomers.add(80); // Th6
+        walkInCustomers.add(90); // Th7
+        walkInCustomers.add(100); // CN
+
+        List<MenuItem> topSellingItems = new ArrayList<MenuItem>();
+
+        // Định nghĩa lớp MenuItem để lưu thông tin món bán chạy
+        class MenuItem {
+
+            public String name;
+            public String imageURL;
+
+            public MenuItem(String name, String imageURL) {
+                this.name = name;
+                this.imageURL = imageURL;
+            }
+        }
+
+        // Thêm dữ liệu của top 5 món bán chạy
+        topSellingItems.add(new Models.MenuItem("Com Tam", "assets/img/gallery/com_tam.jpg"));
+        topSellingItems.add(new Models.MenuItem("Nuoc Ep", "assets/img/gallery/drinks.jpg"));
+        topSellingItems.add(new Models.MenuItem("Món 3", "assets/img/gallery/junk_food.jpg"));
+        topSellingItems.add(new Models.MenuItem("Món 4", "assets/img/gallery/com_tam.jpg"));
+        topSellingItems.add(new Models.MenuItem("Món 5", "assets/img/gallery/com_tam.jpg"));
+
+    %>
+
+    <div>
+        <%--Dynamically generates appropriate greeting based on time of day--%>
+        <%      java.util.Calendar hcal = java.util.Calendar.getInstance();
+            int hhour = hcal.get(java.util.Calendar.HOUR_OF_DAY);
+            String hgreeting = "";
+            if (hhour >= 4 && hhour < 11) {
+                hgreeting = "Chào buổi sáng";
+            } else if (hhour >= 11 && hhour < 14) {
+                hgreeting = "Chào buổi trưa";
+            } else if (hhour >= 14 && hhour < 18) {
+                hgreeting = "Chào buổi chiều";
+            } else {
+                hgreeting = "Chào buổi tối";
+            }
+        %>
+        <p class="fw-bolder fs-3 mb-4"><%= hgreeting%>, ${adminName}!</p>
+        <div class="container-fluid p-4 shadow rounded-4 bg-white mb-3">
+            <h2 class="text-start fs-2">Số liệu hôm nay</h2>
+
+            <div class="d-flex flex-row flex-between-center mt-3">
+                <div>
+                    <p class="fs-4 fw-bold mb-1">20.035.000đ</p>
+                    <h6>Doanh thu bán hàng</h6>
+                </div>
+                <div>
+                    <p class="fs-4 fw-bold mb-1">354</p>
+                    <h6>Đơn hàng</h6>
+                </div>
+                <div>
+                    <p class="fs-4 fw-bold mb-1">2.138</p>
+                    <h6>Khách thăm</h6>
+                </div>
+                <div>
+                    <p class="fs-4 fw-bold mb-1">21</p>
+                    <h6>Khách hàng mới</h6>
+                </div>
+                <div>
+                    <p class="fs-4 fw-bold mb-1">Cơm gà xối mỡ</p>
+                    <h6>Món bán chạy nhất</h6>
+                </div>
+            </div>
+        </div>
+        <!-- Nội dung số liệu hôm nay -->
+    </div>
+    <div class="col-12 d-flex flex-row flex-between-center">
+        <div class="flex-grow-1 p-4 me-3 shadow rounded-4 bg-white">
+            <h2 class="text-start fs-2">Doanh thu theo tuần</h2>
+            <canvas id="revenueChart" width="400" height="200"></canvas> <!-- Thêm thẻ canvas cho biểu đồ -->
+            <!-- Nội dung chương trình khuyến mãi -->
+        </div>
+        <div class="p-4 col-5 shadow rounded-4 bg-white">
+            <h2 class="text-start fs-2">Số lượng khách hàng</h2>
+
+            <canvas id="customerChart" width="400" height="200"></canvas> <!-- Thêm thẻ canvas cho biểu đồ số lượng khách hàng -->
+        </div>
+    </div>
+    <div class="d-flex flex-row flex-between-center mt-3">
+        <div class="flex-grow-1 p-4 me-3 shadow rounded-4 bg-white">
+            <h2 class="text-start fs-2">Đơn hàng trung bình</h2>
+            <canvas id="averageOrderChart" width="400" height="200"></canvas> <!-- Thêm thẻ canvas cho biểu đồ đơn hàng trung bình -->
+
+        </div>
+        <div class="p-4 col-5 shadow rounded-4 bg-white">
+            <h2 class="text-start fs-2">Top 5 món bán chạy</h2>
+            <% for (Models.MenuItem item : topSellingItems) {%>
+            <div class="d-flex align-items-center">
+                <img src="<%= item.imageURL%>" alt="<%= item.name%>" class="img-fluid" style="max-width: 70px; max-height: 70px;margin-bottom: 10px;">
+                <p class="m-0 ms-2"><%= item.name%></p>
+            </div>
+
+
+            <% }%>
+            <!-- Nội dung mục tiêu tháng này -->
+        </div>
+    </div>
+
+    <!--labels: ['Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy', 'Chủ Nhật'],-->
+    <!-- Bên dưới nơi bạn bao gồm thư viện Chart.js và tạo biểu đồ -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Sử dụng dữ liệu doanh thu hàng tuần từ Java
+        var weeklyRevenueData = <%= weeklyRevenueData%>;
+
+        // Tìm giá trị doanh thu cao nhất và chỉ mục tương ứng
+        var maxRevenue = Math.max(...weeklyRevenueData);
+        var maxRevenueIndex = weeklyRevenueData.indexOf(maxRevenue);
+
+        var ctx = document.getElementById('revenueChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy', 'Chủ Nhật'],
+                datasets: [{
+                        label: 'Doanh thu',
+                        data: weeklyRevenueData,
+                        borderColor: 'blue',
+                        fill: false
+                    }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        suggestedMax: maxRevenue + 500
+                    }
+                },
+                plugins: {
+                    annotation: {
+                        annotations: {
+                            maxRevenueMarker: {
+                                type: 'point',
+                                xValue: maxRevenueIndex, // Chỉ mục của giá trị cao nhất
+                                yValue: maxRevenue, // Giá trị doanh thu cao nhất
+                                borderColor: 'red',
+                                borderWidth: 4,
+                                radius: 10,
+                                label: {
+                                    content: 'Doanh thu cao nhất',
+                                    enabled: true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+
+        var weeklyAverageOrderData = <%= weeklyAverageOrderData%>;
+
+        // Tìm giá trị đơn hàng trung bình cao nhất và chỉ mục tương ứng
+        var maxAverageOrder = <%= maxAverageOrder%>;
+        var maxAverageOrderIndex = <%= maxAverageOrderIndex%>;
+
+        var ctx2 = document.getElementById('averageOrderChart').getContext('2d');
+        var averageOrderChart = new Chart(ctx2, {
+            type: 'line',
+            data: {
+                labels: ['Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy', 'Chủ Nhật'],
+                datasets: [{
+                        label: 'Đơn hàng trung bình',
+                        data: weeklyAverageOrderData,
+                        borderColor: 'green',
+                        fill: false,
+                        tension: 0.3
+                    }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        suggestedMax: maxAverageOrder + 10
+                    }
+                },
+                plugins: {
+                    annotation: {
+                        annotations: {
+                            maxAverageOrderMarker: {
+                                type: 'point',
+                                xValue: maxAverageOrderIndex, // Chỉ mục của giá trị đơn hàng trung bình cao nhất
+                                yValue: maxAverageOrder, // Giá trị đơn hàng trung bình cao nhất
+                                borderColor: 'red',
+                                borderWidth: 4,
+                                radius: 10,
+                                label: {
+                                    content: 'Đơn hàng trung bình cao nhất',
+                                    enabled: true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+
+        // Sử dụng dữ liệu số lượng khách hàng đã đăng ký và khách hàng vãn lai từ Java
+        var registeredCustomersData = <%= registeredCustomers%>;
+        var walkInCustomersData = <%= walkInCustomers%>;
+
+        var ctx3 = document.getElementById('customerChart').getContext('2d');
+        var customerChart = new Chart(ctx3, {
+            type: 'line',
+            data: {
+                labels: ['Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy', 'Chủ Nhật'],
+                datasets: [
+                    {
+                        label: 'Khách đã đăng ký',
+                        data: registeredCustomersData,
+                        borderColor: 'blue',
+                        fill: false
+                    },
+                    {
+                        label: 'Khách vãn lai',
+                        data: walkInCustomersData,
+                        borderColor: 'green',
+                        fill: false
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        suggestedMax: Math.max(...registeredCustomersData, ...walkInCustomersData) + 10
+                    }
+                }
+            }
+        });
+    </script>
+</div>
+
+
+
+

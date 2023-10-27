@@ -1,131 +1,131 @@
-Banh beo
-Banh bot loc
-Banh can
-Banh canh
-Banh chung
-Banh cuon
-Banh duc
-Banh gio
-Banh khot
-Banh mi
-Banh pia
-Banh tet
-Banh trang nuong
-Banh xeo
-Bun bo Hue
-Bun dau mam tom
-Bun mam
-Bun rieu
-Bun thit nuong
-Ca kho to
+Bánh Bèo
+Bánh Bột Lộc
+Bánh Căn
+Bánh canh
+Bánh chung
+Bánh cuon
+Bánh đúc
+Bánh Giò
+Bánh Khọt
+Bánh Mì
+Bánh Pía
+Bánh Tét
+Bánh Tráng Nướng
+Bánh Xèo
+Bún Bò Huế
+Bún Đậu Mắm Tôm
+Bún Mắm
+Bún Riêu
+Bún Thịt Nướng
+Cá Kho Tộ
 Canh chua
-Cao lau
-Chao long
-Com tam
-Goi cuon
-Hu tieu
-Mi quang
+Cao Lầu
+Cháo Lòng
+Cơm Tấm
+Gỏi Cuốn
+Hủ Tiếu
+Mì Quảng
 Nem chua
-Xoi xeo
-apple_pie
-baby_back_ribs
+Xôi Xéo
+apple pie
+baby back ribs
 baklava
-beef_carpaccio
-beef_tartare
-beet_salad
+beef carpaccio
+beef tartare
+beet salad
 beignets
 bibimbap
-bread_pudding
-breakfast_burrito
+bread pudding
+breakfast burrito
 bruschetta
-caesar_salad
+caesar salad
 cannoli
-caprese_salad
-carrot_cake
+caprese salad
+carrot cake
 ceviche
-cheese_plate
+cheese plate
 cheesecake
-chicken_curry
-chicken_quesadilla
-chicken_wings
-chocolate_cake
-chocolate_mousse
+chicken curry
+chicken quesadilla
+chicken wings
+chocolate cake
+chocolate mousse
 churros
-clam_chowder
-club_sandwich
-crab_cakes
-creme_brulee
-croque_madame
-cup_cakes
-deviled_eggs
+clam chowder
+club sandwich
+crab cakes
+creme brulee
+croque madame
+cup cakes
+deviled eggs
 donuts
 dumplings
 edamame
-eggs_benedict
+eggs benedict
 escargots
 falafel
-filet_mignon
-fish_and_chips
-foie_gras
-french_fries
-french_onion_soup
-french_toast
-fried_calamari
-fried_rice
-frozen_yogurt
-garlic_bread
+filet mignon
+fish and chips
+foie gras
+french fries
+french onion soup
+french toast
+fried calamari
+fried rice
+frozen yogurt
+garlic bread
 gnocchi
-greek_salad
-grilled_cheese_sandwich
-grilled_salmon
+greek salad
+grilled cheese sandwich
+grilled salmon
 guacamole
 gyoza
 hamburger
-hot_and_sour_soup
-hot_dog
-huevos_rancheros
+hot and sour soup
+hot dog
+huevos rancheros
 hummus
-ice_cream
+ice cream
 lasagna
-lobster_bisque
-lobster_roll_sandwich
-macaroni_and_cheese
+lobster bisque
+lobster roll sandwich
+macaroni and cheese
 macarons
-miso_soup
+miso soup
 mussels
 nachos
-non_food
+non food
 omelette
-onion_rings
+onion rings
 oysters
-pad_thai
+pad thai
 paella
 pancakes
-panna_cotta
-peking_duck
-pho
+panna cotta
+peking duck
+Phở
 pizza
-pork_chop
+pork chop
 poutine
-prime_rib
-pulled_pork_sandwich
+prime rib
+pulled pork sandwich
 ramen
 ravioli
-red_velvet_cake
+red velvet cake
 risotto
 samosa
 sashimi
 scallops
-seaweed_salad
-shrimp_and_grits
-spaghetti_bolognese
-spaghetti_carbonara
-spring_rolls
+seaweed salad
+shrimp and grits
+spaghetti bolognese
+spaghetti carbonara
+spring rolls
 steak
-strawberry_shortcake
+strawberry shortcake
 sushi
 tacos
 takoyaki
 tiramisu
-tuna_tartare
+tuna tartare
 waffles

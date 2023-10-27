@@ -30,7 +30,7 @@ public class DeleteCartController extends HttpServlet {
         String foodId = request.getParameter("fid");
         Cart cart = (Cart) object;
         cart.removeItem(Integer.parseInt(foodId));
-        response.sendRedirect("home");
+        response.sendRedirect("/");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

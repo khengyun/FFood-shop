@@ -11,10 +11,10 @@ let itemsShown = 0;
 
 //show success order food
 $(document).ready(function () {
-  if (window.location.hash === '#success') {
-    $('#success').modal('show');
+  if (window.location.hash === "#success") {
+    $("#success").modal("show");
     setTimeout(function () {
-      $('#success').modal('hide');
+      $("#success").modal("hide");
     }, 3000);
   }
   showInitialFoodItems();
@@ -64,28 +64,27 @@ $(document).on("click", ".btn-categories", function () {
 });
 
 // Get all button addToCartBtn
-var addToCartButtons = document.querySelectorAll('.addToCartBtn');
+let addToCartButtons = document.querySelectorAll(".addToCartBtn");
 
 // Loop each button and add click event
-addToCartButtons.forEach(function(button) {
-  button.addEventListener('click', function() {
-    var foodId = this.getAttribute('data-foodid');
-    var quantity = this.getAttribute('data-quantity');
+addToCartButtons.forEach(function (button) {
+  button.addEventListener("click", function () {
+    let foodId = this.getAttribute("data-foodid");
+    let quantity = this.getAttribute("data-quantity");
     // Send AJAX request to addToCart servlet endpoint
     $.ajax({
-        type: "GET",
-        url: "addToCart",
-        data: {
-            fid: foodId,
-            quantity: quantity
-        },
-        success: function (response) {
-            console.log("Item added to cart successfully.");
-        },
-        error: function (error) {
-
-            console.error("Error occurred: " + error.responseText);
-        }
+      type: "GET",
+      url: "addToCart",
+      data: {
+        fid: foodId,
+        quantity: quantity,
+      },
+      success: function (response) {
+        console.log("Item added to cart successfully.");
+      },
+      error: function (error) {
+        console.error("Error occurred: " + error.responseText);
+      },
     });
     window.location.reload();
   });
@@ -113,7 +112,7 @@ function showInitialFoodItems() {
   }
 
   // Show the "show more" button if there are more items to show
-  autoHideButton()
+  autoHideButton();
 }
 
 // Add event listener to the "Xem thêm" button
@@ -146,7 +145,9 @@ function searchFoodByKeyword() {
 
   // Iterate through each food item
   for (let i = 0; i < foodList.length; i++) {
-    let foodName = foodList[i].querySelector(".card-title").textContent.toLowerCase();
+    let foodName = foodList[i]
+      .querySelector(".card-title")
+      .textContent.toLowerCase();
     let foodContainer = foodList[i];
 
     // Check if the search term is empty

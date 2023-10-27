@@ -1,8 +1,8 @@
 <%@ page pageEncoding="UTF-8" %>
-<div class="row row-cols-4 gx-3" id="food-list">
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 gx-3" id="food-list">
   <!-- Gets foodList attribute set by HomeController.java -->
   <c:forEach items="${foodList}" var="food">
-    <div class="col-sm-6 col-md-4 col-lg-3 mb-4 h-100" id="food-${food.foodTypeID}">
+    <div class="food-card mb-4 h-100" id="food-${food.foodTypeID}">
       <div class="card card-span h-100 rounded-3 shadow">
         <div class="position-relative">
           <img class="card-img-top img-fluid rounded-3 h-100" src="${food.imageURL}" alt="${food.foodName}" />

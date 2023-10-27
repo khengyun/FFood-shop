@@ -65,19 +65,26 @@ $(document).on("click", "#btn-update-user", function () {
 });
 
 $(document).on("click", "#btn-delete-user", function () {
-    let username = $(this).data("username");
-    let accountID = $(this).data("account-id");
-    let deleteAccountLink = "";
-    if (accountID === null) {
-        deleteAccountLink = "/admin";
-    } else {
-        deleteAccountLink = "/admin/user/delete/" + accountID;
-    }
-    
     let modal = $("#delete-user-modal");
-    // Set the values of the corresponding form inputs in the modal
-    modal.find("#username").html(username + " ");
-    modal.find("#deleteAccountLink").attr("href", deleteAccountLink);
+    // Clear the list of users in the modal every time the button is clicked
+    modal.find(".modal-body ul").empty();
+
+    // Retrieves selected rows' data in JSON format, so that it can be iterated
+    let users = JSON.parse($(this).attr("data-users"));
+
+    // Populate the list of users in the modal
+    for (let userId in users) {
+        let userName = users[userId];
+        modal.find("#delete-user-list").append("<li>" + userName + "</li>");
+    }
+
+
+    // Keep users IDs as strings
+    let userIds = Object.keys(users).toString();
+
+    // Set the values to the hidden input in the modal
+    modal.find("input[name='userData']").attr("value", userIds);
+
 });
 
 $(document).on("click", "#btn-update-voucher", function () {
