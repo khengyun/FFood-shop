@@ -11,10 +11,11 @@ let itemsShown = 0;
 
 //show success order food
 $(document).ready(function () {
-  if (window.location.hash === '#success') {
-    $('#success').modal('show');
+  notSort = document.querySelectorAll("div[id^='food-']"); 
+  if (window.location.hash === "#success") {
+    $("#success").modal("show");
     setTimeout(function () {
-      $('#success').modal('hide');
+      $("#success").modal("hide");
     }, 3000);
   }
   showInitialFoodItems();
@@ -64,7 +65,7 @@ $(document).on("click", ".btn-categories", function () {
 });
 
 // Get all button addToCartBtn
-var addToCartButtons = document.querySelectorAll('.addToCartBtn');
+var addToCartButtons = document.querySelectorAll(".addToCartBtn");
 
 // Loop each button and add click event
 addToCartButtons.forEach(function(button) {
@@ -73,19 +74,18 @@ addToCartButtons.forEach(function(button) {
     var quantity = this.getAttribute('data-quantity');
     // Send AJAX request to addToCart servlet endpoint
     $.ajax({
-        type: "GET",
-        url: "addToCart",
-        data: {
-            fid: foodId,
-            quantity: quantity
-        },
-        success: function (response) {
-            console.log("Item added to cart successfully.");
-        },
-        error: function (error) {
-
-            console.error("Error occurred: " + error.responseText);
-        }
+      type: "GET",
+      url: "addToCart",
+      data: {
+        fid: foodId,
+        quantity: quantity,
+      },
+      success: function (response) {
+        console.log("Item added to cart successfully.");
+      },
+      error: function (error) {
+        console.error("Error occurred: " + error.responseText);
+      },
     });
     window.location.reload();
   });
@@ -163,5 +163,3 @@ function searchFoodByKeyword() {
   }
   showInitialFoodItems();
 }
-
-
