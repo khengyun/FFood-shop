@@ -1,20 +1,11 @@
 <%@ page pageEncoding="UTF-8" %>
 <div class="tab-pane fade active show" id="home">
-  <%--Dynamically generates appropriate greeting based on time of day--%>
-  <%
-    java.util.Calendar cal = java.util.Calendar.getInstance();
-    int hour = cal.get(java.util.Calendar.HOUR_OF_DAY);
-    String greeting = "";
-    if (hour >= 4 && hour < 11) {
-      greeting = "Chào buổi sáng";
-    } else if (hour >= 11 && hour < 14) {
-      greeting = "Chào buổi trưa";
-    } else if (hour >= 14 && hour < 18) {
-      greeting = "Chào buổi chiều";
-    } else {
-      greeting = "Chào buổi tối";
-    }
-  %>
+  <%--Dynamically generates appropriate greeting based on time of day--%> <%
+  java.util.Calendar cal = java.util.Calendar.getInstance(); int hour =
+  cal.get(java.util.Calendar.HOUR_OF_DAY); String greeting = ""; if (hour >= 4
+  && hour < 11) { greeting = "Chào buổi sáng"; } else if (hour >= 11 && hour <
+  14) { greeting = "Chào buổi trưa"; } else if (hour >= 14 && hour < 18) {
+  greeting = "Chào buổi chiều"; } else { greeting = "Chào buổi tối"; } %>
   <p class="fw-bolder fs-3 mb-4"><%= greeting %>, ${adminName}!</p>
   <div class="container-fluid p-4 shadow rounded-4 bg-white mb-3">
     <h2 class="text-start fs-2">Số liệu hôm nay</h2>
@@ -41,12 +32,11 @@
       </div>
     </div>
   </div>
-  <div class="col-12 d-flex flex-row flex-between-center">
-    <div class="flex-grow-1 p-4 me-3 shadow rounded-4 bg-white">
-      <h2 class="text-start fs-2">Chương trình Khuyến mãi</h2>
-      <div class="d-flex flex-row">
-
-      </div>
+  <!-- First row -->
+  <div class="col-12 d-flex flex-row flex-wrap flex-between-center gap-3">
+    <div class="flex-grow-1 col-7 flex-lg-grow-0 p-4 shadow rounded-4 bg-white">
+      <!-- Revenue chart by food category -->
+      <%@ include file="components/chartDailyRevenueByFoodCategory.jspf" %>
     </div>
     <div class="p-4 col-5 shadow rounded-4 bg-white">
       <h2 class="text-start fs-2">Các món bán chạy</h2>
@@ -70,4 +60,5 @@
       </div>
     </div>
   </div>
+
 </div>
