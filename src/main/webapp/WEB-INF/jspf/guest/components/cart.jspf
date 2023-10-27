@@ -36,8 +36,7 @@
                                 <c:otherwise>
                                   <c:forEach var="cart" items="${sessionScope['cart'].items}">
                                 <input type="text" name="fid" value="${cart.food.foodID}" hidden>
-                                <tr class="align-middle">
-                                    <!-- Image and Food name -->
+                                <tr id="cart-item-${cart.food.foodID}" class="align-middle">
                                     <td class="table-image-cell">
                                         <img src="${cart.food.imageURL}" alt="${cart.food.foodName}" class="me-3"/>
                                         ${cart.food.foodName}
@@ -85,14 +84,19 @@
                     </div>
                 </form>
             </div>
-            <div class="modal-footer flex-wrap pt-0">
-              <button type="button" class="btn w-100 w-sm-auto btn-outline-dark px-4" data-bs-dismiss="modal" aria-label="Close">
-                Tiếp tục chọn món
-              </button>
-              <%-- To solve the issue of submit button outside of the form element, just add "form" attribute --%>
-              <button type="submit" class="btn w-100 w-sm-auto btn-primary px-5" id="btnSubmit" name="btnSubmit" form="cart-form" value="Checkout">
-                Thanh toán
-              </button>
+            <div class="modal-footer">
+                <div class="d-flex flex-row align-items-center justify-content-end w-100">
+                    <div class="col text-end me-3">
+                        <h5 class="m-0">Tổng thanh toán: <fmt:formatNumber type="number" pattern="###,###"
+                                                                           value="${totalPrice}"/>đ</h5>
+                    </div>
+                    <div class="col-xl-2 col-lg-3 col-md-4 col-sm-4 align-self-end text-end">
+                        <%-- To solve the issue of submit button outside of the form element, just add "form" attribute --%>
+                        <button type="submit" class="btn btn-primary w-100" id="btnSubmit" name="btnSubmit" form="cart-form" value="Checkout">
+                            Thanh toán
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -133,6 +137,36 @@
         } else {
             cartBadge.innerText = numRows;
         }
+    }
+    
+    function deleteCartItem(foodID) {
+        
+        var cartItem = document.getElementById("cart-item-" + foodID);
+        // Xử lý sự kiện khi yêu cầu hoàn thành
+        
+        
+        // Kiểm tra xem phần tử tồn tại hay không
+        if (cartItem) {
+            // Tạo một đối tượng XMLHttpRequest
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "deleteCart?fid=" + foodID, true);
+            xhr.onload = function () {
+            if (xhr.status == 200) {
+                // Xóa hàng từ DOM mà không cần tải lại trang
+                var row = document.getElementById("row-" + foodID);
+                row.parentNode.removeChild(row);
+                } else {
+                    console.error("Yêu cầu không thành công: " + xhr.status);
+                }
+            };
+            // Gửi yêu cầu đến máy chủ
+            xhr.send();
+            cartItem.parentNode.removeChild(cartItem);
+        } else {
+            console.error("Không tìm thấy sản phẩm để xóa.");
+        }
+
+        
     }
 
     // Restrict user input to reject non-numeric characters
