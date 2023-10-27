@@ -4,11 +4,11 @@
 <div class="modal" tabindex="-1" id="cart-modal">
     <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered modal-fullscreen-lg-down">
         <div class="modal-content px-4 py-3">
-            <div class="modal-header pb-0 border-bottom-0">
+            <div class="modal-header border-bottom-0">
                 <h4 class="modal-title" id="exampleModalLabel">Giỏ hàng</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body py-2">
+            <div class="modal-body py-0">
                 <%-- Putting form inside modal body ensures the modal's scrollability --%>
                 <form id="cart-form" action="checkout" method="POST">
                     <div class="table-responsive">
@@ -17,9 +17,9 @@
                                 <tr>
                                     <th scope="col">Món ăn/Đồ uống</th>
                                     <th scope="col" style="min-width: 6em">Đơn giá</th>
-                                    <th scope="col">Số lượng</th>
-                                    <th scope="col" style="min-width: 6em">Số tiền</th>
-                                    <th scope="col">Thao tác</th>
+                                    <th scope="col" style="min-width: 6em">Số lượng</th>
+                                    <th scope="col" style="min-width: 6em" class="d-none d-md-table-cell">Số tiền</th>
+                                    <th scope="col" class="d-none d-md-table-cell">Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody class="table-group-divider">
@@ -38,7 +38,7 @@
                                 <input type="text" name="fid" value="${cart.food.foodID}" hidden>
                                 <tr id="cart-item-${cart.food.foodID}" class="align-middle">
                                     <td class="table-image-cell">
-                                        <img src="${cart.food.imageURL}" alt="${cart.food.foodName}" class="me-3"/>
+                                        <img src="${cart.food.imageURL}" alt="${cart.food.foodName}" class="d-none d-md-inline rounded shadow-sm me-3"/>
                                         ${cart.food.foodName}
                                     </td>
                                     <!-- Price -->
@@ -53,7 +53,7 @@
                                         </div>
                                     </td>
                                     <!-- Total -->
-                                    <td class="item-total">
+                                    <td class="item-total d-none d-md-table-cell">
                                       <c:set var="productPrice" value="${Double.parseDouble(cart.food.foodPrice) * cart.foodQuantity}"/>
                                       <c:set var="totalPrice" value="${totalPrice + productPrice}"/>
                                       <fmt:formatNumber type="number" pattern="###,###"
@@ -62,11 +62,11 @@
                                     <!-- Remove -->
                                     <td>
                                         <a href="deleteCart?fid=${cart.food.foodID}" 
-                                                    class="d-flex btn btn-sm btn-outline-danger align-items-center px-3"
+                                                    class="d-flex btn btn-sm btn-outline-danger align-items-center px-2 px-md-3"
                                                     style="width:fit-content;"
                                                     onclick="return confirm('Bạn có muốn xóa Món này khỏi Giỏ hàng không?')">
-                                                    <i class="ph-bold ph-trash fs-1 me-2"></i>
-                                                    Xóa
+                                                    <i class="ph-bold ph-trash fs-1 me-md-2"></i>
+                                                    <span class="d-none d-md-inline">Xóa</span>
                                         </a>
                                     </td>
                                 </tr>
@@ -74,29 +74,20 @@
                             </c:otherwise>
                             </c:choose>
                             </tbody>
-                            <tfoot class="table-group-divider">
-                              <th colspan="5" class="text-end">
-                                <h4 id="grand-total" class="mt-2">Tổng thanh toán: <fmt:formatNumber type="number" pattern="###,###"
-                                  value="${totalPrice}"/> đ</h5>
-                              </th>
-                            </tfoot>
                         </table>
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
-                <div class="d-flex flex-row align-items-center justify-content-end w-100">
-                    <div class="col text-end me-3">
-                        <h5 class="m-0">Tổng thanh toán: <fmt:formatNumber type="number" pattern="###,###"
-                                                                           value="${totalPrice}"/>đ</h5>
-                    </div>
-                    <div class="col-xl-2 col-lg-3 col-md-4 col-sm-4 align-self-end text-end">
-                        <%-- To solve the issue of submit button outside of the form element, just add "form" attribute --%>
-                        <button type="submit" class="btn btn-primary w-100" id="btnSubmit" name="btnSubmit" form="cart-form" value="Checkout">
-                            Thanh toán
-                        </button>
-                    </div>
-                </div>
+            <div class="modal-footer border-top-0 pt-0 flex-wrap">
+              <h5 id="grand-total" class="mb-3 pt-2 w-100 text-end border-top border-black border-2">Tổng thanh toán: <fmt:formatNumber type="number" pattern="###,###"
+                value="${totalPrice}"/> đ</h5>
+              <button type="button" class="btn w-100 w-sm-auto btn-outline-dark px-4" data-bs-dismiss="modal" aria-label="Close">
+                Tiếp tục chọn món
+              </button>
+              <%-- To solve the issue of submit button outside of the form element, just add "form" attribute --%>
+              <button type="submit" class="btn w-100 w-sm-auto btn-primary px-5" id="btnSubmit" name="btnSubmit" form="cart-form" value="Checkout">
+                Thanh toán
+              </button>
             </div>
         </div>
     </div>
@@ -107,6 +98,14 @@
   #cart-modal input[type=number]::-webkit-outer-spin-button { 
     -webkit-appearance: none; 
     margin: 0; 
+  }
+  #cart-modal .modal-body {
+    -webkit-box-shadow: inset 0px 20px 36px -30px rgba(0,0,0,0.04),
+    inset 0px -20px 36px -30px rgba(0,0,0,0.04); 
+    box-shadow: inset 0px 20px 36px -30px rgba(0,0,0,0.04),
+     inset 0px -20px 36px -30px rgba(0,0,0,0.04);
+    -moz-box-shadow: inset 0px 20px 36px -30px rgba(0,0,0,0.04),
+     inset 0px -20px 36px -30px rgba(0,0,0,0.04); 
   }
 </style>
 
