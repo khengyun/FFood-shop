@@ -33,35 +33,29 @@
             </button>
             <thead>
                 <tr>
-                    <th onclick="sortTable(0)">Mã Tài khoản</th>
-                    <th onclick="sortTable(1)">Tên Người dùng</th>
-                    <th onclick="sortTable(2)">Email</th>
-                    <!--<th>Thao tác</th>-->
+                    <th onclick="sortTable(0)">Mã tài khoản</th>
+                    <th onclick="sortTable(1)">Mã người dùng</th>
+                    <th onclick="sortTable(2)">Tên người dùng</th>
+                    <th onclick="sortTable(3)">Họ</th>
+                    <th onclick="sortTable(4)">Tên</th>
+                    <th onclick="sortTable(5)">Giới tính</th>
+                    <th onclick="sortTable(6)">Số điện thoại</th>
+                    <th onclick="sortTable(7)">Email</th>
+                    <th onclick="sortTable(8)">Địa chỉ</th>
                 </tr>
             </thead>
             <tbody>
-            <c:forEach items="${userAccountList}" var="u">
+            <c:forEach items="${userList}" var="u">
                 <tr>
-                    <td>${u.accountID}</td>
+                    <td>${u.userID}</td>
+                    <td>${u.customerID}</td>
                     <td>${u.username}</td>
+                    <td>${u.lastName}</td>
+                    <td>${u.firstName}</td>
+                    <td>${u.gender}</td>
+                    <td>${u.phone}</td>
                     <td>${u.email}</td>
-<!--                    <td>
-                        <button type="button" id="btn-update-user"
-                                class="btn btn-sm btn-success py-1 m-1"
-                                data-account-id="${u.accountID}"
-                                data-username="${u.username}"
-                                data-email="${u.email}"
-                                data-bs-toggle="modal" data-bs-target="#update-user-modal">
-                            Cập nhật
-                        </button>
-                        <button type="button" id="btn-delete-user"
-                                class="btn btn-sm btn-danger py-1 m-1"
-                                data-account-id="${u.accountID}"
-                                data-username="${u.username}"
-                                data-bs-toggle="modal" data-bs-target="#delete-user-modal">
-                            Xóa
-                        </button>
-                    </td>-->
+                    <td>${u.address}</td>                   
                 </tr>
             </c:forEach>
             </tbody>
