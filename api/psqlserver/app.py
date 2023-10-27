@@ -22,5 +22,17 @@ def get_all_food():
 def search_food_by_name_endpoint(food_name: str):
     return food_operations.search_food_by_name(food_name)
 
+@app.get('/get_daily_revenue')
+def get_daily_revenue():
+    return food_operations.get_daily_revenue()
+
+@app.get('/get_top_selling_foods')
+def get_top_selling_foods():
+    return food_operations.get_top_selling_foods()
+
+@app.get('/get_daily_sales')
+def get_daily_sales():
+    return food_operations.get_daily_sales()
+
 if __name__ == '__main__': 
     uvicorn.run('app:app', port=8001, host='0.0.0.0')
