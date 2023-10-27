@@ -4,28 +4,34 @@
   <canvas id="chart-revenue-by-food-category"></canvas>
 </div>
 
-<script>  
-  const chart = document.getElementById('chart-revenue-by-food-category');
-  
-  // Gets the list of top 5 best selling food categories
-  const categories = ["Bánh mì", "Bánh mì", "Bánh mì", "Bánh mì", "Bánh mì"];
-  // TODO add implementation
+<script>
+  const chart = document.getElementById("chart-revenue-by-food-category");
 
-  const categoriesRevenue = [12012000, 19000000, 30000000, 5000000, 22000000];
+  // Fetch data from the API
+  fetch("http://localhost:8001/get_top_selling_foods")
+    .then((response) => response.json())
+    .then((data) => {
+      const categories = data.map((food) => food.name);
+      const categoriesRevenue = data.map((food) => food.total_revenue);
 
-  new Chart(chart, {
-    type: 'doughnut',
-    data: {
-      labels: categories,
-      datasets: [{
-        data: categoriesRevenue,
-        hoverOffset: 10
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false
-    }
-  });
-
+      new Chart(chart, {
+        type: "doughnut",
+        data: {
+          labels: categories,
+          datasets: [
+            {
+              data: categoriesRevenue,
+              hoverOffset: 10,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+        },
+      });
+    })
+    .catch((error) => {
+      console.error("Error fetching data:", error);
+    });
 </script>

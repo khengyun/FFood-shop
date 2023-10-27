@@ -37,13 +37,14 @@
         </button>
         <div class="collapse navbar-collapse pt-3 pb-2 py-lg-2 w-100" id="navbarSupportedContent">
             <form class="d-flex col">
-                <!-- Search bar -->
-                <div class="input-group-icon flex-grow-1 mx-md-5 pe-2">
-                    <i class="fas fa-search input-box-icon text-primary"></i>
-                    <input class="form-control border-1 input-box bg-100" type="search" placeholder="Tìm món ăn"
-                           aria-label="Tìm món ăn" id="search-bar" value="" onblur="searchFoodByKeyword()" />
-                </div>
-                <%@ include file="../../hyperfeat/fooddetechbutton.jspf" %>
+              <!-- Search bar -->
+              <div class="input-group-icon flex-grow-1 mx-md-5 pe-2">
+                <i class="fas fa-search input-box-icon text-primary"></i>
+                <input class="form-control border-1 input-box bg-100" type="search" placeholder="Tìm món ăn"
+                  aria-label="Tìm món ăn" id="search-bar" oninput="searchFoodByKeyword()" />
+                <div class="list-group search-results" style="position: absolute;" id="search-results-list"></div>
+              </div>
+              <%@ include file="../../hyperfeat/fooddetechbutton.jspf" %>
                 <!-- Cart button -->
                 <button type="button"
                         class="btn ps-1 pe-2 py-0 position-relative nav-icon text-decoration-none my-auto text-primary fs-2 me-4"
@@ -82,5 +83,4 @@
                 </c:choose>
             </form>
         </div>
-    </div>
 </nav>
