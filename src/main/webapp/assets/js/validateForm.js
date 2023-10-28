@@ -331,53 +331,39 @@ function validateForm() {
    
     $(".add-voucher-form").validate({
         rules: {
-            txtAccountUsername: {
-                required: true,
-                maxlength: 50,
-                pattern: /^[a-zA-Z0-9-'_]+$/
-            },
-            txtAccountFullname: {
+            txtvoucher_name: {
                 required: true,
                 maxlength: 100,
-                pattern: /^[\p{L}\s]+$/u
             },
-            txtEmail: {
+            txtvoucher_code: {
                 required: true,
-                maxlength: 255,
-                email: true
+                maxlength: 16,
+                pattern: /^[A-Z0-9]+$/
             },
-            txtAccountPassword: {
+            txtvoucher_discount_percent: {
                 required: true,
-                minlength: 8
+                range: [0, 100]
             },
-            txtReAccountPassword: {
-                required: true,
-                equalTo: "#txtAdminAccountPassword"
+            txtvoucher_quantity: {
+                required: true
             }
         },
         messages: {
-            txtAccountUsername: {
-                required: "Vui lòng nhập Tên Tài khoản",
-                maxlength: "Tên Tài khoản không được vượt quá 50 ký tự",
-                pattern: "Tên Tài khoản chỉ chấp nhận chữ, số, dấu gạch ngang, gạch dưới, nháy đơn và không chứa khoảng trắng"
+            txtvoucher_name: {
+                required: "Vui lòng nhập tên Voucher",
+                maxlength: "Tên Voucher không được vượt quá 100 ký tự"
             },
-            txtAccountFullname: {
-                required: "Vui lòng nhập tên đầy đủ",
-                maxlength: "Tên đầy đủ không được vượt quá 100 ký tự",
-                pattern: "Tên đầy đủ chỉ chấp nhận chữ, khoảng trắng"
+            txtvoucher_code: {
+                required: "Vui lòng nhập mã code",
+                maxlength: "Mã code không được vượt quá 16 ký tự",
+                pattern: "Mã code chỉ chấp nhận chữ in hoa, số"
             },
-            txtEmail: {
-                required: "Vui lòng nhập Email",
-                maxlength: "Email không được vượt quá 255 ký tự",
-                email: "Vui lòng nhập địa chỉ Email hợp lệ"
+            txtvoucher_discount_percent: {
+                required: "Vui lòng nhập phần trăm giảm giá",
+                range: "Vui lòng nhập từ 0% đến 100%"
             },
-            txtAccountPassword: {
-                required: "Vui lòng nhập Mật khẩu",
-                minlength: "Mật khẩu phải có ít nhất 8 ký tự"
-            },
-            txtReAccountPassword: {
-                required: "Vui lòng nhập lại Mật khẩu",
-                equalTo: "Mật khẩu không khớp"
+            txtvoucher_quantity: {
+                required: "Vui lòng nhập số lượng giảm giá",
             }
         },
         submitHandler: function (form) {
@@ -396,13 +382,14 @@ function validateForm() {
             txtvoucher_code: {
                 required: true,
                 maxlength: 16,
+                pattern: /^[A-Z0-9]+$/
             },
             txtvoucher_discount_percent: {
                 required: true,
                 range: [0, 100]
             },
             txtvoucher_quantity: {
-                required: true,
+                required: true
             }
         },
         messages: {
@@ -412,7 +399,8 @@ function validateForm() {
             },
             txtvoucher_code: {
                 required: "Vui lòng nhập mã code",
-                maxlength: "Mã code không được vượt quá 16 ký tự"
+                maxlength: "Mã code không được vượt quá 16 ký tự",
+                pattern: "Mã code chỉ chấp nhận chữ in hoa, số"
             },
             txtvoucher_discount_percent: {
                 required: "Vui lòng nhập phần trăm giảm giá",
@@ -516,7 +504,8 @@ function validateForm() {
             },
             txtPhoneNumber: {
                 required: true,
-                maxlength: 11
+                maxlength: 11,
+                number: true
             },
             txtAddress: {
                 required: true,
@@ -536,7 +525,8 @@ function validateForm() {
             },
             txtPhoneNumber: {
                 required: "Vui lòng nhập số điện thoại",
-                maxlength: "Số điện thoại không được vượt quá 11 kí tự"
+                maxlength: "Số điện thoại không được vượt quá 11 kí tự",
+                number: "Số điện thoại chỉ chấp nhận số"
             },
             txtAddress: {
                 required: "Vui lòng nhập địa chỉ của Người dùng",
@@ -760,7 +750,8 @@ $(".checkout-form").validate({
             },
             txtPhone: {
                 required: true,
-                maxlength: 11
+                maxlength: 11,
+                number: true
             },
             txtAddress: {
                 required: true,
@@ -780,7 +771,8 @@ $(".checkout-form").validate({
             },
             txtPhone: {
                 required: "Vui lòng nhập số điện thoại",
-                maxlength: "Số điện thoại không được vượt quá 11 kí tự"
+                maxlength: "Số điện thoại không được vượt quá 11 kí tự",
+                number: "Số điện thoại chỉ chấp nhận số"
             },
             txtAddress: {
                 required: "Vui lòng nhập địa chỉ của Người dùng",
