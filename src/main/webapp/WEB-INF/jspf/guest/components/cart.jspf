@@ -29,7 +29,7 @@
                                 <c:when test="${sessionScope['cart'].items.isEmpty() || sessionScope['cart'].items == null}">
                                     <tr>
                                         <td colspan="5" class="text-center">
-                                            <p id="empty-cart-label" class="fs-1 my-1">Giỏ hàng của bạn đang trống</p>
+                                            <p id="empty-cart-label" class="fs-1 my-1">Giỏ hàng của bạn đang trống</p>
                                         </td>
                                     </tr>
                                 </c:when>
@@ -42,7 +42,10 @@
                                         ${cart.food.foodName}
                                     </td>
                                     <!-- Price -->
-                                    <td class="item-price">${cart.food.getFoodPriceFormat()}</td>
+                                    <td class="item-price">
+                                        <fmt:formatNumber type="number" pattern="###,###"
+                                                        value="${cart.food.foodPrice - (cart.food.foodPrice * cart.food.discountPercent / 100)}"/> đ
+                                    </td>
                                     <!-- Quantity -->
                                     <!-- https://codepen.io/anitaparmar26/pen/BaLYMeN -->
                                     <td>
@@ -54,20 +57,19 @@
                                     </td>
                                     <!-- Total -->
                                     <td class="item-total">
-                                      <c:set var="productPrice" value="${Double.parseDouble(cart.food.foodPrice) * cart.foodQuantity}"/>
+                                      <c:set var="productPrice" value="${Double.parseDouble(cart.food.foodPrice- (cart.food.foodPrice * cart.food.discountPercent / 100)) * cart.foodQuantity}"/>
                                       <c:set var="totalPrice" value="${totalPrice + productPrice}"/>
                                       <fmt:formatNumber type="number" pattern="###,###"
-                                                        value="${Double.parseDouble(cart.food.foodPrice) * cart.foodQuantity}"/> đ
+                                                        value="${Double.parseDouble(cart.food.foodPrice-(cart.food.foodPrice * cart.food.discountPercent / 100)) * cart.foodQuantity}"/> đ
                                     </td>
                                     <!-- Remove -->
                                     <td>
-                                        <a href="deleteCart?fid=${cart.food.foodID}" 
-                                                    class="d-flex btn btn-sm btn-outline-danger align-items-center px-3"
-                                                    style="width:fit-content;"
-                                                    onclick="return confirm('Bạn có muốn xóa Món này khỏi Giỏ hàng không?')">
-                                                    <i class="ph-bold ph-trash fs-1 me-2"></i>
-                                                    Xóa
-                                        </a>
+                                        <button type="button" style="width:fit-content;" 
+                                                class="d-flex btn btn-sm btn-outline-danger align-items-center px-3" 
+                                                onclick="deleteCartItem(${cart.food.foodID})">
+                                             <i class="ph-bold ph-trash fs-1 me-2"></i>
+                                            Xóa
+                                        </button>
                                     </td>
                                 </tr>
                             </c:forEach>
