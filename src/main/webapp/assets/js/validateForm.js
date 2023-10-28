@@ -20,11 +20,13 @@ function validateForm() {
             },
             txtFoodName: {
                 required: true,
-                maxlength: 100
+                maxlength: 100,
+                pattern: /^[\p{L}\s]+$/u
             },
             txtFoodDescription: {
                 required: true,
-                maxlength: 500
+                maxlength: 500,
+                pattern: /^[\p{L}\s]+$/u
             },
             txtFoodPrice: {
                 required: true,
@@ -48,11 +50,13 @@ function validateForm() {
             txtFoodTypeID: "Vui lòng chọn loại món",
             txtFoodName: {
                 required: "Tên món không được để trống",
-                maxlength: "Tên món không dài quá 100 kí tự"
+                maxlength: "Tên món không dài quá 100 kí tự",
+                pattern: "Tên món chỉ chấp nhận chữ, khoảng trắng"
             },
             txtFoodDescription: {
                 required: "Tên món không được để trống",
-                maxlength: "Tên món không dài quá 500 kí tự"
+                maxlength: "Tên món không dài quá 500 kí tự",
+                pattern: "Mô tả món ăn chỉ chấp nhận chữ, khoảng trắng"
             },
             txtFoodPrice: {
                 required: "Vui lòng nhập Đơn giá",
@@ -84,11 +88,13 @@ function validateForm() {
             },
             txtFoodName: {
                 required: true,
-                maxlength: 100
+                maxlength: 100,
+                pattern: /^[\p{L}\s]+$/u
             },
             txtFoodDescription: {
                 required: true,
-                maxlength: 500
+                maxlength: 500,
+                pattern: /^[\p{L}\s]+$/u
             },
             txtFoodPrice: {
                 required: true,
@@ -114,11 +120,13 @@ function validateForm() {
             },
             txtFoodName: {
                 required: "Tên món không được để trống",
-                maxlength: "Tên món không dài quá 100 kí tự"
+                maxlength: "Tên món không dài quá 100 kí tự",
+                pattern: "Tên món chỉ chấp nhận chữ, khoảng trắng"
             },
             txtFoodDescription: {
-                required: "Tên món không được để trống",
-                maxlength: "Tên món không dài quá 500 kí tự"
+                required: "Mô tả món ăn không được để trống",
+                maxlength: "Mô tả món ăn không dài quá 500 kí tự",
+                pattern: "Mô tả món ăn chỉ chấp nhận chữ, khoảng trắng"
             },
             txtFoodPrice: {
                 required: "Vui lòng nhập Đơn giá",
@@ -126,7 +134,7 @@ function validateForm() {
                 min: "Đơn giá phải là số dương"
             },
             txtDiscountPercent: {
-                required: "Vui lòng nhập Giá trị giảm giá",
+                required: "Vui lòng nhập giá trị giảm giá",
                 digits: "Giá trị giảm giá phải là số nguyên",
                 min: "Giá trị giảm giá không được dưới 0",
                 max: "Giá trị giảm giá không được quá 100"
@@ -498,11 +506,13 @@ function validateForm() {
         rules: {
             txtLastName: {
                 required: true,
-                maxlength: 50
+                maxlength: 50,
+                pattern: /^[\p{L}\s]+$/u
             },
             txtFirstName: {
                 required: true,
-                maxlength: 50
+                maxlength: 50,
+                pattern: /^[\p{L}\s]+$/u
             },
             txtPhoneNumber: {
                 required: true,
@@ -516,11 +526,13 @@ function validateForm() {
         messages: {
             txtLastName: {
                 required: "Vui lòng nhập họ",
-                maxlength: "Họ Người dùng không được vượt quá 50 ký tự"
+                maxlength: "Họ Người dùng không được vượt quá 50 ký tự",
+                pattern: "Họ Người dùng chỉ chấp nhận chữ, khoảng trắng"
             },
             txtFirstName: {
                 required: "Vui lòng nhập tên",
-                maxlength: "Tên Người dùng không được vượt quá 50 ký tự"
+                maxlength: "Tên Người dùng không được vượt quá 50 ký tự",
+                pattern: "Tên Người dùng chỉ chấp nhận chữ, khoảng trắng"
             },
             txtPhoneNumber: {
                 required: "Vui lòng nhập số điện thoại",
@@ -726,6 +738,53 @@ $(".update-order-form").validate({
             txtAddress: {
                 required: "Vui lòng nhập địa chỉ đặt hàng",
                 maxlength: "Địa chỉ không được vượt quá 200 ký tự",
+            }
+        },
+        submitHandler: function (form) {
+            // Handle form submission here
+            form.submit();
+        }
+});
+
+$(".checkout-form").validate({
+        rules: {
+            txtLastName: {
+                required: true,
+                maxlength: 50,
+                pattern: /^[\p{L}\s]+$/u
+            },
+            txtFirstName: {
+                required: true,
+                maxlength: 50,
+                pattern: /^[\p{L}\s]+$/u
+            },
+            txtPhone: {
+                required: true,
+                maxlength: 11
+            },
+            txtAddress: {
+                required: true,
+                maxlength: 255
+            }
+        },
+        messages: {
+            txtLastName: {
+                required: "Vui lòng nhập họ",
+                maxlength: "Họ Người dùng không được vượt quá 50 ký tự",
+                pattern: "Họ Người dùng chỉ chấp nhận chữ, khoảng trắng"
+            },
+            txtFirstName: {
+                required: "Vui lòng nhập tên",
+                maxlength: "Tên Người dùng không được vượt quá 50 ký tự",
+                pattern: "Tên Người dùng chỉ chấp nhận chữ, khoảng trắng"
+            },
+            txtPhone: {
+                required: "Vui lòng nhập số điện thoại",
+                maxlength: "Số điện thoại không được vượt quá 11 kí tự"
+            },
+            txtAddress: {
+                required: "Vui lòng nhập địa chỉ của Người dùng",
+                maxlength: "Địa chỉ không được vượt quá 255 kí tự"
             }
         },
         submitHandler: function (form) {
