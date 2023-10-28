@@ -137,31 +137,84 @@ function autoHideButton() {
   }
 }
 
-/**
- * Searches for food items based on a search term and updates the visibility of the food items accordingly.
- */
+// Search bar
 function searchFoodByKeyword() {
-  // Get the search term input value and convert it to lowercase
-  let searchTerm = $("#search-bar").val().toLowerCase();
+  const searchInput = document.getElementById("search-bar");
+  const searchResultsList = document.getElementById("search-results-list");
 
-  // Iterate through each food item
-  for (let i = 0; i < foodList.length; i++) {
-    let foodName = foodList[i]
-      .querySelector(".card-title")
-      .textContent.toLowerCase();
-    let foodContainer = foodList[i];
+  // Clear previous search results
+  searchResultsList.innerHTML = "";
 
-    // Check if the search term is empty
-    if (searchTerm === "") {
-      foodContainer.classList.remove("d-none"); // Show all food items if no search term is entered
-    } else {
-      // Check if the food name includes the search term
-      if (foodName.includes(searchTerm)) {
-        foodContainer.classList.remove("d-none"); // Show food items that contain the search term
-      } else {
-        foodContainer.classList.add("d-none"); // Hide food items that do not contain the search term
-      }
-    }
+  if (searchInput.value.trim() === "") {
+    searchResultsList.style.display = "none";
+    return;
   }
-  showInitialFoodItems();
+
+  // Fetch search results based on the input
+  fetch(`http://localhost:8001/search_food_by_name/${searchInput.value}`)
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.length > 0) {
+        data.forEach((item) => {
+          // Create a card
+          const card = document.createElement("div");
+          card.classList.add("card", "mb-3");
+
+          // Create a row for card content
+          const row = document.createElement("div");
+          row.classList.add("row", "g-0");
+
+          // Create a column for the image
+          const imageCol = document.createElement("div");
+          imageCol.classList.add("col-md-4");
+
+          // Create an image for the card
+          const img = document.createElement("img");
+          img.src = item.food_url;
+          img.alt = item.food_name;
+          img.classList.add("img-fluid", "rounded-start", "food-thumbnail");
+
+          // Create a column for the card body
+          const bodyCol = document.createElement("div");
+          bodyCol.classList.add("col-md-8");
+
+          // Create a card body
+          const cardBody = document.createElement("div");
+          cardBody.classList.add("card-body");
+
+          // Create card title
+          const cardTitle = document.createElement("h5");
+          cardTitle.classList.add("card-title");
+          cardTitle.textContent = item.food_name;
+
+          // Create card text
+          const cardText = document.createElement("p");
+          cardText.classList.add("card-text");
+          cardText.textContent = item.food_description;
+
+          // Create card text for the price
+          const priceText = document.createElement("p");
+          priceText.classList.add("card-text");
+          priceText.classList.add("text-muted");
+          priceText.textContent = `${item.food_price} VNĐ`;
+
+          // Append elements to the card and row
+          card.appendChild(row);
+          row.appendChild(imageCol);
+          row.appendChild(bodyCol);
+          imageCol.appendChild(img);
+          bodyCol.appendChild(cardBody);
+          cardBody.appendChild(cardTitle);
+          cardBody.appendChild(cardText);
+          cardBody.appendChild(priceText);
+
+          searchResultsList.appendChild(card);
+        });
+        searchResultsList.style.display = "block";
+      } else {
+        searchResultsList.style.display = "none";
+      }
+    })
+    .catch((error) => console.error(error));
 }
+
