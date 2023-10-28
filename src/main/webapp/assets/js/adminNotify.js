@@ -98,6 +98,24 @@ $(document).ready(function () {
   }
 });
 
+//show success for order
+$(document).ready(function () {
+  
+  if (window.location.hash === '#success_update_order') {
+    $('#success_update_order').modal('show');
+    setTimeout(function () {
+      $('#success_update_order').modal('hide');
+    }, 2000);
+  };
+  
+  if (window.location.hash === '#success_delete_order') {
+    $('#success_delete_order').modal('show');
+    setTimeout(function () {
+      $('#success_delete_order').modal('hide');
+    }, 2000);
+  }
+});
+
 // ===================================FAILURE======================================
 
 //show fail for voucher
@@ -217,7 +235,23 @@ $(document).ready(function () {
       $('#failure_delete_role').modal('hide');
     }, 2000);
   };
+});
   
+  //show fail for order
+$(document).ready(function () {
+   if (window.location.hash === '#failure_update_order') {
+    $('#failure_update_order').modal('show');
+    setTimeout(function () {
+      $('#failure_update_order').modal('hide');
+    }, 2000);
+  };
+  
+  if (window.location.hash === '#failure_delete_order') {
+    $('#failure_delete_order').modal('show');
+    setTimeout(function () {
+      $('#failure_delete_order').modal('hide');
+    }, 2000);
+  };
 });
 
 

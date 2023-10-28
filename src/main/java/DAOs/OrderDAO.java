@@ -5,23 +5,17 @@
 package DAOs;
 
 import DBConnection.DBConnection;
-import Models.Account;
 import Models.Cart;
 import Models.CartItem;
-import Models.Order;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import Models.Order;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -209,6 +203,39 @@ public class OrderDAO {
         }
         return result;
     }
+    
+    public int updateForAdmin(Order order) {
+        String sql = "UPDATE [Order] SET order_status_id = ?, payment_method_id = ?, contact_phone = ?, delivery_address = ?, order_total = ?, order_note = ? WHERE order_id = ?";
+        int result = 0;
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setByte(1, order.getOrderStatusID());
+            ps.setByte(2, order.getPaymentMethodID());
+            ps.setString(3, order.getContactPhone());
+            ps.setString(4, order.getDeliveryAddress());
+            ps.setBigDecimal(5, order.getOrderTotal());
+            ps.setString(6, order.getOrderNote());
+            ps.setInt(7, order.getOrderID());
+            result = ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
+    
+    public int updateOrderStatus(Order order) {
+        String sql = "UPDATE [Order] SET order_status_id = ? WHERE order_id = ?";
+        int result = 0;
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setByte(1, order.getOrderStatusID());       
+            ps.setInt(2, order.getOrderID());
+            result = ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
 
     public int cancelOrder(int orderID, Timestamp cancelTime) {
         String sql = "UPDATE [Order] SET order_status_id = ?, order_cancel_time = ? WHERE order_id = ?";
@@ -315,6 +342,51 @@ public class OrderDAO {
         }
         return orderItems;
     }
+    
+    
+    public int delete(int id) {
+        int result = 0;
+        String sql = "delete from [Order] where order_id=?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            result = ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
+    
+    public int deleteMultiple(List<Integer> orderIDs) {
+        int result = 0;
+        try {
+            conn.setAutoCommit(false); // Start transaction
+            for (Integer orderID : orderIDs) {
+                if (delete(orderID) == 1) {
+                    result++; // Count number of successful deletions
+                } else {
+                    conn.rollback(); // Rollback transaction if deletion fails
+                    return 0;
+                }
+            }
+            conn.commit(); // Commit transaction if all deletions succeed
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                conn.rollback(); // Rollback transaction if any exception occurs
+            } catch (SQLException rollbackEx) {
+                Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, rollbackEx);
+            }
+            return 0;
+        } finally {
+            try {
+                conn.setAutoCommit(true); // Reset auto commit
+            } catch (SQLException finalEx) {
+                Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, finalEx);
+            }
+        }
+        return result;
+    }
 
     public static void main(String[] args) throws ParseException {
         OrderDAO a = new OrderDAO();
@@ -327,4 +399,5 @@ public class OrderDAO {
 
         a.add(new Order(1, 1, (byte) 2, (byte) 3, "0123123123", "ca mau", timestamp, "cac le", timestamp));
     }
+    
 }

@@ -35,6 +35,8 @@
                 <%@ include file="WEB-INF/jspf/admin/components/updatevoucher.jspf" %>
                 <%@ include file="WEB-INF/jspf/admin/components/failure.jspf" %>
                 <%@ include file="WEB-INF/jspf/admin/components/success.jspf" %>
+                <%@ include file="WEB-INF/jspf/admin/components/updateOrder.jspf" %>
+                <%@ include file="WEB-INF/jspf/admin/components/deleteOrder.jspf" %>
                 <!-- Main Content -->
                 <main class="w-100 p-4 bg-surface">
                     <div class="tab-content">

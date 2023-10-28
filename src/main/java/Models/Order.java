@@ -109,6 +109,20 @@ public class Order {
         this.deliveryTime = deliveryTime;
         this.orderCancelTime = orderCancelTime;
     }
+    public Order(int orderID, byte orderStatusID, byte paymentMethodID, String contactPhone, String deliveryAddress, String orderNote, BigDecimal orderTotal) {
+        this.orderID = orderID;
+        this.orderStatusID = orderStatusID;
+        this.paymentMethodID = paymentMethodID;
+        this.contactPhone = contactPhone;
+        this.deliveryAddress = deliveryAddress;
+        this.orderNote = orderNote;
+        this.orderTotal = orderTotal;
+    }
+    
+    public Order(int orderID, byte orderStatusID) {
+        this.orderID = orderID;
+        this.orderStatusID = orderStatusID; 
+    }
     
     public int getOrderID() {
         return orderID;

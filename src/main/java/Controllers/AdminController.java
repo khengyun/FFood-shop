@@ -674,6 +674,98 @@ public class AdminController extends HttpServlet {
             return;
         }
     }
+    
+    private void doPostUpdateOrder(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int orderID = Integer.parseInt(request.getParameter("txtOrderID"));
+        String phonenumber = request.getParameter("txtPhoneNumber");
+        String address = request.getParameter("txtOrderAddress");
+        String paymentmethod = request.getParameter("txtPaymentMethod");
+        String note = request.getParameter("txtOrderNote");
+        String status = request.getParameter("txtOrderStatus");
+        Double orderTotal = Double.parseDouble(request.getParameter("txtOrderTotal"));
+
+        BigDecimal orderTotalPay = BigDecimal.valueOf(orderTotal);
+        
+        byte orderStatusID = 5;
+        if (status.equals("Chờ xác nhận")){
+            orderStatusID = 1;
+        } else if (status.equals("Đang chuẩn bị món")){
+            orderStatusID = 2;
+        } else if (status.equals("Đang giao")){
+            orderStatusID = 3;
+        } else if (status.equals("Đã giao")){
+            orderStatusID = 4;
+        } 
+        
+        byte paymentMethodID = 3;
+        if (paymentmethod.equals("Thẻ tín dụng")){
+            paymentMethodID = 1;
+        } else if (paymentmethod.equals("Thẻ ghi nợ")){
+            paymentMethodID = 2;
+        }
+        
+        OrderDAO orderDAO = new OrderDAO();
+        Order order = new Order(orderID, orderStatusID, paymentMethodID, phonenumber, address, note, orderTotalPay);
+        
+        int result = orderDAO.updateForAdmin(order);
+     
+        if (result == 1) {
+            response.sendRedirect("/admin#success_update_order");
+            return;
+        } else {
+            response.sendRedirect("/admin#failure_update_order");
+            return;
+        }
+    }
+    
+    private void doGetOrder(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int orderID = Integer.parseInt(request.getParameter("orderID"));
+        String status = request.getParameter("Changestatus");
+        byte orderStatusID = 5;
+        if (status.equals("Chờ xác nhận")){
+            orderStatusID = 1;
+        } else if (status.equals("Đang chuẩn bị món")){
+            orderStatusID = 2;
+        } else if (status.equals("Đang giao")){
+            orderStatusID = 3;
+        } else if (status.equals("Đã giao")){
+            orderStatusID = 4;
+        } 
+        
+        OrderDAO orderDAO = new OrderDAO();
+        Order order = new Order(orderID, orderStatusID);
+        int result = orderDAO.updateOrderStatus(order);
+        System.out.println("Deo dc af");
+    }
+    
+    private void doPostDeleteOrder(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        // Get the string of food IDs from the request
+        String[] orderIDs = request.getParameter("orderData").split(",");
+
+        // Convert the strings to numbers
+        List<Integer> orderIDList = new ArrayList<>();
+        for (int i = 0; i < orderIDs.length; i++) {
+            orderIDList.add(Integer.parseInt(orderIDs[i]));
+        }
+
+        // Delete each food item, and count deleted items
+        OrderDAO dao = new OrderDAO();
+        int result = dao.deleteMultiple(orderIDList);
+
+        // TODO implement a deletion status message after page reload
+        // Redirect or forward to another page if necessary
+        if (result == 1) {
+            response.sendRedirect("/admin#success_delete_order");
+            return;
+        } else {
+            response.sendRedirect("/admin#failure_delete_order");
+            return;
+        }
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
     // + sign on the left to edit the code.">
@@ -699,6 +791,8 @@ public class AdminController extends HttpServlet {
             doGetUser(request, response);
         } else if (path.startsWith("/admin/voucher")) {
             doGetVoucher(request, response);
+        } else if (path.startsWith("/admin/order")) {
+            doGetOrder(request, response);
         } else {
             // response.setContentType("text/css");
             request.getRequestDispatcher("/admin.jsp").forward(request, response);
@@ -753,6 +847,12 @@ public class AdminController extends HttpServlet {
                     break;
                 case "SubmitDeleteRole":
                     doPostDeleteRole(request, response);
+                    break;
+                case "SubmitUpdateOrder":
+                    doPostUpdateOrder(request, response);
+                    break;
+                case "SubmitDeleteOrder":
+                    doPostDeleteOrder(request, response);
                     break;
                 default:
                     break;

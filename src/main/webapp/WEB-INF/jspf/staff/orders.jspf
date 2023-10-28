@@ -27,33 +27,34 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                        <%--<th>Mã KH</th>                            --%>
+                    <th style="display: none;">KH ID</th>
                     <th>SĐT liên lạc</th>
+                    <th style="display: none;">SĐT liên lạc</th>
                     <th>Họ</th>
                     <th>Tên</th> 
                     <th>Địa chỉ nhận</th>
                     <th>Hình thức thanh toán</th>
                     <th>Các món đặt</th>
                     <th>Ghi chú</th>                          
-                    <th>Thanh toán</th>
+                    <th>Thanh toán</th> 
                     <th>Trạng thái</th>
+                    <th style="display: none;" >Trạng thái</th>
                     <th>Thời gian đặt</th>
-                        <%--<th>Thời gian nhận</th>                   
-                            <th>Thời gian hủy</th>                    --%>
                 </tr>
             </thead>
             <tbody>
             <c:forEach items="${orderList}" var="o">
                 <tr>
                     <td>${o.orderID}</td>
+                    <td style="display: none;" >${o.customerID}</td>
                     <td>
-                         <a href="tel:${o.contactPhone}" class="text-decoration-none">
+                        <a href="tel:${o.contactPhone}" class="text-decoration-none">
                             ${o.contactPhone}
                         </a>
                     </td>
+                    <td style="display: none;" > ${o.contactPhone} </td>
                     <td>${o.lastname}</td>
                     <td>${o.firstname}</td>
-                    <%--<td>${o.customerID}</td>              --%> 
                     <td style="white-space: pre-wrap;">${o.deliveryAddress}</td>
                     <td>${o.paymentMethod}</td>
                     <td>
@@ -66,14 +67,15 @@
                     <td>${(o.orderNote == null) ? "" : o.orderNote}</td>        
                     <td><fmt:formatNumber type="number" pattern="###,###,###.##" value="${o.orderTotal}"/>đ</td>
                 <td>
-                    <select name="orderStatus" id="orderStatus" style="border: none; background: transparent;" disabled>
+                    <select name="orderStatus" id="orderStatus" data-orderid="${o.orderID}" onchange="handleSelectChange(this)">
                         <option value="Chờ xác nhận" ${o.orderStatus == 'Chờ xác nhận' ? 'selected' : ''}>Chờ xác nhận</option>
-                        <option value="Đang chuẩn bị" ${o.orderStatus == 'Đang chuẩn bị' ? 'selected' : ''}>Đang chuẩn bị</option>
+                        <option value="Đang chuẩn bị món" ${o.orderStatus == 'Đang chuẩn bị món' ? 'selected' : ''}>Đang chuẩn bị</option>
                         <option value="Đang giao" ${o.orderStatus == 'Đang giao' ? 'selected' : ''}>Đang giao</option>
                         <option value="Đã giao" ${o.orderStatus == 'Đã giao' ? 'selected' : ''}>Đã giao</option>
                         <option value="Đã hủy" ${o.orderStatus == 'Đã hủy' ? 'selected' : ''}>Đã hủy</option>
                     </select>
                 </td>
+                <td style="display: none;">${o.orderStatus}</td>
                 <td style="word-wrap: break-word; white-space: pre-wrap;">${o.orderTime}</td>
                 </tr>
             </c:forEach>

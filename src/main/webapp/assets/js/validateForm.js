@@ -700,16 +700,6 @@ function validateForm() {
 
 $(".update-order-form").validate({
         rules: {
-            txtLastName: {
-                required: true,
-                maxlength: 50,
-                pattern: /^[\p{L}\s]+$/u
-            },
-            txtFirstName: {
-                required: true,
-                maxlength: 50,
-                pattern: /^[\p{L}\s]+$/u
-            },
             txtOrderNote: {
                 maxlength: 500
             },
@@ -725,16 +715,6 @@ $(".update-order-form").validate({
 
         },
         messages: {
-            txtLastName: {
-                required: "Vui lòng nhập họ nguời đặt hàng",
-                maxlength: "Họ đặt hàng không được vượt quá 50 ký tự",
-                pattern: "Họ người đặt hàng chỉ chấp nhận chữ, khoảng trắng"
-            },
-            txtFirstName: {
-                required: "Vui lòng nhập tên người đặt hàng",
-                maxlength: "Tên người đặt hàng không được vượt quá 50 ký tự",
-                pattern: "Tên người đặt hàng chỉ chấp nhận chữ, khoảng trắng"
-            },
             txtOrderNote: {
                 maxlength: "Ghi chú không được vượt quá 50 ký tự",
             },
