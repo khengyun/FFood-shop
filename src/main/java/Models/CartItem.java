@@ -6,10 +6,6 @@ package Models;
 
 import java.math.BigDecimal;
 
-/**
- *
- * @author Hung
- */
 public class CartItem {
 
   private int cartItemID;
