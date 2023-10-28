@@ -251,32 +251,6 @@ $(document).on("click", "#btn-delete-order", function () {
     modal.find("input[name='orderData']").attr("value", orderIds);
 });
 
-// Lấy thẻ select bằng ID hoặc bất kỳ phương pháp nào khác
-const orderStatusSelect = document.getElementById("orderStatus");
-
-// Thêm event listener cho sự kiện change
-orderStatusSelect.addEventListener("change", function() {
-    // Lấy giá trị hiện tại của thẻ select khi trạng thái thay đổi
-    const selectedStatus = orderStatusSelect.value;
-    const orderid = this.getAttribute("data-orderid");
-    
-    // Send AJAX request to addToCart servlet endpoint
-    $.ajax({
-      type: "GET",
-      url: "admin/order",
-      data: {
-        orderID: orderid,
-        status: selectedStatus
-      },
-      success: function (response) {
-        console.log("Change order status successfully.");
-      },
-      error: function (error) {
-        console.error("Error occurred: " + error.responseText);
-      }
-    });
-});
-
 function handleSelectChange(selectElement) {
     // Get the selected value
     const selectedStatus = selectElement.value;

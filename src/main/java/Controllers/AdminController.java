@@ -737,7 +737,6 @@ public class AdminController extends HttpServlet {
         OrderDAO orderDAO = new OrderDAO();
         Order order = new Order(orderID, orderStatusID);
         int result = orderDAO.updateOrderStatus(order);
-        System.out.println("Deo dc af");
     }
     
     private void doPostDeleteOrder(HttpServletRequest request, HttpServletResponse response)

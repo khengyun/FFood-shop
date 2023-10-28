@@ -16,6 +16,12 @@
                         <i class="ph-bold ph-pencil fs-1 me-2"></i>
                         Cập nhật
                     </button>
+                    <button type="button" id="btn-delete-order"
+                            class="btn btn-danger btn-delete d-flex align-items-center flex-shrink-0" data-bs-toggle="modal"
+                            data-bs-target="#delete-order-modal">
+                        <i class="ph-bold ph-trash fs-1 me-2"></i>
+                        Xóa đơn
+                    </button>
                 </div>
             </div>
             <thead>

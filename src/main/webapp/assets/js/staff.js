@@ -49,3 +49,47 @@ $(document).on("click", "#btn-delete-food", function () {
   // Set the values to the hidden input in the modal
   modal.find("input[name='foodData']").attr("value", foodIds);
 });
+
+function handleSelectChange(selectElement) {
+    // Get the selected value
+    const selectedStatus = selectElement.value;
+
+    // Get the data-orderid attribute value
+    const orderid = selectElement.getAttribute("data-orderid");
+
+    // Send AJAX request to addToCart servlet endpoint
+    $.ajax({
+      type: "GET",
+      url: "staff/order",
+      data: {
+        orderID: orderid,
+        Changestatus: selectedStatus
+      },
+      success: function (response) {
+        console.log("Change order status successfully.");
+      },
+      error: function (error) {
+        console.error("Error occurred: " + error.responseText);
+      }
+    });
+}
+
+$(document).on("click", "#btn-update-order", function () {
+    let orderID = $(this).attr("data-order-id");
+    let phoneNumber = $(this).attr("data-order-phonenumber");
+    let address = $(this).attr("data-order-address");
+    let Ordernote = $(this).attr("data-order-note");
+    let paymentMethod = $(this).attr("data-order-paymentmethod");
+    let orderStatus = $(this).attr("data-order-status");
+    let orderTotal = $(this).attr("data-order-total");
+
+    let modal = $("#update-order-modal");
+    // Set the values of the corresponding form inputs in the modal
+    modal.find("input[name='txtOrderID']").attr("value", orderID);
+    modal.find("#txtPhoneNumber").attr("value", phoneNumber);
+    modal.find("#txtOrderAddress").val(address);
+    modal.find("#txtPaymentMethod").val(paymentMethod);
+    modal.find("#txtOrderNote").val(Ordernote);
+    modal.find("#txtOrderStatus").val(orderStatus);
+    modal.find("#txtOrderTotal").val(orderTotal);
+});
