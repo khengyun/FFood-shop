@@ -52,16 +52,28 @@ $(document).on("click", "#btn-delete-food", function () {
 });
 
 $(document).on("click", "#btn-update-user", function () {
-    let accountID = $(this).data("account-id");
-    let username = $(this).data("username");
-    let email = $(this).data("email");
-    
+    let userID = $(this).attr("data-user-id");
+    let customerID = $(this).attr("data-user-customerid");
+    let username = $(this).attr("data-user-username");
+    let lastname = $(this).attr("data-user-lastname");
+    let firstname = $(this).attr("data-user-firstname");
+    let gender = $(this).attr("data-user-gender");
+    let phonenumber = $(this).attr("data-user-phone");
+    let email = $(this).attr("data-user-email");
+    let address = $(this).attr("data-user-address");
+
     let modal = $("#update-user-modal");
-    
     // Set the values of the corresponding form inputs in the modal
-    modal.find("input[name='txtAccountID']").attr("value", accountID);
+    modal.find("input[name='txtUserID']").attr("value", userID);
+    modal.find("input[name='txtCustomerID']").attr("value", customerID);
+
     modal.find("#txtAccountUsername").attr("value", username);
-    modal.find("#txtEmail").attr("value", email);
+    modal.find("#txtLastName").attr("value", lastname);
+    modal.find("#txtFirstName").attr("value", firstname);
+    modal.find("#txtGender").val(gender);
+    modal.find("#txtPhoneNumber").val(phonenumber);
+    modal.find("#txtEmail").val(email);
+    modal.find("#txtAddress").val(address);
 });
 
 $(document).on("click", "#btn-delete-user", function () {
@@ -71,6 +83,7 @@ $(document).on("click", "#btn-delete-user", function () {
 
     // Retrieves selected rows' data in JSON format, so that it can be iterated
     let users = JSON.parse($(this).attr("data-users"));
+    let customers = JSON.parse($(this).attr("data-customers"));
 
     // Populate the list of users in the modal
     for (let userId in users) {
@@ -78,13 +91,14 @@ $(document).on("click", "#btn-delete-user", function () {
         modal.find("#delete-user-list").append("<li>" + userName + "</li>");
     }
 
-
     // Keep users IDs as strings
     let userIds = Object.keys(users).toString();
+    let customerIds = Object.keys(customers).toString();
+
 
     // Set the values to the hidden input in the modal
     modal.find("input[name='userData']").attr("value", userIds);
-
+    modal.find("input[name='customerData']").attr("value", customerIds);
 });
 
 $(document).on("click", "#btn-update-voucher", function () {

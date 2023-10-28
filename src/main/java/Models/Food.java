@@ -94,9 +94,15 @@ public class Food {
         return foodPrice;
     }
 
+//    public String getFoodPriceFormat() {
+//        DecimalFormat decimalFormat = new DecimalFormat("#,### đ");
+//        return decimalFormat.format(this.foodPrice-(this.foodPrice * this.discountPercent / 100));
+//    }
+    
     public String getFoodPriceFormat() {
+        BigDecimal discountedPrice = foodPrice.subtract(foodPrice.multiply(BigDecimal.valueOf(discountPercent / 100)));
         DecimalFormat decimalFormat = new DecimalFormat("#,### đ");
-        return decimalFormat.format(foodPrice);
+        return decimalFormat.format(discountedPrice);
     }
 
     public void setFoodPrice(BigDecimal foodPrice) {
