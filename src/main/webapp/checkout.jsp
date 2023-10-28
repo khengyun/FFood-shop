@@ -57,11 +57,14 @@
                   <c:forEach var="cart" items="${sessionScope['cart'].items}">
                     <tr>
                       <td>${cart.food.foodName}</td>
-                      <td>${cart.food.getFoodPriceFormat()}</td>
+                      <td>
+                          <fmt:formatNumber type="number" pattern="###,###"
+                                                        value="${cart.food.foodPrice - (cart.food.foodPrice * cart.food.discountPercent / 100)}"/> đ
+                      </td>
                       <td>${cart.foodQuantity}</td>
-                      <td><c:set var="productPrice" value="${Double.parseDouble(cart.food.foodPrice) * cart.foodQuantity}" />
+                      <td><c:set var="productPrice" value="${Double.parseDouble(cart.food.foodPrice- (cart.food.foodPrice * cart.food.discountPercent / 100)) * cart.foodQuantity}" />
                         <c:set var="totalPrice" value="${totalPrice + productPrice}" /> 
-                        ${Double.parseDouble(cart.food.foodPrice) * cart.foodQuantity} đ</td>
+                        ${Double.parseDouble(cart.food.foodPrice- (cart.food.foodPrice * cart.food.discountPercent / 100)) * cart.foodQuantity} đ</td>
                     </tr>
                   </c:forEach>
 

@@ -42,7 +42,10 @@
                                         ${cart.food.foodName}
                                     </td>
                                     <!-- Price -->
-                                    <td class="item-price">${cart.food.getFoodPriceFormat()}</td>
+                                    <td class="item-price">
+                                        <fmt:formatNumber type="number" pattern="###,###"
+                                                        value="${cart.food.foodPrice - (cart.food.foodPrice * cart.food.discountPercent / 100)}"/> đ
+                                    </td>
                                     <!-- Quantity -->
                                     <!-- https://codepen.io/anitaparmar26/pen/BaLYMeN -->
                                     <td>
@@ -54,10 +57,10 @@
                                     </td>
                                     <!-- Total -->
                                     <td class="item-total">
-                                      <c:set var="productPrice" value="${Double.parseDouble(cart.food.foodPrice) * cart.foodQuantity}"/>
+                                      <c:set var="productPrice" value="${Double.parseDouble(cart.food.foodPrice- (cart.food.foodPrice * cart.food.discountPercent / 100)) * cart.foodQuantity}"/>
                                       <c:set var="totalPrice" value="${totalPrice + productPrice}"/>
                                       <fmt:formatNumber type="number" pattern="###,###"
-                                                        value="${Double.parseDouble(cart.food.foodPrice) * cart.foodQuantity}"/> đ
+                                                        value="${Double.parseDouble(cart.food.foodPrice-(cart.food.foodPrice * cart.food.discountPercent / 100)) * cart.foodQuantity}"/> đ
                                     </td>
                                     <!-- Remove -->
                                     <td>
