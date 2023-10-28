@@ -257,9 +257,10 @@ public class CheckoutController extends HttpServlet {
 
       double orderTotalDouble = 0;
       for (CartItem item : cartItemList) {
+        int itemDiscount = item.getFood().getDiscountPercent();
         double itemPrice = item.getFood().getFoodPrice().doubleValue();
         int itemQuantity = item.getFoodQuantity();
-        orderTotalDouble += itemPrice * itemQuantity;
+        orderTotalDouble += (itemPrice - (itemPrice * itemDiscount / 100)) * itemQuantity;
 
         item.setCartID(cart.getId());
         result = cartitemdao.add(item);

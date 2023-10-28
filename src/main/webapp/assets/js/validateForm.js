@@ -156,10 +156,29 @@ function validateForm() {
                 maxlength: 100,
                 pattern: /^[a-zA-Z0-9-'_]+$/
             },
+            txtLastName: {
+                required: true,
+                maxlength: 50,
+                pattern: /^[\p{L}\s]+$/u
+            },
+            txtFirstName: {
+                required: true,
+                maxlength: 50,
+                pattern: /^[\p{L}\s]+$/u
+            },
+            txtPhoneNumber: {
+                required: true,
+                maxlength: 11,
+                number: true
+            },
             txtEmail: {
                 required: true,
                 maxlength: 255,
                 email: true
+            },
+            txtAddress: {
+                required: true,
+                maxlength: 200,
             },
             txtAccountPassword: {
                 required: true,
@@ -168,7 +187,7 @@ function validateForm() {
             txtAccountRePassword: {
                 required: true,
                 minlength: 8,
-                equalTo: "#txtAccountPassword"
+                equalTo: "#txtUserAccountPassword"
             }
         },
         messages: {
@@ -177,10 +196,29 @@ function validateForm() {
                 maxlength: "Tên Tài khoản Người dùng không được vượt quá 100 ký tự",
                 pattern: "Tên Tài khoản chỉ chấp nhận chữ, số, dấu gạch ngang, gạch dưới, nháy đơn và không chứa khoảng trắng"
             },
+            txtLastName: {
+                required: "Vui lòng nhập Họ Người dùng",
+                maxlength: "Họ Người dùng không được vượt quá 50 ký tự",
+                pattern: "Tên Tài khoản chỉ chấp nhận chữ, khoảng trắng"
+            },
+            txtFirstName: {
+                required: "Vui lòng nhập Tên Người dùng",
+                maxlength: "Tên Người dùng không được vượt quá 50 ký tự",
+                pattern: "Tên Tài khoản chỉ chấp nhận chữ, khoảng trắng"
+            },
+            txtPhoneNumber: {
+                required: "Vui lòng nhập số điện thoại",
+                minlength: "Mật khẩu phải có ít nhất 8 ký tự",
+                number: "SĐT Chỉ chấp nhận số"
+            },
             txtEmail: {
                 required: "Vui lòng nhập Email",
                 maxlength: "Email không được vượt quá 255 ký tự",
                 email: "Vui lòng nhập địa chỉ Email hợp lệ"
+            },
+            txtAddress: {
+                required: "Vui lòng nhập Tên Người dùng",
+                maxlength: "Địa chỉ không được vượt quá 200 ký tự",
             },
             txtAccountPassword: {
                 required: "Vui lòng nhập Mật khẩu",
@@ -203,36 +241,76 @@ function validateForm() {
         rules: {
             txtAccountUsername: {
                 required: true,
-                maxlength: 100
+                maxlength: 100,
+                pattern: /^[a-zA-Z0-9-'_]+$/
+            },
+            txtLastName: {
+                required: true,
+                maxlength: 50,
+                pattern: /^[\p{L}\s]+$/u
+            },
+            txtFirstName: {
+                required: true,
+                maxlength: 50,
+                pattern: /^[\p{L}\s]+$/u
+            },
+            txtPhoneNumber: {
+                required: true,
+                maxlength: 11,
+                number: true
             },
             txtEmail: {
                 required: true,
                 maxlength: 255,
                 email: true
             },
+            txtAddress: {
+                required: true,
+                maxlength: 200,
+            },
             txtAccountPassword: {
                 minlength: 8
             },
             txtAccountRePassword: {
                 minlength: 8,
-                equalTo: "#txtUpdateAccountPassword"
+                equalTo: "#txtUpdateUserAccountPassword"
             }
         },
         messages: {
             txtAccountUsername: {
                 required: "Vui lòng nhập Tên Tài khoản Người dùng",
-                maxlength: "Tên Tài khoản Người dùng không được vượt quá 100 ký tự"
+                maxlength: "Tên Tài khoản Người dùng không được vượt quá 100 ký tự",
+                pattern: "Tên Tài khoản chỉ chấp nhận chữ, số, dấu gạch ngang, gạch dưới, nháy đơn và không chứa khoảng trắng"
+            },
+            txtLastName: {
+                required: "Vui lòng nhập Họ Người dùng",
+                maxlength: "Họ Người dùng không được vượt quá 50 ký tự",
+                pattern: "Tên Tài khoản chỉ chấp nhận chữ, khoảng trắng"
+            },
+            txtFirstName: {
+                required: "Vui lòng nhập Tên Người dùng",
+                maxlength: "Tên Người dùng không được vượt quá 50 ký tự",
+                pattern: "Tên Tài khoản chỉ chấp nhận chữ, khoảng trắng"
+            },
+            txtPhoneNumber: {
+                required: "Vui lòng nhập số điện thoại",
+                minlength: "Mật khẩu phải có ít nhất 8 ký tự",
+                number: "SĐT Chỉ chấp nhận số"
             },
             txtEmail: {
                 required: "Vui lòng nhập Email",
                 maxlength: "Email không được vượt quá 255 ký tự",
                 email: "Vui lòng nhập địa chỉ Email hợp lệ"
             },
+            txtAddress: {
+                required: "Vui lòng nhập Tên Người dùng",
+                maxlength: "Địa chỉ không được vượt quá 200 ký tự",
+            },
             txtAccountPassword: {
-                minlength: "Mật khẩu mới phải có ít nhất 8 ký tự"
+                minlength: "Mật khẩu phải có ít nhất 8 ký tự"
             },
             txtAccountRePassword: {
-                minlength: "Mật khẩu mới phải có ít nhất 8 ký tự",
+                minlength: "Mật khẩu phải có ít nhất 8 ký tự",
                 equalTo: "Mật khẩu không khớp"
             }
         },

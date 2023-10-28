@@ -4,10 +4,6 @@
  */
 package Models;
 
-/**
- *
- * @author Hung
- */
 public class Customer {
 
   private int customerID;
