@@ -33,6 +33,8 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -195,6 +197,28 @@ public class AdminController extends HttpServlet {
         }
         OrderDAO orderDAO = new OrderDAO();
         List<Order> orderList = orderDAO.getAllList();
+        // Sorting orderList based on status in ascending order and ID in descending order
+//        Collections.sort(orderList, new Comparator<Order>() {
+//            @Override
+//            public int compare(Order o1, Order o2) {
+//                // Compare status in ascending order
+//                int statusComparison = Integer.compare(o1.getOrderStatusID(), o2.getOrderStatusID());
+//
+//                // If status is equal, sort by ID in descending order
+//                if (statusComparison == 0) {
+//                    return Integer.compare(o2.getOrderID(), o1.getOrderID());
+//                }
+//
+//                // Else sort by status in ascending order
+//                return statusComparison;
+//            }
+//        });
+        for (int i = 0; i < orderList.size(); i++){
+            String Orderfirstname = customerDAO.getCustomer(orderList.get(i).getCustomerID()).getFirstName();
+            String Orderlastname = customerDAO.getCustomer(orderList.get(i).getCustomerID()).getLastName();
+            orderList.get(i).setFirstname(Orderfirstname);
+            orderList.get(i).setLastname(Orderlastname);
+        }
 
         VoucherDAO voucherDAO = new VoucherDAO();
         List<Voucher> voucherList = voucherDAO.getAllList();

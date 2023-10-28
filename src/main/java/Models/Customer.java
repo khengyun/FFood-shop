@@ -60,7 +60,7 @@ public class Customer {
   }
 
   public String getFullName() {
-    return fullName;
+    return this.lastName + " " + this.firstName;
   }
 
   public void setFullName(String fullName) {

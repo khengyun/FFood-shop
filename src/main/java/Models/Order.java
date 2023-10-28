@@ -17,6 +17,9 @@ public class Order {
     private String hashOrderID;
     private int cartID;
     private int customerID;
+    private String fullname;
+    private String firstname;
+    private String lastname;
     private byte orderStatusID;
     private String orderStatus;
     private byte paymentMethodID;
@@ -106,7 +109,7 @@ public class Order {
         this.deliveryTime = deliveryTime;
         this.orderCancelTime = orderCancelTime;
     }
-
+    
     public int getOrderID() {
         return orderID;
     }
@@ -241,6 +244,30 @@ public class Order {
 
     public void setHashOrderID(String hashOrderID) {
         this.hashOrderID = hashOrderID;
+    }
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
     
     // Method to hash an integer as a string using MD5
