@@ -111,32 +111,49 @@
   }
 </style>
 
-<script>
+<script>  
+    
+    // Call the updateCartInformation function initially to set up the cart information
+    updateCartInformation();
+    
     // Get the cart table element
     const cartTable = document.getElementById("cart-table");
+    // Example event listener (you should replace this with your actual event listener code)
+    cartTable.addEventListener("change", function() {
+        // Call the updateCartInformation function inside the event listener to update cart information dynamically
+        updateCartInformation();
+        console.log("heheheh");
+    });
+    
+        
+    // Function to update cart information
+    function updateCartInformation() {
+        // Get the cart table element
+        const cartTable = document.getElementById("cart-table");
 
-    // Get the cart badge element
-    const cartBadge = document.getElementById("cart-badge");
+        // Get the cart badge element
+        const cartBadge = document.getElementById("cart-badge");
 
-    // Get the number of rows in the cart table
-    const numRows = cartTable.getElementsByTagName("tbody")[0].getElementsByTagName("tr").length;
+        // Get the number of rows in the cart table
+        const numRows = cartTable.getElementsByTagName("tbody")[0].getElementsByTagName("tr").length;
 
-    // If there are no rows or there is an empty cart label, disable the submit button and remove the cart badge
-    // Otherwise, enable the submit button and add the cart badge
-    if (numRows === 0 || document.getElementById("empty-cart-label")) {
-        document.getElementById("btnSubmit").disabled = true;
-        cartBadge.classList.add("d-none");
-    } else {
-        document.getElementById("btnSubmit").disabled = false;
-        cartBadge.classList.remove("d-none");
-
-        // Set the cart badge text to the number of rows
-        if (numRows > 99) {
-            cartBadge.innerText = "99+";
-        } else if (numRows < 0) {
-            cartBadge.innerText = "0";
+        // If there are no rows or there is an empty cart label, disable the submit button and remove the cart badge
+        // Otherwise, enable the submit button and add the cart badge
+        if (numRows === 0 || document.getElementById("empty-cart-label")) {
+            document.getElementById("btnSubmit").disabled = true;
+            cartBadge.classList.add("d-none");
         } else {
-            cartBadge.innerText = numRows;
+            document.getElementById("btnSubmit").disabled = false;
+            cartBadge.classList.remove("d-none");
+
+            // Set the cart badge text to the number of rows
+            if (numRows > 99) {
+                cartBadge.innerText = "99+";
+            } else if (numRows < 0) {
+                cartBadge.innerText = "0";
+            } else {
+                cartBadge.innerText = numRows;
+            }
         }
     }
     
@@ -151,18 +168,10 @@
             // Tạo một đối tượng XMLHttpRequest
             var xhr = new XMLHttpRequest();
             xhr.open("GET", "deleteCart?fid=" + foodID, true);
-            xhr.onload = function () {
-            if (xhr.status == 200) {
-                // Xóa hàng từ DOM mà không cần tải lại trang
-                var row = document.getElementById("row-" + foodID);
-                row.parentNode.removeChild(row);
-                } else {
-                    console.error("Yêu cầu không thành công: " + xhr.status);
-                }
-            };
             // Gửi yêu cầu đến máy chủ
             xhr.send();
             cartItem.parentNode.removeChild(cartItem);
+            updateCartInformation();
         } else {
             console.error("Không tìm thấy sản phẩm để xóa.");
         }
