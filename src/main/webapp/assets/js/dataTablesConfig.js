@@ -133,7 +133,6 @@ $(document).ready(function () {
                 let price = data[0][4]
                         .substring(0, data[0][4].length - 1) // Removes currency symbol
                         .replace(',', '') // Removes thousand separators
-                        .concat(".0000"); // Adds optional decimals
                 btnUpdate.attr("data-food-price", price);
 
                 let status = 0
@@ -603,10 +602,10 @@ $(document).ready(function () {
     function disableDeleteUserBtn() {
         let btnDelete = $('#btn-delete-user');
         if (btnDelete) {
-            btnUpdate.removeAttr("data-user-id");
-            btnUpdate.removeAttr("data-user-customerid");
-            btnUpdate.removeAttr("data-user-username");
-            btnUpdate.removeAttr("data-user-firstname");
+            btnDelete.removeAttr("data-user-id");
+            btnDelete.removeAttr("data-user-customerid");
+            btnDelete.removeAttr("data-user-username");
+            btnDelete.removeAttr("data-user-firstname");
             btnDelete.addClass("disabled");
         }
     }
@@ -733,6 +732,75 @@ $(document).ready(function () {
                 .column(columnIndex)
                 .nodes()
                 .each((element) => element.classList.add('highlight'));
+    });
+    
+    function disableUpdateOrderBtn() {
+        let btnUpdate = $('#btn-update-order');
+        if (btnUpdate) {
+            btnUpdate.removeAttr("data-order-id");
+            btnUpdate.removeAttr("data-order-phonenumber");
+            btnUpdate.removeAttr("data-order-lastname");
+            btnUpdate.removeAttr("data-order-firstname");
+            btnUpdate.removeAttr("data-order-address");
+            btnUpdate.removeAttr("data-order-paymentmethod");
+            btnUpdate.removeAttr("data-order-note");
+            btnUpdate.removeAttr("data-order-status");
+            btnUpdate.removeAttr("data-order-total");
+            btnUpdate.addClass("disabled");
+        }
+    }
+
+    function disableDeleteOrderBtn() {
+        let btnDelete = $('#btn-delete-order');
+        if (btnDelete) {
+            btnDelete.removeAttr("data-order-id");
+            btnDelete.addClass("disabled");
+        }
+    }
+    
+    orderTable.on('select selectItems deselect', function (e, dt, type, indexes) {
+        if (type === 'row' && indexes && Array.isArray(indexes)) {
+            let btnUpdate = $('#btn-update-order');
+            let btnDelete = $('#btn-delete-order');
+
+            // Retrieves selected rows
+            let data4 = orderTable.rows({selected: true}).data();
+
+            // Only allows update for exactly 1 row
+            if (data4.length === 1) {
+
+                // data's type is a 2D array since the table's data is DOM-sourced
+                // https://datatables.net/reference/api/row().data()
+                btnUpdate.attr("data-order-id", data4[0][0]);
+                btnUpdate.attr("data-order-phonenumber", data4[0][3]);
+                btnUpdate.attr("data-order-address", data4[0][6]);
+                btnUpdate.attr("data-order-paymentmethod", data4[0][7]);
+                btnUpdate.attr("data-order-note", data4[0][9]);
+                let total = data4[0][10]
+                        .substring(0, data4[0][10].length - 1) // Removes currency symbol
+                        .replace(',', '') // Removes thousand separators
+                btnUpdate.attr("data-order-total", total);
+                btnUpdate.attr("data-order-status", data4[0][12]);
+                btnUpdate.removeClass("disabled");
+
+                let orders = {};
+                orders[data4[0][0]] = data4[0][0]; 
+                btnDelete.attr("data-orders", JSON.stringify(orders));
+                btnDelete.removeClass("disabled");
+            } else if (data4.length > 1) {
+                let orders = {};
+                for (let i = 0; i < data4.length; i++) {
+                    let orderId = data4[i][0];
+                    orders[orderId] = data4[i][0]; 
+                }
+                btnDelete.attr("data-orders", JSON.stringify(orders));
+                btnDelete.removeClass("disabled");
+                disableUpdateUserBtn();
+            } else {
+                disableUpdateUserBtn();
+                disableDeleteUserBtn();
+            }
+        }
     });
 
 // Add event listener for opening and closing details

@@ -16,6 +16,7 @@
 
         <%@ include file="WEB-INF/jspf/common/imports/resources.jspf" %>
         <%@ include file="WEB-INF/jspf/admin/imports/dataTablesStyle.jspf" %>
+        <%@ include file="WEB-INF/jspf/staff/imports/chartjs.jspf" %>
     </head>
     <body>
         <div class="container-fluid m-0 p-0">
@@ -23,6 +24,7 @@
                 <%@ include file="WEB-INF/jspf/staff/components/addFood.jspf" %>
                 <%@ include file="WEB-INF/jspf/staff/components/updateFood.jspf" %>
                 <%@ include file="WEB-INF/jspf/staff/components/deleteFood.jspf" %>
+                <%@ include file="WEB-INF/jspf/staff/components/updateOrder.jspf" %>
                 <%@ include file="WEB-INF/jspf/staff/components/failure.jspf" %>
                 <%@ include file="WEB-INF/jspf/staff/components/success.jspf" %>
                 <%@ include file="WEB-INF/jspf/staff/components/staffSidebar.jspf" %>
@@ -34,56 +36,8 @@
                         <%@ include file="WEB-INF/jspf/staff/home.jspf" %>
                         <!-- Food & Drinks Tab Content -->
                         <%@ include file="WEB-INF/jspf/staff/foods.jspf" %>
-
-                        <!-- Orders Tab Content -->
-                        <div class="tab-pane fade" id="orders">
-                            <div class="container-fluid p-2">
-                                <table id="orders-table" class="table table-bordered table-striped">
-                                    <h1 class="text-center fw-bold fs-3">Quản lý Đơn món</h1>
-                                    <thead>
-                                        <tr>
-                                            <th>Mã Đơn</th>
-                                            <th>Mã KH</th>
-                                            <th>SĐT liên lạc</th>
-                                            <th>Địa chỉ nhận</th>
-                                            <th>Phương thức thanh toán</th>
-                                            <th>Các món đặt</th>
-                                            <th>Ghi chú</th> <!-- contains both customer note and cart details -->
-                                            <th>Thanh toán</th>
-                                            <th>Trạng thái</th>
-                                            <th>Thời gian đặt</th>
-                                            <th>Thời gian nhận</th>
-                                            <th>Thời gian hủy</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <c:forEach items="${orderList}" var="o">
-                                            <tr>
-                                                <td>${o.orderID}</td>
-                                                <td>${o.customerID}</td>
-                                                <td>${o.contactPhone}</td>
-                                                <td>${o.deliveryAddress}</td>
-                                                <td>${o.paymentMethod}</td>
-                                                <td>
-                                                    <c:forEach items="${o.orderItems}" var="orderItem">
-                                                        <p>${orderItem}</p>
-                                                    </c:forEach>
-                                                </td>
-                                                <td>${(o.orderNote == null) ? "" : o.orderNote}</td>
-                                                <td><fmt:formatNumber type="number" pattern="###,###,###.##" value="${o.orderTotal}"/>đ</td>
-                                                <td>${o.orderStatus}</td>
-                                                <td>${o.orderTime}</td>
-                                                <td>${(o.deliveryTime == null) ? "" : o.deliveryTime}</td>
-                                                <td>${(o.orderCancelTime == null) ? "" : o.orderCancelTime}</td>
-                                            </tr>
-                                        </c:forEach>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-
-
+                        <!-- Order Tab Content -->
+                        <%@ include file="WEB-INF/jspf/staff/orders.jspf" %>
                     </div>
                 </main>
             </div>

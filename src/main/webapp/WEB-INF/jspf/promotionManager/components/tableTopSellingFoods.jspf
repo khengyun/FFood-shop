@@ -1,0 +1,56 @@
+<%@ page pageEncoding="UTF-8" %>
+<h2 class="text-start fs-2">Các món bán chạy</h2>
+<div class="d-flex flex-row">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">STT</th>
+        <th scope="col">Tên món</th>
+        <th scope="col">Số Lượng</th>
+        <th scope="col">Tổng</th>
+      </tr>
+    </thead>
+    <tbody id="top-selling-foods-list"></tbody>
+  </table>
+</div>
+
+<script>
+  // Sửa mã JavaScript để định dạng total_revenue
+  function formatCurrency(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
+
+  // Fetch data from the API
+  fetch("http://localhost:8001/get_top_selling_foods")
+    .then((response) => response.json())
+    .then((data) => {
+      const topSellingFoodsList = document.getElementById(
+        "top-selling-foods-list"
+      );
+      let index = 0;
+
+      data.forEach((food) => {
+        num = index + 1;
+        index++;
+        const row = document.createElement("tr");
+        row.innerHTML =
+          "<td>" +
+          num +
+          "</td>" +
+          "<td>" +
+          food.name +
+          "</td>" +
+          "<td>" +
+          food.total_sold +
+          "</td>" +
+          "<td>" +
+          formatCurrency(food.total_revenue) +
+          " vnd</td>";
+        topSellingFoodsList.appendChild(row);
+      });
+    })
+    .catch((error) => {
+      console.error("Error fetching data:", error);
+    });
+</script>
+

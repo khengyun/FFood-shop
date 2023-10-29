@@ -1,0 +1,60 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="modal" tabindex="-1" id="update-order-modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form class="update-order-form" method="POST" action="/admin">
+                <div class="modal-header">
+                    <h5 class="modal-title">Cập nhật đơn hàng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body px-5">
+                    <!-- Order - Order ID -->
+                    <input type="hidden" id="txtOrderID" name="txtOrderID" value=""/>
+                    <input type="hidden" id="txtCustomerID" name="txtCustomerID" value=""/>
+                    <div class="mb-3">
+                        <label for="txtPhoneNumber" class="form-label">SĐT liên lạc</label>
+                        <input type="text" class="form-control" id="txtPhoneNumber" name="txtPhoneNumber" maxlength="11" required value="">
+                    </div>
+                    <div class="mb-3">
+                        <label for="txtOrderAddress" class="form-label">Địa chỉ nhận</label>
+                        <textarea  type="text" class="form-control" id="txtOrderAddress" name="txtOrderAddress" maxlength="200" required rows="2"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="txtPaymentMethod" class="form-label">Hình thức thanh toán</label>
+                        <select class="form-select" id="txtPaymentMethod" name="txtPaymentMethod" required>
+                            <option value="COD">COD</option>
+                            <option value="Thẻ tín dụng">Thẻ tín dụng</option>
+                            <option value="Thẻ ghi nợ">Thẻ ghi nợ</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="txtOrderNote" class="form-label">Ghi chú</label>
+                        <textarea  type="text" class="form-control" id="txtOrderNote" name="txtOrderNote" maxlength="200" rows="2"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="txtOrderStatus" class="form-label">Trạng thái</label>
+                        <select class="form-select" name="txtOrderStatus" id="txtOrderStatus" required>
+                            <option value="Chờ xác nhận">Chờ xác nhận</option>
+                            <option value="Đang chuẩn bị món">Đang chuẩn bị món</option>
+                            <option value="Đang giao">Đang giao</option>
+                            <option value="Đã giao">Đã giao</option>
+                            <option value="Đã hủy">Đã hủy</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="txtOrderTotal" class="form-label">Thanh toán</label>
+                        <input type="number" step="1" class="form-control" id="txtOrderTotal" name="txtOrderTotal" min="0" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <!-- Submit Button -->
+                    <button type="button" class="btn btn-danger btn-cancel" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-success btn-confirm" onclick="validateForm()">Cập nhật</button>
+                    <!-- Hidden Submit Value -->
+                    <input type="hidden" id="btnSubmit" name="btnSubmit" value="SubmitUpdateOrder">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

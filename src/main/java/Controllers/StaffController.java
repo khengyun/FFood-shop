@@ -149,6 +149,70 @@ public class StaffController extends HttpServlet {
         }
         
     }
+    
+        private void doPostUpdateOrder(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int orderID = Integer.parseInt(request.getParameter("txtOrderID"));
+        String phonenumber = request.getParameter("txtPhoneNumber");
+        String address = request.getParameter("txtOrderAddress");
+        String paymentmethod = request.getParameter("txtPaymentMethod");
+        String note = request.getParameter("txtOrderNote");
+        String status = request.getParameter("txtOrderStatus");
+        Double orderTotal = Double.parseDouble(request.getParameter("txtOrderTotal"));
+
+        BigDecimal orderTotalPay = BigDecimal.valueOf(orderTotal);
+        
+        byte orderStatusID = 5;
+        if (status.equals("Chờ xác nhận")){
+            orderStatusID = 1;
+        } else if (status.equals("Đang chuẩn bị món")){
+            orderStatusID = 2;
+        } else if (status.equals("Đang giao")){
+            orderStatusID = 3;
+        } else if (status.equals("Đã giao")){
+            orderStatusID = 4;
+        } 
+        
+        byte paymentMethodID = 3;
+        if (paymentmethod.equals("Thẻ tín dụng")){
+            paymentMethodID = 1;
+        } else if (paymentmethod.equals("Thẻ ghi nợ")){
+            paymentMethodID = 2;
+        }
+        
+        OrderDAO orderDAO = new OrderDAO();
+        Order order = new Order(orderID, orderStatusID, paymentMethodID, phonenumber, address, note, orderTotalPay);
+        
+        int result = orderDAO.updateForAdmin(order);
+     
+        if (result == 1) {
+            response.sendRedirect("/admin#success_update_order");
+            return;
+        } else {
+            response.sendRedirect("/admin#failure_update_order");
+            return;
+        }
+    }
+    
+    private void doGetOrder(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int orderID = Integer.parseInt(request.getParameter("orderID"));
+        String status = request.getParameter("Changestatus");
+        byte orderStatusID = 5;
+        if (status.equals("Chờ xác nhận")){
+            orderStatusID = 1;
+        } else if (status.equals("Đang chuẩn bị món")){
+            orderStatusID = 2;
+        } else if (status.equals("Đang giao")){
+            orderStatusID = 3;
+        } else if (status.equals("Đã giao")){
+            orderStatusID = 4;
+        } 
+        
+        OrderDAO orderDAO = new OrderDAO();
+        Order order = new Order(orderID, orderStatusID);
+        int result = orderDAO.updateOrderStatus(order);
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -176,6 +240,8 @@ public class StaffController extends HttpServlet {
             response.sendRedirect("/staff");
         } else if (path.startsWith("/staff/food")) {
             doGetFood(request, response);
+        } else if (path.startsWith("/staff/order")) {
+            doGetOrder(request, response);
         } else {
             // response.setContentType("text/css");
             request.getRequestDispatcher("/staff.jsp").forward(request, response);
@@ -205,6 +271,9 @@ public class StaffController extends HttpServlet {
                     break;
                 case "SubmitDeleteFood":
                     doPostDeleteFood(request, response);
+                    break;
+                case "SubmitUpdateOrder":
+                    doPostUpdateOrder(request, response);
                     break;
                 default:
                     break;

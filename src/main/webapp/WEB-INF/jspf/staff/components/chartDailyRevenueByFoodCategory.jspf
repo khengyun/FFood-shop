@@ -1,0 +1,37 @@
+<%@ page pageEncoding="UTF-8" %>
+<h2 class="text-start fs-2">Doanh thu theo món</h2>
+<div class="chart-container mt-3">
+  <canvas id="chart-revenue-by-food-category"></canvas>
+</div>
+
+<script>
+  const chart = document.getElementById("chart-revenue-by-food-category");
+
+  // Fetch data from the API
+  fetch("http://localhost:8001/get_top_selling_foods")
+    .then((response) => response.json())
+    .then((data) => {
+      const categories = data.map((food) => food.name);
+      const categoriesRevenue = data.map((food) => food.total_revenue);
+
+      new Chart(chart, {
+        type: "doughnut",
+        data: {
+          labels: categories,
+          datasets: [
+            {
+              data: categoriesRevenue,
+              hoverOffset: 10,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+        },
+      });
+    })
+    .catch((error) => {
+      console.error("Error fetching data:", error);
+    });
+</script>
