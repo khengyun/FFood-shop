@@ -22,7 +22,7 @@
 
     <div class="dropdown">
         <button class="btn btn-dark px-2 py-0 me-3 dropdown-toggle d-flex align-items-center gap-2 show" type="button" id="languageDropdown" data-bs-toggle="dropdown"
-            aria-expanded="false">
+            aria-expanded="false" title="Ngôn ngữ">
             <img src="https://cdn-icons-png.flaticon.com/512/197/197473.png" width="20" height="20"
                 alt="vietnam" />VN
         </button>
