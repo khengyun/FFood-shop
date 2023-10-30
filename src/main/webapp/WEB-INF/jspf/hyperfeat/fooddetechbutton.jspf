@@ -7,12 +7,5 @@
   data-bs-toggle="modal"
   data-bs-target="#cameraModal"
 >
-  <img
-    src="https://cdn-icons-png.flaticon.com/512/2956/2956596.png "
-    width="25"
-    height="25"
-    alt=""
-    title=""
-    class="img-small"
-  />
+  <i class="ph-bold ph-camera"></i>
 </button>
