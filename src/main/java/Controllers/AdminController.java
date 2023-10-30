@@ -26,6 +26,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -38,9 +39,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @author CE171454 Hua Tien Thanh
- */
 public class AdminController extends HttpServlet {
 
     /**
@@ -703,8 +701,10 @@ public class AdminController extends HttpServlet {
             paymentMethodID = 2;
         }
         
+        HttpSession session = request.getSession();
         OrderDAO orderDAO = new OrderDAO();
         Order order = new Order(orderID, orderStatusID, paymentMethodID, phonenumber, address, note, orderTotalPay);
+        
         
         int result = orderDAO.updateForAdmin(order);
      

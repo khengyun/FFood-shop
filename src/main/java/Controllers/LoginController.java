@@ -154,12 +154,14 @@ public class LoginController extends HttpServlet {
                         account = dao.getAccount(email);
                         String username = account.getUsername();
                         session = request.getSession();
+                        session.setAttribute("adminID", account.getAdminID());
                         session.setAttribute("admin", username);
                         response.sendRedirect("/admin");
                     } else if (accountType.equals("staff")) {
                         account = dao.getAccount(email);
                         String username = account.getUsername();
                         session = request.getSession();
+                        session.setAttribute("staffID", account.getStaffID());
                         session.setAttribute("staff", username);
                         response.sendRedirect("/staff");
                     } else if (accountType.equals("promotionManager")) {
