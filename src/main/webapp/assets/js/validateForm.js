@@ -558,6 +558,26 @@ function validateForm() {
             form.submit();
         }
     });
+    
+    $("#voucher-form").validate({
+        rules: {
+            voucherCode: {
+                required: true,
+                maxlength: 16,
+            }
+        },
+        messages: {
+            voucherCode: {
+                required: "Vui lòng nhập mã giảm giá",
+                maxlength: "Mã giảm giá không được vượt quá 16 ký tự"
+            }
+
+        },
+        submitHandler: function (form) {
+            // Handle form submission here
+            form.submit();
+        }
+    });
 
     $("#changePass-form").validate({
         rules: {
@@ -756,6 +776,9 @@ $(".checkout-form").validate({
             txtAddress: {
                 required: true,
                 maxlength: 255
+            },
+            txtVoucherCode: {
+                maxlength: 16
             }
         },
         messages: {
@@ -777,6 +800,9 @@ $(".checkout-form").validate({
             txtAddress: {
                 required: "Vui lòng nhập địa chỉ của Người dùng",
                 maxlength: "Địa chỉ không được vượt quá 255 kí tự"
+            },
+            txtVoucherCode: {
+                maxlength: "Mã giảm giá không được vượt quá 16 kí tự"
             }
         },
         submitHandler: function (form) {

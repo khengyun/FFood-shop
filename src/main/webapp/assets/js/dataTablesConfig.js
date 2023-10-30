@@ -441,13 +441,7 @@ $(document).ready(function () {
                 btnUpdate.attr("data-role-username", data2[0][2]);
                 btnUpdate.attr("data-role-fullname", data2[0][3]);
                 btnUpdate.attr("data-role-email", data2[0][4]);
-                let account_type = "";
-                if (data2[0][5] === "Staff"){
-                    account_type = "staff";
-                } else {
-                    account_type = "promotionManager";
-                }
-                btnUpdate.attr("data-role-type", account_type);
+                btnUpdate.attr("data-role-type", data2[0][5]);
                 btnUpdate.removeClass("disabled");
 
                 let roles = {};
