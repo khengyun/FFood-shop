@@ -4,7 +4,7 @@
     <c:forEach items="${foodList}" var="food">
         <div class="food-card mb-4 h-100" id="food-${food.foodTypeID}">
             <div class="card card-span h-100 rounded-3 shadow">
-                <div class="position-relative" style="height: 300px; overflow: hidden;">
+                <div class="position-relative">
                     <img class="card-img-top img-fluid rounded-3" style="object-fit: cover; object-position: center; width: 100%;" src="${food.imageURL}" alt="${food.foodName}" />
                     <c:if test="${food.discountPercent != 0}">
                         <span class="badge bg-success p-2 m-3 shadow position-absolute top-0 start-0">
