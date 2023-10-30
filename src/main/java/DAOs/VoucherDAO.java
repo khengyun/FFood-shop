@@ -51,6 +51,21 @@ public class VoucherDAO {
         return voucher;
     }
     
+    public Voucher getVoucherByCode(String code) {
+        Voucher voucher = null;
+        try {
+            ps = conn.prepareStatement("select * from Voucher where voucher_code = ?");
+            ps.setString(1, code);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                voucher = new Voucher(rs.getByte("voucher_id"), rs.getString("voucher_name"), rs.getString("voucher_code"),rs.getByte("voucher_discount_percent"),rs.getByte("voucher_quantity"), rs.getByte("voucher_status"), rs.getTimestamp("voucher_date"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(VoucherDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return voucher;
+    }
+    
     public Voucher getVoucher(String voucher_name) {
         Voucher voucher = null;
         try {
@@ -169,5 +184,26 @@ public class VoucherDAO {
         return result;
     }
     
-    
+    public int updateQuantity(Voucher voucher) {
+        String sql = "update Voucher set voucher_quantity = ?, voucher_status = ? where voucher_id = ?";
+        int result = 0;
+        byte status = voucher.getVoucher_status();
+        byte quantity = voucher.getVoucher_quantity();
+        if (quantity == 1) {
+            status = 0;
+            quantity = 0;
+        } else {
+            quantity = (byte) (quantity - 1);
+        }
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setByte(1, quantity);
+            ps.setByte(2, status);
+            ps.setByte(3, voucher.getVoucherID());
+            result = ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(VoucherDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
 }

@@ -521,8 +521,6 @@ public class AdminController extends HttpServlet {
             if (result == 1) {
                 account.setProID(roleID);
                 int result1 = accountDAO.add(account);
-                System.out.println(result1);
-
                 if (result1 == 1) {
                     response.sendRedirect("/admin#success_update_role");
                     return;
@@ -793,7 +791,6 @@ public class AdminController extends HttpServlet {
         } else if (path.startsWith("/admin/order")) {
             doGetOrder(request, response);
         } else {
-            // response.setContentType("text/css");
             request.getRequestDispatcher("/admin.jsp").forward(request, response);
         }
     }

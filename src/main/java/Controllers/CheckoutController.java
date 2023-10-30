@@ -7,11 +7,13 @@ import DAOs.CartDAO;
 import DAOs.CartItemDAO;
 import DAOs.CustomerDAO;
 import DAOs.OrderDAO;
+import DAOs.VoucherDAO;
 import Models.Account;
 import Models.Cart;
 import Models.CartItem;
 import Models.Customer;
 import Models.Order;
+import Models.Voucher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -83,12 +85,8 @@ public class CheckoutController extends HttpServlet {
                 int customerID = currentAccount.getCustomerID();
                 CustomerDAO customerDAO = new CustomerDAO();
                 Customer customer = customerDAO.getCustomer(customerID);
-
                 request.setAttribute("customer", customer);
-                //</editor-fold>
-
             }
-            //</editor-fold>
         }
 
         // Lưu trữ URL hiện tại vào session attribute
@@ -128,6 +126,287 @@ public class CheckoutController extends HttpServlet {
         request.getRequestDispatcher("checkout.jsp").forward(request, response);
     }
 
+    protected void doPostOrder(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int accountID = 0;
+        if (request.getParameter("txtAccountID") != null
+                && !request.getParameter("txtAccountID").isEmpty()) {
+            accountID = Integer.parseInt(request.getParameter("txtAccountID"));
+        }
+
+        String lastname = request.getParameter("txtLastName");
+        String firstname = request.getParameter("txtFirstName");
+        String gender = request.getParameter("txtGender");
+        String phone = request.getParameter("txtPhone");
+        String address = request.getParameter("txtAddress");
+        String note = request.getParameter("txtNote");
+
+        // Trình tự đặt món: thêm Customer -> Cart -> tất cả Cartitem -> Order
+        // Thêm Customer
+        Customer customer = new Customer(firstname, lastname, gender, phone, address);
+        CustomerDAO customerdao = new CustomerDAO();
+        int customerID = 0;
+
+        int result = 0;
+        if (accountID != 0) {
+            // Nếu có accountID -> đã login thành công
+            AccountDAO accountDAO = new AccountDAO();
+            Account account = accountDAO.getAccount(accountID);
+            if (account.getCustomerID() != 0) {
+                // Tài khoản này đã có thông tin KH
+                customerID = account.getCustomerID();
+            } else {
+
+                result = customerdao.add(customer);
+                if (result == 1) {
+                    Customer lastestCustomer = customerdao.getLatestCustomer();
+                    account.setCustomerID(lastestCustomer.getCustomerID());
+                    accountDAO.updateCustomerID(account);
+                    customerID = lastestCustomer.getCustomerID();
+                } else {
+                    response.sendRedirect("/home#failure");
+                    return;
+                }
+
+                customer = customerdao.getLatestCustomer();  // customerId lay tu DB ra tang dan
+                customerID = customer.getCustomerID();
+            }
+        } else {
+
+            //<editor-fold defaultstate="collapsed" desc="Nếu không có: thêm customer vào db">
+            result = customerdao.add(customer);
+            if (result != 1) {
+                request.getRequestDispatcher("checkout.jsp").forward(request, response);
+                return;
+            }
+            customer = customerdao.getLatestCustomer();  // customerId lay tu DB ra tang dan
+            customerID = customer.getCustomerID();
+        }
+
+        // Lấy Cart từ session -> thêm vào db
+        HttpSession session = request.getSession();
+        Cart cart = (Cart) session.getAttribute("cart");
+        CartDAO cartdao = new CartDAO();
+
+        cart.setUserId(customerID);
+        result = cartdao.add(cart);
+        if (result != 1) {
+            request.getRequestDispatcher("checkout.jsp").forward(request, response);
+        }
+
+        CartItemDAO cartitemdao = new CartItemDAO();
+        List<CartItem> cartItemList = cart.getItems();
+        int cartID = cartdao.getLatestCartID();
+        cart = cartdao.getCart(cartID);
+
+        double orderTotalDouble = 0;
+        for (CartItem item : cartItemList) {
+            int itemDiscount = item.getFood().getDiscountPercent();
+            double itemPrice = item.getFood().getFoodPrice().doubleValue();
+            int itemQuantity = item.getFoodQuantity();
+            orderTotalDouble += (itemPrice - (itemPrice * itemDiscount / 100)) * itemQuantity;
+
+            item.setCartID(cart.getId());
+            result = cartitemdao.add(item);
+            if (result != 1) {
+                request.getRequestDispatcher("checkout.jsp").forward(request, response);
+                return;
+            }
+        }
+        
+        
+
+        // Lấy thời gian hiện tại
+        LocalDateTime currentTime = LocalDateTime.now();
+        // Chuyển đổi thời gian hiện tại thành Timestamp
+        Timestamp orderTime = Timestamp.valueOf(currentTime);
+        // Tạo một số ngẫu nhiên từ 5 đến 15
+        int randomMinutes = ThreadLocalRandom.current().nextInt(5, 16);
+        // Tính toán deliveryTime bằng cách cộng thời gian giao hàng ngẫu nhiên với orderTime
+        LocalDateTime deliveryDateTime = currentTime.plusMinutes(randomMinutes);
+        Timestamp deliveryTime = Timestamp.valueOf(deliveryDateTime);
+        OrderDAO orderdao = new OrderDAO();
+        Order order = new Order(cartID, customerID, (byte) 1, (byte) 3, phone, address, orderTime, note, deliveryTime);
+        // Do khi khởi tạo giá trị mặc định của orderTotal = 0
+        // nên ta tự set cho nó
+        
+        VoucherDAO voucherDAO = new VoucherDAO();
+        if (request.getParameter("txtVoucherCode") != null) {
+            String voucherCode = request.getParameter("txtVoucherCode");
+            Voucher voucher = voucherDAO.getVoucherByCode(voucherCode);
+            if (voucher != null ) {
+                orderTotalDouble = orderTotalDouble * voucher.getVoucherDiscount();
+                voucherDAO.updateQuantity(voucher);
+                order.setVoucherID(voucher.getVoucherID());
+                System.out.println("Giam gia");
+            } else {
+                System.out.println("Khong giam gia");
+            }
+        }
+        
+        BigDecimal orderTotal = BigDecimal.valueOf(orderTotalDouble);
+        order.setOrderTotal(orderTotal);
+        result = orderdao.add(order);
+        if (result != 1) {
+            request.getRequestDispatcher("checkout.jsp").forward(request, response);
+        }
+
+        session.removeAttribute("cart");
+        // Điều hướng về home sau khi add order thành công
+        response.sendRedirect("/home#success");
+    }
+
+    protected void doPostCheckout(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        HttpSession session = request.getSession();
+        
+        String voucherStatus = "Vui lòng nhập mã giảm giá nếu bạn có";
+        request.setAttribute("voucherStatus", voucherStatus);
+        request.setAttribute("voucherpercent", 1.0);
+        
+        if (session.getAttribute("userID") != null) {
+            int userID = (Integer) session.getAttribute("userID");
+            // Người dùng có đăng nhập -> lấy thông tin người dùng để autofill
+            AccountDAO accountDAO = new AccountDAO();
+            Account currentAccount = accountDAO.getAccount(userID);
+
+            request.setAttribute("currentAccount", currentAccount);
+            //<editor-fold defaultstate="collapsed" desc="Lấy thông tin khách hàng nếu có">
+            // This info will be used to preload the "Thông tin của tôi" form
+            // Default int values are assigned 0 instead of null
+            if (currentAccount.getCustomerID() != 0) {
+                //<editor-fold defaultstate="collapsed" desc="Get customer info">
+                int customerID = currentAccount.getCustomerID();
+                CustomerDAO customerDAO = new CustomerDAO();
+                Customer customer = customerDAO.getCustomer(customerID);
+
+                request.setAttribute("customer", customer);
+                //</editor-fold>
+
+            }
+            //</editor-fold>
+        }
+
+        // Lưu trữ URL hiện tại vào session attribute
+        session.setAttribute("previousUrl", request.getRequestURI());
+
+        Cart cart = (Cart) session.getAttribute("cart");
+        if (cart == null || cart.getItems().isEmpty()) {
+            cart = new Cart();
+            session.setAttribute("mess", "Giỏ hàng của bạn đang trống, vui lòng thêm món để thanh toán.");
+            response.sendRedirect("/");
+            return;
+        }
+        String quantityParam = "";
+        for (CartItem cartItem : cart.getItems()) {
+            Short foodId = cartItem.getFood().getFoodID();
+
+            if (request.getParameter("quantity-" + foodId) != null) {
+                quantityParam = request.getParameter("quantity-" + foodId);
+            } else if (session.getAttribute("quantity-" + foodId) != null) {
+                quantityParam = (String) session.getAttribute("quantity-" + foodId);
+            }
+            int quantity = Integer.parseInt(quantityParam);
+            cartItem.setFoodQuantity(quantity); // Cập nhật số lượng cho mục trong giỏ hàng
+            session.setAttribute("quantity-" + foodId, quantityParam);
+        }
+        session.setAttribute("cart", cart);
+
+        // Remove empty cart message if it exists
+        if (session.getAttribute("mess") != null) {
+            session.removeAttribute("mess");
+        }
+
+        request.getRequestDispatcher("checkout.jsp").forward(request, response);
+    }
+    
+    protected void doPostVoucher(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        
+        String voucherCode = request.getParameter("voucherCode");
+        VoucherDAO voucherDAO = new VoucherDAO();
+        Voucher voucher = voucherDAO.getVoucherByCode(voucherCode);
+        Double voucherpercent = 1.0;
+        String voucherStatus = "Vui lòng nhập mã giảm giá nếu bạn có";
+        LocalDateTime currentTime = LocalDateTime.now();
+        Timestamp now = Timestamp.valueOf(currentTime);
+        if (voucher != null) {
+            if (voucher.getVoucher_status() == 1 && now.compareTo(voucher.getVoucher_date()) < 0){
+                request.setAttribute("voucherCode", voucherCode);
+                voucherpercent= voucher.getVoucherDiscount();
+                System.out.println(voucherpercent);
+                
+                voucherStatus = voucher.getVoucher_name() + " - Giảm giá " + voucher.getVoucher_discount_percent() + "%";
+                request.setAttribute("voucherStatus", voucherStatus);
+                request.setAttribute("voucherpercent", voucherpercent);
+            } else {              
+                request.setAttribute("voucherStatus", voucherStatus);
+                request.setAttribute("voucherpercent", voucherpercent);
+            }  
+        } else {
+            request.setAttribute("voucherStatus", voucherStatus);
+            request.setAttribute("voucherpercent", voucherpercent);
+        }
+        
+        
+        if (session.getAttribute("userID") != null) {
+            int userID = (Integer) session.getAttribute("userID");
+            // Người dùng có đăng nhập -> lấy thông tin người dùng để autofill
+            AccountDAO accountDAO = new AccountDAO();
+            Account currentAccount = accountDAO.getAccount(userID);
+
+            request.setAttribute("currentAccount", currentAccount);
+            //<editor-fold defaultstate="collapsed" desc="Lấy thông tin khách hàng nếu có">
+            // This info will be used to preload the "Thông tin của tôi" form
+            // Default int values are assigned 0 instead of null
+            if (currentAccount.getCustomerID() != 0) {
+                //<editor-fold defaultstate="collapsed" desc="Get customer info">
+                int customerID = currentAccount.getCustomerID();
+                CustomerDAO customerDAO = new CustomerDAO();
+                Customer customer = customerDAO.getCustomer(customerID);
+
+                request.setAttribute("customer", customer);
+                //</editor-fold>
+
+            }
+            //</editor-fold>
+        }
+
+        // Lưu trữ URL hiện tại vào session attribute
+        session.setAttribute("previousUrl", request.getRequestURI());
+
+        Cart cart = (Cart) session.getAttribute("cart");
+        if (cart == null || cart.getItems().isEmpty()) {
+            cart = new Cart();
+            session.setAttribute("mess", "Giỏ hàng của bạn đang trống, vui lòng thêm món để thanh toán.");
+            response.sendRedirect("/");
+            return;
+        }
+        String quantityParam = "";
+        for (CartItem cartItem : cart.getItems()) {
+            Short foodId = cartItem.getFood().getFoodID();
+
+            if (request.getParameter("quantity-" + foodId) != null) {
+                quantityParam = request.getParameter("quantity-" + foodId);
+            } else if (session.getAttribute("quantity-" + foodId) != null) {
+                quantityParam = (String) session.getAttribute("quantity-" + foodId);
+            }
+            int quantity = Integer.parseInt(quantityParam);
+            cartItem.setFoodQuantity(quantity); // Cập nhật số lượng cho mục trong giỏ hàng
+            session.setAttribute("quantity-" + foodId, quantityParam);
+        }
+        session.setAttribute("cart", cart);
+
+        // Remove empty cart message if it exists
+        if (session.getAttribute("mess") != null) {
+            session.removeAttribute("mess");
+        }
+
+        request.getRequestDispatcher("checkout.jsp").forward(request, response);
+    }
+
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -140,190 +419,12 @@ public class CheckoutController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (request.getParameter("btnSubmit") != null
-                && request.getParameter("btnSubmit").equals("SubmitOrder")) {
-            int accountID = 0;
-            if (request.getParameter("txtAccountID") != null
-                    && !request.getParameter("txtAccountID").isEmpty()) {
-                accountID = Integer.parseInt(request.getParameter("txtAccountID"));
-            }
-
-            String lastname = request.getParameter("txtLastName");
-            String firstname = request.getParameter("txtFirstName");
-            String gender = request.getParameter("txtGender");
-            String phone = request.getParameter("txtPhone");
-            String address = request.getParameter("txtAddress");
-            String note = request.getParameter("txtNote");
-
-            // Trình tự đặt món: thêm Customer -> Cart -> tất cả Cartitem -> Order
-            // Thêm Customer
-            Customer customer = new Customer(firstname, lastname, gender, phone, address);
-            CustomerDAO customerdao = new CustomerDAO();
-            int customerID = 0;
-
-            int result = 0;
-            if (accountID != 0) {
-                // Nếu có accountID -> đã login thành công
-                AccountDAO accountDAO = new AccountDAO();
-                Account account = accountDAO.getAccount(accountID);
-                if (account.getCustomerID() != 0) {
-                    // Tài khoản này đã có thông tin KH
-                    customerID = account.getCustomerID();
-                } else {
-
-                    result = customerdao.add(customer);
-                    if (result == 1) {
-                        Customer lastestCustomer = customerdao.getLatestCustomer();
-                        account.setCustomerID(lastestCustomer.getCustomerID());
-                        accountDAO.updateCustomerID(account);
-                        customerID = lastestCustomer.getCustomerID();
-                    } else {
-                        response.sendRedirect("/home#failure");
-                        return;
-                    }
-
-                    customer = customerdao.getLatestCustomer();  // customerId lay tu DB ra tang dan
-                    customerID = customer.getCustomerID();
-                }
-            } else {
-
-                //<editor-fold defaultstate="collapsed" desc="Nếu không có: thêm customer vào db">
-                result = customerdao.add(customer);
-                if (result != 1) {
-                    request.getRequestDispatcher("checkout.jsp").forward(request, response);
-                    return;
-                }
-                customer = customerdao.getLatestCustomer();  // customerId lay tu DB ra tang dan
-                customerID = customer.getCustomerID();
-            }
-
-            // Lấy Cart từ session -> thêm vào db
-            HttpSession session = request.getSession();
-            Cart cart = (Cart) session.getAttribute("cart");
-            CartDAO cartdao = new CartDAO();
-
-            cart.setUserId(customerID);
-            result = cartdao.add(cart);
-            if (result != 1) {
-                request.getRequestDispatcher("checkout.jsp").forward(request, response);
-            }
-
-            CartItemDAO cartitemdao = new CartItemDAO();
-            List<CartItem> cartItemList = cart.getItems();
-            int cartID = cartdao.getLatestCartID();
-            cart = cartdao.getCart(cartID);
-
-            double orderTotalDouble = 0;
-            for (CartItem item : cartItemList) {
-                int itemDiscount = item.getFood().getDiscountPercent();
-                double itemPrice = item.getFood().getFoodPrice().doubleValue();
-                int itemQuantity = item.getFoodQuantity();
-                orderTotalDouble += (itemPrice - (itemPrice * itemDiscount / 100)) * itemQuantity;
-
-                item.setCartID(cart.getId());
-                result = cartitemdao.add(item);
-                if (result != 1) {
-                    request.getRequestDispatcher("checkout.jsp").forward(request, response);
-                    return;
-                }
-            }
-
-            // Lấy thời gian hiện tại
-            LocalDateTime currentTime = LocalDateTime.now();
-            // Chuyển đổi thời gian hiện tại thành Timestamp
-            Timestamp orderTime = Timestamp.valueOf(currentTime);
-            // Tạo một số ngẫu nhiên từ 5 đến 15
-            int randomMinutes = ThreadLocalRandom.current().nextInt(5, 16);
-            // Tính toán deliveryTime bằng cách cộng thời gian giao hàng ngẫu nhiên với orderTime
-            LocalDateTime deliveryDateTime = currentTime.plusMinutes(randomMinutes);
-            Timestamp deliveryTime = Timestamp.valueOf(deliveryDateTime);
-
-            OrderDAO orderdao = new OrderDAO();
-            Order order = new Order(cartID, customerID, (byte) 1, (byte) 3, phone, address, orderTime, note, deliveryTime);
-            // Do khi khởi tạo giá trị mặc định của orderTotal = 0
-            // nên ta tự set cho nó
-            BigDecimal orderTotal = BigDecimal.valueOf(orderTotalDouble);
-            order.setOrderTotal(orderTotal);
-            result = orderdao.add(order);
-            if (result != 1) {
-                request.getRequestDispatcher("checkout.jsp").forward(request, response);
-            }
-
-            session.removeAttribute("cart");
-            // Điều hướng về home sau khi add order thành công
-            response.sendRedirect("/home#success");
-
-        } else if (request.getParameter("btnSubmit") != null
-                && request.getParameter("btnSubmit").equals("Checkout")) {
-
-            HttpSession session = request.getSession();
-
-            if (session.getAttribute("userID") != null) {
-                int userID = (Integer) session.getAttribute("userID");
-                // Người dùng có đăng nhập -> lấy thông tin người dùng để autofill
-                AccountDAO accountDAO = new AccountDAO();
-                Account currentAccount = accountDAO.getAccount(userID);
-
-                request.setAttribute("currentAccount", currentAccount);
-                //<editor-fold defaultstate="collapsed" desc="Lấy thông tin khách hàng nếu có">
-                // This info will be used to preload the "Thông tin của tôi" form
-                // Default int values are assigned 0 instead of null
-                if (currentAccount.getCustomerID() != 0) {
-                    //<editor-fold defaultstate="collapsed" desc="Get customer info">
-                    int customerID = currentAccount.getCustomerID();
-                    CustomerDAO customerDAO = new CustomerDAO();
-                    Customer customer = customerDAO.getCustomer(customerID);
-
-                    request.setAttribute("customer", customer);
-                    //</editor-fold>
-
-                }
-                //</editor-fold>
-            }
-
-            // Lưu trữ URL hiện tại vào session attribute
-            session.setAttribute("previousUrl", request.getRequestURI());
-
-            Cart cart = (Cart) session.getAttribute("cart");
-            if (cart == null || cart.getItems().isEmpty()) {
-                cart = new Cart();
-                session.setAttribute("mess", "Giỏ hàng của bạn đang trống, vui lòng thêm món để thanh toán.");
-                response.sendRedirect("/");
-                return;
-            }
-            String quantityParam = "";
-            for (CartItem cartItem : cart.getItems()) {
-                Short foodId = cartItem.getFood().getFoodID();
-
-                if (request.getParameter("quantity-" + foodId) != null) {
-                    // Thông thường nếu truy cập /checkout thì sẽ có 2 cách truy cập:
-                    // 1 là từ nút Thanh toán (từ modal Giỏ hàng)
-                    // 2 là từ nút Đặt món (từ chính trang /checkout)
-                    // Tất cả đều sử dụng POST và dữ liệu lấy từ form của trang trước đó
-                    // nên ta sẽ lấy dữ liệu từ parameter
-                    quantityParam = request.getParameter("quantity-" + foodId);
-                } else if (session.getAttribute("quantity-" + foodId) != null) {
-                    // Tuy nhiên nếu yêu cầu là GET, ví dụ như sau khi đăng nhập
-                    // hoặc đăng xuất thành công thì trả về trang hiện tại tức /checkout 
-                    // thì parameter của request sau khi submit form không còn,
-                    // nên ta phải lưu giá trị của form bằng session attribute,
-                    // do đó ta phải lấy từ session
-                    quantityParam = (String) session.getAttribute("quantity-" + foodId);
-                }
-                int quantity = Integer.parseInt(quantityParam);
-                cartItem.setFoodQuantity(quantity); // Cập nhật số lượng cho mục trong giỏ hàng
-                // Lưu lại số lượng của các mục trong trường hợp request là GET
-                // ví dụ như sau khi đăng nhập/đăng xuất thành công tại /checkout
-                session.setAttribute("quantity-" + foodId, quantityParam);
-            }
-            session.setAttribute("cart", cart);
-
-            // Remove empty cart message if it exists
-            if (session.getAttribute("mess") != null) {
-                session.removeAttribute("mess");
-            }
-
-            request.getRequestDispatcher("checkout.jsp").forward(request, response);
+        if (request.getParameter("btnSubmit") != null && request.getParameter("btnSubmit").equals("SubmitOrder")) {
+            doPostOrder(request, response);
+        } else if (request.getParameter("btnSubmit") != null && request.getParameter("btnSubmit").equals("Checkout")) {
+            doPostCheckout(request,response);
+        } else if (request.getParameter("btnSubmit") != null && request.getParameter("btnSubmit").equals("SubmitVoucher")) {
+            doPostVoucher(request,response);
         }
 
     }

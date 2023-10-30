@@ -44,7 +44,7 @@
                     <td >${r.fullname}</td>
                     <td >${r.username}</td>
                     <td >${r.email}</td>
-                    <td>${r.accountType eq 'staff' ? 'Staff' : 'Promotion Manager'}</td>
+                    <td>${r.accountType}</td>
                 </tr>
             </c:forEach>
             </tbody>
