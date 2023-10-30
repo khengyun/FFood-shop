@@ -3,9 +3,10 @@
 <button
   id="openCameraModal"
   type="button"
-  class="btn btn-primary"
+  class="btn bg-100 border border-400 border-start-0 d-flex align-items-center"
   data-bs-toggle="modal"
   data-bs-target="#cameraModal"
+  title="Tìm Môn bằng hình ảnh"
 >
-  <i class="ph-bold ph-camera"></i>
+  <i class="ph-fill ph-camera" style="font-size: 1.2rem"></i>
 </button>
