@@ -18,6 +18,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -151,6 +152,24 @@ public class PromotionManagerController extends HttpServlet {
         }
         
     }
+    
+    private void doPostUpdateFood(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        short foodID = Short.parseShort(request.getParameter("txtFoodID"));
+        byte discountPercent = Byte.parseByte(request.getParameter("txtDiscountPercent"));
+
+
+        FoodDAO foodDAO = new FoodDAO();
+        Food food = new Food(foodID, discountPercent);
+        int result = foodDAO.updateDiscount(food);
+        if (result == 1) {
+            response.sendRedirect("/promotionManager#success_update_food");
+            return;
+        } else {
+            response.sendRedirect("/promotionManager#failure_update_food");
+            return;
+        }
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -166,10 +185,13 @@ public class PromotionManagerController extends HttpServlet {
             throws ServletException, IOException {
         String path = request.getRequestURI();
         if (path.endsWith("/promotionManager")) {
-
             VoucherDAO voucherDAO = new VoucherDAO();
             List<Voucher> voucherList = voucherDAO.getAllList();
-
+            
+            FoodDAO foodDAO = new FoodDAO();
+            List<Food> foodList = foodDAO.getAllList();
+            
+            request.setAttribute("foodList", foodList);
             request.setAttribute("voucherList", voucherList);
             request.getRequestDispatcher("/promotionManager.jsp").forward(request, response);
         } else if (path.endsWith("/promotionManager/")) {
@@ -204,6 +226,9 @@ public class PromotionManagerController extends HttpServlet {
                 case "SubmitDeleteVoucher":
                     doPostDeleteVoucher(request, response);
                     break;
+                case "SubmitUpdateFood":
+                    doPostUpdateFood(request, response);
+                    break;    
                 default:
                     break;
             }

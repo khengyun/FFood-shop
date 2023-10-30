@@ -1,0 +1,48 @@
+<%@ page pageEncoding="UTF-8" %>
+<div class="tab-pane fade" id="foods">
+    <div class="container-fluid p-4 shadow rounded-4 bg-white">
+        <table id="food-table" class="table table-hover nowrap align-middle" style="width: 100%;">
+            <h1 class="text-start fw-bold fs-3 mb-3">Quản lý Món ăn & Đồ uống</h1>
+            <div id="foods-button-container" class="row mb-2">
+                <div class="col-sm-12 col-lg-5 mt-sm-2 mt-lg-0 d-flex flex-wrap gap-2 justify-content-lg-end">
+                    <button type="button" id="btn-update-food"
+                            class="btn btn-secondary btn-update d-flex  align-items-center flex-shrink-0" data-bs-toggle="modal"
+                            data-bs-target="#update-food-modal">
+                        <i class="ph-bold ph-pencil fs-1 me-2"></i>
+                        Cập nhật
+                    </button>
+                </div>
+            </div>
+            <thead>
+                <tr>
+                    <th>Mã số</th>
+                    <th>Loại món</th>
+                    <th>Tên món</th>
+                    <th style="display: none;">Mô tả</th>
+                    <th>Đơn giá</th>
+                    <th>Đánh giá</th>
+                    <th>Trạng thái</th>
+                    <th>Giảm giá</th>
+                    <th>Hình ảnh</th>
+                </tr>
+            </thead>
+            <tbody>
+            <c:forEach items="${foodList}" var="f">
+                <tr>
+                    <td>${f.foodID}</td>
+                    <td>${f.foodType}</td>
+                    <td>${f.foodName}</td>
+                    <td style="display: none;">${f.description}</td>
+                    <td><fmt:formatNumber type="number" pattern="###,###" value="${f.foodPrice}"/>đ</td>
+                <td> ${f.rate} Sao</td>
+                <td> ${f.status eq 0 ? 'Hết' : 'Còn'}</td>
+                <td>${(f.discountPercent == null) ? 0 : f.discountPercent}%</td>
+                <td class="table-image-cell">
+                    <img src="${f.imageURL}" alt="${f.foodName}"/>
+                </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+    </div>
+</div>

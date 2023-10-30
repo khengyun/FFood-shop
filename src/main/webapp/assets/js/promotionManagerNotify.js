@@ -15,6 +15,13 @@ $(document).ready(function () {
     }, 2000);
   };
   
+  if (window.location.hash === '#success_update_food') {
+    $('#success_update_food').modal('show');
+    setTimeout(function () {
+      $('#success_update_food').modal('hide');
+    }, 2000);
+  };
+  
   if (window.location.hash === '#success_delete_voucher') {
     $('#success_delete_voucher').modal('show');
     setTimeout(function () {
@@ -43,6 +50,12 @@ $(document).ready(function () {
     $('#failure_update_voucher').modal('show');
     setTimeout(function () {
       $('#failure_update_voucher').modal('hide');
+    }, 2000);
+  };
+  if (window.location.hash === '#failure_update_food') {
+    $('#failure_update_food').modal('show');
+    setTimeout(function () {
+      $('#failure_update_food').modal('hide');
     }, 2000);
   };
   if (window.location.hash === '#failure_delete_voucher') {

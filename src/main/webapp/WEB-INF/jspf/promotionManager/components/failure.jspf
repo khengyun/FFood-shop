@@ -45,3 +45,14 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="failure_update_food" tabindex="-1" role="dialog" aria-labelledby="failureLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h3 class="text-center p-3">Cập nhật food không thành công!</h3>
+      </div>
+    </div>
+  </div>
+</div>
