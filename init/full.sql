@@ -414,10 +414,10 @@ insert into OrderStatus (order_status) values (N'Đã giao');
 insert into OrderStatus (order_status) values (N'Đã hủy');
 
 -- Voucher
-insert into Voucher (voucher_name, voucher_code, voucher_discount_percent, voucher_quantity, voucher_status, voucher_date) values ( N'Quốc tế phụ nữ', 'ADASD2FD23123DBE', 30, 100, 0,'20231019 00:00:01 AM' );
-insert into Voucher (voucher_name, voucher_code, voucher_discount_percent, voucher_quantity, voucher_status, voucher_date) values ( N'Khách hàng may mắn', 'ADEF38BDYOQM875V', 20, 10, 0,'20230808 00:00:01 AM');
-insert into Voucher (voucher_name, voucher_code, voucher_discount_percent, voucher_quantity, voucher_status, voucher_date) values (N'Quà tặng Noel', 'DUEMAHWOPUNH62GH', 40, 50, 1,'20231215 00:00:01 AM' );
-insert into Voucher (voucher_name, voucher_code, voucher_discount_percent, voucher_quantity, voucher_status, voucher_date) values ( N'Người đặc biệt', 'DJWOA975N4B92BH6', 50, 5, 1,'20231108 00:00:01 AM' );
+insert into Voucher (voucher_name, voucher_code, voucher_discount_percent, voucher_quantity, voucher_status, voucher_date) values ( N'Quốc tế phụ nữ', 'ADASD2FD23123DBE', 30, 100, 0,'20231019 00:01:00 AM' );
+insert into Voucher (voucher_name, voucher_code, voucher_discount_percent, voucher_quantity, voucher_status, voucher_date) values ( N'Khách hàng may mắn', 'ADEF38BDYOQM875V', 20, 10, 0,'20230808 00:01:00 AM');
+insert into Voucher (voucher_name, voucher_code, voucher_discount_percent, voucher_quantity, voucher_status, voucher_date) values (N'Quà tặng Noel', 'DUEMAHWOPUNH62GH', 40, 50, 1,'20231215 00:01:00 AM' );
+insert into Voucher (voucher_name, voucher_code, voucher_discount_percent, voucher_quantity, voucher_status, voucher_date) values ( N'Người đặc biệt', 'DJWOA975N4B92BH6', 50, 5, 1,'20231108 00:01:00 AM' );
 
 -- Cart, CartItem, Order test data
 insert into Cart (customer_id) values (1);
@@ -433,16 +433,16 @@ contact_phone, delivery_address, order_time, order_total,
 order_note, delivery_time, order_cancel_time
 ) values (
 1, 1, 4, 1, 
-'0931278397', N'39 Mậu Thân, Ninh Kiều, Cần Thơ', '20230708 10:34:09 AM', 190000, 
-NULL, '20230708 10:49:35 AM', NULL);
+'0931278397', N'39 Mậu Thân, Ninh Kiều, Cần Thơ', '20230708 10:34:00 AM', 190000, 
+NULL, '20230708 10:49:00 AM', NULL);
 
 insert into Payment (
     order_id, payment_method_id, payment_total, payment_content, payment_bank, payment_code, payment_status, payment_time
 ) values (
-    1,1,190000,N'Thanh toán đơn hàng ffood',N'NCB','14111641',1,'20230708 11:20:02 AM'
+    1,1,190000,N'Thanh toán đơn hàng ffood',N'NCB','14111641',1,'20230708 11:20:00 AM'
 );
 
-insert into OrderLog (order_id, staff_id, log_activity, log_time) values (1, 1, N'Update order status','20230708 10:51:02 AM');
-insert into OrderLog (order_id, staff_id, log_activity, log_time) values (1, 2, N'Update order status','20230708 11:03:07 AM');
-insert into OrderLog (order_id, staff_id, log_activity, log_time) values (1, 3, N'Update order status','20230708 11:18:030 AM');
-insert into OrderLog (order_id, staff_id, log_activity, log_time) values (1, 4, N'Update Payment status','20230708 11:20:30 AM');
+insert into OrderLog (order_id, staff_id, log_activity, log_time) values (1, 1, N'Update order status','20230708 10:51:00 AM');
+insert into OrderLog (order_id, staff_id, log_activity, log_time) values (1, 2, N'Update order status','20230708 11:03:00 AM');
+insert into OrderLog (order_id, staff_id, log_activity, log_time) values (1, 3, N'Update order status','20230708 11:18:00 AM');
+insert into OrderLog (order_id, staff_id, log_activity, log_time) values (1, 4, N'Update Payment status','20230708 11:20:00 AM');
