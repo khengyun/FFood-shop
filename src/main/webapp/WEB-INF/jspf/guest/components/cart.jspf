@@ -131,7 +131,9 @@
         // Otherwise, enable the submit button and add the cart badge
         if (numRows === 0 || document.getElementById("empty-cart-label")) {
             document.getElementById("btnSubmit").disabled = true;
-            cartBadges.classList.add("d-none");
+            for (const badge of cartBadges) {
+                badge.classList.add("d-none");         
+            }
         } else {
             document.getElementById("btnSubmit").disabled = false;
 
@@ -145,8 +147,8 @@
             for (const badge of cartBadges) {
               if (numRows > 99) {
                   badge.innerText = "+99";
-              } else if (numRows < 0) {
-                  badge.innerText = "0";
+              } else if (numRows <= 0) {
+                  badge.innerText = "";
               } else {
                   badge.innerText = numRows;
               };
@@ -269,13 +271,23 @@
     // Function to update the total price based on all product prices
     function updateTotalPrice() {
         let totalPrice = 0;
-        // Iterate through all rows in the table and calculate the total price
-        const rows = document.querySelectorAll("#cart-table tbody tr");
-        rows.forEach(function (row) {
-            const productPriceText = row.querySelector("td:nth-child(4)").textContent.trim();
-            const productPrice = parseFloat(productPriceText.replace("đ", "").replace(",", ""));
-            totalPrice += productPrice;
-        });
+
+        // Get the number of rows in the cart table
+        const numRows = document.querySelectorAll("#cart-table tbody tr").length;
+
+        // If there are at least 1 row that does not have an empty cart label
+        // Calculate the total price, else set the total price to 0
+        if (numRows !== 0 && !document.getElementById("empty-cart-label")) {
+            // Iterate through all rows in the table and calculate the total price
+            const rows = document.querySelectorAll("#cart-table tbody tr");
+            rows.forEach(function (row) {
+                const productPriceText = row.querySelector("td:nth-child(4)").textContent.trim();
+                const productPrice = parseFloat(productPriceText.replace("đ", "").replace(",", ""));
+                totalPrice += productPrice;
+            });
+        } else {
+            totalPrice = 0;
+        }
         // Update the total price element
         const totalPriceElement = document.querySelector("#grand-total");
         totalPriceElement.textContent = "Tổng thanh toán: " + totalPrice.toLocaleString() + "đ";
