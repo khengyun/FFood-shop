@@ -51,6 +51,7 @@
                 id="chkRememberMe"
                 name="chkRememberMe"
                 value="remember"
+                checked
               />
               <label class="form-check-label" for="chkRememberMe"
                 >Duy trì đăng nhập</label

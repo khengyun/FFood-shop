@@ -4,7 +4,7 @@
       data-context="signin"
       data-ux_mode="popup"
       data-callback="onSignIn"
-      data-auto_prompt="false"></div>
+      data-skip_prompt_cookie="user"></div>
 
 <div class="g_id_signin"
       data-type="standard"
@@ -12,6 +12,7 @@
       data-theme="outline"
       data-text="signin_with"
       data-size="large"
+      data-width=351
       data-logo_alignment="left"></div>
 
 <script>
