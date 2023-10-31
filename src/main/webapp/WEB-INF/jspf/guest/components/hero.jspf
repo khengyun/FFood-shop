@@ -14,7 +14,7 @@
             <div class="col-md-7 col-lg-6 py-8 text-md-start text-center">
               <h1 class="display-1 fs-md-5 fs-lg-6 fs-xl-8 text-light">FFood ngay tại nhà 1</h1>
               <h1 class="text-800 mb-5 fs-4">Chỉ cần vài phút<br class="d-none d-xxl-block" /> là có ngay đồ ăn nóng hổi</h1>
-              <a class="btn btn-lg btn-danger" href="#food-list"> ĐẶT MÓN NGAY<i class="fas fa-chevron-right ms-2"></i></a>
+              <a class="btn btn-lg btn-primary" href="#food-list">ĐẶT MÓN NGAY<i class="ph-bold ph-caret-down ms-2"></i></a>
             </div>
           </div>
         </div>

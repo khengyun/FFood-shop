@@ -1,5 +1,5 @@
 <%@ page pageEncoding="UTF-8" %>
-<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 gx-4" id="food-list">
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 gx-4" style="scroll-margin-top: 5rem;" id="food-list">
     <!-- Gets foodList attribute set by HomeController.java -->
     <c:forEach items="${foodList}" var="food">
         <div class="food-card mb-4" id="food-${food.foodTypeID}">
@@ -51,5 +51,5 @@
             </div>
         </div>
     </c:forEach>
-    <button id="btn-show-more" class="btn btn-secondary mx-auto">Xem thêm</button>
+    <button id="btn-show-more" class="btn btn-secondary mx-auto">Xem thêm <i class="ph-bold ph-arrow-down"></i></button>
 </div>
