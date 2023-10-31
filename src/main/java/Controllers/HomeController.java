@@ -108,12 +108,11 @@ public class HomeController extends HttpServlet {
         request.setAttribute("foodList", foodList);
 
         List<String> imgURLList = new ArrayList<>();
-        imgURLList.add("assets/img/gallery/com_tam.jpg");
-        imgURLList.add("assets/img/gallery/noodles.png");
-        imgURLList.add("assets/img/gallery/sub-sandwich.png");
-        imgURLList.add("assets/img/gallery/junk_food.jpg");
-        imgURLList.add("assets/img/gallery/dessert.jpg");
-        imgURLList.add("assets/img/gallery/drinks.jpg");
+        String baseURL = "assets/img/gallery/";
+        int numOfImages = 10;
+        for (int i = 1; i <= numOfImages; i++) {
+          imgURLList.add(baseURL + i + ".jpg");
+        }
 
         FoodTypeDAO dao1 = new FoodTypeDAO();
         ResultSet rs1 = dao1.getAllFoodType();
@@ -126,7 +125,7 @@ public class HomeController extends HttpServlet {
             }
         } catch (Exception e) {
         }
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < numOfImages; i++) {
             foodTypeList.get(i).setImgURL(imgURLList.get(i));
         }
         request.setAttribute("foodTypeList", foodTypeList);
