@@ -4149,19 +4149,19 @@ fieldset:disabled .btn {
 }
 
 .btn-primary {
-  color: var(--bs-black);
-  background-color: var(--m3--ref--primary--primary70);
-  border-color: var(--m3--ref--primary--primary70);
-}
-
-.btn-primary:hover {
-  color: var(--bs-black);
+  color: var(--m3--sys--light--on-primary);
   background-color: var(--m3--ref--primary--primary60);
   border-color: var(--m3--ref--primary--primary60);
 }
 
+.btn-primary:hover {
+  color: var(--m3--sys--light--on-primary);
+  background-color: var(--m3--ref--primary--primary50);
+  border-color: var(--m3--ref--primary--primary50);
+}
+
 .btn-check:focus + .btn-primary, .btn-primary:focus {
-  color: var(--bs-black);
+  color: var(--m3--sys--light--on-primary);
   background-color: var(--m3--ref--primary--primary50);
   border-color: var(--m3--ref--primary--primary50);
   -webkit-box-shadow: 0 0 0 0 rgba(231, 167, 26, 0.5);
@@ -4171,9 +4171,9 @@ fieldset:disabled .btn {
 .btn-check:checked + .btn-primary,
 .btn-check:active + .btn-primary, .btn-primary:active, .btn-primary.active,
 .show > .btn-primary.dropdown-toggle {
-  color: var(--bs-black);
-  background-color: var(--m3--ref--primary--primary70);
-  border-color: var(--m3--ref--primary--primary70);
+  color: var(--m3--sys--light--on-primary);
+  background-color: var(--m3--ref--primary--primary60);
+  border-color: var(--m3--ref--primary--primary60);
 }
 
 .btn-check:checked + .btn-primary:focus,
@@ -4184,9 +4184,9 @@ fieldset:disabled .btn {
 }
 
 .btn-primary:disabled, .btn-primary.disabled {
-  color: #616161;
-  background-color: #FFB30E;
-  border-color: #FFB30E;
+  color: var(--m3--ref--primary--primary20);
+  background-color: var(--m3--ref--primary--primary80);
+  border-color: var(--m3--ref--primary--primary80);
 }
 
 .btn-secondary {
@@ -8447,11 +8447,11 @@ fieldset:disabled .btn {
 }
 
 .border-primary {
-  border-color: #FFB30E !important;
+  border-color: var(--m3--ref--primary--primary60) !important;
 }
 
 .border-secondary {
-  border-color: #2780ED !important;
+  border-color: var(--m3--ref--secondary--secondary40) !important;
 }
 
 .border-success {
@@ -10130,11 +10130,11 @@ fieldset:disabled .btn {
 
 /* rtl:end:remove */
 .text-primary {
-  color: #FFB30E !important;
+  color: var(--bs-primary70) !important;
 }
 
 .text-secondary {
-  color: #2780ED !important;
+  color: var(--bs-secondary40) !important;
 }
 
 .text-success {
