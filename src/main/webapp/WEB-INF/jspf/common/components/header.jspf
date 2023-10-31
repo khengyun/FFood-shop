@@ -54,7 +54,7 @@
         <div class="collapse navbar-collapse pt-3 pb-2 py-lg-2 w-100" id="navbarSupportedContent">
             <form class="d-flex flex-column flex-md-row flex-grow-1 gap-2 flex-lg-row">
               <!-- Search bar -->
-              <div class="input-group mx-lg-2">
+              <div class="input-group mx-lg-3">
                 <!-- Search by keyword input -->
                 <input class="form-control bg-100" type="search" placeholder="Tìm món ăn"
                   aria-label="Tìm món ăn" id="search-bar" oninput="searchFoodByKeyword()" />
