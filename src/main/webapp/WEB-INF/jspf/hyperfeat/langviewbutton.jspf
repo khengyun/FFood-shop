@@ -27,12 +27,12 @@
 
 
     <div class="dropdown">
-        <button class="btn px-2 py-0 me-3 dropdown-toggle d-flex align-items-center gap-2 border-0 show" type="button" id="languageDropdown" data-bs-toggle="dropdown"
+        <button class="language-dropdown btn px-2 py-0 me-3 dropdown-toggle d-flex align-items-center gap-2 border-0" type="button" data-bs-toggle="dropdown"
             aria-expanded="false" title="Ngôn ngữ">
             <img src="https://cdn-icons-png.flaticon.com/512/197/197473.png" width="20" height="20"
                 alt="vietnam" />VN
         </button>
-        <ul class="dropdown-menu" style="z-index: 1021;" aria-labelledby="languageDropdown">
+        <ul class="dropdown-menu shadow" style="z-index: 1021;">
             <li><a class="dropdown-item lang-select lang_capitalize d-flex align-items-center gap-2" data-lang="vi" href="#googtrans(vi|vi)"><img
                         src="https://cdn-icons-png.flaticon.com/512/197/197473.png " width="20" height="20"
                         alt="Vietnamese flag" />Tiếng Việt</a></li>
@@ -93,29 +93,34 @@
         }
 
         function updateLanguageDropdownContent(selectedLangHref) {
-            var langButton = $('#languageDropdown');
+            var langButtons = $('.language-dropdown');
+            
             var CheckHref = selectedLangHref.split("#")[1];
             selectedLangHref = "#" + CheckHref;
 
-            switch (selectedLangHref) {
+            for (const button of langButtons) {
+              switch (selectedLangHref) {
                 case '#googtrans(vi|vi)':
-                    langButton.html('<img src="https://cdn-icons-png.flaticon.com/512/197/197473.png" width="20" height="20" alt="Vietnamese flag"/>VN');
+                    $(button).html('<img src="https://cdn-icons-png.flaticon.com/512/197/197473.png" width="20" height="20" alt="Vietnamese flag"/>VN');
                     break;
                 case '#googtrans(vi|en)':
-                    langButton.html('<img src="https://img.icons8.com/?size=256&id=t3NE3BsOAQwq&format=png" width="20" height="20" alt="Great Britain flag"/>EN');
+                    $(button).html('<img src="https://img.icons8.com/?size=256&id=t3NE3BsOAQwq&format=png" width="20" height="20" alt="Great Britain flag"/>EN');
                     break;
                 case '#googtrans(vi|fr)':
-                    langButton.html('<img src="https://cdn-icons-png.flaticon.com/512/330/330490.png" width="20" height="20" alt="French flag"/>FR');
+                    $(button).html('<img src="https://cdn-icons-png.flaticon.com/512/330/330490.png" width="20" height="20" alt="French flag"/>FR');
                     break;
                 case '#googtrans(vi|zh-CN)':
-                    langButton.html('<img src="https://cdn-icons-png.flaticon.com/512/197/197375.png" width="20" height="20" alt="Chinese flag"/>zh-CN');
+                    $(button).html('<img src="https://cdn-icons-png.flaticon.com/512/197/197375.png" width="20" height="20" alt="Chinese flag"/>zh-CN');
                     break;
                 case '#googtrans(vi|ja)':
-                    langButton.html('<img src="https://cdn-icons-png.flaticon.com/512/555/555646.png" width="20" height="20" alt="Japanese flag"/>JP');
+                    $(button).html('<img src="https://cdn-icons-png.flaticon.com/512/555/555646.png" width="20" height="20" alt="Japanese flag"/>JP');
                     break;
                 default:
                     checkAndSetLanguageFromCookie();
+              }
             }
+
+            
         }
 
         var currentURL = window.location.href;
