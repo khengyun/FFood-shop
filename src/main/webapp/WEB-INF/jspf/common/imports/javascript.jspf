@@ -1,7 +1,8 @@
 <%-- any content can be specified here e.g.: --%>
 <%@ page pageEncoding="UTF-8" %>
 <!-- JavaScripts -->
-<script src="<%= request.getContextPath() + "vendors/bootstrap-5.3.0-dist/js/bootstrap.bundle.min.js"%>"></script>
+<script src="<%= request.getContextPath() + "vendors/@popperjs/popper.min.js"%>"></script>
+<script src="<%= request.getContextPath() + "vendors/bootstrap/bootstrap.min.js"%>"></script>
 <script src="<%= request.getContextPath() + "vendors/is/is.min.js"%>"></script>
-<script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+
 <script src="<%= request.getContextPath() + "vendors/fontawesome/all.min.js"%>"></script>
