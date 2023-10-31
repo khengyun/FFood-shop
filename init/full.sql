@@ -195,7 +195,7 @@ create table [Order] (
 GO
 
 create table Payment (
-    order_id				int not null foreign key references [Order](order_id),
+    order_id                int not null foreign key references [Order](order_id),
     payment_method_id       tinyint not null foreign key references PaymentMethod(payment_method_id),
     payment_total           money not null,
     payment_content         nvarchar(1023) null,
@@ -208,7 +208,7 @@ create table Payment (
 GO
 
 create table OrderLog (
-	log_id				int identity(1,1) not null primary key,
+    log_id				int identity(1,1) not null primary key,
     order_id            int not null foreign key references [Order](order_id),
     staff_id			tinyint null foreign key references Staff(staff_id),
     admin_id			tinyint null foreign key references [Admin](admin_id),
