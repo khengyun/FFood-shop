@@ -172,6 +172,7 @@
             xhr.send();
             cartItem.parentNode.removeChild(cartItem);
             updateCartInformation();
+            updateTotalPrice();
         } else {
             console.error("Không tìm thấy sản phẩm để xóa.");
         }
