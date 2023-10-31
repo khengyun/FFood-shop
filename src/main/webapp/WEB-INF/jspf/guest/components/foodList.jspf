@@ -16,8 +16,12 @@
                     </c:if>
                 </div>
                 <div class="card-body d-flex flex-column">
+                    <!-- Food name -->
                     <h5 class="card-title fw-bolder fs-1 text-1000 mb-1">${food.foodName}</h5>
+                    
+                    <!-- Food price and rating -->
                     <div class="card-text mb-3">
+                      <!-- Food price -->
                       <span class="text-secondary fw-bolder" style="font-size: 1.2rem">
                         <fmt:formatNumber type="number" pattern="###,###" value="${food.foodPrice - (food.foodPrice * food.discountPercent / 100)}" />đ
                       </span>
@@ -26,6 +30,8 @@
                               <s><fmt:formatNumber type="number" pattern="###,###" value="${food.foodPrice}" />đ</s>
                           </span>
                       </c:if>
+
+                      <!-- Food rating -->
                       <div class="text-primary mt-1">
                         <c:forEach begin="1" end="5" varStatus="loop">
                           <c:choose>
