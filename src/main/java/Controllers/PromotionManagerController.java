@@ -18,6 +18,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -87,7 +88,8 @@ public class PromotionManagerController extends HttpServlet {
             response.sendRedirect("/promotionManager#failure_add_voucher_exist");
             return;
         }
-
+        HttpSession session = request.getSession();
+        session.setAttribute("tabID", 2);
         int result = voucherDAO.add(voucher);
 
         if (result == 1) {
@@ -115,7 +117,8 @@ public class PromotionManagerController extends HttpServlet {
         voucher.setVoucherID(voucherID);
 
         int result = voucherDAO.update(voucher);
-
+        HttpSession session = request.getSession();
+        session.setAttribute("tabID", 2);
         if (result == 1) {
             response.sendRedirect("/promotionManager#success_update_voucher");
             return;
@@ -144,7 +147,8 @@ public class PromotionManagerController extends HttpServlet {
         // TODO implement a deletion status message after page reload
         // Redirect or forward to another page if necessary
         request.setAttribute("tabID", 3);
-        
+        HttpSession session = request.getSession();
+        session.setAttribute("tabID", 2);
         if (result == 1) {
             response.sendRedirect("/promotionManager#success_delete_voucher");
         } else {
@@ -162,6 +166,8 @@ public class PromotionManagerController extends HttpServlet {
         FoodDAO foodDAO = new FoodDAO();
         Food food = new Food(foodID, discountPercent);
         int result = foodDAO.updateDiscount(food);
+        HttpSession session = request.getSession();
+        session.setAttribute("tabID", 1);
         if (result == 1) {
             response.sendRedirect("/promotionManager#success_update_food");
             return;

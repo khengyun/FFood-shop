@@ -85,8 +85,10 @@ public class StaffController extends HttpServlet {
         byte foodRate = Byte.parseByte(request.getParameter("txtFoodRate"));
         byte foodStatus = Byte.parseByte(request.getParameter("txtFoodStatus"));
         String imageURL = (String) request.getAttribute("txtImageURL");
-        System.out.println("imageURL"+ imageURL);
         FoodDAO foodDAO = new FoodDAO();
+        HttpSession session = request.getSession();
+        session.setAttribute("tabID", 1);
+        
         Food food = new Food(foodName, foodDescription, foodPrice, foodStatus, foodRate, discountPercent, imageURL, foodTypeID);
         if (foodDAO.getFood(foodName) != null) {
             response.sendRedirect("/staff#failure_add_food_exist");
@@ -118,7 +120,8 @@ public class StaffController extends HttpServlet {
         FoodDAO foodDAO = new FoodDAO();
         Food food = new Food(foodID, foodName, foodDescription, foodPrice, foodStatus, foodRate, discountPercent, imageURL, foodTypeID);
         int result = foodDAO.update(food);
-
+        HttpSession session = request.getSession();
+        session.setAttribute("tabID", 1);
         if (result == 1) {
             response.sendRedirect("/staff#success_update_food");
             return;
@@ -142,7 +145,8 @@ public class StaffController extends HttpServlet {
         // Delete each food item, and count deleted items
         FoodDAO dao = new FoodDAO();
         int result = dao.deleteMultiple(foodIDList);
-
+        HttpSession session = request.getSession();
+        session.setAttribute("tabID", 1);
         // TODO implement a deletion status message after page reload
         // Redirect or forward to another page if necessary
         request.setAttribute("tabID", 3);
@@ -166,7 +170,8 @@ public class StaffController extends HttpServlet {
         Double orderTotal = Double.parseDouble(request.getParameter("txtOrderTotal"));
 
         BigDecimal orderTotalPay = BigDecimal.valueOf(orderTotal);
-        
+        HttpSession session = request.getSession();
+        session.setAttribute("tabID", 2);
         byte orderStatusID = 5;
         if (status.equals("Chờ xác nhận")){
             orderStatusID = 1;
@@ -184,7 +189,6 @@ public class StaffController extends HttpServlet {
         } else if (paymentmethod.equals("Thẻ ghi nợ")){
             paymentMethodID = 2;
         }
-        HttpSession session = request.getSession();
         OrderDAO orderDAO = new OrderDAO();
         Order order = new Order(orderID, orderStatusID, paymentMethodID, phonenumber, address, note, orderTotalPay);
         
@@ -221,6 +225,7 @@ public class StaffController extends HttpServlet {
             orderStatusID = 4;
         } 
         HttpSession session = request.getSession();
+        session.setAttribute("tabID", 2);
         OrderDAO orderDAO = new OrderDAO();
         Order order = new Order(orderID, orderStatusID);
         int result = orderDAO.updateOrderStatus(order);
