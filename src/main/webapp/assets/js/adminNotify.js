@@ -254,7 +254,11 @@ $(document).ready(function () {
   };
 });
 
+// =================================== Order ======================================
 
 
-
-
+//$(document).ready(function () {
+//   if (window.location.hash === '#history') {
+//    $('#OrderLog-modal').modal('show');
+//  };
+//});

@@ -3,7 +3,7 @@
 <%@page import="java.util.Collections"%>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
-<div class="tab-pane fade" id="insights">
+<div class="tab-pane fade ${(tabID == 1) ? "active show" : ""}" id="insights">
     <%
         // Giả định bạn đã có một danh sách dữ liệu doanh thu hàng tuần từ Java
         List<Integer> weeklyRevenueData = new ArrayList<Integer>();

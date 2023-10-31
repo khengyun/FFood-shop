@@ -777,7 +777,6 @@ $(document).ready(function () {
                 btnUpdate.attr("data-order-total", total);
                 btnUpdate.attr("data-order-status", data4[0][12]);
                 btnUpdate.removeClass("disabled");
-
                 let orders = {};
                 orders[data4[0][0]] = data4[0][0]; 
                 btnDelete.attr("data-orders", JSON.stringify(orders));
@@ -790,10 +789,10 @@ $(document).ready(function () {
                 }
                 btnDelete.attr("data-orders", JSON.stringify(orders));
                 btnDelete.removeClass("disabled");
-                disableUpdateUserBtn();
+                disableUpdateOrderBtn();
             } else {
-                disableUpdateUserBtn();
-                disableDeleteUserBtn();
+                disableUpdateOrderBtn();
+                disableDeleteOrderBtn();
             }
         }
     });

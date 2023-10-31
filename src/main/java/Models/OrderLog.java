@@ -11,6 +11,7 @@ public class OrderLog {
     private int order_id;
     private byte staff_id;
     private byte admin_id;
+    private String fullname;
     private String log_activity;
     private Timestamp log_time;
 
@@ -21,11 +22,25 @@ public class OrderLog {
         this.log_time = log_time;
     }
     
+    public OrderLog(int order_id, String log_activity, Timestamp log_time) {
+        this.order_id = order_id;
+        this.log_activity = log_activity;
+        this.log_time = log_time;
+    }
+    
     public OrderLog(int log_id, int order_id, byte staff_id, byte admin_id, String log_activity, Timestamp log_time) {
         this.log_id = log_id;
         this.order_id = order_id;
         this.staff_id = staff_id;
         this.admin_id = admin_id;
+        this.log_activity = log_activity;
+        this.log_time = log_time;
+    }
+
+    public OrderLog(int log_id, int order_id, String fullname, String log_activity, Timestamp log_time) {
+        this.log_id = log_id;
+        this.order_id = order_id;
+        this.fullname = fullname;
         this.log_activity = log_activity;
         this.log_time = log_time;
     }
@@ -76,5 +91,13 @@ public class OrderLog {
 
     public void setLog_time(Timestamp log_time) {
         this.log_time = log_time;
+    }
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 }

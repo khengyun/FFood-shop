@@ -36,6 +36,19 @@ public class OrderLogDAO {
         }
         return null;
     }
+    
+    public ResultSet getAllByID(int id) {
+        String sql = "select * from OrderLog where order_id = ?";
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderLogDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
     public OrderLog getOrderLog(int id) {
         OrderLog log = null;
@@ -87,17 +100,53 @@ public class OrderLogDAO {
         }
         return logList;
     }
+    
+    public List<OrderLog> getAllListByOrderID(int id) {
+        ResultSet rs = this.getAllByID(id);
+        List<OrderLog> logList = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                OrderLog log = new OrderLog(
+                        rs.getInt("log_id"), 
+                        rs.getInt("order_id"), 
+                        rs.getByte("staff_id"), 
+                        rs.getByte("admin_id"), 
+                        rs.getString("log_activity"), 
+                        rs.getTimestamp("log_time")
+                );
+                logList.add(log);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderLogDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return logList;
+    }
 
-    public int add(OrderLog log) {
-        String sql = "insert into OrderLog (order_id, staff_id, admin_id, log_activity, log_time) values (?,?,?,?,?)";
+    public int addAdminLog(OrderLog log) {
+        String sql = "insert into OrderLog (order_id, admin_id, log_activity, log_time) values (?,?,?,?,?)";
+        int result = 0;
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, log.getOrder_id());
+            ps.setByte(2, log.getAdmin_id());
+            ps.setString(3, log.getLog_activity());
+            ps.setTimestamp(4, log.getLog_time());
+            result = ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderLogDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
+    
+    public int addStaffLog(OrderLog log) {
+        String sql = "insert into OrderLog (order_id, staff_id, log_activity, log_time) values (?,?,?,?,?)";
         int result = 0;
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, log.getOrder_id());
             ps.setByte(2, log.getStaff_id());
-            ps.setByte(3, log.getAdmin_id());
-            ps.setString(4, log.getLog_activity());
-            ps.setTimestamp(5, log.getLog_time());
+            ps.setString(3, log.getLog_activity());
+            ps.setTimestamp(4, log.getLog_time());
             result = ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(OrderLogDAO.class.getName()).log(Level.SEVERE, null, ex);
