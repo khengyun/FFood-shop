@@ -35,19 +35,19 @@
         <ul class="dropdown-menu" style="z-index: 1021;" aria-labelledby="languageDropdown">
             <li><a class="dropdown-item lang-select lang_capitalize d-flex align-items-center gap-2" data-lang="vi" href="#googtrans(vi|vi)"><img
                         src="https://cdn-icons-png.flaticon.com/512/197/197473.png " width="20" height="20"
-                        alt="Vietnamese flag" />Vietnamese</a></li>
+                        alt="Vietnamese flag" />Tiếng Việt</a></li>
             <li><a class="dropdown-item lang-select lang_capitalize d-flex align-items-center gap-2" data-lang="en" href="#googtrans(vi|en)"><img
                         src="https://img.icons8.com/?size=256&id=t3NE3BsOAQwq&format=png" width="20" height="20"
                         alt="Great Britain flag" />English</a></li>
             <li><a class="dropdown-item lang-select lang_capitalize d-flex align-items-center gap-2" data-lang="fr" href="#googtrans(vi|fr)"><img
                         src="https://cdn-icons-png.flaticon.com/512/330/330490.png" width="20" height="20"
-                        alt="French flag" />French</a></li>
+                        alt="French flag" />Français</a></li>
             <li><a class="dropdown-item lang-select lang_capitalize d-flex align-items-center gap-2" data-lang="zh-CN" href="#googtrans(vi|zh-CN)"><img
                         src="https://cdn-icons-png.flaticon.com/512/197/197375.png" width="20" height="20"
-                        alt="Chinese flag" />Chinese</a></li>
+                        alt="Chinese flag" />简体中文</a></li>
             <li><a class="dropdown-item lang-select lang_capitalize d-flex align-items-center gap-2" data-lang="ja" href="#googtrans(vi|ja)"><img
                         src="https://cdn-icons-png.flaticon.com/512/555/555646.png" width="20" height="20"
-                        alt="Japanese flag" />Japanese</a></li>
+                        alt="Japanese flag" />日本語</a></li>
         </ul>
     </div>
 
