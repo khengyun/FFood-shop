@@ -1,6 +1,6 @@
 <%@ page pageEncoding="UTF-8" %>
 <button type="button"
-        class="btn px-1 pt-1 pb-0 ms-2 me-3 position-relative nav-icon text-decoration-none my-auto text-primary fs-3"
+        class="btn px-1 pt-1 pb-0 ms-2 me-3 position-relative nav-icon text-decoration-none my-auto text-primary fs-3 fs-lg-2"
         data-bs-toggle="modal"
         data-bs-target="#cart-modal">
   <i class="ph-bold ph-shopping-cart"></i>
