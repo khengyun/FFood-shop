@@ -115,24 +115,14 @@
     
     // Call the updateCartInformation function initially to set up the cart information
     updateCartInformation();
-    
-    // Get the cart table element
-    const cartTable = document.getElementById("cart-table");
-    // Example event listener (you should replace this with your actual event listener code)
-    cartTable.addEventListener("change", function() {
-        // Call the updateCartInformation function inside the event listener to update cart information dynamically
-        updateCartInformation();
-        console.log("heheheh");
-    });
-    
         
     // Function to update cart information
     function updateCartInformation() {
         // Get the cart table element
         const cartTable = document.getElementById("cart-table");
 
-        // Get the cart badge element
-        const cartBadge = document.getElementById("cart-badge");
+        // Get the cart badge elements
+        const cartBadges = document.getElementsByClassName("cart-badge");
 
         // Get the number of rows in the cart table
         const numRows = cartTable.getElementsByTagName("tbody")[0].getElementsByTagName("tr").length;
@@ -141,36 +131,65 @@
         // Otherwise, enable the submit button and add the cart badge
         if (numRows === 0 || document.getElementById("empty-cart-label")) {
             document.getElementById("btnSubmit").disabled = true;
-            cartBadge.classList.add("d-none");
+            cartBadges.classList.add("d-none");
         } else {
             document.getElementById("btnSubmit").disabled = false;
-            cartBadge.classList.remove("d-none");
+
+            // Remove the cart badge. Class selectors return HTMLCollection, so we use a for-of loop
+            // https://stackoverflow.com/questions/22754315/for-loop-for-htmlcollection-elements
+            for (const badge of cartBadges) {
+                badge.classList.remove("d-none");         
+            }
 
             // Set the cart badge text to the number of rows
-            if (numRows > 99) {
-                cartBadge.innerText = "99+";
-            } else if (numRows < 0) {
-                cartBadge.innerText = "0";
-            } else {
-                cartBadge.innerText = numRows;
-            }
+            for (const badge of cartBadges) {
+              if (numRows > 99) {
+                  badge.innerText = "+99";
+              } else if (numRows < 0) {
+                  badge.innerText = "0";
+              } else {
+                  badge.innerText = numRows;
+              };
+            };
         }
+
+        // Update the total price
+        updateTotalPrice();
     }
     
     function deleteCartItem(foodID) {
         
-        var cartItem = document.getElementById("cart-item-" + foodID);
-        // Xử lý sự kiện khi yêu cầu hoàn thành
+        let cartItem = document.getElementById("cart-item-" + foodID);
         
-        
-        // Kiểm tra xem phần tử tồn tại hay không
+        // Performs an AJAX request to delete the cart item if it exists
         if (cartItem) {
-            // Tạo một đối tượng XMLHttpRequest
-            var xhr = new XMLHttpRequest();
+            // Create a XMLHttpRequest object
+            let xhr = new XMLHttpRequest();
             xhr.open("GET", "deleteCart?fid=" + foodID, true);
-            // Gửi yêu cầu đến máy chủ
+            // Send the request to the server
             xhr.send();
             cartItem.parentNode.removeChild(cartItem);
+
+            // Checks if the cart is empty after this action
+            // If yes, insert a row with an empty cart label
+            if (document.getElementById("cart-table").getElementsByTagName("tbody")[0].getElementsByTagName("tr").length === 0) {
+                // Insert a row with an empty cart label
+                let row = document.createElement("tr");
+
+                let cell = document.createElement("td");
+                cell.setAttribute("colspan", "5");
+                cell.setAttribute("class", "text-center");
+                cell.setAttribute("id", "empty-cart-label");
+
+                let paragraph = document.createElement("p");
+                paragraph.setAttribute("id", "empty-cart-label");
+                paragraph.setAttribute("class", "fs-1 my-1");
+                paragraph.innerText = "Gio hàng của bạn đang trống";
+
+                row.appendChild(cell);
+                cell.appendChild(paragraph);
+                document.getElementById("cart-table").getElementsByTagName("tbody")[0].appendChild(row);
+            }
             updateCartInformation();
         } else {
             console.error("Không tìm thấy sản phẩm để xóa.");
