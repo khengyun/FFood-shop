@@ -1,0 +1,9 @@
+<%@ page pageEncoding="UTF-8" %>
+<button type="button"
+        class="btn px-1 py-0 ms-2 me-3 position-relative nav-icon text-decoration-none my-auto text-primary fs-2"
+        data-bs-toggle="modal"
+        data-bs-target="#cart-modal">
+  <i class="fas fa-fw fa-cart-arrow-down"></i>
+  <span class="cart-badge position-absolute top-0 start-100 translate-middle px-2 fs-0 bg-danger rounded-pill text-white">
+    <span class="visually-hidden">Giỏ hàng</span>
+</button>
