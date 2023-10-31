@@ -3,7 +3,7 @@
 <!-- Cart -->
 <div class="modal" tabindex="-1" id="cart-modal">
     <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered modal-fullscreen-lg-down">
-        <div class="modal-content px-4 py-3">
+        <div class="modal-content p-1 px-sm-4 py-sm-3">
             <div class="modal-header border-bottom-0">
                 <h4 class="modal-title" id="exampleModalLabel">Giỏ hàng</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -15,7 +15,7 @@
                         <table id="cart-table" class="table table-sm table-hover mb-0">
                             <thead>
                                 <tr>
-                                    <th scope="col">Món ăn/Đồ uống</th>
+                                    <th scope="col">Món ăn / Đồ uống</th>
                                     <th scope="col" style="min-width: 6em">Đơn giá</th>
                                     <th scope="col" style="min-width: 6em">Số lượng</th>
                                     <th scope="col" style="min-width: 6em" class="d-none d-md-table-cell">Số tiền</th>
@@ -56,7 +56,7 @@
                                         </div>
                                     </td>
                                     <!-- Total -->
-                                    <td class="item-total">
+                                    <td class="item-total d-none d-md-table-cell">
                                       <c:set var="productPrice" value="${Double.parseDouble(cart.food.foodPrice- (cart.food.foodPrice * cart.food.discountPercent / 100)) * cart.foodQuantity}"/>
                                       <c:set var="totalPrice" value="${totalPrice + productPrice}"/>
                                       <fmt:formatNumber type="number" pattern="###,###"
@@ -67,8 +67,8 @@
                                         <button type="button" style="width:fit-content;" 
                                                 class="d-flex btn btn-sm btn-outline-danger align-items-center px-3" 
                                                 onclick="deleteCartItem(${cart.food.foodID})">
-                                             <i class="ph-bold ph-trash fs-1 me-2"></i>
-                                            Xóa
+                                             <i class="ph-bold ph-trash fs-1"></i>
+                                            <span class="d-none d-md-flex ms-2">Xoá</span>
                                         </button>
                                     </td>
                                 </tr>
