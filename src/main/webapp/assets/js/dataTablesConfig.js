@@ -451,7 +451,7 @@ $(document).ready(function () {
                 
                 roles[data2[0][1]] = data2[0][3];
                 accounts[data2[0][0]] = data2[0][2];
-                account_type = "";
+                let account_type = "";
                 if (data2[0][5] === "Staff") {
                     account_type = "staff";
                     temp1s[data2[0][1]] = account_type; 
@@ -464,7 +464,8 @@ $(document).ready(function () {
                 } 
                 btnDelete.attr("data-roles", JSON.stringify(roles));
                 btnDelete.attr("data-accounts", JSON.stringify(accounts));
-                
+                btnDelete.attr("data-temp1s", JSON.stringify(temp1s));
+                btnDelete.attr("data-temp2s", JSON.stringify(temp2s));
                 
                 btnDelete.removeClass("disabled");
             } else if (data2.length > 1) {
@@ -526,7 +527,7 @@ $(document).ready(function () {
         $('.dtsp-titleRow > button').addClass("d-flex align-items-center btn-sm py-2");
 
         // Insert the table's button group to existing button container with Add, Update, Delete buttons
-        foodTable.buttons().container().prependTo("#role-button-container");
+        roleTable.buttons().container().prependTo("#role-button-container");
         // Manually configure classes for the newly inserted button group
         let tableButtons = $("#role-button-container > div.dt-buttons");
         tableButtons.removeClass("btn-group");
@@ -776,7 +777,6 @@ $(document).ready(function () {
                 btnUpdate.attr("data-order-total", total);
                 btnUpdate.attr("data-order-status", data4[0][12]);
                 btnUpdate.removeClass("disabled");
-
                 let orders = {};
                 orders[data4[0][0]] = data4[0][0]; 
                 btnDelete.attr("data-orders", JSON.stringify(orders));
@@ -789,10 +789,10 @@ $(document).ready(function () {
                 }
                 btnDelete.attr("data-orders", JSON.stringify(orders));
                 btnDelete.removeClass("disabled");
-                disableUpdateUserBtn();
+                disableUpdateOrderBtn();
             } else {
-                disableUpdateUserBtn();
-                disableDeleteUserBtn();
+                disableUpdateOrderBtn();
+                disableDeleteOrderBtn();
             }
         }
     });

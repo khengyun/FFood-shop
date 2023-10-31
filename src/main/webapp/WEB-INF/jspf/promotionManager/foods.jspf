@@ -1,27 +1,15 @@
 <%@ page pageEncoding="UTF-8" %>
-<div class="tab-pane fade ${(tabID == 3) ? "active show" : ""}" id="foods">
+<div class="tab-pane fade ${(tabID == 1) ? "active show" : ""}" id="foods">
     <div class="container-fluid p-4 shadow rounded-4 bg-white">
         <table id="food-table" class="table table-hover nowrap align-middle" style="width: 100%;">
             <h1 class="text-start fw-bold fs-3 mb-3">Quản lý Món ăn & Đồ uống</h1>
             <div id="foods-button-container" class="row mb-2">
                 <div class="col-sm-12 col-lg-5 mt-sm-2 mt-lg-0 d-flex flex-wrap gap-2 justify-content-lg-end">
-                    <button type="button" class="btn btn-success d-flex  align-items-center flex-shrink-0" 
-                            data-bs-toggle="modal"
-                            data-bs-target="#add-food-modal">
-                        <i class="ph-bold ph-plus fs-1 me-2"></i>
-                        Thêm món
-                    </button>
                     <button type="button" id="btn-update-food"
                             class="btn btn-secondary btn-update d-flex  align-items-center flex-shrink-0" data-bs-toggle="modal"
                             data-bs-target="#update-food-modal">
                         <i class="ph-bold ph-pencil fs-1 me-2"></i>
                         Cập nhật
-                    </button>
-                    <button type="button" id="btn-delete-food"
-                            class="btn btn-danger btn-delete d-flex align-items-center flex-shrink-0" data-bs-toggle="modal"
-                            data-bs-target="#delete-food-modal">
-                        <i class="ph-bold ph-trash fs-1 me-2"></i>
-                        Xoá món
                     </button>
                 </div>
             </div>

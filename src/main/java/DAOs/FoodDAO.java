@@ -197,6 +197,20 @@ public class FoodDAO {
         }
         return result;
     }
+    
+    public int updateDiscount(Food food) {
+        String sql = "update Food set discount_percent = ? where food_id = ?";
+        int result = 0;
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setByte(1, food.getDiscountPercent());
+            ps.setShort(2, food.getFoodID());
+            result = ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(FoodDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
 
     public String getFoodType(byte foodTypeID) {
         String foodType = null;

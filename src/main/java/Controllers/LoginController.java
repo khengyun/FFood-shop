@@ -20,10 +20,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author CE171454 Hua Tien Thanh
- */
 public class LoginController extends HttpServlet {
 
     /**
@@ -154,12 +150,14 @@ public class LoginController extends HttpServlet {
                         account = dao.getAccount(email);
                         String username = account.getUsername();
                         session = request.getSession();
+                        session.setAttribute("adminID", account.getAdminID());
                         session.setAttribute("admin", username);
                         response.sendRedirect("/admin");
                     } else if (accountType.equals("staff")) {
                         account = dao.getAccount(email);
                         String username = account.getUsername();
                         session = request.getSession();
+                        session.setAttribute("staffID", account.getStaffID());
                         session.setAttribute("staff", username);
                         response.sendRedirect("/staff");
                     } else if (accountType.equals("promotionManager")) {
