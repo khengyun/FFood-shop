@@ -65,7 +65,7 @@
                                     <!-- Remove -->
                                     <td>
                                         <button type="button" style="width:fit-content;" 
-                                                class="d-flex btn btn-sm btn-outline-danger align-items-center px-3" 
+                                                class="d-flex btn btn-sm btn-outline-danger align-items-center px-2 px-sm-3" 
                                                 onclick="deleteCartItem(${cart.food.foodID})">
                                              <i class="ph-bold ph-trash fs-1"></i>
                                             <span class="d-none d-md-flex ms-2">Xoá</span>
