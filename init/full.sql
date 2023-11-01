@@ -1,133 +1,180 @@
--- create ffood database
-create database ffood;
-go
+﻿USE [master]
+GO
+
+/*******************************************************************************
+   Drop database if it exists
+********************************************************************************/
+IF EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'ffood')
+BEGIN
+	ALTER DATABASE ffood SET OFFLINE WITH ROLLBACK IMMEDIATE;
+	ALTER DATABASE ffood SET ONLINE;
+	DROP DATABASE ffood;
+END
+
+GO
+
+CREATE DATABASE ffood
+GO
+
+USE ffood
+GO
+
+/*******************************************************************************
+	Drop tables if exists
+*******************************************************************************/
+DECLARE @sql nvarchar(MAX) 
+SET @sql = N'' 
+
+SELECT @sql = @sql + N'ALTER TABLE ' + QUOTENAME(KCU1.TABLE_SCHEMA) 
+    + N'.' + QUOTENAME(KCU1.TABLE_NAME) 
+    + N' DROP CONSTRAINT ' -- + QUOTENAME(rc.CONSTRAINT_SCHEMA)  + N'.'  -- not in MS-SQL
+    + QUOTENAME(rc.CONSTRAINT_NAME) + N'; ' + CHAR(13) + CHAR(10) 
+FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS AS RC 
+
+INNER JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE AS KCU1 
+    ON KCU1.CONSTRAINT_CATALOG = RC.CONSTRAINT_CATALOG  
+    AND KCU1.CONSTRAINT_SCHEMA = RC.CONSTRAINT_SCHEMA 
+    AND KCU1.CONSTRAINT_NAME = RC.CONSTRAINT_NAME 
+
+EXECUTE(@sql) 
+
+GO
+DECLARE @sql2 NVARCHAR(max)=''
+
+SELECT @sql2 += ' Drop table ' + QUOTENAME(TABLE_SCHEMA) + '.'+ QUOTENAME(TABLE_NAME) + '; '
+FROM   INFORMATION_SCHEMA.TABLES
+WHERE  TABLE_TYPE = 'BASE TABLE'
+
+Exec Sp_executesql @sql2 
+GO 
 
 --use ffood database
 use ffood;
-go
+GO
 
 -- Create 14 tables
 create table FoodType (
-	food_type_id		tinyint identity(1,1) not null primary key,
-	food_type			nvarchar(20) not null
+	food_type_id	tinyint identity(1,1) not null primary key,
+	food_type		nvarchar(20) not null
 );
 
-go
+GO
 
 create table Food (
-	food_id				smallint identity(1,1) not null primary key,
-	food_name			nvarchar(500) not null,
-	food_description	nvarchar(2000) not null,
-	food_price			money not null,
-	food_status			bit not null,
-	food_rate			tinyint not null,
+	food_id			smallint identity(1,1) not null primary key,
+	food_name		nvarchar(500) not null,
+	food_description	nvarchar(2000) null,
+	food_price		money not null,
+	food_status		bit not null,
+	food_rate		tinyint null,
 	discount_percent	tinyint not null,
-	food_img_url		varchar(255) not null,
+	food_img_url		varchar(400) not null,
 	food_type_id		tinyint not null foreign key references FoodType(food_type_id)
 );
 
-go
+GO
 
 create table [Admin] (
-	admin_id			tinyint identity(1,1) not null primary key,
+	admin_id		tinyint identity(1,1) not null primary key,
 	admin_fullname		nvarchar(200) not null,
 );
 
-go
+GO
 
 create table AdminFood (
-	admin_id			tinyint not null foreign key references [Admin](admin_id),
-	food_id				smallint not null foreign key references Food(food_id)
+	admin_id		tinyint not null foreign key references [Admin](admin_id),
+	food_id			smallint not null foreign key references Food(food_id)
 );
 
-go
+GO
 
 create table Staff (
-	staff_id			tinyint identity(1,1) not null primary key,
+	staff_id		tinyint identity(1,1) not null primary key,
 	staff_fullname		nvarchar(200) not null,
 );
 
-go
+GO
 
 create table Voucher (
-	voucher_id					tinyint identity(1,1) not null primary key,
-	voucher_name				nvarchar(200) not null,
-	voucher_code				char(16) not null,
+	voucher_id		tinyint identity(1,1) not null primary key,
+	voucher_name		nvarchar(200) not null,
+	voucher_code			char(16) not null,
 	voucher_discount_percent	tinyint not null,
-	voucher_quantity			tinyint not null,
-	voucher_status				bit not null,
-	voucher_date				datetime not null
+	voucher_quantity		tinyint not null,
+	voucher_status			bit not null,
+	voucher_date			datetime not null
 );
 
-go
+GO
 
 create table PromotionManager (
-	pro_id				tinyint identity(1,1) not null primary key,
+	pro_id			tinyint identity(1,1) not null primary key,
 	pro_fullname		nvarchar(200) not null,
 );
 
-go
+GO
 
 create table Customer (
-	customer_id			int identity(1,1) not null primary key,
-	customer_firstname	nvarchar(200) null,
-	customer_lastname	nvarchar(200) null,
-	customer_gender		nvarchar(5) null,
-	customer_phone		varchar(11) null,
-	customer_address	nvarchar(1000) null
+	customer_id		int identity(1,1) not null primary key,
+	customer_firstname	nvarchar(200) not null,
+	customer_lastname	nvarchar(200) not null,
+	customer_gender		nvarchar(5) not null,
+	customer_phone		varchar(11) not null,
+	customer_address	nvarchar(1000) not null
 );
 
-go
+GO
 
 -- Create index for Customer table to improve search performance
 create index idx_customer_firstname_lastname_gender_phone_address
 on Customer (customer_firstname, customer_lastname, customer_gender, customer_phone, customer_address);
 
-go
+GO
+
 create table Account (
-	account_id			int identity(1,1) not null primary key,
-	customer_id			int null foreign key references Customer(customer_id),
-	staff_id			tinyint null foreign key references Staff(staff_id),
-	pro_id				tinyint null foreign key references PromotionManager(pro_id),
-	admin_id			tinyint null foreign key references [Admin](admin_id),
+	account_id		int identity(1,1) not null primary key,
+	customer_id		int null foreign key references Customer(customer_id),
+	staff_id		tinyint null foreign key references Staff(staff_id),
+	pro_id			tinyint null foreign key references PromotionManager(pro_id),
+	admin_id		tinyint null foreign key references [Admin](admin_id),
 	account_username	nvarchar(100) not null,
 	account_email		nvarchar(500) not null,
 	account_password	char(32) not null,
 	account_type		varchar(20) not null,
 );
 
-go
+GO
 
 create table Cart (
-	cart_id				int identity(1,1) not null primary key,
-	customer_id			int not null foreign key references Customer(customer_id)
+	cart_id			int identity(1,1) not null primary key,
+	customer_id		int not null foreign key references Customer(customer_id)
 );
 
-go
+GO
 
 create table CartItem (
 	cart_item_id		int identity(1,1) not null primary key,
-	cart_id				int not null foreign key references Cart(cart_id),
-	food_id				smallint not null foreign key references Food(food_id),
-	food_price			money not null,
+	cart_id			int not null foreign key references Cart(cart_id),
+	food_id			smallint not null foreign key references Food(food_id),
+	food_price		money not null,
 	food_quantity		tinyint not null
 );
 
-go
+GO
 
 create table OrderStatus (
 	order_status_id		tinyint identity(1,1) not null primary key,
 	order_status		nvarchar(50) not null
 );
 
-go
+GO
 
 create table PaymentMethod (
 	payment_method_id	tinyint identity(1,1) not null primary key,
 	payment_method		nvarchar(50) not null
 );
 
-go
+GO
 
 create table [Order] (
 	order_id			int identity(1,1) not null primary key,
@@ -147,39 +194,48 @@ create table [Order] (
 
 GO
 
+create table Payment (
+    order_id                int not null foreign key references [Order](order_id),
+    payment_method_id       tinyint not null foreign key references PaymentMethod(payment_method_id),
+    payment_total           money not null,
+    payment_content         nvarchar(1023) null,
+    payment_bank            nvarchar(50) null,
+    payment_code            varchar(20) null,
+    payment_status          tinyint not null,
+    payment_time            datetime not null
+);
+
+GO
+
+create table OrderLog (
+    log_id				int identity(1,1) not null primary key,
+    order_id            int not null foreign key references [Order](order_id),
+    staff_id			tinyint null foreign key references Staff(staff_id),
+    admin_id			tinyint null foreign key references [Admin](admin_id),
+    log_activity        nvarchar(100) not null,
+    log_time            datetime not null
+);
+
+GO
 
 --Use ffood database
 USE ffood
 GO
 
--- Remove link food to other database after delete food
-CREATE TRIGGER tr_delete_admin_food_links
+-- Inactivate food when delete
+CREATE TRIGGER tr_InactivateFood
 ON Food
-FOR DELETE
+INSTEAD OF DELETE
 AS
 BEGIN
-    DELETE FROM AdminFood WHERE food_id IN (SELECT deleted.food_id FROM deleted);
-END
-
-go
-
--- Check price and discount percent before add to Food table
-CREATE TRIGGER tr_check_food_price
-ON Food
-AFTER DELETE
-AS
-BEGIN
-    IF (SELECT COUNT(*) FROM inserted WHERE food_price <= 0 OR discount_percent < 0 OR discount_percent > 100) > 0
-    BEGIN
-        RAISERROR('Invalid food price or discount percent.', 16, 1)
-        ROLLBACK
-    END
-END
+    UPDATE Food
+    SET food_status = 0
+    WHERE food_id IN (SELECT food_id FROM deleted);
+END;
 
 GO
 
 -- Remove cart after customer deleted
-
 CREATE TRIGGER tr_delete_cart_links
 ON Account
 AFTER DELETE
@@ -188,7 +244,7 @@ BEGIN
     DELETE FROM Cart WHERE customer_id IN (SELECT deleted.customer_id FROM deleted);
 END
 
-go
+GO
 
 -- Don't delete when still have order
 CREATE TRIGGER tr_prevent_delete_customer
@@ -205,33 +261,6 @@ BEGIN
     BEGIN
         DELETE FROM Customer WHERE customer_id = (SELECT customer_id FROM deleted)
     END
-END
-
-go
-
--- remove food from cart when a food was removed 
-
-CREATE TRIGGER tr_remove_food_from_carts
-ON Food
-INSTEAD OF DELETE
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    CREATE TABLE #CartsToRemove (cart_id INT);
-
-    INSERT INTO #CartsToRemove (cart_id)
-    SELECT DISTINCT ci.cart_id
-    FROM CartItem ci
-    INNER JOIN deleted d ON ci.food_id = d.food_id;
-
-    DELETE FROM CartItem WHERE food_id IN (SELECT food_id FROM deleted);
-    
-    DELETE FROM Food WHERE food_id IN (SELECT food_id FROM deleted);
-    
-    DELETE FROM Cart WHERE cart_id IN (SELECT cart_id FROM #CartsToRemove);
-    
-    DROP TABLE #CartsToRemove;
 END
 
 GO
@@ -261,24 +290,44 @@ insert into Account (admin_id, account_username, account_email, account_password
 insert into Account (admin_id, account_username, account_email, account_password, account_type) values (6, N'duykhang123', N'khanghdse172647@fpt.edu.vn', CONVERT(NVARCHAR(32), HashBytes('MD5', '123456'), 2), 'admin');
 
 -- Staffs must be added before an associated Account (if exists) can be created
-insert into Staff (staff_fullname) values ('Nguyễn Văn TestStaff');
+insert into Staff (staff_fullname) values ('Test Staff Mot');
+insert into Staff (staff_fullname) values ('Test Staff Hai');
+insert into Staff (staff_fullname) values ('Test Staff Ba');
+insert into Staff (staff_fullname) values ('Test Staff Bon');
+insert into Staff (staff_fullname) values ('Test Staff Nam');
+insert into Staff (staff_fullname) values ('Test Staff Sau');
 -- Reset the identity seed for the Account table to 20
 -- Staffs' account ID starts from 21-40
-dbcc checkident (Account, RESEED, 20);
+dbcc checkident (Account, RESEED, 50);
 -- Insert Staff Account
-insert into Account(staff_id, account_username, account_email, account_password, account_type) values (1, N'testStaff', N'teststaff@fpt.edu.vn', CONVERT(NVARCHAR(32), HashBytes('MD5', '123456'), 2), 'staff');
+insert into Account(staff_id, account_username, account_email, account_password, account_type) values (1, N'testStaff', N'teststaff1@fpt.edu.vn', CONVERT(NVARCHAR(32), HashBytes('MD5', '123456'), 2), 'staff');
+insert into Account(staff_id, account_username, account_email, account_password, account_type) values (2, N'testStaff', N'teststaff2@fpt.edu.vn', CONVERT(NVARCHAR(32), HashBytes('MD5', '123456'), 2), 'staff');
+insert into Account(staff_id, account_username, account_email, account_password, account_type) values (3, N'testStaff', N'teststaff3@fpt.edu.vn', CONVERT(NVARCHAR(32), HashBytes('MD5', '123456'), 2), 'staff');
+insert into Account(staff_id, account_username, account_email, account_password, account_type) values (4, N'testStaff', N'teststaff4@fpt.edu.vn', CONVERT(NVARCHAR(32), HashBytes('MD5', '123456'), 2), 'staff');
+insert into Account(staff_id, account_username, account_email, account_password, account_type) values (5, N'testStaff', N'teststaff5@fpt.edu.vn', CONVERT(NVARCHAR(32), HashBytes('MD5', '123456'), 2), 'staff');
+insert into Account(staff_id, account_username, account_email, account_password, account_type) values (6, N'testStaff', N'teststaff6@fpt.edu.vn', CONVERT(NVARCHAR(32), HashBytes('MD5', '123456'), 2), 'staff');
 
 -- Insert test promotion manager account
-insert into PromotionManager (pro_fullname) values ('Nguyễn Văn TestPromotion');
+insert into PromotionManager (pro_fullname) values ('Test Promotion Manager Mot');
+insert into PromotionManager (pro_fullname) values ('Test Promotion Manager Hai');
+insert into PromotionManager (pro_fullname) values ('Test Promotion Manager Ba');
+insert into PromotionManager (pro_fullname) values ('Test Promotion Manager Bon');
+insert into PromotionManager (pro_fullname) values ('Test Promotion Manager Nam');
+insert into PromotionManager (pro_fullname) values ('Test Promotion Manager Sau');
 -- Promotion managers' account ID starts from 41-50
-dbcc checkident (Account, RESEED, 40);
+dbcc checkident (Account, RESEED, 100);
 -- Insert Promotion Manager Account
-insert into Account(pro_id, account_username, account_email, account_password, account_type) values (1, N'testPromotion', N'testPromotion@fpt.edu.vn', CONVERT(NVARCHAR(32), HashBytes('MD5', '123456'), 2), 'promotionManager');
+insert into Account(pro_id, account_username, account_email, account_password, account_type) values (1, N'testPromotion1', N'testPromotion1@fpt.edu.vn', CONVERT(NVARCHAR(32), HashBytes('MD5', '123456'), 2), 'promotionManager');
+insert into Account(pro_id, account_username, account_email, account_password, account_type) values (2, N'testPromotion2', N'testPromotion2@fpt.edu.vn', CONVERT(NVARCHAR(32), HashBytes('MD5', '123456'), 2), 'promotionManager');
+insert into Account(pro_id, account_username, account_email, account_password, account_type) values (3, N'testPromotion3', N'testPromotion3@fpt.edu.vn', CONVERT(NVARCHAR(32), HashBytes('MD5', '123456'), 2), 'promotionManager');
+insert into Account(pro_id, account_username, account_email, account_password, account_type) values (4, N'testPromotion4', N'testPromotion4@fpt.edu.vn', CONVERT(NVARCHAR(32), HashBytes('MD5', '123456'), 2), 'promotionManager');
+insert into Account(pro_id, account_username, account_email, account_password, account_type) values (5, N'testPromotion5', N'testPromotion5@fpt.edu.vn', CONVERT(NVARCHAR(32), HashBytes('MD5', '123456'), 2), 'promotionManager');
+insert into Account(pro_id, account_username, account_email, account_password, account_type) values (6, N'testPromotion6', N'testPromotion6@fpt.edu.vn', CONVERT(NVARCHAR(32), HashBytes('MD5', '123456'), 2), 'promotionManager');
 
 
 -- Customer must be added before an associated Account (if exists) can be created
 insert into Customer (customer_firstname, customer_lastname, customer_gender, customer_phone, customer_address) values (N'Quoc Anh', N'Nguyen', N'Nam', '0914875606', N'Đường sô 3, Khu Vực Bình thường B, Bình Thủy, Cần Thơ');
-dbcc checkident (Account, RESEED, 50);
+dbcc checkident (Account, RESEED, 200);
 -- Insert Customer Account
 insert into Account (customer_id, account_username, account_email, account_password, account_type) values (1, N'quocanh123', N'anhnq1130@gmail.com', CONVERT(NVARCHAR(32), HashBytes('MD5', '123456'), 2), 'user');
 
@@ -365,28 +414,35 @@ insert into OrderStatus (order_status) values (N'Đã giao');
 insert into OrderStatus (order_status) values (N'Đã hủy');
 
 -- Voucher
-insert into Voucher (voucher_name, voucher_code, voucher_discount_percent, voucher_quantity, voucher_status, voucher_date) values ( N'Quốc tế phụ nữ', 'ADASD2FD23123DBE', 30, 100, 0,'20231019 00:00:01 AM' );
-insert into Voucher (voucher_name, voucher_code, voucher_discount_percent, voucher_quantity, voucher_status, voucher_date) values ( N'Khách hàng may mắn', 'ADEF38BDYOQM875V', 20, 10, 0,'20230808 00:00:01 AM');
-insert into Voucher (voucher_name, voucher_code, voucher_discount_percent, voucher_quantity, voucher_status, voucher_date) values (N'Quà tặng Noel', 'DUEMAHWOPUNH62GH', 40, 50, 1,'20231215 00:00:01 AM' );
-insert into Voucher (voucher_name, voucher_code, voucher_discount_percent, voucher_quantity, voucher_status, voucher_date) values ( N'Người đặc biệt', 'DJWOA975N4B92BH6', 50, 5, 1,'20231108 00:00:01 AM' );
+insert into Voucher (voucher_name, voucher_code, voucher_discount_percent, voucher_quantity, voucher_status, voucher_date) values ( N'Quốc tế phụ nữ', 'ADASD2FD23123DBE', 30, 100, 0,'20231019 00:01:00 AM' );
+insert into Voucher (voucher_name, voucher_code, voucher_discount_percent, voucher_quantity, voucher_status, voucher_date) values ( N'Khách hàng may mắn', 'ADEF38BDYOQM875V', 20, 10, 0,'20230808 00:01:00 AM');
+insert into Voucher (voucher_name, voucher_code, voucher_discount_percent, voucher_quantity, voucher_status, voucher_date) values (N'Quà tặng Noel', 'DUEMAHWOPUNH62GH', 40, 50, 1,'20231215 00:01:00 AM' );
+insert into Voucher (voucher_name, voucher_code, voucher_discount_percent, voucher_quantity, voucher_status, voucher_date) values ( N'Người đặc biệt', 'DJWOA975N4B92BH6', 50, 5, 1,'20231108 00:01:00 AM' );
 
 -- Cart, CartItem, Order test data
 insert into Cart (customer_id) values (1);
 
-insert into CartItem (cart_id, food_id, food_price, food_quantity) values (1, 2, 55000, 2);
+insert into CartItem (cart_id, food_id, food_price, food_quantity) values (1, 2, 50000, 2);
+insert into CartItem (cart_id, food_id, food_price, food_quantity) values (1, 10, 30000, 1);
 insert into CartItem (cart_id, food_id, food_price, food_quantity) values (1, 23, 20000, 3);
 
 -- Insert an Order for the Cart
 insert into [Order] (
-cart_id, customer_id, order_status_id, payment_method_id,
+cart_id, customer_id ,order_status_id, payment_method_id,
 contact_phone, delivery_address, order_time, order_total, 
 order_note, delivery_time, order_cancel_time
 ) values (
 1, 1, 4, 1, 
-'0931278397', N'39 Mậu Thân, Ninh Kiều, Cần Thơ', '20230708 10:34:09 AM', 170000, 
-NULL, '20230708 10:49:35 AM', NULL);
+'0931278397', N'39 Mậu Thân, Ninh Kiều, Cần Thơ', '20230708 10:34:00 AM', 190000, 
+NULL, '20230708 10:49:00 AM', NULL);
 
+insert into Payment (
+    order_id, payment_method_id, payment_total, payment_content, payment_bank, payment_code, payment_status, payment_time
+) values (
+    1,1,190000,N'Thanh toán đơn hàng ffood',N'NCB','14111641',1,'20230708 11:20:00 AM'
+);
 
-
-
-
+insert into OrderLog (order_id, staff_id, log_activity, log_time) values (1, 1, N'Update order status','20230708 10:51:00 AM');
+insert into OrderLog (order_id, staff_id, log_activity, log_time) values (1, 2, N'Update order status','20230708 11:03:00 AM');
+insert into OrderLog (order_id, staff_id, log_activity, log_time) values (1, 3, N'Update order status','20230708 11:18:00 AM');
+insert into OrderLog (order_id, staff_id, log_activity, log_time) values (1, 4, N'Update Payment status','20230708 11:20:00 AM');

@@ -71,7 +71,10 @@ public class Food {
         this.foodType = foodType;
     }
 
-    
+    public Food(short foodID, byte discountPercent) {
+        this.foodID = foodID;
+        this.discountPercent = discountPercent;
+    }
 
 
     public short getFoodID() {
