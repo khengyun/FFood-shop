@@ -26,7 +26,6 @@ function validateForm() {
             txtFoodDescription: {
                 required: true,
                 maxlength: 500,
-                pattern: /^[\p{L}\s]+$/u
             },
             txtFoodPrice: {
                 required: true,
@@ -55,8 +54,7 @@ function validateForm() {
             },
             txtFoodDescription: {
                 required: "Tên món không được để trống",
-                maxlength: "Tên món không dài quá 500 kí tự",
-                pattern: "Mô tả món ăn chỉ chấp nhận chữ, khoảng trắng"
+                maxlength: "Tên món không dài quá 500 kí tự"
             },
             txtFoodPrice: {
                 required: "Vui lòng nhập Đơn giá",
@@ -94,7 +92,6 @@ function validateForm() {
             txtFoodDescription: {
                 required: true,
                 maxlength: 500,
-                pattern: /^[\p{L}\s]+$/u
             },
             txtFoodPrice: {
                 required: true,
@@ -125,8 +122,7 @@ function validateForm() {
             },
             txtFoodDescription: {
                 required: "Mô tả món ăn không được để trống",
-                maxlength: "Mô tả món ăn không dài quá 500 kí tự",
-                pattern: "Mô tả món ăn chỉ chấp nhận chữ, khoảng trắng"
+                maxlength: "Mô tả món ăn không dài quá 500 kí tự"
             },
             txtFoodPrice: {
                 required: "Vui lòng nhập Đơn giá",
@@ -558,6 +554,26 @@ function validateForm() {
             form.submit();
         }
     });
+    
+    $("#voucher-form").validate({
+        rules: {
+            voucherCode: {
+                required: true,
+                maxlength: 16,
+            }
+        },
+        messages: {
+            voucherCode: {
+                required: "Vui lòng nhập mã giảm giá",
+                maxlength: "Mã giảm giá không được vượt quá 16 ký tự"
+            }
+
+        },
+        submitHandler: function (form) {
+            // Handle form submission here
+            form.submit();
+        }
+    });
 
     $("#changePass-form").validate({
         rules: {
@@ -756,6 +772,9 @@ $(".checkout-form").validate({
             txtAddress: {
                 required: true,
                 maxlength: 255
+            },
+            txtVoucherCode: {
+                maxlength: 16
             }
         },
         messages: {
@@ -777,6 +796,9 @@ $(".checkout-form").validate({
             txtAddress: {
                 required: "Vui lòng nhập địa chỉ của Người dùng",
                 maxlength: "Địa chỉ không được vượt quá 255 kí tự"
+            },
+            txtVoucherCode: {
+                maxlength: "Mã giảm giá không được vượt quá 16 kí tự"
             }
         },
         submitHandler: function (form) {

@@ -4,12 +4,6 @@
     Author     : CE171454 Hua Tien Thanh
 --%>
 
-<%-- 
-    Document   : checkout
-    Created on : Jul 1, 2023, 8:00:52 PM
-    Author     : CE171454 Hua Tien Thanh
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -37,7 +31,7 @@
             <%@ include file="WEB-INF/jspf/common/components/header.jspf" %>
             <%@ include file="WEB-INF/jspf/guest/components/login.jspf" %>
             <%@ include file="WEB-INF/jspf/guest/components/signup.jspf" %>
-
+            <%@ include file="WEB-INF/jspf/guest/components/verify.jspf" %>
             <div class="container my-5">
                 <div class="row">
                     <div class="col-md-6">
@@ -67,8 +61,6 @@
                                                 ${Double.parseDouble(cart.food.foodPrice- (cart.food.foodPrice * cart.food.discountPercent / 100)) * cart.foodQuantity} đ</td>
                                         </tr>
                                     </c:forEach>
-
-
                                 </tbody>
                             </table>
                         </div>
@@ -80,32 +72,35 @@
                                 <input type="hidden" id="txtAccountID" name="txtAccountID" value="${currentAccount.accountID}"/>
                                 <div class="col-md-12">
                                     <h4>Thông tin giao món</h4>
-                                    <div class="mb-3">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
                                         <label for="txtLastName" class="form-label">Họ</label>
-                                        <input type="text" class="form-control" id="txtLastName" name="txtLastName" value="${customer.lastName}" placeholder="Enter your last name">
-                                        <div class="form-error"></div>
+                                        <input type="text" class="form-control" id="txtLastName" name="txtLastName" value="${customer.lastName}" required>
+                                            <div class="form-error"></div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="txtFirstName" class="form-label">Tên</label>
+                                            <input type="text" class="form-control" id="txtFirstName" name="txtFirstName"value="${customer.firstName}" required>
+                                            <div class="form-error"></div>
+                                        </div>
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="txtFirstName" class="form-label">Tên</label>
-                                        <input type="text" class="form-control" id="txtFirstName" name="txtFirstName"value="${customer.firstName}" placeholder="Enter your first name">
-                                        <div class="form-error"></div>
-                                    </div>
+                                    
 
-                                    <div class="mb-3">
+                                    <div class="row">
                                         <label for="txtGender" class="form-label">Giới tính</label>
-                                        <div class="form-check">
+                                        <div class="col-md-3 mx-3 form-check">
                                             <input class="form-check-input" type="radio" name="txtGender" id="genderMale" value="Nam" ${(customer.gender == "Nam") || (empty customer.gender) ? "checked" : ""}>
                                             <label class="form-check-label" for="genderMale">
                                                 Nam
                                             </label>
                                         </div>
-                                        <div class="form-check">
+                                        <div class="col-md-3 form-check">
                                             <input class="form-check-input" type="radio" name="txtGender" id="genderFemale" value="Nữ" ${customer.gender == "Nữ" ? "checked" : ""}>
                                             <label class="form-check-label" for="genderFemale">
                                                 Nữ
                                             </label>
                                         </div>
-                                        <div class="form-check">
+                                        <div class="col-md-3 form-check">
                                             <input class="form-check-input" type="radio" name="txtGender" id="genderOther" value="Khác" ${customer.gender == "Khác" ? "checked" : ""} >
                                             <label class="form-check-label" for="genderOther">
                                                 Khác
@@ -115,17 +110,17 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="txtPhone" class="form-label">Điện thoại liên hệ</label>
-                                        <input type="text" class="form-control" id="txtPhone" name="txtPhone" placeholder="Enter your phone number" value="${customer.phone}">
+                                        <input type="text" class="form-control" id="txtPhone" name="txtPhone" value="${customer.phone}" required>
                                         <div class="form-error"></div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="txtAddress" class="form-label">Địa chỉ giao hàng</label>
-                                        <input type="text" class="form-control" id="txtAddress" name="txtAddress" placeholder="Enter your address" value="${customer.address}">
+                                        <input type="text" class="form-control" id="txtAddress" name="txtAddress" value="${customer.address}" required>
                                         <div class="form-error"></div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="txtNote" class="form-label">Ghi chú</label>
-                                        <textarea class="form-control" name ="txtNote" id="txtNote" rows="3" placeholder="Enter any additional notes"></textarea>
+                                        <textarea class="form-control" name ="txtNote" id="txtNote" rows="3"></textarea>
                                         <div class="form-error"></div>
                                     </div>
 
@@ -133,13 +128,30 @@
                                 <div class="col-md-12">
                                     <h4>Phương thức thanh toán</h4>
                                     <input class="paying-method" checked type="radio" disabled>
-                                    <span class="">Thanh toán khi nhận món (COD)</button>
+                                    <span class="">Thanh toán khi nhận món (COD)</span>
                                         <!--<input type="radio" class="btn-check" name="paymentMethod" id="paymentMethod3" >-->
                                         <!--<label class="btn btn-outline-dark p-3" for="paymentMethod3">Thanh toán khi nhận món (COD)</label>-->
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-12 my-3">
+                                        <h4>Giảm giá</h4>
+                                        <div class="input-group">
+                                            <input value="${voucherCode}" type="text" class="form-control" id="txtVoucherCode" name="txtVoucherCode" readonly>
+                                            <button class="btn btn-primary" type="button" id="voucherButton" 
+                                                    data-bs-toggle="modal" data-bs-target="#voucher-modal" >
+                                                Nhập mã giảm giá
+                                            </button>
+                                        </div>
+                                        <div class="form-error"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <span class="">${voucherStatus}</span>
+                                </div>
+
                             </div>
                             <div class="col-md-12 text-md-end mt-3 d-flex justify-content-end align-items-center">
-                                <h4 class="d-inline-flex">Tổng thanh toán: ${totalPrice}đ</h4>
+                                <h4 class="d-inline-flex">Tổng thanh toán: ${totalPrice*(voucherpercent)}đ</h4>
                                 <button type="submit"  id=”btnSubmit” name="btnSubmit" value="SubmitOrder" class="btn btn-primary ms-3" onclick="return checkPaying();" >Đặt món</button>
                             </div>
                         </form>
@@ -149,6 +161,7 @@
             <%@ include file="WEB-INF/jspf/common/components/footer.jspf" %>
         </main>
         <%@ include file="WEB-INF/jspf/common/imports/javascript.jspf" %>
+        <%@ include file="WEB-INF/jspf/common/imports/validation.jspf" %>
 
         <script>
             // Primary variables
@@ -250,9 +263,5 @@
             }
 
         </script>
-
-
-        <%@ include file="WEB-INF/jspf/common/imports/validation.jspf" %>
-
     </body>
 </html>

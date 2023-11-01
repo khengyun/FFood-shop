@@ -1,6 +1,52 @@
--- create ffood database
-create database ffood;
+﻿USE [master]
 GO
+
+/*******************************************************************************
+   Drop database if it exists
+********************************************************************************/
+IF EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'ffood')
+BEGIN
+	ALTER DATABASE ffood SET OFFLINE WITH ROLLBACK IMMEDIATE;
+	ALTER DATABASE ffood SET ONLINE;
+	DROP DATABASE ffood;
+END
+
+GO
+
+CREATE DATABASE ffood
+GO
+
+USE ffood
+GO
+
+/*******************************************************************************
+	Drop tables if exists
+*******************************************************************************/
+DECLARE @sql nvarchar(MAX) 
+SET @sql = N'' 
+
+SELECT @sql = @sql + N'ALTER TABLE ' + QUOTENAME(KCU1.TABLE_SCHEMA) 
+    + N'.' + QUOTENAME(KCU1.TABLE_NAME) 
+    + N' DROP CONSTRAINT ' -- + QUOTENAME(rc.CONSTRAINT_SCHEMA)  + N'.'  -- not in MS-SQL
+    + QUOTENAME(rc.CONSTRAINT_NAME) + N'; ' + CHAR(13) + CHAR(10) 
+FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS AS RC 
+
+INNER JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE AS KCU1 
+    ON KCU1.CONSTRAINT_CATALOG = RC.CONSTRAINT_CATALOG  
+    AND KCU1.CONSTRAINT_SCHEMA = RC.CONSTRAINT_SCHEMA 
+    AND KCU1.CONSTRAINT_NAME = RC.CONSTRAINT_NAME 
+
+EXECUTE(@sql) 
+
+GO
+DECLARE @sql2 NVARCHAR(max)=''
+
+SELECT @sql2 += ' Drop table ' + QUOTENAME(TABLE_SCHEMA) + '.'+ QUOTENAME(TABLE_NAME) + '; '
+FROM   INFORMATION_SCHEMA.TABLES
+WHERE  TABLE_TYPE = 'BASE TABLE'
+
+Exec Sp_executesql @sql2 
+GO 
 
 --use ffood database
 use ffood;
@@ -8,7 +54,7 @@ GO
 
 -- Create 14 tables
 create table FoodType (
-	food_type_id		tinyint identity(1,1) not null primary key,
+	food_type_id	tinyint identity(1,1) not null primary key,
 	food_type		nvarchar(20) not null
 );
 
@@ -150,14 +196,25 @@ create table [Order] (
 GO
 
 create table Payment (
-    order_id			int not null foreign key references [Order](order_id),
-    payment_method_id           tinyint not null foreign key references PaymentMethod(payment_method_id),
-    payment_total               money not null,
-    payment_content             nvarchar(1023) null,
-    payment_bank                nvarchar(50) null,
-    payment_code                varchar(20) null,
-    payment_status              tinyint not null,
-    payment_time                  datetime not null
+    order_id                int not null foreign key references [Order](order_id),
+    payment_method_id       tinyint not null foreign key references PaymentMethod(payment_method_id),
+    payment_total           money not null,
+    payment_content         nvarchar(1023) null,
+    payment_bank            nvarchar(50) null,
+    payment_code            varchar(20) null,
+    payment_status          tinyint not null,
+    payment_time            datetime not null
+);
+
+GO
+
+create table OrderLog (
+    log_id				int identity(1,1) not null primary key,
+    order_id            int not null foreign key references [Order](order_id),
+    staff_id			tinyint null foreign key references Staff(staff_id),
+    admin_id			tinyint null foreign key references [Admin](admin_id),
+    log_activity        nvarchar(100) not null,
+    log_time            datetime not null
 );
 
 GO
@@ -593,10 +650,10 @@ insert into OrderStatus (order_status) values (N'Đã giao');
 insert into OrderStatus (order_status) values (N'Đã hủy');
 
 -- Voucher
-insert into Voucher (voucher_name, voucher_code, voucher_discount_percent, voucher_quantity, voucher_status, voucher_date) values ( N'Quốc tế phụ nữ', 'ADASD2FD23123DBE', 30, 100, 0,'20231019 00:00:01 AM' );
-insert into Voucher (voucher_name, voucher_code, voucher_discount_percent, voucher_quantity, voucher_status, voucher_date) values ( N'Khách hàng may mắn', 'ADEF38BDYOQM875V', 20, 10, 0,'20230808 00:00:01 AM');
-insert into Voucher (voucher_name, voucher_code, voucher_discount_percent, voucher_quantity, voucher_status, voucher_date) values (N'Quà tặng Noel', 'DUEMAHWOPUNH62GH', 40, 50, 1,'20231215 00:00:01 AM' );
-insert into Voucher (voucher_name, voucher_code, voucher_discount_percent, voucher_quantity, voucher_status, voucher_date) values ( N'Người đặc biệt', 'DJWOA975N4B92BH6', 50, 5, 1,'20231108 00:00:01 AM' );
+insert into Voucher (voucher_name, voucher_code, voucher_discount_percent, voucher_quantity, voucher_status, voucher_date) values ( N'Quốc tế phụ nữ', 'ADASD2FD23123DBE', 30, 100, 0,'20231019 00:01:00 AM' );
+insert into Voucher (voucher_name, voucher_code, voucher_discount_percent, voucher_quantity, voucher_status, voucher_date) values ( N'Khách hàng may mắn', 'ADEF38BDYOQM875V', 20, 10, 0,'20230808 00:01:00 AM');
+insert into Voucher (voucher_name, voucher_code, voucher_discount_percent, voucher_quantity, voucher_status, voucher_date) values (N'Quà tặng Noel', 'DUEMAHWOPUNH62GH', 40, 50, 1,'20231215 00:01:00 AM' );
+insert into Voucher (voucher_name, voucher_code, voucher_discount_percent, voucher_quantity, voucher_status, voucher_date) values ( N'Người đặc biệt', 'DJWOA975N4B92BH6', 50, 5, 1,'20231108 00:01:00 AM' );
 
 -- Cart, CartItem, Order test data
 insert into Cart (customer_id) values (1);
@@ -607,18 +664,21 @@ insert into CartItem (cart_id, food_id, food_price, food_quantity) values (1, 23
 
 -- Insert an Order for the Cart
 insert into [Order] (
-cart_id, customer_id, staff_id ,order_status_id, payment_method_id,
+cart_id, customer_id ,order_status_id, payment_method_id,
 contact_phone, delivery_address, order_time, order_total, 
 order_note, delivery_time, order_cancel_time
 ) values (
-1, 1, 1, 4, 1, 
-'0931278397', N'39 Mậu Thân, Ninh Kiều, Cần Thơ', '20230708 10:34:09 AM', 190000, 
-NULL, '20230708 10:49:35 AM', NULL);
+1, 1, 4, 1, 
+'0931278397', N'39 Mậu Thân, Ninh Kiều, Cần Thơ', '20230708 10:34:00 AM', 190000, 
+NULL, '20230708 10:49:00 AM', NULL);
 
 insert into Payment (
     order_id, payment_method_id, payment_total, payment_content, payment_bank, payment_code, payment_status, payment_time
 ) values (
-    1,1,190000,N'Thanh toán đơn hàng ffood',N'NCB','14111641',1,'20230708 11:05:02 AM'
+    1,1,190000,N'Thanh toán đơn hàng ffood',N'NCB','14111641',1,'20230708 11:20:00 AM'
 );
 
-
+insert into OrderLog (order_id, staff_id, log_activity, log_time) values (1, 1, N'Update order status','20230708 10:51:00 AM');
+insert into OrderLog (order_id, staff_id, log_activity, log_time) values (1, 2, N'Update order status','20230708 11:03:00 AM');
+insert into OrderLog (order_id, staff_id, log_activity, log_time) values (1, 3, N'Update order status','20230708 11:18:00 AM');
+insert into OrderLog (order_id, staff_id, log_activity, log_time) values (1, 4, N'Update Payment status','20230708 11:20:00 AM');
