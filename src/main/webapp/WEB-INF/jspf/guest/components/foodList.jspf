@@ -1,11 +1,11 @@
 <%@ page pageEncoding="UTF-8" %>
-<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 gx-4" id="food-list">
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 gx-4" style="scroll-margin-top: 5rem;" id="food-list">
     <!-- Gets foodList attribute set by HomeController.java -->
     <c:forEach items="${foodList}" var="food">
-        <div class="food-card mb-4 h-100" id="food-${food.foodTypeID}">
+        <div class="food-card mb-4" id="food-${food.foodTypeID}">
             <div class="card card-span h-100 rounded-3 shadow">
                 <div class="position-relative">
-                    <img class="card-img-top img-fluid rounded-3" style="object-fit: cover; object-position: center; width: 100%;" src="${food.imageURL}" alt="${food.foodName}" />
+                    <img class="card-img-top img-fluid rounded-3" loading="lazy" style="object-fit: cover; object-position: center; width: 100%; height: 150px" src="${food.imageURL}" alt="${food.foodName}" />
                     <c:if test="${food.discountPercent != 0}">
                         <span class="badge bg-success p-2 m-3 shadow position-absolute top-0 start-0">
                             <i class="fas fa-tag me-2 fs-0"></i>
@@ -15,22 +15,41 @@
                         </span>
                     </c:if>
                 </div>
-                <div class="card-body">
-                    <h5 class="card-title fw-bold fs-1 text-1000 text-truncate mb-1">${food.foodName}</h5>
+                <div class="card-body d-flex flex-column">
+                    <!-- Food name -->
+                    <h5 class="card-title fw-bolder fs-1 text-1000 mb-1">${food.foodName}</h5>
+                    
+                    <!-- Food price and rating -->
                     <div class="card-text mb-3">
-                        <span class="text-primary fw-bold">
-                            <fmt:formatNumber type="number" pattern="###,###" value="${food.foodPrice - (food.foodPrice * food.discountPercent / 100)}" />đ
-                        </span>
-                        <c:if test="${food.discountPercent != 0}">
-                            <span class="ms-3 text-600">
-                                <s><fmt:formatNumber type="number" pattern="###,###" value="${food.foodPrice}" />đ</s>
-                            </span>
-                        </c:if>
+                      <!-- Food price -->
+                      <span class="text-secondary fw-bolder" style="font-size: 1.2rem">
+                        <fmt:formatNumber type="number" pattern="###,###" value="${food.foodPrice - (food.foodPrice * food.discountPercent / 100)}" />đ
+                      </span>
+                      <c:if test="${food.discountPercent != 0}">
+                          <span class="ms-1 text-600">
+                              <s><fmt:formatNumber type="number" pattern="###,###" value="${food.foodPrice}" />đ</s>
+                          </span>
+                      </c:if>
+
+                      <!-- Food rating -->
+                      <div class="text-primary mt-1">
+                        <c:forEach begin="1" end="5" varStatus="loop">
+                          <c:choose>
+                            <c:when test="${loop.index <= food.rate}">
+                              <i class="ph-fill ph-star"></i>
+                            </c:when>
+                            <c:otherwise>
+                              <i class="ph-bold ph-star"></i>
+                            </c:otherwise>
+                          </c:choose>
+                        </c:forEach>
+                      </div>
                     </div>
-                    <button class="btn btn-lg btn-danger px-2 w-100 addToCartBtn" data-foodid="${food.foodID}" data-quantity="1"> Thêm vào Giỏ hàng </button>
+                    <div class="flex-grow-1"></div>
+                    <button class="btn btn-lg btn-primary px-2 w-100 addToCartBtn" data-foodid="${food.foodID}" data-quantity="1"> Thêm vào Giỏ hàng </button>
                 </div>
             </div>
         </div>
     </c:forEach>
-    <button id="btn-show-more" class="btn btn-secondary mx-auto">Xem thêm</button>
+    <button id="btn-show-more" class="btn btn-secondary mx-auto">Xem thêm <i class="ph-bold ph-arrow-down"></i></button>
 </div>

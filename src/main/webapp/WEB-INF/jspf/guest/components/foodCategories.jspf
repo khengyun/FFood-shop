@@ -1,22 +1,63 @@
 <%@ page pageEncoding="UTF-8" %>
 <div class="row flex-center">
-  <div class="col-12">
-    <div class="row h-100 align-items-center">
-      <c:forEach items="${foodTypeList}" var="foodType">
-        <div class="col-6 col-sm-4 col-md-3 col-lg mb-5 h-100">
-          <div class="card card-span h-100 rounded-circle">
-            <button class="btn-categories" data-food-type-id="${foodType.foodTypeID}">
-              <img class="img-fluid rounded-circle h-100" style="object-fit: contain; width: 200px;" src="${foodType.imgURL}" alt="${foodType.foodType}" />
-            </button>
-            <div class="card-body">
-              <h5 class="text-center fw-bold text-1000 text-truncate mb-2"
-                  style="${foodType.foodTypeID == 5 ? "letter-spacing: -0.5px; font-size: 18px;" : ""}">
-                ${foodType.foodType}
-              </h5>
+  
+    <div class="carousel slide my-3" id="carouselFoodCategories">
+      <!-- Carousel items -->
+      <div class="carousel-inner">
+        <!-- Outer loop: Creates a carousel item for every 6 food types, so 2 items as there are 10 food types -->
+        <!-- Set the first 6 food types as active -->
+        <c:forEach begin="0" end="${foodTypeList.size() / 6}" varStatus="outerLoop">
+          <div class="carousel-item ${ outerLoop.index == 0 ? 'active' : '' }">
+            <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6 h-100 align-items-center align-items-stretch">
+              <!-- Inner loop: Displays 6 food types per outer loop -->
+              <!-- Display only the 1st to 6th food types (outerLoop.index = 0) -->
+              <!-- Then display the 7th to 12th food types (outerLoop.index = 1) and so on... -->
+              <c:forEach begin="${6 * outerLoop.index}" end="${6 * (outerLoop.index + 1) - 1}" items="${foodTypeList}" var="foodType" varStatus="innerLoop">
+                <div class="h-100">
+                  <button class="btn-categories" data-food-type-id="${foodType.foodTypeID}">
+                    <div class="card card-span h-100 rounded-circle">
+                      <img class="img-fluid border rounded-3" style="object-fit: cover; object-position: center; width: 100%; height: 100px;" src="${foodType.imgURL}" alt="${foodType.foodType}" />
+                      <div class="card-body px-0">
+                        <h5 class="text-center fw-bold text-1000">
+                          ${foodType.foodType}
+                        </h5>
+                      </div>
+                    </div>
+                  </button>
+                </div>
+              </c:forEach>
             </div>
           </div>
-        </div>
-      </c:forEach>
+        </c:forEach>
+
+      </div>
+
+      <!-- Carousel indicators -->
+      <div class="carousel-indicators position-relative">
+        <c:forEach begin="0" end="${foodTypeList.size() / 6}" varStatus="outerLoop">
+          <button type="button" data-bs-target="#carouselFoodCategories" data-bs-slide-to="${outerLoop.index}" class="border border-3 border-primary rounded-3 ${ outerLoop.index == 0 ? 'active' : '' }" aria-current="true" aria-label="Trang 1"></button>
+        </c:forEach>
+      </div>
+      
+      <!-- Carousel controls -->
+      <button class="carousel-control-prev carousel-icon pb-7 d-none d-sm-block" style="left: -2em;" type="button" data-bs-target="#carouselFoodCategories" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon hover-top-shadow" aria-hidden="true"></span>
+        <span class="visually-hidden">Các loại món trước</span>
+      </button>
+      <button class="carousel-control-next carousel-icon pb-7 d-none d-sm-block" style="right: -2em;" type="button" data-bs-target="#carouselFoodCategories" data-bs-slide="next">
+        <span class="carousel-control-next-icon hover-top-shadow" aria-hidden="true"></span>
+        <span class="visually-hidden">Các loại món sau</span>
+      </button>
     </div>
-  </div>
+  
 </div>
+<script>
+  // A carousel has to be initialized after the page is loaded for it to work properly
+  // https://getbootstrap.com/docs/5.3/components/carousel/#methods
+  $(document).ready(function() {
+    const carousel = new bootstrap.Carousel(document.querySelector('#carouselFoodCategories'), {
+      interval: 0,
+      ride: false
+    })
+  });
+</script>

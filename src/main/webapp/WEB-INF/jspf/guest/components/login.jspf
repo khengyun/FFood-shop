@@ -51,6 +51,7 @@
                 id="chkRememberMe"
                 name="chkRememberMe"
                 value="remember"
+                checked
               />
               <label class="form-check-label" for="chkRememberMe"
                 >Duy trì đăng nhập</label
@@ -69,7 +70,7 @@
               </a>
             </div>
           </div>
-          <div class="form-group row px-3">
+          <div class="form-group row px-3 my-3">
             <button
               type="submit"
               class="btn btn-primary btn-lg btn-block loginbutton"
@@ -81,26 +82,7 @@
             </button>
           </div>
           <!-- Sign In With Google button with HTML data attributes API -->
-          <div
-            id="g_id_onload"
-            data-client_id="878924649175-qs2bdc6eq08cfq344o6uft06hm22nrho.apps.googleusercontent.com"
-            data-context="signin"
-            data-ux_mode="popup"
-            data-callback="onSignIn"
-            data-auto_prompt="false"
-          ></div>
-
-          <div
-            class="g_id_signin"
-            data-type="standard"
-            data-shape="rectangular"
-            data-theme="filled_blue"
-            data-text="signin_with"
-            data-size="large"
-            data-logo_alignment="left"
-          ></div>
-
-          <!-- end login button -->
+          <%@ include file="buttons/googleSignInButton.jspf" %>
 
           <div class="mt-4 text-center">
             Bạn chưa có tài khoản?
@@ -120,42 +102,3 @@
     </div>
   </div>
 </div>
-
-<!-- SIGN UP -->
-<script>
-  function onSignIn(googleUser) {
-    // Lấy các trường thông tin từ đối tượng JSON googleUser
-    console.log(googleUser);
-    const clientId = googleUser.clientId;
-    const client_id = googleUser.client_id;
-    const credential = googleUser.credential;
-    console.log(clientId);
-
-    // Gửi GET request đến server
-    fetch(`http://localhost:8001/get_credential/` + credential, {
-      method: "GET",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // console.log(data);
-        document.getElementById("txtEmail").value = data.email;
-        document.getElementById("txtPassword").value = data.password;
-
-        // document.getElementById("txtEmail").style.display = "none";
-        // document.getElementById("txtPassword").style.display = "none";
-        const loginButton = document.querySelector(
-          ".btn.btn-primary.btn-lg.btn-block.loginbutton"
-        );
-        if (loginButton) {
-          loginButton.click();
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  }
-</script>

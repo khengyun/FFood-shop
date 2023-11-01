@@ -11,23 +11,24 @@
                     <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>                
                 </div>
                 <form class="form mx-2 p-2 mx-md-4 p-md-4 mb-4" id="otp-form" method="post" action="/verifyOTP">
-                    <h1 class="text-center mb-2 mb-md-4">Nhập mã OTP</h1>
-                    <div class="form-group col pb-4">
+                    <h1 class="text-center mb-4 mb-md-5">Nhập mã xác thực (OTP)</h1>
+                    <div class="form-group col">
                         <div class="">
                             <input type="text" class="form-control" id="otp" name="otp" placeholder="Nhập OTP" required="">
                             <div class="lblError" id="lblErrorName"></div>
                         </div>
                     </div>
-
-                    <div class="form-group row px-3">
-                        <button type="submit" class="btn btn-primary btn-lg btn-block" id="btnSubmit" name="btnSubmit" value="Submit" onclick="validateForm()">Xác nhận</button>
+                    <div class="form-group-row pt-3">
+                      <p>Chúng tôi đã gửi 1 mã xác thực đến email của bạn, 
+                        hãy kiểm tra hộp thư (bao gồm mục thư rác/spam) của bạn nhé.
+                      </p>
+                    </div> 
+                    <div class="form-group d-flex flex-row-reverse justify-content-between align-items-center mt-4">
+                        <button type="submit" class="btn btn-primary btn-block px-4" id="btnSubmit" name="btnSubmit" value="Submit" onclick="validateForm()">Xác nhận email</button>
+                        <a href="https://mail.google.com/mail/u/0/#inbox" target="_blank" class="btn btn-outline-light fw-bolder link-primary">
+                          Mở hộp thư email
+                        </a>
                     </div>
-                    <a href="https://mail.google.com/mail/u/0/#inbox" target="_blank">
-                        <span class="fw-bold text-decoration-underline link-primary">
-                            Truy cập email của bạn
-                        </span>
-                    </a>
-
                 </form>
             </div>
         </div>
