@@ -30,22 +30,22 @@
         <button class="language-dropdown btn px-2 py-0 me-3 dropdown-toggle d-flex align-items-center gap-2 border-0" type="button" data-bs-toggle="dropdown"
             aria-expanded="false" title="Ngôn ngữ">
             <img src="https://cdn-icons-png.flaticon.com/512/197/197473.png" width="20" height="20"
-                alt="vietnam" />VN
+                alt="vietnam" /><span class="notranslate">VN</span>
         </button>
         <ul class="dropdown-menu shadow" style="z-index: 1021;">
-            <li><a class="dropdown-item lang-select lang_capitalize d-flex align-items-center gap-2" data-lang="vi" href="#googtrans(vi|vi)"><img
+            <li><a class="dropdown-item lang-select lang_capitalize d-flex align-items-center gap-2 notranslate" data-lang="vi" href="#googtrans(vi|vi)"><img
                         src="https://cdn-icons-png.flaticon.com/512/197/197473.png " width="20" height="20"
                         alt="Vietnamese flag" />Tiếng Việt</a></li>
-            <li><a class="dropdown-item lang-select lang_capitalize d-flex align-items-center gap-2" data-lang="en" href="#googtrans(vi|en)"><img
+            <li><a class="dropdown-item lang-select lang_capitalize d-flex align-items-center gap-2 notranslate" data-lang="en" href="#googtrans(vi|en)"><img
                         src="https://img.icons8.com/?size=256&id=t3NE3BsOAQwq&format=png" width="20" height="20"
                         alt="Great Britain flag" />English</a></li>
-            <li><a class="dropdown-item lang-select lang_capitalize d-flex align-items-center gap-2" data-lang="fr" href="#googtrans(vi|fr)"><img
+            <li><a class="dropdown-item lang-select lang_capitalize d-flex align-items-center gap-2 notranslate" data-lang="fr" href="#googtrans(vi|fr)"><img
                         src="https://cdn-icons-png.flaticon.com/512/330/330490.png" width="20" height="20"
                         alt="French flag" />Français</a></li>
-            <li><a class="dropdown-item lang-select lang_capitalize d-flex align-items-center gap-2" data-lang="zh-CN" href="#googtrans(vi|zh-CN)"><img
+            <li><a class="dropdown-item lang-select lang_capitalize d-flex align-items-center gap-2 notranslate" data-lang="zh-CN" href="#googtrans(vi|zh-CN)"><img
                         src="https://cdn-icons-png.flaticon.com/512/197/197375.png" width="20" height="20"
                         alt="Chinese flag" />简体中文</a></li>
-            <li><a class="dropdown-item lang-select lang_capitalize d-flex align-items-center gap-2" data-lang="ja" href="#googtrans(vi|ja)"><img
+            <li><a class="dropdown-item lang-select lang_capitalize d-flex align-items-center gap-2 notranslate" data-lang="ja" href="#googtrans(vi|ja)"><img
                         src="https://cdn-icons-png.flaticon.com/512/555/555646.png" width="20" height="20"
                         alt="Japanese flag" />日本語</a></li>
         </ul>
@@ -101,19 +101,19 @@
             for (const button of langButtons) {
               switch (selectedLangHref) {
                 case '#googtrans(vi|vi)':
-                    $(button).html('<img src="https://cdn-icons-png.flaticon.com/512/197/197473.png" width="20" height="20" alt="Vietnamese flag"/>VN');
+                    $(button).html('<img src="https://cdn-icons-png.flaticon.com/512/197/197473.png" width="20" height="20" alt="Vietnamese flag"/><span class="notranslate">VN</span>');
                     break;
                 case '#googtrans(vi|en)':
-                    $(button).html('<img src="https://img.icons8.com/?size=256&id=t3NE3BsOAQwq&format=png" width="20" height="20" alt="Great Britain flag"/>EN');
+                    $(button).html('<img src="https://img.icons8.com/?size=256&id=t3NE3BsOAQwq&format=png" width="20" height="20" alt="Great Britain flag"/><span class="notranslate">EN</span>');
                     break;
                 case '#googtrans(vi|fr)':
-                    $(button).html('<img src="https://cdn-icons-png.flaticon.com/512/330/330490.png" width="20" height="20" alt="French flag"/>FR');
+                    $(button).html('<img src="https://cdn-icons-png.flaticon.com/512/330/330490.png" width="20" height="20" alt="French flag"/><span class="notranslate">FR</span>');
                     break;
                 case '#googtrans(vi|zh-CN)':
-                    $(button).html('<img src="https://cdn-icons-png.flaticon.com/512/197/197375.png" width="20" height="20" alt="Chinese flag"/>zh-CN');
+                    $(button).html('<img src="https://cdn-icons-png.flaticon.com/512/197/197375.png" width="20" height="20" alt="Chinese flag"/><span class="notranslate">zh-CN</span>');
                     break;
                 case '#googtrans(vi|ja)':
-                    $(button).html('<img src="https://cdn-icons-png.flaticon.com/512/555/555646.png" width="20" height="20" alt="Japanese flag"/>JP');
+                    $(button).html('<img src="https://cdn-icons-png.flaticon.com/512/555/555646.png" width="20" height="20" alt="Japanese flag"/><span class="notranslate">JP</span>');
                     break;
                 default:
                     checkAndSetLanguageFromCookie();
