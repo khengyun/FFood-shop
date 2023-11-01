@@ -1,4 +1,4 @@
-﻿USE [master]
+USE [master]
 GO
 
 /*******************************************************************************
@@ -179,7 +179,6 @@ GO
 create table [Order] (
 	order_id		int identity(1,1) not null primary key,
 	cart_id			int not null foreign key references Cart(cart_id),
-        staff_id		tinyint null foreign key references Staff(staff_id),
 	customer_id		int not null foreign key references Customer(customer_id),
 	order_status_id		tinyint not null foreign key references OrderStatus(order_status_id),
 	payment_method_id	tinyint not null foreign key references PaymentMethod(payment_method_id),
