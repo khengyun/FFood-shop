@@ -40,14 +40,24 @@
       </div>
       
       <!-- Carousel controls -->
-      <button class="carousel-control-prev carousel-icon" type="button" data-bs-target="#carouselFoodCategories" data-bs-slide="prev">
+      <button class="carousel-control-prev carousel-icon pb-7 d-none d-sm-block" style="left: -2em;" type="button" data-bs-target="#carouselFoodCategories" data-bs-slide="prev">
         <span class="carousel-control-prev-icon hover-top-shadow" aria-hidden="true"></span>
         <span class="visually-hidden">Các loại món trước</span>
       </button>
-      <button class="carousel-control-next carousel-icon" type="button" data-bs-target="#carouselFoodCategories" data-bs-slide="next">
+      <button class="carousel-control-next carousel-icon pb-7 d-none d-sm-block" style="right: -2em;" type="button" data-bs-target="#carouselFoodCategories" data-bs-slide="next">
         <span class="carousel-control-next-icon hover-top-shadow" aria-hidden="true"></span>
         <span class="visually-hidden">Các loại món sau</span>
       </button>
     </div>
   
 </div>
+<script>
+  // A carousel has to be initialized after the page is loaded for it to work properly
+  // https://getbootstrap.com/docs/5.3/components/carousel/#methods
+  $(document).ready(function() {
+    const carousel = new bootstrap.Carousel(document.querySelector('#carouselFoodCategories'), {
+      interval: 0,
+      ride: false
+    })
+  });
+</script>
