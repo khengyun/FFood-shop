@@ -690,6 +690,7 @@ body {
   font-size: 1rem;
   font-weight: 500;
   line-height: 1.5;
+  letter-spacing: -0.02rem;
   color: #424242;
   background-color: #FFFEFE;
   -webkit-text-size-adjust: 100%;
@@ -917,6 +918,8 @@ figure {
 img,
 svg {
   vertical-align: middle;
+  pointer-events: none;
+  user-select: none;
 }
 
 table {
