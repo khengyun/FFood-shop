@@ -24,7 +24,7 @@
                       </p>
                     </div> 
                     <div class="form-group d-flex flex-row-reverse justify-content-between align-items-center mt-4">
-                        <button type="submit" class="btn btn-primary btn-lg btn-block" id="btnSubmit" name="btnSubmit" value="Submit" onclick="validateForm()">Xác thực email</button>
+                        <button type="submit" class="btn btn-primary btn-block px-4" id="btnSubmit" name="btnSubmit" value="Submit" onclick="validateForm()">Xác nhận email</button>
                         <a href="https://mail.google.com/mail/u/0/#inbox" target="_blank" class="btn btn-outline-light fw-bolder link-primary">
                           Mở hộp thư email
                         </a>
