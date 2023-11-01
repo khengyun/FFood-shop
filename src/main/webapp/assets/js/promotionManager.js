@@ -52,3 +52,29 @@ $(document).on("click", "#btn-delete-voucher", function () {
     // Set the values to the hidden input in the modal
     modal.find("input[name='voucherData']").attr("value", voucherIds);
 });
+
+$(document).on("click", "#btn-update-food", function () {
+    let foodID = $(this).attr("data-food-id");
+    let foodType = $(this).attr("data-food-type");
+    let foodName = $(this).attr("data-food-name");
+    let foodDescription = $(this).attr("data-food-description");
+    let foodPrice = $(this).attr("data-food-price");
+    let foodStatus = $(this).attr("data-food-status");
+    let foodRate = $(this).attr("data-food-rate");
+    let discountPercent = $(this).attr("data-discount-percent");
+    let imageURL = $(this).attr("data-image-url");
+
+    // Set the values of the corresponding form inputs in the modal
+    let modal = $("#update-food-modal");
+    modal.find("input[name='txtFoodID']").attr("value", foodID);
+    modal.find("#txtFoodName").attr("value", foodName);
+    modal.find("#txtDiscountPercent").attr("value", discountPercent);
+    for (let i = 1; i < 7; i++) {
+        let foodTypes = {1: "Cơm", 2: "Mì", 3: "Bánh mì", 4: "Đồ ăn vặt", 5: "Tráng miệng", 6: "Đồ uống"};
+        if (foodType === foodTypes[i]) {
+            modal.find("#txtFoodTypeID option[value = " + i + "]").attr("selected", "selected");
+        } else {
+            modal.find("#txtFoodTypeID option[value = " + i + "]").removeAttr("selected");
+        }
+    }
+});

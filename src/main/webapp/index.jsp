@@ -15,16 +15,16 @@ Tien Thanh --%> <%@page contentType="text/html" pageEncoding="UTF-8"%>
     <script src="https://accounts.google.com/gsi/client" async></script>
   </head>
   <body>
-    <%@ include file="WEB-INF/jspf/common/components/header.jspf" %> <%@ include
-    file="WEB-INF/jspf/guest/components/cart.jspf" %> <%@ include
-    file="WEB-INF/jspf/guest/components/login.jspf" %> <%@ include
-    file="WEB-INF/jspf/guest/components/signup.jspf" %> <%@ include
-    file="WEB-INF/jspf/guest/components/forget.jspf" %> <%@ include
-    file="WEB-INF/jspf/guest/components/changePassword.jspf" %> <%@ include
-    file="WEB-INF/jspf/guest/components/verify.jspf" %> <%@ include
-    file="WEB-INF/jspf/guest/components/success.jspf" %> <%@ include
-    file="WEB-INF/jspf/guest/components/failure.jspf" %> <%@ include
-    file="WEB-INF/jspf/guest/components/camera.jspf" %>
+    <%@ include file="WEB-INF/jspf/common/components/header.jspf" %> 
+    <%@ include file="WEB-INF/jspf/guest/components/cart.jspf" %> 
+    <%@ include file="WEB-INF/jspf/guest/components/login.jspf" %> 
+    <%@ include file="WEB-INF/jspf/guest/components/signup.jspf" %> 
+    <%@ include file="WEB-INF/jspf/guest/components/forget.jspf" %> 
+    <%@ include file="WEB-INF/jspf/guest/components/changePassword.jspf" %> 
+    <%@ include file="WEB-INF/jspf/guest/components/verify.jspf" %> 
+    <%@ include file="WEB-INF/jspf/guest/components/success.jspf" %> 
+    <%@ include file="WEB-INF/jspf/guest/components/failure.jspf" %> 
+    <%@ include file="WEB-INF/jspf/guest/components/camera.jspf" %>
 
     <!-- Main Content -->
     <main class="main" id="top">
@@ -71,8 +71,8 @@ Tien Thanh --%> <%@page contentType="text/html" pageEncoding="UTF-8"%>
       <!-- Footer -->
       <%@ include file="WEB-INF/jspf/common/components/footer.jspf" %>
     </main>
-    <%@ include file="WEB-INF/jspf/common/imports/javascript.jspf" %> <%@
-    include file="WEB-INF/jspf/common/imports/validation.jspf" %>
+    <%@ include file="WEB-INF/jspf/common/imports/javascript.jspf" %> 
+    <%@ include file="WEB-INF/jspf/common/imports/validation.jspf" %>
     <script src="assets/js/home.js"></script>
     <script src="assets/js/userNotify.js"></script>
   </body>

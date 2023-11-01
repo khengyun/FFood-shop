@@ -17,10 +17,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author ADMIN
- */
 public class HomeController extends HttpServlet {
 
     /**

@@ -24,10 +24,37 @@
                       </p>
                     </div> 
                     <div class="form-group d-flex flex-row-reverse justify-content-between align-items-center mt-4">
-                        <button type="submit" class="btn btn-primary btn-lg btn-block" id="btnSubmit" name="btnSubmit" value="Submit">Xác thực email</button>
+                        <button type="submit" class="btn btn-primary btn-lg btn-block" id="btnSubmit" name="btnSubmit" value="Submit" onclick="validateForm()">Xác thực email</button>
                         <a href="https://mail.google.com/mail/u/0/#inbox" target="_blank" class="btn btn-outline-light fw-bolder link-primary">
                           Mở hộp thư email
                         </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Check Voucher-->
+<div class="modal" tabindex="-1" id="voucher-modal">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="d-flex col">
+                    <div class="flex-grow-1"></div>
+                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>                
+                </div>
+                <form class="form mx-2 p-2 mx-md-4 p-md-4 mb-4" id="voucher-form" method="post" action="/checkout">
+                    <h1 class="text-center mb-2 mb-md-4">Nhập mã giảm giá</h1>
+                    <div class="form-group col pb-4">
+                        <div class="">
+                            <input type="text" class="form-control" id="voucherCode" name="voucherCode" placeholder="Nhập mã giảm giá" required>
+                            <div class="lblError" id="lblErrorName"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row px-3">
+                        <button type="submit" class="btn btn-primary btn-lg btn-block" id="btnSubmit" name="btnSubmit" value="SubmitVoucher" onclick="validateForm()">Xác nhận</button>
                     </div>
                 </form>
             </div>
