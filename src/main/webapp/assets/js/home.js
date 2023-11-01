@@ -36,6 +36,16 @@ $(document).on("click", ".btn-categories", function () {
       return aId.localeCompare(bId);
     });
 
+    // Find the img of the clicked button, and set its border to indicate the chosen category
+    let img = $(this).find("img");
+    img.addClass("border-4 border-primary shadow");
+
+    // Find the img of the previous button, and remove its border
+    if (prevCategoryID !== null) {
+      let prevImg = $(".btn-categories[data-food-type-id=" + prevCategoryID + "]").find("img");
+      prevImg.removeClass("border-4 border-primary shadow");
+    }
+
     // Store the id of the clicked button
     prevCategoryID = categoryID;
 
@@ -52,6 +62,13 @@ $(document).on("click", ".btn-categories", function () {
   } else {
     // In the case of the same button, the list restored to its original state (not sorted)
     sorted = null;
+
+    // Find the img of the previous button, and remove its border
+    if (prevCategoryID !== null) {
+      let prevImg = $(".btn-categories[data-food-type-id=" + prevCategoryID + "]").find("img");
+      prevImg.removeClass("border-4 border-primary shadow");
+    }
+    
     prevCategoryID = null; // Remove the id of the previous button
 
     // Restore the original list
@@ -118,8 +135,11 @@ function showInitialFoodItems() {
 
 // Add event listener to the "Xem thêm" button
 showMoreButton.addEventListener("click", function () {
+  // Stores the number of items shown before the click
+  let itemsShownBeforeClick = itemsShown;
+  
   // Show the next 12 items
-  for (let i = itemsShown; i < itemsShown + itemsToShow; i++) {
+  for (let i = itemsShown; i < itemsShownBeforeClick + itemsToShow; i++) {
     if (i < foodItems.length) {
       foodItems[i].classList.remove("d-none");
       itemsShown++;
@@ -148,7 +168,8 @@ function searchFoodByKeyword() {
   for (let i = 0; i < foodList.length; i++) {
     let foodName = foodList[i]
       .querySelector(".card-title")
-      .textContent.toLowerCase();
+      .textContent.toLowerCase()
+      .normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Remove accents and tones
     let foodContainer = foodList[i];
 
     // Check if the search term is empty
@@ -164,4 +185,16 @@ function searchFoodByKeyword() {
     }
   }
   showInitialFoodItems();
+
+  // Because searching ignores selected food categories, we need to reset the selected category
+  // Find the img of the previous button, and remove its border
+  if (prevCategoryID !== null) {
+    let prevImg = $(".btn-categories[data-food-type-id=" + prevCategoryID + "]").find("img");
+    prevImg.removeClass("border-4 border-primary shadow");
+  }
+  
+  prevCategoryID = null; // Remove the id of the previous button
+
+  // Scroll to the food list section of the page
+  document.getElementById("food-list").scrollIntoView();
 }

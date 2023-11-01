@@ -1,4 +1,4 @@
-﻿USE [master]
+USE [master]
 GO
 
 /*******************************************************************************
@@ -177,17 +177,17 @@ create table PaymentMethod (
 GO
 
 create table [Order] (
-	order_id			int identity(1,1) not null primary key,
-	cart_id				int not null foreign key references Cart(cart_id),
-	customer_id			int not null foreign key references Customer(customer_id),
+	order_id		int identity(1,1) not null primary key,
+	cart_id			int not null foreign key references Cart(cart_id),
+	customer_id		int not null foreign key references Customer(customer_id),
 	order_status_id		tinyint not null foreign key references OrderStatus(order_status_id),
 	payment_method_id	tinyint not null foreign key references PaymentMethod(payment_method_id),
-	voucher_id			tinyint null foreign key references Voucher(voucher_id),
+	voucher_id		tinyint null foreign key references Voucher(voucher_id),
 	contact_phone		varchar(11) not null,
 	delivery_address	nvarchar(500) not null,
-	order_time			datetime not null,
-	order_total			money not null,
-	order_note			nvarchar(1023) null,
+	order_time		datetime not null,
+	order_total		money not null,
+	order_note		nvarchar(1023) null,
 	delivery_time		datetime null,
 	order_cancel_time	datetime null
 );
@@ -332,74 +332,309 @@ dbcc checkident (Account, RESEED, 200);
 insert into Account (customer_id, account_username, account_email, account_password, account_type) values (1, N'quocanh123', N'anhnq1130@gmail.com', CONVERT(NVARCHAR(32), HashBytes('MD5', '123456'), 2), 'user');
 
 -- Insert Food Types
-insert into FoodType (food_type) values (N'Cơm');
-insert into FoodType (food_type) values (N'Mì');
-insert into FoodType (food_type) values (N'Bánh mì');
-insert into FoodType (food_type) values (N'Đồ ăn vặt');
-insert into FoodType (food_type) values (N'Tráng miệng');
+insert into FoodType (food_type) values (N'Mì và Bún');
+insert into FoodType (food_type) values (N'Bánh và Bánh Mì');
+insert into FoodType (food_type) values (N'Hải Sản');
+insert into FoodType (food_type) values (N'Món Ăn Truyền Thống');
+insert into FoodType (food_type) values (N'Món Ăn Châu Á');
+insert into FoodType (food_type) values (N'Món Thịt');
+insert into FoodType (food_type) values (N'Món ăn nhanh');
+insert into FoodType (food_type) values (N'Món ăn nhẹ');
+insert into FoodType (food_type) values (N'Món Tráng Miệng');
 insert into FoodType (food_type) values (N'Đồ uống');
 
 -- Ensure food_id starts from 1
 dbcc checkident (Food, RESEED, 0);
--- Rice
-insert into Food (food_type_id, food_name, food_description ,food_price, food_status, food_rate, discount_percent, food_img_url) 
-values (1, N'Cơm sườn bì chả',N'Cơm Sườn Bì Chả thường được phục vụ trong một tô hoặc trên một dĩa, với một lượng lớn cơm nguội ở dưới cùng. Thịt sườn nướng, lớp bì xé và lớp chả được sắp xếp một cách tinh tế. Món ăn được trang trí với các loại rau mầm và rau cải tươi ngon, tạo nên sự tương phản màu sắc rất hấp dẫn. Cuối cùng, món ăn được trang trí bằng nước chấm ngon mắt, kết hợp hoàn hảo hương vị của từng thành phần.' , 40000, 1, 5, 0, 'https://drive.google.com/uc?id=171ufFckFyj9GjpMkXowmoQTw6ZcEkjSp');
-insert into Food (food_type_id, food_name, food_description ,food_price, food_status, food_rate, discount_percent, food_img_url) 
-values (1, N'Cơm gà xối mỡ',N'Cơm Gà Xối Mỡ là một món ăn phổ biến trong ẩm thực Việt Nam. Món ăn này bao gồm cơm nóng hổi được trải đều trên đĩa, phủ lên trên là lớp gà chiên giòn và thơm béo. Gà được chiên đến khi vỏ giòn và màu vàng óng ả, tạo ra một hương vị đặc trưng và hấp dẫn. Cơm Gà Xối Mỡ thường được kèm theo các loại rau sống như dưa chuột, cà chua, và rau mầm, cùng với nước sốt mắc khén thơm ngon.', 55000, 1, 4,20, 'https://drive.google.com/uc?id=1THlEKsaHjx_CgYpq-2O7gKXONdF1dAgZ');
-insert into Food (food_type_id, food_name, food_description, food_price, food_status, food_rate, discount_percent, food_img_url) 
-values (1, N'Cơm chiên dương châu', N'Cơm Chiên Dương Châu là một món ăn tuyệt vời với hương vị độc đáo và hấp dẫn. Cơm chiên được chế biến cùng với hải sản như tôm, mực và cá, kết hợp với các loại rau cải tươi ngon. Món ăn này thường được chế biến trên lửa lớn để tạo ra lớp cơm giòn và thơm béo, tạo nên hương vị đặc trưng của ẩm thực Đông Á.', 30000, 1, 5, 10, 'https://drive.google.com/uc?id=1NxzB2r6hV1UXX_uMFIdRU8pb8UYtB8dw');
-insert into Food (food_type_id, food_name, food_description, food_price, food_status, food_rate, discount_percent, food_img_url) 
-values (1, N'Cơm bò lúc lắc', N'Cơm Bò Lúc Lắc là một món ăn phổ biến trong ẩm thực Việt Nam. Món ăn này bao gồm cơm nóng hổi được kết hợp với thịt bò xào nhanh trên lửa lớn, tạo ra lớp thịt bò giòn và thơm ngon. Thịt bò thường được chiên chín với các loại gia vị, tỏi và ớt, tạo nên hương vị đặc trưng. Món ăn thường được phục vụ kèm theo salad rau sống và nước sốt mắc khén.', 45000, 1,4, 0, 'https://drive.google.com/uc?id=1P-9QLh8MPKJmB9GEctJbYSZrlkXjCWqu');
+-- Noodle
+insert into Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+values (1, N'Phở', 40000, 1, 5, 0, 'https://www.allrecipes.com/thmb/SZjdgaXhmkrRNLoOvdxuAktwk3E=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/228443-authentic-pho-DDMFS-4x3-0523f6531ccf4dbeb4b5bde52e007b1e.jpg');
+insert into Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+values (1, N'Bún bò Huế', 50000, 1, 5, 5, 'https://th.bing.com/th/id/OIP.SXfegdkWCvC_Hbc3A4eW4wHaE7?pid=ImgDet&rs=1');
+insert into Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+values (1, N'Bún đậu mắm tôm', 45000, 1, 5, 0, 'https://img-global.cpcdn.com/recipes/2c630c584ca9709c/751x532cq70/bun-d%E1%BA%ADu-m%E1%BA%AFm-tom-recipe-main-photo.jpg');
+insert into Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+values (1, N'Bún mắm', 40000, 1, 5, 30, 'https://th.bing.com/th/id/OIP.3p7EKLDnu_dS3comDM40oQHaE0?pid=ImgDet&rs=1');
+insert into Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+values (1, N'Bún riêu', 40000, 1, 5, 0, 'https://th.bing.com/th/id/R.e41d43c5534281e211ae9a708a2b5517?rik=eec%2bt0%2fAUqttcQ&riu=http%3a%2f%2fseonkyounglongest.com%2fwp-content%2fuploads%2f2018%2f06%2fBun-Rieu-07.jpg&ehk=0iemq%2bdo28ouF67dFC5dFQTUvo%2biGdgK7hx4tsn%2bv%2bc%3d&risl=&pid=ImgRaw&r=0');
+insert into Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+values (1, N'Bún thịt nướng', 35000, 1, 5, 0, 'https://th.bing.com/th/id/R.dd5289abf81592cb720dedc3bf6a598a?rik=L6zDZI0S1g2QyA&pid=ImgRaw&r=0');
+insert into Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+values (1, N'Mì quảng', 50000, 1, 5, 0, 'https://beptruong.edu.vn/wp-content/uploads/2022/10/mi-quang-chay-voi-vi-thanh-dam.jpg');
+insert into Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+values (1, N'Ramen', 63000, 1, 5, 0, 'https://www.justonecookbook.com/wp-content/uploads/2023/04/Spicy-Shoyu-Ramen-8055-I.jpg');
+insert into Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+values (1, N'Hủ Tiếu', 37000, 1, 5, 0, 'https://vcdn1-giadinh.vnecdn.net/2023/05/15/Bc8Thnhphm18-1684125639-9811-1684125654.jpg?w=1200&h=0&q=100&dpr=1&fit=crop&s=i0OuvKxyIvG-1BRluganjQ');
+insert into Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+values (1, N'Ravioli', 30000, 1, 5, 15, 'https://cdn11.bigcommerce.com/s-cjh14ahqln/product_images/uploaded_images/cheese-ravioli-2-web.jpg');
+insert into Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+values (1, N'Spaghetti Bolognese', 58000, 1, 5, 15, 'https://supervalu.ie/image/var/files/real-food/recipes/Uploaded-2020/spaghetti-bolognese-recipe.jpg');
+insert into Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+values (1, N'Spaghetti Carbonara', 60000, 1, 5, 0, 'https://static01.nyt.com/images/2021/02/14/dining/carbonara-horizontal/carbonara-horizontal-threeByTwoMediumAt2X-v2.jpg');
 
--- Noodles
-insert into Food (food_type_id, food_name, food_description, food_price, food_status, food_rate, discount_percent, food_img_url) 
-values (2, N'Mì xào hải sản', N'Mì Xào Hải Sản thường được chế biến từ mì dai, ngon mắt, kết hợp với hải sản như tôm, mực, cá và các loại rau sống giòn tươi. Món ăn này thường được xào nhanh trên lửa lớn với các loại gia vị để tạo nên hương vị đậm đà và hấp dẫn.', 60000, 1,4, 15, 'https://drive.google.com/uc?id=1b2lndY7jUDPgwV1dMXpx9hAVQZQebvqS');
-insert into Food (food_type_id, food_name, food_description, food_price, food_status, food_rate, discount_percent, food_img_url) 
-values (2, N'Mì xào bò', N'Mì Xào Bò là một món ăn ngon và nhanh gọn, chế biến từ thịt bò mềm ngon và các loại rau cải tươi ngon. Món ăn này thường được xào nhanh với lửa lớn để giữ được độ giòn của rau và vị thơm của thịt.', 55000, 1,5, 0, 'https://drive.google.com/uc?id=16blYSeX0hkvED0Fb1dBdSKIVwRzB6_dN');
-insert into Food (food_type_id, food_name, food_description, food_price, food_status, food_rate, discount_percent, food_img_url) 
-values (2, N'Mì tương đen', N'Mì Tương Đen là một món ăn phổ biến, chế biến từ mì dai và ngon miệng, kết hợp với tương đen, thịt heo hoặc thịt bò, và các loại rau sống. Món ăn này có hương vị đặc trưng của tương đen và vị ngon của thịt.', 45000, 1,5, 0, 'https://drive.google.com/uc?id=1u87tcdwWV0-5sYn6RPN208VTZv56UB3u');
-insert into Food (food_type_id, food_name, food_description, food_price, food_status, food_rate, discount_percent, food_img_url) 
-values (2, N'Mì quảng', N'Mì Quảng là một món ăn truyền thống của người Việt Nam, với hương vị đặc trưng và đa dạng. Mì mềm thơm, kết hợp với các loại thịt như thịt bò, thịt heo, tôm, mực và các loại rau sống giòn ngon, tạo nên một hương vị độc đáo và hấp dẫn.', 40000, 1,3, 0, 'https://drive.google.com/uc?id=1gB9FPTZ2hurV4cSZDEvpeQTffGFdGz4g');
+-- Banh - Banh Mi
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (2, N'Bánh bèo', 25000, 1, 5, 10, 'https://static.vinwonders.com/production/banh-beo-nha-trang-1.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (2, N'Bánh bột lọc', 25000, 1, 5, 0, 'https://th.bing.com/th/id/OIP.1W7a0ykWZ0Sk8ohsGHZk0QHaE8?pid=ImgDet&rs=1');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (2, N'Bánh căn', 35000, 1, 5, 0, 'https://cdn.vatgia.com/pictures/thumb/0x0/2021/03/1616756570-lwn.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (2, N'Bánh canh', 34000, 1, 5, 0, 'https://statics.vinpearl.com/banh-canh-10_1631867919.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (2, N'Bánh chưng', 40000, 1, 5, 0, 'https://www.cet.edu.vn/wp-content/uploads/2020/01/banh-chung.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (2, N'Bánh cuốn', 20000, 1, 5, 0, 'https://i.ytimg.com/vi/vR18wfdLtJE/maxresdefault.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (2, N'Bánh đúc', 34000, 1, 5, 0, 'https://i.ytimg.com/vi/-he2nZsGghA/maxresdefault.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (2, N'Bánh giò', 38000, 1, 5, 0, 'https://th.bing.com/th/id/R.b63b36f87a42ca49b9c3cf9cdbb98dd6?rik=W7iOEdgJi7vMhA&pid=ImgRaw&r=0');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (2, N'Bánh khọt', 40000, 1, 5, 0, 'https://th.bing.com/th/id/R.3710363219d01194ae36bb770a07ad3f?rik=L2f9%2bVTEPN9j9w&riu=http%3a%2f%2ffoodisafourletterword.com%2fwp-content%2fuploads%2f2020%2f12%2fVietnamese_Crispy_Savory_Shrimp_Pancakes_Recipe_Banh_Khot_top.jpg&ehk=XCD8GsPPzpMrhvD6HySuocNVMJ4fXCObJXtrs7Bde0c%3d&risl=&pid=ImgRaw&r=0');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (2, N'Bánh mì', 20000, 1, 5, 0, 'https://th.bing.com/th/id/R.9bd3f3d87a4571fe7a6300f26941058b?rik=ZmuwBpVNPPYIwQ&pid=ImgRaw&r=0');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (2, N'Bánh pía', 60000, 1, 5, 0, 'https://media.urbanistnetwork.com/saigoneer/article-images/2018/09/Sep17/lapia/BanhPia1b.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (2, N'Bánh tét', 66000, 1, 5, 0, 'https://img4.thuthuatphanmem.vn/uploads/2019/12/16/anh-dep-nhat-ve-banh-chung-truyen-thong-cua-nguoi-dan-toc_023616788.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (2, N'Bánh tráng nướng', 15000, 1, 5, 0, 'https://bizweb.dktcdn.net/100/393/897/files/banh-trang-nuong-bao-nhieu-calo.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (2, N'Bánh xèo', 30000, 1, 5, 0, 'https://th.bing.com/th/id/R.517c2ff96732c3950f8e95a673c01f09?rik=%2fqn6R%2fZgswIjyg&pid=ImgRaw&r=0');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (2, N'Carrot Cake', 48000, 1, 5, 0, 'https://images.squarespace-cdn.com/content/v1/5d7a597d2459d4207ae1a00a/1575826400580-43ATBE70CA4J66XS53T7/carrot_cake-3.jpg?format=1000w');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (2, N'French Toast', 45000, 1, 5, 0, 'https://www.simplyrecipes.com/thmb/b48moNCTtaUYEc1Qyxhe9V66XKc=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Simply-Recipes-French-Toast-Lead-Shot-3b-c3a68a576a9548f5bd43cce3d2d7f4b7.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (2, N'Garlic Bread', 58000, 1, 5, 0, 'https://www.sorrentina.in/cdn/shop/articles/Garlic_Bread.webp?v=1684226216');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (2, N'Lasagna', 45000, 1, 5, 0, 'https://static01.nyt.com/images/2023/08/31/multimedia/RS-Lasagna-hkjl/RS-Lasagna-hkjl-superJumbo.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (2, N'Pancakes', 40000, 1, 5, 0, 'https://www.allrecipes.com/thmb/WqWggh6NwG-r8PoeA3OfW908FUY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/21014-Good-old-Fashioned-Pancakes-mfs_001-1fa26bcdedc345f182537d95b6cf92d8.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (2, N'Panna Cotta', 25000, 1, 5, 0, 'https://biancazapatka.com/wp-content/uploads/2022/12/panna-cotta-720x1008.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (2, N'Red Velvet Cake', 44000, 1, 5, 0, 'https://www.allrecipes.com/thmb/gDJ1S6ETLfWGyyWw_4A_IGhvDYE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/9295_red-velvet-cake_ddmfs_4x3_1129-a8ab17b825e3464a9a53ceeda54ff461.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (2, N'Strawberry Shortcake', 70000, 1, 5, 0, 'https://i8b2m3d9.stackpathcdn.com/wp-content/uploads/2020/08/Strawberry_Shortcake_5140sq.jpg');
 
--- Banh mi
-insert into Food (food_type_id, food_name, food_description, food_price, food_status, food_rate, discount_percent, food_img_url) 
-values (3, N'Bánh mì chả cá', N'Bánh Mì Chả Cá là một món ăn đường phố phổ biến tại Việt Nam. Bánh mì mềm mại và giòn tan được chế biến từ chả cá tươi ngon, kết hợp với các loại rau sống và nước mắc khén, tạo nên hương vị độc đáo và hấp dẫn.', 20000, 1,5, 0, 'https://drive.google.com/uc?id=1KVJXVXir51PjPQu9ZQlyuiQbQrlwKS5D');
-insert into Food (food_type_id, food_name, food_description, food_price, food_status, food_rate, discount_percent, food_img_url) 
-values (3, N'Bánh mì thịt nguội', N'Bánh Mì Thịt Người là một món ăn truyền thống của Việt Nam. Bánh mì mềm mại và thơm ngon được kết hợp với các loại thịt nguội, các loại rau sống và nước sốt, tạo nên một hương vị đặc trưng và hấp dẫn.', 18000, 1,4, 0, 'https://drive.google.com/uc?id=1RKM-vmALRleJKjg6w2CPNLearOgFdxyy');
-insert into Food (food_type_id, food_name, food_description, food_price, food_status, food_rate, discount_percent, food_img_url) 
-values (3, N'Bánh mì heo quay', N'Bánh Mì Heo Quay là một món ăn ngon và phổ biến tại Việt Nam. Bánh mì giòn tan được kết hợp với lớp thịt heo quay giòn và thơm ngon, kèm theo các loại rau sống và nước sốt mắc khén, tạo nên một trải nghiệm ẩm thực tuyệt vời.', 25000, 1,5, 0, 'https://drive.google.com/uc?id=1Bd-goOKWwQNjc6M3e6vliZnFSHV4uwlQ');
-insert into Food (food_type_id, food_name, food_description, food_price, food_status, food_rate, discount_percent, food_img_url) 
-values (3, N'Bánh mì xíu mại', N'Bánh Mì Xíu Mại là một món ăn đường phố hấp dẫn của Việt Nam. Bánh mì mềm mại chứa bên trong những viên xíu mại thơm ngon, kết hợp với các loại rau sống và nước sốt, tạo nên một hương vị truyền thống và thú vị.', 35000, 1,5, 50, 'https://drive.google.com/uc?id=1Fgt8Gv9xFnSYl1m-EYgzqj7JPvqM9Tda');
+-- Sea Food
+-- Chèn các món ăn vào cơ sở dữ liệu với giá ngẫu nhiên tương ứng với thị trường ở Việt Nam
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (3, N'Cá kho tộ', 80000, 1, 5, 0, 'https://bepmina.vn/wp-content/uploads/2023/07/cach-lam-ca-ba-sa-kho-to.jpeg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (3, N'Sashimi', 120000, 1, 5, 0, 'https://images.immediate.co.uk/production/volatile/sites/30/2020/02/sashimi-c123df7.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (3, N'Scallops', 150000, 1, 5, 0, 'https://www.onceuponachef.com/images/2022/03/how-to-cook-scallops-2-scaled.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (3, N'Seaweed Salad', 50000, 1, 5, 0, 'https://valuemartgrocery.com/cdn/shop/products/Seaweed-Salad-Reshoot-6-scaledsquare_1024x1024.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (3, N'Shrimp and Grits', 90000, 1, 5, 0, 'https://www.bowlofdelicious.com/wp-content/uploads/2018/08/Easy-Classic-Shrimp-and-Grits-square.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (3, N'Lobster Bisque', 130000, 1, 5, 0, 'https://cafedelites.com/wp-content/uploads/2020/02/Lobster-Bisque-IMAGE-1jpg.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (3, N'Lobster Roll Sandwich', 140000, 1, 5, 0, 'https://www.eatingwell.com/thmb/ZrNy9pvrIiCo_PVC5G6EH-jlP28=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/lobster-roll-ck-226594-4x3-1-b3aea3b5cd3e46b6820e2ca6a5c7b310.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (3, N'Ceviche', 70000, 1, 5, 0, 'https://hips.hearstapps.com/hmg-prod/images/ceviche-index-64887642e188d.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (3, N'Crab Cakes', 100000, 1, 5, 0, 'https://hips.hearstapps.com/hmg-prod/images/crab-cakes-index-64e7cee7d4dda.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (3, N'Grilled Salmon', 110000, 1, 5, 0, 'https://www.acouplecooks.com/wp-content/uploads/2020/05/Grilled-Salmon-015-1.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (3, N'Mussels', 60000, 1, 5, 0, 'https://www.healthyseasonalrecipes.com/wp-content/uploads/2023/01/simple-steamed-mussels-with-garlic-sq-041.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (3, N'Oysters', 90000, 1, 5, 0, 'https://static.emerils.com/grilled%20oysters.jpeg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (3, N'Tuna Tartare', 120000, 1, 5, 0, 'https://pinchandswirl.com/wp-content/uploads/2022/12/Tuna-Tartare-sq.jpg');
 
--- Junk food
-insert into Food (food_type_id, food_name, food_description, food_price, food_status, food_rate, discount_percent, food_img_url) 
-values (4, N'Khoai tây chiên', N'Khoai Tây Chiên là một món ăn nhanh phổ biến được làm từ khoai tây cắt thành sợi mỏng và chiên giòn. Món ăn thường được phục vụ nóng hổi, giòn rụm, và thường được ăn kèm với sốt mayonnaise hoặc sốt ớt.', 15000, 1,4, 0, 'https://drive.google.com/uc?id=1xpFNpt7GRnW9-Z7i0oMJiHtP1_pXEe04');
-insert into Food (food_type_id, food_name, food_description, food_price, food_status, food_rate, discount_percent, food_img_url) 
-values (4, N'Mực chiên xù', N'Mực Chiên Xù là một món ăn biến thái được chế biến từ mực tươi ngon. Mực được phủ lớp bột chiên giòn và thơm phức, tạo nên một trải nghiệm ẩm thực độc đáo và ngon miệng.', 20000, 1,5, 0, 'https://drive.google.com/uc?id=1bH_-gCL1S4WZxQ_VjZZmtXBecUiVEqVb');
-insert into Food (food_type_id, food_name, food_description, food_price, food_status, food_rate, discount_percent, food_img_url) 
-values (4, N'Gà xiên que', N'Gà Xiên Que là một món ăn đường phố phổ biến. Miếng thịt gà được xiên lên que và chiên giòn. Món ăn thường được phục vụ nóng hổi và thường đi kèm với các loại sốt gia vị.', 18000, 1,4, 0, 'https://drive.google.com/uc?id=1Ty6y9P00G49E_zjsZC_rNaA_8uKUFoav');
-insert into Food (food_type_id, food_name, food_description, food_price, food_status, food_rate, discount_percent, food_img_url) 
-values (4, N'Xúc xích xiên que', N'Xúc Xích Xiên Que là một món ăn độc đáo và ngon miệng. Xúc xích được xiên lên que và chiên giòn. Món ăn thường được ăn kèm với các loại sốt gia vị và rau sống.', 15000, 1,5, 0, 'https://drive.google.com/uc?id=1jzKat34QrD7PtT-YsgeDYW5fpca8Xo34');
 
--- Desserts
-insert into Food (food_type_id, food_name, food_description, food_price, food_status, food_rate, discount_percent, food_img_url) 
-values (5, N'Bánh flan', N'Bánh Flan là một món tráng miệng ngon miệng được làm từ trứng, đường và sữa. Món ăn có vị ngọt, mềm mịn và thường được phục vụ với caramel đặc biệt ở phía trên.', 10000, 1,5, 0, 'https://drive.google.com/uc?id=1d4TVY2jIAtI8PWcu06_FtkP2YitNW0DD');
-insert into Food (food_type_id, food_name, food_description, food_price, food_status, food_rate, discount_percent, food_img_url) 
-values (5, N'Panna cotta', N'Panna Cotta là một món tráng miệng nguyên thủy xuất phát từ Italy. Món ăn này được làm từ sữa, đường và gelatin, tạo nên một kết cấu mềm mịn và mát lạnh. Panna Cotta thường được phục vụ với các loại sốt trái cây hoặc caramel.', 15000, 1,4, 0, 'https://drive.google.com/uc?id=1Is76NMoBErXptJ3dwYK-cKgDgnL0Mwki');
-insert into Food (food_type_id, food_name, food_description, food_price, food_status, food_rate, discount_percent, food_img_url)  
-values (5, N'Sữa chua dẻo', N'Sữa Chua Dẻo là một món tráng miệng phổ biến tại các quán ăn đường phố Việt Nam. Món ăn này được làm từ sữa chua, đường và gelatin, tạo nên một kết cấu mềm mịn và ngon miệng.', 15000, 1,5, 0, 'https://drive.google.com/uc?id=1ivbEwy1KgLkDV3NlUtALGU6vN0SQHEEG');
-insert into Food (food_type_id, food_name, food_description, food_price, food_status, food_rate, discount_percent, food_img_url) 
-values (5, N'Chè sen nhãn dừa', N'Chè Sen Nhãn Dừa là một món tráng miệng truyền thống của ẩm thực Việt Nam. Món ăn này bao gồm sen, nhãn và dừa tươi ngon, tạo nên hương vị ngọt ngào và mát lạnh. Món ăn thường được phục vụ với đá và thạch dừa.', 18000, 1,4, 10, 'https://drive.google.com/uc?id=1q7taf4uwKWJLrwttYUBeSuZLk98ytetm');
+-- Mon an truyen thong
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (4, N'Cao lầu', 55000, 1, 5, 0, 'https://img-global.cpcdn.com/recipes/2940d93145814c54/680x482cq70/cao-l%E1%BA%A7u-h%E1%BB%99i-an-fake-recipe-main-photo.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (4, N'Cháo lòng', 40000, 1, 5, 0, 'https://diadiemlongkhanh.cdn.vccloud.vn/static/images/2022/06/08/ee1023df-7261-4b67-b939-9aef34e0d33e-image.jpeg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (4, N'Com tấm', 30000, 1, 5, 0, 'https://i.ytimg.com/vi/6luZIIX5yCM/maxresdefault.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (4, N'Gỏi cuốn', 35000, 1, 5, 0, 'https://www.cet.edu.vn/wp-content/uploads/2018/11/goi-cuon-tom-thit.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (4, N'Nem chua', 25000, 1, 5, 0, 'https://statics.vinpearl.com/nem-chua-1_1628326267.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (4, N'Xôi xéo', 20000, 1, 5, 0, 'https://statics.vinpearl.com/xoi-xeo-01%20(2)_1632322118.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (4, N'Canh Chua', 35000, 1, 5, 0, 'https://i-giadinh.vnecdn.net/2023/04/25/Thanh-pham-1-1-7239-1682395675.jpg');
+
+
+-- Mon an chau a
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (5, N'Pad Thai', 60000, 1, 5, 0, 'https://static01.nyt.com/images/2022/03/23/dining/17padthairex1/merlin_203116326_32624565-ffae-482d-9a55-043cf31afb0b-mediumSquareAt3X.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (5, N'Takoyaki', 55000, 1, 5, 0, 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Takoyaki.jpg/640px-Takoyaki.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (5, N'Bibimbap', 65000, 1, 5, 0, 'https://upload.wikimedia.org/wikipedia/commons/4/44/Dolsot-bibimbap.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (5, N'Breakfast Burrito', 50000, 1, 5, 0, 'https://hips.hearstapps.com/hmg-prod/images/delish-breakfast-burrito-horizontaljpg-1541624805.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (5, N'Chicken Curry', 70000, 1, 5, 0, 'https://www.foodandwine.com/thmb/8YAIANQTZnGpVWj2XgY0dYH1V4I=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/spicy-chicken-curry-FT-RECIPE0321-58f84fdf7b484e7f86894203eb7834e7.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (5, N'Fried Rice', 48000, 1, 5, 0, 'https://www.seriouseats.com/thmb/BJjCEDw9OZe95hpZxmNcD3rJnHo=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/20230529-SEA-EggFriedRice-AmandaSuarez-hero-c8d95fbf69314b318bc279159f582882.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (5, N'Gyoza', 55000, 1, 5, 0, 'https://assets.epicurious.com/photos/628ba0d3fa016bab2139efa2/1:1/w_4546');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (5, N'Peking Duck', 90000, 1, 5, 0, 'https://cdn.i-scmp.com/sites/default/files/images/methode/2018/11/21/b681f60a-eca4-11e8-b0fe-c62dccd2d711_image_hires_192253.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (5, N'Samosa', 35000, 1, 5, 0, 'https://www.indianhealthyrecipes.com/wp-content/uploads/2021/12/samosa-recipe.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (5, N'Spring Rolls', 38000, 1, 5, 0, 'https://jackpurcellmeats.com.au/wp-content/uploads/2017/07/spring-rolls-01.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (5, N'Sushi', 70000, 1, 5, 0, 'https://media.post.rvohealth.io/wp-content/uploads/2021/09/sushi-sashimi-732x549-thumbnail-732x549.jpg');
+
+-- Mon Thit
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (6, N'Beef Carpaccio', 65000, 1, 5, 0, 'https://www.seriouseats.com/thmb/VgVaMsNZog6fWU79Ottu-iw3CLc=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/SEA-italian-easy-beef-carpaccio-recipe-hero-01-e4153bc58c19429085be0e525888a37a.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (6, N'Beef Tartare', 70000, 1, 5, 0, 'https://upload.wikimedia.org/wikipedia/commons/d/db/Classic_steak_tartare.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (6, N'Chicken Quesadilla', 48000, 1, 5, 0, 'https://hips.hearstapps.com/hmg-prod/images/chicken-quesadilla-index-64515c8e98e28.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (6, N'Chicken Wings', 55000, 1, 5, 0, 'https://images.immediate.co.uk/production/volatile/sites/30/2020/12/Air-Fryer-Chicken-Wings-d2c6fa4.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (6, N'Pork Chop', 60000, 1, 5, 0, 'https://hips.hearstapps.com/del.h-cdn.co/assets/18/11/1600x1200/sd-aspect-1520972774-pork-chops-horizontal.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (6, N'Prime Rib', 80000, 1, 5, 0, 'https://www.kingsford.com/wp-content/uploads/2023/05/PrimeRib-8_cc1_00000000_72-Desktop.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (6, N'Pulled Pork Sandwich', 55000, 1, 5, 0, 'https://www.simplyrecipes.com/thmb/xl-Bn-Y1HByU2ZfYZlaoHRVm0MQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Simply-Recipes-Pulled-Pork-Sandwich-Lead-3b_vertical-94ec18fb8f264514b09a408359f5d7e8.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (6, N'Steak', 70000, 1, 5, 0, 'https://www.skinnytaste.com/wp-content/uploads/2022/03/Air-Fryer-Steak-6.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (6, N'Baby Back Ribs', 75000, 1, 5, 0, 'https://www.southernliving.com/thmb/sQ3jAjFAP-SPt_upe-Im4rxMKrQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/oven-baked-baby-back-ribs-beauty-332_preview-34579f7f15ed4548ae3bb5b2048aab60.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (6, N'Filet Mignon', 90000, 1, 5, 0, 'https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2023/02/Filet-Mignon-main.jpg');
+
+-- Mon an nhanh
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (7, N'French Fries', 25000, 1, 5, 0, 'https://static.toiimg.com/thumb/54659021.cms?imgsize=275086&width=800&height=800');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (7, N'Hot Dog', 30000, 1, 5, 0, 'https://i.redd.it/uke6xn3ji5071.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (7, N'Nachos', 35000, 1, 5, 0, 'https://www.simplyrecipes.com/thmb/xTCx1mKCjjPYgGasys_JGafuem0=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__simply_recipes__uploads__2019__04__Nachos-LEAD-3-e6dd6cbb61474c9889e1524b3796601e.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (7, N'Pizza', 40000, 1, 5, 0, 'https://www.allrecipes.com/thmb/fFW1o307WSqFFYQ3-QXYVpnFj6E=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/48727-Mikes-homemade-pizza-DDMFS-beauty-4x3-BG-2974-a7a9842c14e34ca699f3b7d7143256cf.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (7, N'Dumplings', 35000, 1, 5, 0, 'https://www.bhg.com/thmb/eQgTJ-Bl7DUSNIVQvfntHP3ZVOM=/2000x0/filters:no_upscale():strip_icc()/bhg-pork-and-shitake-steamed-dumplings-FmOg5-5J4gv94CccQYTVph-0ef0a4a8987244759154f9e5e1b1819e.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (7, N'Fish and Chips', 45000, 1, 5, 0, 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Fish_and_chips_blackpool.jpg/800px-Fish_and_chips_blackpool.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (7, N'Fried Calamari', 38000, 1, 5, 0, 'https://www.seriouseats.com/thmb/RLHQFr_lp9-HTIWBikzVwu4M17s=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__serious_eats__seriouseats.com__2020__11__20201125-fried-calamari-vicky-wasik-10-9cee3a081e96476b89e29b331d30be61.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (7, N'Gnocchi', 32000, 1, 5, 0, 'https://www.marthastewart.com/thmb/AdbLwcdFLpcsvW1bah2OuLij55o=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/336461-gnocchi-with-tomato-sauce-hero-04-1fe29843b76a4f0ab2ebc226de2723a0.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (7, N'Hamburger', 30000, 1, 5, 0, 'https://www.washingtonpost.com/wp-apps/imrs.php?src=https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/M6HASPARCZHYNN4XTUYT7H6PTE.jpg&w=1440');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (7, N'Huevos Rancheros', 35000, 1, 5, 0, 'https://i0.wp.com/www.aspicyperspective.com/wp-content/uploads/2018/04/best-huevos-rancheros-recipe-25.jpg?resize=800%2C675&ssl=1');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (7, N'Tacos', 38000, 1, 5, 0, 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/001_Tacos_de_carnitas%2C_carne_asada_y_al_pastor.jpg/1200px-001_Tacos_de_carnitas%2C_carne_asada_y_al_pastor.jpg');
+
+-- Mon an nhe
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (8, N'Caprese Salad', 35000, 1, 5, 0, 'https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2019/07/Caprese-Salad-main-1.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (8, N'Greek Salad', 32000, 1, 5, 0, 'https://cdn.loveandlemons.com/wp-content/uploads/2019/07/greek-salad-2.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (8, N'Guacamole', 28000, 1, 5, 0, 'https://www.giallozafferano.com/images/255-25549/Guacamole_1200x800.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (8, N'Hummus', 25000, 1, 5, 0, 'https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2022/08/Hummus-main-1.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (8, N'Caesar Salad', 30000, 1, 5, 0, 'https://cdn.loveandlemons.com/wp-content/uploads/2019/12/caesar-salad-recipe.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (8, N'Risotto', 38000, 1, 5, 0, 'https://www.allrecipes.com/thmb/854efwMYEwilYjKr0FiF4FkwBvM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/85389-gourmet-mushroom-risotto-DDMFS-4x3-a8a80a8deb064c6a8f15452b808a0258.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (8, N'Omelette', 26000, 1, 5, 0, 'https://realfood.tesco.com/media/images/1400x919-Tesco-5For15-13273-RainbowOmelette-b3f0c3cc-2f15-40a7-98b1-07af0609f99e-0-1400x919.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (8, N'Onion Rings', 22000, 1, 5, 0, 'https://th.bing.com/th/id/OIG.tUsUxbWy2qtAgqLtbaxx?pid=ImgGn');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (8, N'Poutine', 25000, 1, 5, 0, 'https://www.seasonsandsuppers.ca/wp-content/uploads/2014/01/new-poutine-1.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (8, N'Club Sandwich', 35000, 1, 5, 0, 'https://www.foodandwine.com/thmb/tM060YA0Fd0UALCmPQ-5gGWyBqA=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Classic-Club-Sandwich-FT-RECIPE0523-99327c9c87214026b9419b949ee13a9c.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (8, N'Beet Salad', 28000, 1, 5, 0, 'https://cdn.loveandlemons.com/wp-content/uploads/2021/11/beet-salad-1.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (8, N'Cheese Plate', 32000, 1, 5, 0, 'https://www.barleyandsage.com/wp-content/uploads/2021/08/summer-cheeseboard-1200x1200-1.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (8, N'Clam Chowder', 26000, 1, 5, 0, 'https://s23209.pcdn.co/wp-content/uploads/2019/10/Easy-Clam-ChowderIMG_1064.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (8, N'Croque Madame', 32000, 1, 5, 0, 'https://hips.hearstapps.com/hmg-prod/images/190417-croque-monsieur-horizontal-476-1556565130.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (8, N'Edamame', 18000, 1, 5, 0, 'https://peasandcrayons.com/wp-content/uploads/2018/02/quick-easy-spicy-sambal-edamame-recipe-2.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (8, N'Eggs Benedict', 32000, 1, 5, 0, 'https://www.foodandwine.com/thmb/j6Ak6jECu0fdly1XFHsp4zZM8gQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Eggs-Benedict-FT-RECIPE0123-4f5f2f2544464dc89a667b5d960603b4.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (8, N'Foie Gras', 75000, 1, 5, 0, 'https://upload.wikimedia.org/wikipedia/commons/8/82/Foie_gras_en_cocotte.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (8, N'Grilled Cheese Sandwich', 25000, 1, 5, 0, 'https://static01.nyt.com/images/2023/02/28/multimedia/ep-air-fryer-grilled-cheese-vpmf/ep-air-fryer-grilled-cheese-vpmf-mediumSquareAt3X.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (8, N'Ice Cream', 15000, 1, 5, 0, 'https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aWNlX2NyZWFtfGVufDB8fDB8fHww&w=1000&q=80');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (8, N'Paella', 42000, 1, 5, 0, 'https://www.allrecipes.com/thmb/PdwNPwZiNXr9cw8W6WQacCl6i98=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/84137-easy-paella-DDMFS-4x3-08712e61e7dc453d94673f65f9eca7d2.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (8, N'Waffles', 18000, 1, 5, 0, 'https://www.allrecipes.com/thmb/imrP1HYi5pu7j1en1_TI-Kcnzt4=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/20513-classic-waffles-mfs-025-4x3-81c0f0ace44d480ca69dd5f2c949731a.jpg');
+
+-- Mon trang mieng
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (9, N'Apple Pie', 45000, 1, 5, 0, 'https://www.inspiredtaste.net/wp-content/uploads/2022/11/Apple-Pie-Recipe-Video.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (9, N'Baklava', 55000, 1, 5, 0, 'https://cleobuttera.com/wp-content/uploads/2018/03/lifted-baklava-720x540.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (9, N'Beignets', 40000, 1, 5, 0, 'https://hips.hearstapps.com/hmg-prod/images/beignets-1656591291.png');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (9, N'Bread Pudding', 38000, 1, 5, 0, 'https://www.livewellbakeoften.com/wp-content/uploads/2020/10/Bread-Pudding-10s-new.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (9, N'Cannoli', 50000, 1, 5, 0, 'https://i0.wp.com/memoriediangelina.com/wp-content/uploads/2023/01/Cannoli-2.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (9, N'Cheesecake', 48000, 1, 5, 0, 'https://www.allrecipes.com/thmb/DHosjm3NundSDP1q6wWEEECYwr8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/8419-easy-sour-cream-cheesecake-DDMFS-beauty-4x3-BG-2747-44b427d330aa41aa876269b1249698a0.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (9, N'Chocolate Cake', 46000, 1, 5, 0, 'https://ichef.bbci.co.uk/food/ic/food_16x9_832/recipes/easy_chocolate_cake_31070_16x9.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (9, N'Chocolate Mousse', 42000, 1, 5, 0, 'https://bakerbynature.com/wp-content/uploads/2023/08/Easy-Chocolate-Mousse-Baker-by-Nature-12617-1.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (9, N'Churros', 35000, 1, 5, 0, 'https://www.recipetineats.com/wp-content/uploads/2016/08/Churros_9-SQ.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (9, N'Creme Brulee', 48000, 1, 5, 0, 'https://bellyfull.net/wp-content/uploads/2023/05/Creme-Brulee-blog-1.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (9, N'Cupcakes', 40000, 1, 5, 0, 'https://www.bhg.com/thmb/iL-5Q6gGjmXkxCKqEovughTLQAo=/3000x0/filters:no_upscale():strip_icc()/how-to-bake-how-to-make-cupcakes-hero-01-12c03f3eff374d569b0565bff7d9e597.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (9, N'Donuts', 35000, 1, 5, 0, 'https://cdn.britannica.com/38/230838-050-D0173E79/doughnuts-donuts.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (9, N'Macarons', 42000, 1, 5, 0, 'https://www.southernliving.com/thmb/dnsycw_-mf35yKRkq3cBsThVzrY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Southern-Living_Macarons_025-0e05e0cd226d44609f55ed8bc9cd3a3e.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (9, N'Tiramisu', 49000, 1, 5, 0, 'https://static01.nyt.com/images/2017/04/05/dining/05COOKING-TIRAMISU1/05COOKING-TIRAMISU1-threeByTwoMediumAt2X-v2.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (9, N'Bruschetta', 35000, 1, 5, 0, 'https://www.cookingclassy.com/wp-content/uploads/2019/07/bruschetta-2.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (9, N'Deviled Eggs', 32000, 1, 5, 0, 'https://static01.nyt.com/images/2021/10/15/dining/aw-classic-deviled-eggs/aw-classic-deviled-eggs-articleLarge.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (9, N'Escargots', 55000, 1, 5, 0, 'https://legallyhealthyblonde.com/wp-content/uploads/2022/09/escargot-featured.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (9, N'Falafel', 38000, 1, 5, 0, 'https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2019/07/Falafel-7.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (9, N'French Onion Soup', 42000, 1, 5, 0, 'https://www.onceuponachef.com/images/2019/02/french-onion-soup-1.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (9, N'Frozen Yogurt', 30000, 1, 5, 0, 'https://th.bing.com/th/id/OIG.LFpbBY20Lcd.8a_h1B3J?pid=ImgGn');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (9, N'Hot and Sour Soup', 36000, 1, 5, 0, 'https://cookwithdana.com/wp-content/uploads/2021/11/IMG_2866-scaled.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (9, N'Macaroni and Cheese', 32000, 1, 5, 0, 'https://upload.wikimedia.org/wikipedia/commons/4/44/Original_Mac_n_Cheese_.jpg');
+INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
+VALUES (9, N'Miso Soup', 35000, 1, 5, 0, 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Miso_Soup_001.jpg/1200px-Miso_Soup_001.jpg');
 
 -- Drinks
 insert into Food (food_type_id, food_name, food_description, food_price, food_status, food_rate, discount_percent, food_img_url) 
-values (6, N'Coca-Cola (330ml)', N'Coca-Cola là một loại nước ngọt có ga phổ biến trên toàn thế giới. Với hương vị đặc trưng, ngọt ngào và sảy ngon, Coca-Cola thường được phục vụ lạnh và kèm theo đá.', 12000, 1,5, 0, 'https://drive.google.com/uc?id=14_GTRoOdBs5zuU4VwnzftPsqtdEeW1xP');
+values (10, N'Coca-Cola (330ml)', N'Coca-Cola là một loại nước ngọt có ga phổ biến trên toàn thế giới. Với hương vị đặc trưng, ngọt ngào và sảy ngon, Coca-Cola thường được phục vụ lạnh và kèm theo đá.', 12000, 1,5, 0, 'https://drive.google.com/uc?id=14_GTRoOdBs5zuU4VwnzftPsqtdEeW1xP');
 insert into Food (food_type_id, food_name, food_description, food_price, food_status, food_rate, discount_percent, food_img_url) 
-values (6, N'7 Up (330ml)', N'7 Up là một loại nước ngọt có ga với hương vị chanh mát lạnh. Được sản xuất từ các thành phần tự nhiên, 7 Up thường là lựa chọn tuyệt vời để giải khát trong những ngày nắng nóng.', 12000, 1,5, 0, 'https://drive.google.com/uc?id=1HxLmW1x2aNiZBmKYGps8hXksinGIl7rv');
+values (10, N'7 Up (330ml)', N'7 Up là một loại nước ngọt có ga với hương vị chanh mát lạnh. Được sản xuất từ các thành phần tự nhiên, 7 Up thường là lựa chọn tuyệt vời để giải khát trong những ngày nắng nóng.', 12000, 1,5, 0, 'https://drive.google.com/uc?id=1HxLmW1x2aNiZBmKYGps8hXksinGIl7rv');
 insert into Food (food_type_id, food_name, food_description, food_price, food_status, food_rate, discount_percent, food_img_url) 
-values (6, N'Trà đào', N'Trà Đào là một loại trà trái cây ngon mát, được làm từ trà đen pha chế cùng với hương vị tự nhiên và ngọt ngọt của đào. Một lựa chọn tuyệt vời để giải nhiệt và thư giãn trong ngày nắng nóng.', 20000, 1,4, 0, 'https://drive.google.com/uc?id=1RgBDS_wk1SmUfxMujGQSYMl-uOy8qob3');
+values (10, N'Trà đào', N'Trà Đào là một loại trà trái cây ngon mát, được làm từ trà đen pha chế cùng với hương vị tự nhiên và ngọt ngọt của đào. Một lựa chọn tuyệt vời để giải nhiệt và thư giãn trong ngày nắng nóng.', 20000, 1,4, 0, 'https://drive.google.com/uc?id=1RgBDS_wk1SmUfxMujGQSYMl-uOy8qob3');
 insert into Food (food_type_id, food_name, food_description, food_price, food_status, food_rate, discount_percent, food_img_url) 
-values (6, N'Trà chanh dây', N'Trà Chanh Dây là một loại trà trái cây tươi ngon, được làm từ trà xanh pha chế cùng với hương vị chua chua ngọt ngọt của chanh dây. Một lựa chọn sức khỏe và thưởng thức tuyệt vời cho mọi ngày.', 20000, 1,5, 0, 'https://drive.google.com/uc?id=1Cj22ZH1a79m9zz4oKmB-ZhMZuxd24qCx');
+values (10, N'Trà chanh dây', N'Trà Chanh Dây là một loại trà trái cây tươi ngon, được làm từ trà xanh pha chế cùng với hương vị chua chua ngọt ngọt của chanh dây. Một lựa chọn sức khỏe và thưởng thức tuyệt vời cho mọi ngày.', 20000, 1,5, 0, 'https://drive.google.com/uc?id=1Cj22ZH1a79m9zz4oKmB-ZhMZuxd24qCx');
 
 -- Payment methods
 insert into PaymentMethod (payment_method) values (N'Thẻ tín dụng');

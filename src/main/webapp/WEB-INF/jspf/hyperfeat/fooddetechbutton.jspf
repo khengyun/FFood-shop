@@ -3,16 +3,10 @@
 <button
   id="openCameraModal"
   type="button"
-  class="btn btn-primary"
+  class="btn bg-100 border border-400 border-start-0 d-flex align-items-center"
   data-bs-toggle="modal"
   data-bs-target="#cameraModal"
+  title="Tìm Môn bằng hình ảnh"
 >
-  <img
-    src="https://cdn-icons-png.flaticon.com/512/2956/2956596.png "
-    width="25"
-    height="25"
-    alt=""
-    title=""
-    class="img-small"
-  />
+  <i class="ph-fill ph-camera" style="font-size: 1.2rem"></i>
 </button>
