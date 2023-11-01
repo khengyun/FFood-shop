@@ -13,9 +13,10 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.ResultSet;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import com.google.gson.Gson;
 
 public class HomeController extends HttpServlet {
 
@@ -28,47 +29,6 @@ public class HomeController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        FoodDAO dao = new FoodDAO();
-        ResultSet rs = dao.getAll();
-        List<Food> foodList = new ArrayList<>();
-        try {
-            while (rs.next()) {
-                Food food = new Food(
-                        rs.getShort("food_id"),
-                        rs.getString("food_name"),
-                        rs.getString("food_description"),
-                        rs.getBigDecimal("food_price"),
-                        rs.getByte("food_status"),
-                        rs.getByte("food_rate"),
-                        rs.getByte("discount_percent"),
-                        rs.getString("food_img_url"),
-                        rs.getByte("food_type_id"),
-                        dao.getFoodType(rs.getByte("food_type_id")));
-                foodList.add(food);
-            }
-        } catch (Exception e) {
-        }
-        request.setAttribute("foodList", foodList);
-        request.getRequestDispatcher("index.jsp").forward(request, response);
-
-        FoodTypeDAO dao2 = new FoodTypeDAO();
-        ResultSet rs2 = dao2.getAllFoodType();
-        List<FoodType> foodTypeList = new ArrayList<>();
-        try {
-            while (rs.next()) {
-                FoodType foodType = new FoodType(rs2.getByte("foodTypeID"),
-                        rs2.getString("foodType"));
-                foodTypeList.add(foodType);
-            }
-        } catch (Exception e) {
-        }
-        request.setAttribute("foodTypeList", foodList);
-        request.getRequestDispatcher("index.jsp").forward(request, response);
-    }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -81,27 +41,17 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        FoodDAO dao = new FoodDAO();
-        ResultSet rs = dao.getAll();
+        // Set the JSON string in the session
+        HttpSession session = request.getSession();
+        Gson gson = new Gson();
+        FoodDAO foodDAO = new FoodDAO();
         List<Food> foodList = new ArrayList<>();
-        try {
-            while (rs.next()) {
-                Food food = new Food(
-                        rs.getShort("food_id"),
-                        rs.getString("food_name"),
-                        rs.getString("food_description"),
-                        rs.getBigDecimal("food_price"),
-                        rs.getByte("food_status"),
-                        rs.getByte("food_rate"),
-                        rs.getByte("discount_percent"),
-                        rs.getString("food_img_url"),
-                        rs.getByte("food_type_id"),
-                        dao.getFoodType(rs.getByte("food_type_id")));
-                foodList.add(food);
-            }
-        } catch (Exception e) {
-        }
-        request.setAttribute("foodList", foodList);
+        
+        foodList = foodDAO.getAllList();
+        String jsonFoodList = gson.toJson(foodList);
+        session.setAttribute("jsonFoodList", jsonFoodList);
+        
+        session.setAttribute("foodList", foodList);
 
         List<String> imgURLList = new ArrayList<>();
         String baseURL = "assets/img/gallery/";
@@ -110,18 +60,10 @@ public class HomeController extends HttpServlet {
           imgURLList.add(baseURL + i + ".jpg");
         }
 
-        FoodTypeDAO dao1 = new FoodTypeDAO();
-        ResultSet rs1 = dao1.getAllFoodType();
+        FoodTypeDAO foodTypeDAO = new FoodTypeDAO();
         List<FoodType> foodTypeList = new ArrayList<>();
-        try {
-            while (rs1.next()) {
-                FoodType foodType = new FoodType(rs1.getByte("food_type_id"),
-                        rs1.getString("food_type"));
-                foodTypeList.add(foodType);
-            }
-        } catch (Exception e) {
-        }
-        for (int i = 0; i < numOfImages; i++) {
+        foodTypeList = foodTypeDAO.getAllFoodType();
+        for (int i = 0; i < 10; i++) {
             foodTypeList.get(i).setImgURL(imgURLList.get(i));
         }
         request.setAttribute("foodTypeList", foodTypeList);
@@ -139,17 +81,6 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 
 }
