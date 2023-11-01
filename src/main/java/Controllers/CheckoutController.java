@@ -2,6 +2,14 @@
  */
 package Controllers;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+
 import DAOs.AccountDAO;
 import DAOs.CartDAO;
 import DAOs.CartItemDAO;
@@ -14,18 +22,11 @@ import Models.CartItem;
 import Models.Customer;
 import Models.Order;
 import Models.Voucher;
-import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class CheckoutController extends HttpServlet {
 
@@ -140,6 +141,8 @@ public class CheckoutController extends HttpServlet {
         String phone = request.getParameter("txtPhone");
         String address = request.getParameter("txtAddress");
         String note = request.getParameter("txtNote");
+        //  get payment method
+        String paymentMethod = request.getParameter("paymentMethod");
 
         // Trình tự đặt món: thêm Customer -> Cart -> tất cả Cartitem -> Order
         // Thêm Customer
@@ -247,13 +250,16 @@ public class CheckoutController extends HttpServlet {
         BigDecimal orderTotal = BigDecimal.valueOf(orderTotalDouble);
         order.setOrderTotal(orderTotal);
         result = orderdao.add(order);
-        if (result != 1) {
+        if (result == 1) {
+            // Xóa giỏ hàng từ session
+            session.removeAttribute("cart");
+            
+            // Điều hướng về trang "home" với tham số "orderid"
+            response.sendRedirect("/home?cis=" + customerID + "#success");
+        } else {
+            // Xử lý trường hợp không thêm đơn hàng thành công
             request.getRequestDispatcher("checkout.jsp").forward(request, response);
         }
-
-        session.removeAttribute("cart");
-        // Điều hướng về home sau khi add order thành công
-        response.sendRedirect("/home#success");
     }
 
     protected void doPostCheckout(HttpServletRequest request, HttpServletResponse response)
