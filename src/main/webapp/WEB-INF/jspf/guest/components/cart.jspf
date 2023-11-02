@@ -203,7 +203,7 @@
 
     // Restrict user input to reject non-numeric characters
     // except for navigation keys and backspace/delete
-    $('.quantity-input').on('keydown', (e) => {
+    $('#cart-modal .quantity-input').on('keydown', (e) => {
       let key = e.key;
       let isDigit = /^\d$/.test(key);
       let target = $(e.target);
@@ -229,7 +229,7 @@
     // Set the old quantity variable to the value of the input field (before the user types anything), 
     // so that this will be used to restore the original quantity in case
     // the new quantity is invalid
-    $('.quantity-input').on('focus', (e) => {
+    $('#cart-modal .quantity-input').on('focus', (e) => {
       const target = $(e.target);      
       oldQuantity = parseInt(target.val(), 10);
     })
@@ -237,7 +237,7 @@
     // Validates the user quantity input only when the user clicks outside of the input field
     // instead of immediately upon value change. Because we want the user to safely delete the old number
     // and input a new one without the price values going crazy
-    $('.quantity-input').on('blur', (e) => {
+    $('#cart-modal .quantity-input').on('blur', (e) => {
       // Get the parent table row of the input field
       const tableRow = event.target.closest("tr");
       const target = $(e.target);
@@ -365,7 +365,7 @@
       return localeParseFloat(str.replace(/[^0-9.]/g, ""));
     }
 
-    $(".input-group").on("click", ".button-plus", (e) => {
+    $("#cart-modal .input-group").on("click", ".button-plus", (e) => {
       let quantity = incrementValue(e);
       let target = $(e.target);
       let tableRow = target.closest("tr");
@@ -380,7 +380,7 @@
       updateTotalPrice();
     });
 
-    $(".input-group").on("click", ".button-minus", (e) => {
+    $("#cart-modal .input-group").on("click", ".button-minus", (e) => {
       let quantity = decrementValue(e);
       let target = $(e.target);
       let tableRow = target.closest("tr");
