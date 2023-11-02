@@ -10,13 +10,18 @@
           <div class="card border-0">
             <div class="row g-0">
               <!-- Food image -->
-              <div class="col-lg-6">
+              <div class="col-lg-6 position-relative">
                 <img src=""
                      id="food-image"
                      class="img-fluid w-100 vh-50"
-                     alt="..."
+                     alt="Placeholder image"
                      loading="lazy"
                      style="object-fit: cover; object-position: center;">
+                <button type="button"
+                        class="btn-close position-absolute d-flex d-lg-none bg-white fs-1 p-3"
+                        style="top: 2rem; right: 2rem;"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
               </div>
 
               <!-- Food details -->
@@ -27,7 +32,7 @@
                        class="d-flex align-items-center justify-content-between">
                     <h5 class="card-title fw-bolder fs-3 text-1000 mb-1">Tên món</h5>
                     <button type="button"
-                            class="btn-close"
+                            class="btn-close d-none d-lg-flex"
                             data-bs-dismiss="modal"
                             aria-label="Close"></button>
                   </div>
@@ -66,9 +71,12 @@
                   <div class="flex-grow-1"></div>
 
                   <!-- Quantity input -->
-                  <div class="d-flex flex-row flex-wrap mb-4 justify-content-between justify-content-lg-start gap-4 align-items-center">
-                    <label for="quantity" class="fs-1 fw-bold mb-0">Số lượng</label>
-                    <div class="d-flex input-group align-items-center notranslate" style="width: fit-content;">
+                  <div
+                       class="d-flex flex-row flex-wrap mb-4 justify-content-between justify-content-lg-start gap-4 align-items-center">
+                    <label for="quantity"
+                           class="fs-1 fw-bold mb-0">Số lượng</label>
+                    <div class="d-flex input-group align-items-center notranslate"
+                         style="width: fit-content;">
                       <input type="button"
                              value="-"
                              data-field="quantity"
@@ -160,7 +168,7 @@
 
       // Only set and show the original price and the discount value if the food is discounted
       if (discountPercent > 0) {
-        modal.find("#food-price-original s").html(foodPriceOriginal + " đ").removeClass("d-none");
+        modal.find("#food-price-original").html("<s>" + foodPriceOriginal + " đ</s>").removeClass("d-none");
         modal.find("#food-discount").text("Giảm " + discountPercent + "%").removeClass("d-none");
       } else {
         modal.find("#food-price-original").html("").addClass("d-none");
