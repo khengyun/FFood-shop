@@ -753,10 +753,19 @@ $(document).ready(function () {
         }
     }
     
+    function disableNextOrderBtn() {
+        let btnNext = $('#btn-next-order');
+        if (btnNext) {
+            btnNext.removeAttr("data-order-id");
+            btnNext.addClass("disabled");
+        }
+    }
+    
     orderTable.on('select selectItems deselect', function (e, dt, type, indexes) {
         if (type === 'row' && indexes && Array.isArray(indexes)) {
             let btnUpdate = $('#btn-update-order');
             let btnDelete = $('#btn-delete-order');
+            let btnNext = $('#btn-next-order');
 
             // Retrieves selected rows
             let data4 = orderTable.rows({selected: true}).data();
@@ -773,26 +782,37 @@ $(document).ready(function () {
                 btnUpdate.attr("data-order-note", data4[0][9]);
                 let total = data4[0][10]
                         .substring(0, data4[0][10].length - 1) // Removes currency symbol
-                        .replace(',', '') // Removes thousand separators
+                        .replace(',', ''); // Removes thousand separators
                 btnUpdate.attr("data-order-total", total);
-                btnUpdate.attr("data-order-status", data4[0][12]);
+                btnUpdate.attr("data-order-status", data4[0][11]);
                 btnUpdate.removeClass("disabled");
+
                 let orders = {};
-                orders[data4[0][0]] = data4[0][0]; 
+                
+                if (data4[0][11] != "Đã giao" && data4[0][11] != "Đã hủy"){
+                    orders[data4[0][0]] = data4[0][0]; 
+                }
                 btnDelete.attr("data-orders", JSON.stringify(orders));
+                btnNext.attr("data-orders", JSON.stringify(orders));
                 btnDelete.removeClass("disabled");
+                btnNext.removeClass("disabled");
             } else if (data4.length > 1) {
                 let orders = {};
                 for (let i = 0; i < data4.length; i++) {
-                    let orderId = data4[i][0];
-                    orders[orderId] = data4[i][0]; 
+                    if (data4[i][11] != "Đã giao" && data4[i][11] != "Đã hủy"){
+                        let orderId = data4[i][0];
+                        orders[orderId] = data4[i][0]; 
+                    }
                 }
                 btnDelete.attr("data-orders", JSON.stringify(orders));
+                btnNext.attr("data-orders", JSON.stringify(orders));
                 btnDelete.removeClass("disabled");
+                btnNext.removeClass("disabled");
                 disableUpdateOrderBtn();
             } else {
                 disableUpdateOrderBtn();
                 disableDeleteOrderBtn();
+                disableNextOrderBtn();
             }
         }
     });
