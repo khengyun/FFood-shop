@@ -145,6 +145,7 @@ async def payment_return(request: Request):
             # Gọi hàm insert_payment
             result = order_operations.insert_payment(order_id, vnp_Amount, vnp_TxnRef, vnp_BankCode)
             # Thực hiện xử lý kết quả (nếu cần) sau khi insert_payment
+
             
         except Exception as e:
             result = str(e)

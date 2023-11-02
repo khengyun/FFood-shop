@@ -87,7 +87,7 @@ class OrderOperations:
             values = (
                 order_id,  
                 1, 
-                vnp_Amount/100, 
+                int(vnp_Amount)/100, 
                 "Thanh toán đơn hàng ffood",  
                 vnp_BankCode, 
                 vnp_TxnRef, 
