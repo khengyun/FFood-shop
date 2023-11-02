@@ -50,7 +50,7 @@
                 <td> ${f.status eq 0 ? 'Hết' : 'Còn'}</td>
                 <td>${(f.discountPercent == null) ? 0 : f.discountPercent}%</td>
                 <td class="table-image-cell">
-                    <img src="${f.imageURL}" alt="${f.foodName}"/>
+                    <img src="${f.imageURL}" alt="${f.foodName}" loading="lazy" class="d-md-inline rounded shadow-sm me-3"/>
                 </td>
                 </tr>
             </c:forEach>
