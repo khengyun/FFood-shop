@@ -23,11 +23,11 @@
                     <div class="card-text mb-3">
                       <!-- Food price -->
                       <span class="text-secondary fw-bolder" style="font-size: 1.2rem">
-                        <fmt:formatNumber type="number" pattern="###,###" value="${food.foodPrice - (food.foodPrice * food.discountPercent / 100)}" />đ
+                        <fmt:formatNumber type="number" pattern="###,###" value="${food.foodPrice - (food.foodPrice * food.discountPercent / 100)}" /> đ
                       </span>
                       <c:if test="${food.discountPercent != 0}">
                           <span class="ms-1 text-600">
-                              <s><fmt:formatNumber type="number" pattern="###,###" value="${food.foodPrice}" />đ</s>
+                              <s><fmt:formatNumber type="number" pattern="###,###" value="${food.foodPrice}" /> đ</s>
                           </span>
                       </c:if>
 
@@ -46,7 +46,26 @@
                       </div>
                     </div>
                     <div class="flex-grow-1"></div>
-                    <button class="btn btn-lg btn-primary px-2 w-100 addToCartBtn" data-foodid="${food.foodID}" data-quantity="1"> Thêm vào Giỏ hàng </button>
+                    <a href="" class="stretched-link" data-bs-toggle="modal" data-bs-target="#food-details-modal"
+                       data-food-id="${food.foodID}"
+                       data-food-type="${food.foodTypeID}"
+                       data-food-name="${food.foodName}"
+                       data-food-description="${food.description}"
+                       data-food-price-original="${food.foodPrice}"
+                       data-food-price="${food.foodPrice - (food.foodPrice * food.discountPercent / 100)}"
+                       data-food-status="${food.status}"
+                       data-food-rate="${food.rate}"
+                       data-discount-percent="${food.discountPercent}"
+                       data-image-url="${food.imageURL}">
+                      </a>
+                    <c:choose>
+                        <c:when test="${food.status == 1}">
+                            <button class="btn btn-lg btn-primary px-2 w-100 addToCartBtn z-2" data-foodid="${food.foodID}" data-quantity="1">Thêm vào Giỏ hàng</button>
+                        </c:when>
+                        <c:otherwise>
+                            <button class="btn btn-lg btn-primary px-2 w-100" data-quantity="1" disabled>Tạm hết món</button>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
         </div>
