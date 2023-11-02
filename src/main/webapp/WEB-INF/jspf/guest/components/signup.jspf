@@ -41,9 +41,13 @@
               <div class="lblError" id="lblErrorPassword"></div>
             </div>
           </div>
-          <div class="form-group row px-3">
+          <div class="form-group row px-3 my-3">
             <button type="submit" class="btn btn-primary btn-lg btn-block" id="btnSubmit" name="btnSubmit" value="Submit">Đăng ký</button>
           </div>
+
+          <!-- Sign In With Google button with HTML data attributes API -->
+          <%@ include file="buttons/googleSignUpButton.jspf" %>
+
           <div class="mt-4 text-center">
             Bạn đã có tài khoản? 
             <a href="#login-modal">

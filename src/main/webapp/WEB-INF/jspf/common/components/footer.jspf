@@ -2,14 +2,14 @@
 <%@ page pageEncoding="UTF-8" %>
 <section class="py-0 pt-4 bg-1000">
     <div class="container">
-        <div class="row">
-            <div class="col-6 col-md-4 col-lg-3 col-xxl-3 mb-3">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4">
+            <div class="mb-3">
                 <h5 class="lh-lg fw-bold text-white">THÔNG TIN CHUNG</h5>
                 <ul class="list-unstyled mb-md-4 mb-lg-0">
                     <li class="lh-lg"><a class="text-200 text-decoration-none" href="https://github.com/khengyun/FFood-shop">Về chúng tôi</a></li>
                 </ul>
             </div>
-            <div class="col-6 col-md-4 col-lg-3 col-xxl-3 col-lg-3 mb-3">
+            <div class="mb-3">
                 <h5 class="lh-lg fw-bold text-white">LIÊN HỆ</h5>
                 <ul class="list-unstyled mb-md-4 mb-lg-0">
                     <li class="lh-lg text-200 text-decoration-none">
@@ -19,8 +19,9 @@
 
                     </li>
                     <li class="lh-lg text-200 text-decoration-none">
+                        <!-- ZeroWidthSpace characters help break the email if the email is too long -->
                         <a href="mailto:ffood.shop.cantho@gmail.com" class="navbar-sm-brand text-light text-decoration-none">
-                            Email: ffood.shop.cantho@gmail.com
+                            Email: &#8203;ffood.shop.cantho@&#8203;gmail.com
                         </a>
                     </li>
                     <li class="lh-lg text-200 text-decoration-none">
@@ -30,13 +31,13 @@
                     </li>
                 </ul>
             </div>
-            <div class="col-6 col-md-4 col-lg-3 col-xxl-3 mb-3">
+            <div class="mb-3">
                 <h5 class="lh-lg fw-bold text-white">CÁC CHÍNH SÁCH</h5>
                 <ul class="list-unstyled mb-md-4 mb-lg-0">
                     <li class="lh-lg"><a class="text-200 text-decoration-none" href="https://github.com/tien-thanh-hua/FFood">Điều khoản &amp; Chính sách</a></li>
                 </ul>
             </div>
-            <div class="col-6 col-md-4 col-lg-3 col-xxl-3 mb-3">
+            <div class="mb-3">
                 <h5 class="lh-lg fw-bold text-white">HÃY THEO DÕI CHÚNG TÔI</h5>
                 <div class="text-start my-3"> 
                     <a class="text-500" href="https://github.com/khengyun/FFood-shop" target="_blank">

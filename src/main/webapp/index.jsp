@@ -34,7 +34,7 @@ Tien Thanh --%> <%@page contentType="text/html" pageEncoding="UTF-8"%>
       <!-- Food menu -->
       <section class="py-4 overflow-hidden">
         <div class="container">
-          <div class="row flex-grow-1 mb-6">
+          <div class="row flex-grow-1 mb-2">
             <div class="col-lg-7 mx-auto text-center mt-5 mb-3">
               <h5 class="fw-bold fs-3 fs-lg-5 lh-sm">Danh sách món ăn</h5>
             </div>
