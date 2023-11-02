@@ -76,8 +76,8 @@
                                     <h4>Thông tin giao món</h4>
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
-                                        <label for="txtLastName" class="form-label">Họ</label>
-                                        <input type="text" class="form-control" id="txtLastName" name="txtLastName" value="${customer.lastName}" required>
+                                            <label for="txtLastName" class="form-label">Họ</label>
+                                            <input type="text" class="form-control" id="txtLastName" name="txtLastName" value="${customer.lastName}" required>
                                             <div class="form-error"></div>
                                         </div>
                                         <div class="col-md-6 mb-3">
@@ -86,7 +86,7 @@
                                             <div class="form-error"></div>
                                         </div>
                                     </div>
-                                    
+
 
                                     <div class="row">
                                         <label for="txtGender" class="form-label">Giới tính</label>
@@ -157,11 +157,8 @@
 
                             </div>
                             <div class="col-md-12 text-md-end mt-3 d-flex justify-content-end align-items-center">
-                                <h4 class="d-inline-flex">Tổng thanh toán: 
-                                <fmt:formatNumber type="number" pattern="###,###"
-                                                                value="${totalPrice*(voucherpercent)}"/> đ
-                                </h4>
-                                <button type="submit"  id=”btnSubmit” name="btnSubmit" value="SubmitOrder" class="btn btn-primary ms-3" onclick="return checkPaying();" >Đặt món</button>
+                                <h4 class="d-inline-flex">Tổng thanh toán: <fmt:formatNumber type="number" pattern="###,###" value="${totalPrice*(voucherpercent)}"/>đ</h4>
+                                <button type="submit"  id=”btnSubmit” name="btnSubmit" value="SubmitOrder" class="btn btn-primary ms-3" onclick="return checkAndCompleteOrder();" >Đặt món</button>
                             </div>
                     </div>
                 </div>
@@ -172,102 +169,119 @@
         <%@ include file="WEB-INF/jspf/common/imports/validation.jspf" %>
 
         <script>
-            // Primary variables
-            var firstName = document.querySelector("#txtFirstName");
-            var lastName = document.querySelector("#txtLastName");
-            var phone = document.querySelector("#txtPhone");
-            var gender = document.querySelector("#txtGender");
-            var address = document.querySelector("#txtAddress");
-            var note = document.querySelector("#txtNote");
-            var form = document.querySelector("form");
+            function checkAndCompleteOrder() {
+                if (checkPaying()) {
+                    completeOrder();
+                    return true; // Allow form submission
+                } else {
+                    return false; // Prevent form submission
+                }
+            }
+            
+            function completeOrder() {
+                // Perform actions to process the order...
 
-            function showError(inputID, errorMessage) {
-                let parent = inputID.parentElement;
-                let formError = parent.querySelector(".form-error");
-                let formInput = parent.querySelector("input");
-                formError.classList.add("activeError"); // add class "activeError" into formError.
-                formInput.classList.add("activeErrorOnInput"); // add class "activeError" into formError.
-                formError.innerText = errorMessage; // set message into formError.
+                // Clear the cart after the order is completed
+                sessionStorage.removeItem("cart");
+
+                // Optionally, update the cart display and total price
+                updateCartDisplay();
+                updateTotalPrice();
             }
 
+            // Primary variables
+            var firstName = document.querySelector("#txtFirstName");
+                    var lastName = document.querySelector("#txtLastName");
+                    var phone = document.querySelector("#txtPhone");
+                    var gender = document.querySelector("#txtGender");
+                    var address = document.querySelector("#txtAddress");
+                    var note = document.querySelector("#txtNote");
+                    var form = document.querySelector("form");
+                    function showError(inputID, errorMessage) {
+                    let parent = inputID.parentElement;
+                            let formError = parent.querySelector(".form-error");
+                            let formInput = parent.querySelector("input");
+                            formError.classList.add("activeError"); // add class "activeError" into formError.
+                            formInput.classList.add("activeErrorOnInput"); // add class "activeError" into formError.
+                            formError.innerText = errorMessage; // set message into formError.
+                    }
+
             function showSuccess(inputID) {
-                let parent = inputID.parentElement;
-                let formError = parent.querySelector(".form-error");
-                let formInput = parent.querySelector("input");
-                formError.classList.remove("activeError"); // add class "activeError" into formError.
-                formInput.classList.remove("activeErrorOnInput"); // add class "activeError" into formError.
-                formError.innerText = ""; // set message into formError.
+            let parent = inputID.parentElement;
+                    let formError = parent.querySelector(".form-error");
+                    let formInput = parent.querySelector("input");
+                    formError.classList.remove("activeError"); // add class "activeError" into formError.
+                    formInput.classList.remove("activeErrorOnInput"); // add class "activeError" into formError.
+                    formError.innerText = ""; // set message into formError.
             }
 
             // 2. Check Email;
             function checkName(input, option) {
-                var isNameValid = true;
-                if (input.value.trim() === "") {
-                    // Kiểm tra trường rỗng
-                    if (option === "firstName") {
-                        showError(input, "Tên không được để trống");
-                    } else {
-                        showError(input, "Họ không được để trống");
-                    }
+            var isNameValid = true;
+                    if (input.value.trim() === "") {
+            // Kiểm tra trường rỗng
+            if (option === "firstName") {
+            showError(input, "Tên không được để trống");
+            } else {
+            showError(input, "Họ không được để trống");
+            }
+            isNameValid = false;
+            } else if (input.value.trim().length > 40 && option === "firstName")
+            {
+            showError(input, "Tên không được vượt quá 40 ký tự");
                     isNameValid = false;
-                } else if (input.value.trim().length > 40 && option === "firstName")
-                {
-                    showError(input, "Tên không được vượt quá 40 ký tự");
+            } else if (input.value.trim().length > 10 && option === "lastName")
+            {
+            showError(input, "Họ không được vượt quá 10 ký tự");
                     isNameValid = false;
-                } else if (input.value.trim().length > 10 && option === "lastName")
-                {
-                    showError(input, "Họ không được vượt quá 10 ký tự");
-                    isNameValid = false;
-                } else {
-                    showSuccess(input);
-                }
-                return isNameValid;
+            } else {
+            showSuccess(input);
+            }
+            return isNameValid;
             }
             //            // 2. Check phone;
             function checkPhoneValid(input) {
-                const regexPhone = /^0[1-9]\d{8,9}$/;
-                input.value = input.value.trim();
-                var isPhoneValid = regexPhone.test(input.value);
-                if (input.value === "") {
-                    showError(input, "Số điện thoại không được để trống");
-                } else if (!isPhoneValid) {
-                    showError(input, "Số điện thoại không hợp lệ");
-                } else {
-                    showSuccess(input);
-                }
-                return isPhoneValid;
+            const regexPhone = /^0[1-9]\d{8,9}$/;
+                    input.value = input.value.trim();
+                    var isPhoneValid = regexPhone.test(input.value);
+                    if (input.value === "") {
+            showError(input, "Số điện thoại không được để trống");
+            } else if (!isPhoneValid) {
+            showError(input, "Số điện thoại không hợp lệ");
+            } else {
+            showSuccess(input);
+            }
+            return isPhoneValid;
             }
 
 
             // 2. Check address;
             function checkAddress(input) {
-                var isCheckAddressValid = true;
-                if (input.value.trim() === "") {
-                    showError(input, "Địa chỉ không được để trống");
+            var isCheckAddressValid = true;
+                    if (input.value.trim() === "") {
+            showError(input, "Địa chỉ không được để trống");
                     isCheckAddressValid = false;
-                } else if (input.value.trim().length > 255 && option === "firstName")
-                {
-                    showError(input, "Họ không được vượt quá 10 ký tự");
+            } else if (input.value.trim().length > 255 && option === "firstName")
+            {
+            showError(input, "Họ không được vượt quá 10 ký tự");
                     isCheckAddressValid = false;
-                } else {
-                    showSuccess(input);
-                }
-                return isCheckAddressValid;
+            } else {
+            showSuccess(input);
+            }
+            return isCheckAddressValid;
             }
 
             // 3. Check all in form
             function checkPaying() {
-                let isFirstNameValid = checkName(firstName, "firstName");
-                let isLastNameValid = checkName(lastName, "lastName");
-                let isPhoneValid = checkPhoneValid(phone);
-                let isAddressValid = checkAddress(address);
+            let isFirstNameValid = checkName(firstName, "firstName");
+                    let isLastNameValid = checkName(lastName, "lastName");
+                    let isPhoneValid = checkPhoneValid(phone);
+                    let isAddressValid = checkAddress(address);
+                    if (isFirstNameValid && isLastNameValid && isPhoneValid && isAddressValid) {
 
-                if (isFirstNameValid && isLastNameValid && isPhoneValid && isAddressValid) {
-
-                    return true;
-
-                }
-                return false;
+            return true;
+            }
+            return false;
             }
 
         </script>

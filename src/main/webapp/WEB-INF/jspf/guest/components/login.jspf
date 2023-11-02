@@ -77,6 +77,7 @@
               id="btnSubmit"
               name="btnSubmit"
               value="Submit"
+              onclick="RemoveOrderLogin()"
             >
               Đăng nhập
             </button>
@@ -102,3 +103,13 @@
     </div>
   </div>
 </div>
+
+<script>
+    function RemoveOrderLogin() {
+        // Clear the cart when the user logs out
+        sessionStorage.removeItem("cart");
+        // Optionally, update the cart display and total price
+        updateCartDisplay();
+        updateTotalPrice();
+    }
+</script>

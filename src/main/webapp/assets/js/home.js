@@ -16,6 +16,7 @@ $(document).ready(function () {
     $("#success").modal("show");
     setTimeout(function () {
       $("#success").modal("hide");
+      window.location.href = '/home';
     }, 3000);
   }
   showInitialFoodItems();
@@ -104,9 +105,10 @@ addToCartButtons.forEach(function (button) {
         console.error("Error occurred: " + error.responseText);
       },
     });
-    window.location.reload();
+//    window.location.reload();
   });
 });
+
 
 /**
  * Show default food items

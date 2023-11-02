@@ -1,5 +1,4 @@
-<%-- Document : index Created on : Jun 3, 2023, 5:07:28 PM Author : CE171454 Hua
-Tien Thanh --%> <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="WEB-INF/jspf/common/imports/base.jspf" %>
 <!DOCTYPE html>
 <html lang="vi" dir="ltr">
@@ -50,7 +49,7 @@ Tien Thanh --%> <%@page contentType="text/html" pageEncoding="UTF-8"%>
           <%@ include file="WEB-INF/jspf/guest/components/foodList.jspf" %>
 
           <!-- Food details -->
-          <%@ include file="WEB-INF/jspf/guest/components/foodDetails.jspf" %>
+          <%--<%@ include file="WEB-INF/jspf/guest/components/foodDetails.jspf" %>--%>
         </div>
       </section>
 

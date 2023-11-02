@@ -1,3 +1,15 @@
+// Function to parse a float number from a string, using the current locale of the page
+  // https://stackoverflow.com/questions/59678901/using-parsefloat-in-different-locales
+  function localeParseFloat(s) {
+    // Get the thousands and decimal separator characters used in the locale.
+    let [,thousandsSeparator,,,,decimalSeparator] = 1111.1.toLocaleString(pageLocale);
+    // Remove thousand separators, and put a point where the decimal separator occurs
+    s = Array.from(s, c => c === thousandsSeparator ? "" 
+                        : c === decimalSeparator   ? "." : c).join("");
+    // Now it can be parsed
+    return parseFloat(s);
+}
+
 $(document).on("click", "#btn-update-food", function () {
     let foodID = $(this).attr("data-food-id");
     let foodType = $(this).attr("data-food-type");
@@ -14,7 +26,8 @@ $(document).on("click", "#btn-update-food", function () {
     modal.find("input[name='txtFoodID']").attr("value", foodID);
     modal.find("#txtFoodName").attr("value", foodName);
     modal.find("#txtFoodDescription").val(foodDescription);
-    modal.find("#txtFoodPrice").attr("value", Number(foodPrice).toFixed(2));
+    foodPrice = localeParseFloat(foodPrice);
+    modal.find("#txtFoodPrice").attr("value", foodPrice);
     modal.find("#txtFoodStatus").val(foodStatus);
     modal.find("#txtFoodRate").val(foodRate);
 
@@ -251,29 +264,27 @@ $(document).on("click", "#btn-delete-order", function () {
     modal.find("input[name='orderData']").attr("value", orderIds);
 });
 
-function handleSelectChange(selectElement) {
-    // Get the selected value
-    const selectedStatus = selectElement.value;
+$(document).on("click", "#btn-next-order", function () {
+    let modal = $("#next-order-modal");
+    // Clear the list of foods in the modal every time the button is clicked
+    modal.find(".modal-body ul").empty();
 
-    // Get the data-orderid attribute value
-    const orderid = selectElement.getAttribute("data-orderid");
+    // Retrieves selected rows' data in JSON format, so that it can be iterated
+    let orders = JSON.parse($(this).attr("data-orders")); //accounts contain accountID of username
+    
+    // Populate the list of roles in the modal
+    for (let orderId in orders) {
+        let orderID = orders[orderId];
+        modal.find("#next-order-list").append("<li>" + orderID + "</li>");
+    }
 
-    // Send AJAX request to addToCart servlet endpoint
-    $.ajax({
-      type: "GET",
-      url: "admin/order",
-      data: {
-        orderID: orderid,
-        Changestatus: selectedStatus
-      },
-      success: function (response) {
-        console.log("Change order status successfully.");
-      },
-      error: function (error) {
-        console.error("Error occurred: " + error.responseText);
-      }
-    });
-}
+    // Keep food IDs as strings
+    let orderIds = Object.keys(orders).toString();
+
+    // Set the values to the hidden input in the modal
+    modal.find("input[name='orderData']").attr("value", orderIds);
+});
+
 
 $(document).on("click", "#btn-history-order", function () {
         let orderID = $(this).attr("data-order-id");

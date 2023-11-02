@@ -92,7 +92,7 @@
                               <ul class="dropdown-menu text-small shadow ms-2 w-100">
                                   <li><a class="dropdown-item" href="/user#info">Tài khoản của tôi</a></li>
                                   <li><a class="dropdown-item" href="/user#order">Đơn món</a></li>
-                                  <li><a class="dropdown-item" href="/user/logout">Đăng xuất</a></li>
+                                  <li><a class="dropdown-item" href="/user/logout" onclick="RemoveOrderLogout();">Đăng xuất</a></li>
                               </ul>
                           </div>
                       </c:when>
@@ -108,3 +108,13 @@
             </form>
         </div>
 </nav>
+                
+<script>
+    function RemoveOrderLogout() {
+        // Clear the cart when the user logs out
+        sessionStorage.removeItem("cart");
+        // Optionally, update the cart display and total price
+        updateCartDisplay();
+        updateTotalPrice();
+    }
+</script>
