@@ -132,7 +132,8 @@ async def payment_return(request: Request):
             # Gọi hàm insert_payment
             result = order_operations.insert_payment(order_id, vnp_Amount, vnp_TxnRef, vnp_BankCode)
             # Thực hiện xử lý kết quả (nếu cần) sau khi insert_payment
-            tag = "#success"
+            if result:
+                tag = "#success"
 
             
         except Exception as e:
@@ -164,7 +165,10 @@ async def payment_return(request: Request):
     
     return html_content
 
-
+# /check_order_payment/${orderID}
+@app.get('/check_order_payment/{orderID}')
+def check_order_payment(orderID: int):
+    return order_operations.check_order_payment(orderID)
 
 
 if __name__ == '__main__': 
