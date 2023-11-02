@@ -65,7 +65,7 @@
 
                   <!-- Food description -->
                   <p id="food-description"
-                     class="card-text">Mô tả món ăn.</p>
+                     class="card-text fs-1">Mô tả món ăn.</p>
 
                   <!-- Empty space -->
                   <div class="flex-grow-1"></div>
