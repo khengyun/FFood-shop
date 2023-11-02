@@ -1,3 +1,15 @@
+// Function to parse a float number from a string, using the current locale of the page
+  // https://stackoverflow.com/questions/59678901/using-parsefloat-in-different-locales
+  function localeParseFloat(s) {
+    // Get the thousands and decimal separator characters used in the locale.
+    let [,thousandsSeparator,,,,decimalSeparator] = 1111.1.toLocaleString(pageLocale);
+    // Remove thousand separators, and put a point where the decimal separator occurs
+    s = Array.from(s, c => c === thousandsSeparator ? "" 
+                        : c === decimalSeparator   ? "." : c).join("");
+    // Now it can be parsed
+    return parseFloat(s);
+}
+
 $(document).on("click", "#btn-update-food", function () {
     let foodID = $(this).attr("data-food-id");
     let foodType = $(this).attr("data-food-type");
@@ -14,7 +26,8 @@ $(document).on("click", "#btn-update-food", function () {
     modal.find("input[name='txtFoodID']").attr("value", foodID);
     modal.find("#txtFoodName").attr("value", foodName);
     modal.find("#txtFoodDescription").val(foodDescription);
-    modal.find("#txtFoodPrice").attr("value", Number(foodPrice).toFixed(2));
+    foodPrice = localeParseFloat(foodPrice);
+    modal.find("#txtFoodPrice").attr("value", foodPrice);
     modal.find("#txtFoodStatus").val(foodStatus);
     modal.find("#txtFoodRate").val(foodRate);
 

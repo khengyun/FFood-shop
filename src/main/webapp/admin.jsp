@@ -6,12 +6,14 @@
 <%@ include file="WEB-INF/jspf/common/imports/base.jspf" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="vi" dir="ltr">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>FFood | Admin Dashboard</title>
+        <!-- Locale for JSTL fmt tags -->
+        <fmt:setLocale value="vi" scope="session"/>
         <%@ include file="WEB-INF/jspf/common/imports/resources.jspf" %>
         <%@ include file="WEB-INF/jspf/admin/imports/dataTablesStyle.jspf" %>
         <%@ include file="WEB-INF/jspf/admin/imports/chartjs.jspf" %>

@@ -6,7 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="vi" dir="ltr">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -58,7 +58,9 @@
                                             <td>${cart.foodQuantity}</td>
                                             <td><c:set var="productPrice" value="${Double.parseDouble(cart.food.foodPrice- (cart.food.foodPrice * cart.food.discountPercent / 100)) * cart.foodQuantity}" />
                                                 <c:set var="totalPrice" value="${totalPrice + productPrice}" /> 
-                                                ${Double.parseDouble(cart.food.foodPrice- (cart.food.foodPrice * cart.food.discountPercent / 100)) * cart.foodQuantity} đ</td>
+                                                <fmt:formatNumber type="number" pattern="###,###"
+                                                                  value="${Double.parseDouble(cart.food.foodPrice- (cart.food.foodPrice * cart.food.discountPercent / 100)) * cart.foodQuantity}"/> đ
+                                            </td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>

@@ -28,16 +28,16 @@
                     </div>
                 </form>
             </div>
-            <div class="modal-footer border-top-0 pt-0 flex-wrap">
-                <h5 id="grand-total" class="mb-3 pt-2 w-100 text-end border-top border-black border-2">Tổng thanh toán: <fmt:formatNumber type="number" pattern="###,###"
-                                                                                                                                          value="${totalPrice}"/> đ</h5>
-                <button type="button" class="btn w-100 w-sm-auto btn-outline-dark px-4" data-bs-dismiss="modal" aria-label="Close">
-                    Tiếp tục chọn món
-                </button>
-                <%-- To solve the issue of submit button outside of the form element, just add "form" attribute --%>
-                <button type="submit" class="btn w-100 w-sm-auto btn-primary px-5" id="btnSubmit" name="btnSubmit" form="cart-form" value="Checkout">
-                    Thanh toán
-                </button>
+            <div class="modal-footer border-top-0 pt-0 flex-wrap gap-2">
+              <h5 id="grand-total" class="mb-3 pt-2 w-100 text-end border-top border-black border-2">Tổng thanh toán: <fmt:formatNumber type="number" pattern="###,###"
+                value="${totalPrice}"/> đ</h5>
+              <button type="button" class="btn w-100 w-sm-auto btn-outline-dark fs-2 fs-lg-1 px-4 py-3 py-lg-2" data-bs-dismiss="modal" aria-label="Close">
+                Tiếp tục chọn món
+              </button>
+              <%-- To solve the issue of submit button outside of the form element, just add "form" attribute --%>
+              <button type="submit" class="btn w-100 w-sm-auto btn-primary fs-2 fs-lg-1 px-5 py-3 py-lg-2" id="btnSubmit" name="btnSubmit" form="cart-form" value="Checkout">
+                Thanh toán
+              </button>
             </div>
         </div>
     </div>
@@ -309,12 +309,12 @@
 
     // Restrict user input to reject non-numeric characters
     // except for navigation keys and backspace/delete
-    $('.quantity-input').on('keydown', (e) => {
-        let key = e.key;
-        let isDigit = /^\d$/.test(key);
-        let target = $(e.target);
-        let allowedKeys = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Backspace', 'Delete'];
-        let isException = allowedKeys.includes(key);
+    $('#cart-modal .quantity-input').on('keydown', (e) => {
+      let key = e.key;
+      let isDigit = /^\d$/.test(key);
+      let target = $(e.target);
+      let allowedKeys = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Backspace', 'Delete'];
+      let isException = allowedKeys.includes(key);
 
         // Prevents the user from typing more than 2 digits
         // If target is of HTML input element, use e.target.value
@@ -335,24 +335,25 @@
     // Set the old quantity variable to the value of the input field (before the user types anything), 
     // so that this will be used to restore the original quantity in case
     // the new quantity is invalid
-    $('.quantity-input').on('focus', (e) => {
-        const target = $(e.target);
-        oldQuantity = parseInt(target.val(), 10);
+    $('#cart-modal .quantity-input').on('focus', (e) => {
+      const target = $(e.target);      
+      oldQuantity = parseInt(target.val(), 10);
     })
 
     // Validates the user quantity input only when the user clicks outside of the input field
     // instead of immediately upon value change. Because we want the user to safely delete the old number
     // and input a new one without the price values going crazy
-    $('.quantity-input').on('blur', (e) => {
-        // Get the parent table row of the input field
-        const tableRow = event.target.closest("tr");
-        const target = $(e.target);
-        // Get the price per unit of the food from the data attribute or other source
-        const pricePerUnitText = tableRow.querySelector("td:nth-child(2)").textContent.trim();
-        const pricePerUnit = parseFloat(pricePerUnitText.replace("đ", "").replace(",", ""));
+    $('#cart-modal .quantity-input').on('blur', (e) => {
+      // Get the parent table row of the input field
+      const tableRow = event.target.closest("tr");
+      const target = $(e.target);
+      // Get the price per unit of the food from the data attribute or other source
+      const pricePerUnitText = tableRow.querySelector("td:nth-child(2)").textContent.trim();
+      const pricePerUnit = getPrice(pricePerUnitText);
+      
+      // Get the quantity entered by the user
+      const currentQuantity = parseInt(event.target.value, 10);
 
-        // Get the quantity entered by the user
-        const currentQuantity = parseInt(event.target.value, 10);
 
         // Validates the user input, making sure it is within 1-10
         let newQuantity =
@@ -373,6 +374,34 @@
         // Calculate and update the total price
         updateTotalPrice();
     });
+
+      target.val(newQuantity);
+      
+      // Calculate the new product price
+      const itemTotal = pricePerUnit * newQuantity;
+      
+      // Update the product price cell in the same row
+      // Format the total price string so that it can be displayed correctly to the user
+      formattedItemTotal = itemTotal.toLocaleString(pageLocale);
+      $(tableRow).find(".item-total").html(formattedItemTotal + " đ");
+      
+      // Calculate and update the total price
+      updateTotalPrice();
+    })
+
+    // Function to parse a float number from a string, using the current locale of the page
+    // https://stackoverflow.com/questions/59678901/using-parsefloat-in-different-locales
+    function localeParseFloat(s) {
+        // Get the thousands and decimal separator characters used in the locale.
+        let [,thousandsSeparator,,,,decimalSeparator] = 1111.1.toLocaleString(pageLocale);
+        // Remove thousand separators, and put a point where the decimal separator occurs
+        s = Array.from(s, c => c === thousandsSeparator ? "" 
+                            : c === decimalSeparator   ? "." : c).join("");
+        // Now it can be parsed
+        return parseFloat(s);
+    }
+
+    // Function to update the total price based on all product prices
 
     function updateTotalPrice() {
         let totalPrice = 0;
@@ -466,4 +495,45 @@
         $(tableRow).find(".item-total").html(formattedItemTotal + " đ");
         quantityInput.val(newQuantity);
     }
+
+    /**
+     * Extracts the price from a string representation of a currency value.
+     *
+     * @param {string} str - The string representation of the currency value.
+     * @return {number} The price as a numeric value.
+     */
+    function getPrice(str) {
+      // Remove all non-numeric characters from the string
+      return localeParseFloat(str.replace(/[^0-9.]/g, ""));
+    }
+
+    $("#cart-modal .input-group").on("click", ".button-plus", (e) => {
+      let quantity = incrementValue(e);
+      let target = $(e.target);
+      let tableRow = target.closest("tr");
+      let itemPriceStr = $(tableRow).find(".item-price").html();
+      let itemPrice = getPrice(itemPriceStr);
+      let itemTotal = itemPrice * quantity;
+
+      // Format the total price string so that it can be displayed correctly to the user
+      formattedItemTotal = itemTotal.toLocaleString(pageLocale);
+      $(tableRow).find(".item-total").html(formattedItemTotal + " đ");
+
+      updateTotalPrice();
+    });
+
+    $("#cart-modal .input-group").on("click", ".button-minus", (e) => {
+      let quantity = decrementValue(e);
+      let target = $(e.target);
+      let tableRow = target.closest("tr");
+      let itemPriceStr = $(tableRow).find(".item-price").html();
+      let itemPrice = getPrice(itemPriceStr);
+      let itemTotal = itemPrice * quantity;
+
+      // Format the total price string so that it can be displayed correctly to the user
+      formattedItemTotal = itemTotal.toLocaleString(pageLocale);
+      $(tableRow).find(".item-total").html(formattedItemTotal + " đ");
+
+      updateTotalPrice();
+    });
 </script>
