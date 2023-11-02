@@ -20,10 +20,6 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.net.URLDecoder;
 
-/**
- *
- * @author CE171454 Hua Tien Thanh
- */
 public class AuthenticationFilter implements Filter {
 
   private static final boolean debug = true;
@@ -146,13 +142,24 @@ public class AuthenticationFilter implements Filter {
             } else {
               Cookie[] cookies = httpRequest.getCookies();
               Cookie admin = null;
-
+              Cookie adminID = null;
               for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("admin")) {
                   admin = cookie;
                   String adminName = cookie.getValue();
                   request.setAttribute("adminName", URLDecoder.decode(adminName, "UTF-8"));
                   break;
+                }
+              }
+              
+              for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("adminID")) {
+                    adminID = cookie;
+                    String admin_id = cookie.getValue();
+                    byte adminIDValue = Byte.parseByte(admin_id);
+                    System.out.println(adminIDValue);
+                    session.setAttribute("adminID", adminIDValue);
+                    break;
                 }
               }
             }
@@ -178,7 +185,7 @@ public class AuthenticationFilter implements Filter {
               Cookie promotionManager = null;
 
               for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("promotionManagerName")) {
+                if (cookie.getName().equals("promotionManager")) {
                   promotionManager = cookie;
                   String promotionManagerName = cookie.getValue();
                   request.setAttribute("promotionManagerName", URLDecoder.decode(promotionManagerName, "UTF-8"));
@@ -206,15 +213,27 @@ public class AuthenticationFilter implements Filter {
             } else {
               Cookie[] cookies = httpRequest.getCookies();
               Cookie staff = null;
+              Cookie staffID = null;
 
               for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("StaffName")) {
+                if (cookie.getName().equals("staff")) {
                   staff = cookie;
                   String StaffName = cookie.getValue();
                   request.setAttribute("StaffName", URLDecoder.decode(StaffName, "UTF-8"));
                   break;
                 }
               }
+              
+              for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("staffID")) {
+                    staffID = cookie;
+                    String staff_id = cookie.getValue();
+                    byte staffIDValue = Byte.parseByte(staff_id);
+                    session.setAttribute("staffID", staffIDValue);
+                    break;
+                }
+              }
+              
             }
             request.setAttribute("isLoggedIn", true);
           } else {
