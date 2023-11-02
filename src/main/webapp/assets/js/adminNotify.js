@@ -114,6 +114,13 @@ $(document).ready(function () {
       $('#success_delete_order').modal('hide');
     }, 3000);
   }
+  
+  if (window.location.hash === '#success_next_order') {
+    $('#success_next_order').modal('show');
+    setTimeout(function () {
+      $('#success_next_order').modal('hide');
+    }, 3000);
+  }
 });
 
 // ===================================FAILURE======================================
@@ -250,6 +257,13 @@ $(document).ready(function () {
     $('#failure_delete_order').modal('show');
     setTimeout(function () {
       $('#failure_delete_order').modal('hide');
+    }, 3000);
+  };
+  
+  if (window.location.hash === '#failure_next_order') {
+    $('#failure_next_order').modal('show');
+    setTimeout(function () {
+      $('#failure_next_order').modal('hide');
     }, 3000);
   };
 });

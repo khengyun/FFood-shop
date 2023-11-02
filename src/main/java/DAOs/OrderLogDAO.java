@@ -123,7 +123,7 @@ public class OrderLogDAO {
     }
 
     public int addAdminLog(OrderLog log) {
-        String sql = "insert into OrderLog (order_id, admin_id, log_activity, log_time) values (?,?,?,?,?)";
+        String sql = "insert into OrderLog (order_id, admin_id, log_activity, log_time) values (?,?,?,?)";
         int result = 0;
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -139,7 +139,7 @@ public class OrderLogDAO {
     }
     
     public int addStaffLog(OrderLog log) {
-        String sql = "insert into OrderLog (order_id, staff_id, log_activity, log_time) values (?,?,?,?,?)";
+        String sql = "insert into OrderLog (order_id, staff_id, log_activity, log_time) values (?,?,?,?)";
         int result = 0;
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
