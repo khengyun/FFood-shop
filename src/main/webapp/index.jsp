@@ -75,5 +75,7 @@ Tien Thanh --%> <%@page contentType="text/html" pageEncoding="UTF-8"%>
     <%@ include file="WEB-INF/jspf/common/imports/validation.jspf" %>
     <script src="assets/js/home.js"></script>
     <script src="assets/js/userNotify.js"></script>
+    
+    
   </body>
 </html>

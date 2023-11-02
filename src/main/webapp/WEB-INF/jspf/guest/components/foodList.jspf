@@ -46,7 +46,7 @@
                       </div>
                     </div>
                     <div class="flex-grow-1"></div>
-                    <button class="btn btn-lg btn-primary px-2 w-100 addToCartBtn" data-foodid="${food.foodID}" data-quantity="1"> Thêm vào Giỏ hàng </button>
+                    <button class="btn btn-lg btn-primary px-2 w-100 addToCartBtn" data-foodid="${food.foodID}" data-quantity="1" onclick="addToCart(${food.foodID},1)" > Thêm vào Giỏ hàng </button>
                 </div>
             </div>
         </div>
