@@ -49,7 +49,7 @@
                                     <!-- Quantity -->
                                     <!-- https://codepen.io/anitaparmar26/pen/BaLYMeN -->
                                     <td>
-                                        <div class="d-flex input-group align-items-center">
+                                        <div class="d-flex input-group align-items-center notranslate">
                                           <input type="button" value="-" class="btn btn-outline-dark border border-dark border-1 button-minus px-2 py-1" data-field="quantity-${cart.food.foodID}">
                                           <input type="number" step="1" min="1" max="10" maxlength="2" style="width: 2em;" class="quantity-input quantity-field border border-dark border-1 border-start-0 border-end-0 text-center py-1" name="quantity-${cart.food.foodID}" value="${cart.foodQuantity}">
                                           <input type="button" value="+" class="btn btn-outline-dark border border-dark border-1 button-plus px-2 py-1" data-field="quantity-${cart.food.foodID}">
@@ -243,7 +243,7 @@
       const target = $(e.target);
       // Get the price per unit of the food from the data attribute or other source
       const pricePerUnitText = tableRow.querySelector("td:nth-child(2)").textContent.trim();
-      const pricePerUnit = parseFloat(pricePerUnitText.replace("đ", "").replace(",", ""));
+      const pricePerUnit = getPrice(pricePerUnitText);
       
       // Get the quantity entered by the user
       const currentQuantity = parseInt(event.target.value, 10);
@@ -262,12 +262,24 @@
       
       // Update the product price cell in the same row
       // Format the total price string so that it can be displayed correctly to the user
-      formattedItemTotal = itemTotal.toLocaleString();
+      formattedItemTotal = itemTotal.toLocaleString(pageLocale);
       $(tableRow).find(".item-total").html(formattedItemTotal + " đ");
       
       // Calculate and update the total price
       updateTotalPrice();
     })
+
+    // Function to parse a float number from a string, using the current locale of the page
+    // https://stackoverflow.com/questions/59678901/using-parsefloat-in-different-locales
+    function localeParseFloat(s) {
+        // Get the thousands and decimal separator characters used in the locale.
+        let [,thousandsSeparator,,,,decimalSeparator] = 1111.1.toLocaleString(pageLocale);
+        // Remove thousand separators, and put a point where the decimal separator occurs
+        s = Array.from(s, c => c === thousandsSeparator ? "" 
+                            : c === decimalSeparator   ? "." : c).join("");
+        // Now it can be parsed
+        return parseFloat(s);
+    }
 
     // Function to update the total price based on all product prices
     function updateTotalPrice() {
@@ -283,7 +295,7 @@
             const rows = document.querySelectorAll("#cart-table tbody tr");
             rows.forEach(function (row) {
                 const productPriceText = row.querySelector("td:nth-child(4)").textContent.trim();
-                const productPrice = parseFloat(productPriceText.replace("đ", "").replace(",", ""));
+                const productPrice = getPrice(productPriceText);
                 totalPrice += productPrice;
             });
         } else {
@@ -291,7 +303,7 @@
         }
         // Update the total price element
         const totalPriceElement = document.querySelector("#grand-total");
-        totalPriceElement.textContent = "Tổng thanh toán: " + totalPrice.toLocaleString() + "đ";
+        totalPriceElement.textContent = "Tổng thanh toán: " + totalPrice.toLocaleString(pageLocale) + " đ";
     }
 
     /**
@@ -349,10 +361,8 @@
      * @return {number} The price as a numeric value.
      */
     function getPrice(str) {
-      let trimmedStr = str
-        .replace(" đ", "") // Removes currency symbol and space before it
-        .replace(",", ""); // Removes thousand separators
-      return parseInt(trimmedStr);
+      // Remove all non-numeric characters from the string
+      return localeParseFloat(str.replace(/[^0-9.]/g, ""));
     }
 
     $(".input-group").on("click", ".button-plus", (e) => {
@@ -364,7 +374,7 @@
       let itemTotal = itemPrice * quantity;
 
       // Format the total price string so that it can be displayed correctly to the user
-      formattedItemTotal = itemTotal.toLocaleString();
+      formattedItemTotal = itemTotal.toLocaleString(pageLocale);
       $(tableRow).find(".item-total").html(formattedItemTotal + " đ");
 
       updateTotalPrice();
@@ -379,7 +389,7 @@
       let itemTotal = itemPrice * quantity;
 
       // Format the total price string so that it can be displayed correctly to the user
-      formattedItemTotal = itemTotal.toLocaleString();
+      formattedItemTotal = itemTotal.toLocaleString(pageLocale);
       $(tableRow).find(".item-total").html(formattedItemTotal + " đ");
 
       updateTotalPrice();

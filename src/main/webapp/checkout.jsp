@@ -6,7 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="vi" dir="ltr">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -58,7 +58,9 @@
                                             <td>${cart.foodQuantity}</td>
                                             <td><c:set var="productPrice" value="${Double.parseDouble(cart.food.foodPrice- (cart.food.foodPrice * cart.food.discountPercent / 100)) * cart.foodQuantity}" />
                                                 <c:set var="totalPrice" value="${totalPrice + productPrice}" /> 
-                                                ${Double.parseDouble(cart.food.foodPrice- (cart.food.foodPrice * cart.food.discountPercent / 100)) * cart.foodQuantity} đ</td>
+                                                <fmt:formatNumber type="number" pattern="###,###"
+                                                                  value="${Double.parseDouble(cart.food.foodPrice- (cart.food.foodPrice * cart.food.discountPercent / 100)) * cart.foodQuantity}"/> đ
+                                            </td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>
@@ -155,7 +157,10 @@
 
                             </div>
                             <div class="col-md-12 text-md-end mt-3 d-flex justify-content-end align-items-center">
-                                <h4 class="d-inline-flex">Tổng thanh toán: ${totalPrice*(voucherpercent)}đ</h4>
+                                <h4 class="d-inline-flex">Tổng thanh toán: 
+                                <fmt:formatNumber type="number" pattern="###,###"
+                                                                value="${totalPrice*(voucherpercent)}"/> đ
+                                </h4>
                                 <button type="submit"  id=”btnSubmit” name="btnSubmit" value="SubmitOrder" class="btn btn-primary ms-3" onclick="return checkPaying();" >Đặt món</button>
                             </div>
                     </div>

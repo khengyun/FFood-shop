@@ -1,4 +1,3 @@
-<%-- Document : user Created on : Jul 2, 2023, 8:04:59 PM Author : CE171454 Hua Tien Thanh --%>
 
   <%@page contentType="text/html" pageEncoding="UTF-8" %>
     <!DOCTYPE html>
