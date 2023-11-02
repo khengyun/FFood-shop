@@ -103,7 +103,7 @@ async def payment_return(request: Request):
     vnp_TransactionStatus = request.query_params.get('vnp_TransactionStatus')
     vnp_TxnRef = request.query_params.get('vnp_TxnRef')
     vnp_SecureHash = request.query_params.get('vnp_SecureHash')
-    tag = "#failure"
+    
     
     
     vnpay = Vnpay(Settings)
@@ -146,90 +146,45 @@ async def payment_return(request: Request):
             result = order_operations.insert_payment(order_id, vnp_Amount, vnp_TxnRef, vnp_BankCode)
             # Thực hiện xử lý kết quả (nếu cần) sau khi insert_payment
             
-            if result:
-                tag = "#success"
-                # Generate or load the HTML content
-                html_content = f"""
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <title>Payment Return Page</title>
-                </head>
-                <body>
-                    <h1>Payment Return Page</h1>
-                    <p>Your payment has been processed successfully.</p>
-                    <p>vnp_Amount: {vnp_Amount}</p>
-                    <p>vnp_BankCode: {vnp_BankCode}</p>
-                    <p>vnp_CardType: {vnp_CardType}</p>
-                    <p>vnp_OrderInfo: {vnp_OrderInfo}</p>
-                    <p>vnp_PayDate: {vnp_PayDate}</p>
-                    <p>vnp_ResponseCode: {vnp_ResponseCode}</p>
-                    <p>vnp_TmnCode: {vnp_TmnCode}</p>
-                    <p>vnp_TransactionNo: {vnp_TransactionNo}</p>
-                    <p>vnp_TransactionStatus: {vnp_TransactionStatus}</p>
-                    <p>vnp_TxnRef: {vnp_TxnRef}</p>
-                    <p>vnp_SecureHash: {vnp_SecureHash}</p>
-                    <p>order_id: {order_id}</p>
-                    <P>result: {result}</p>
-                    <script>
-                        // Execute the script after the page has fully loaded
-                        window.onload = function() {{   
-                            window.location.assign("http://localhost:8080/home{tag}");
-                        }};
-                    </script>
-                    <!-- Add your HTML content here -->
-                </body>
-                </html>
-                """
-                
-            else:
-                # Generate or load the HTML content
-                html_content = f"""
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <title>Payment Return Page</title>
-                </head>
-                <body>
-                    <h1>Payment Return Page</h1>
-                    <p>Your payment was processed failed.</p>
-                    <script>
-                        // Execute the script after the page has fully loaded
-                        window.onload = function() {{   
-                            window.location.assign("http://localhost:8080/home{tag}");
-                        }};
-                    </script>
-                    <!-- Add your HTML content here -->
-                </body>
-                </html>
-                """
-            
         except Exception as e:
             result = str(e)
     else:
         # Do something when the payment is failed
-        # Generate or load the HTML content
-        html_content = f"""
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>Payment Return Page</title>
-        </head>
-        <body>
-            <h1>Payment Return Page</h1>
-            <p>Your payment was processed failed.</p>
-            <script>
-                // Execute the script after the page has fully loaded
-                window.onload = function() {{   
-                    window.location.assign("http://localhost:8080/home{tag}");
-                }};
-            </script>
-            <!-- Add your HTML content here -->
-        </body>
-        </html>
-        """
+        pass
 
-    
+    # Generate or load the HTML content
+    html_content = f"""
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Payment Return Page</title>
+    </head>
+    <body>
+        <h1>Payment Return Page</h1>
+        <p>Your payment has been processed successfully.</p>
+        <p>vnp_Amount: {vnp_Amount}</p>
+        <p>vnp_BankCode: {vnp_BankCode}</p>
+        <p>vnp_CardType: {vnp_CardType}</p>
+        <p>vnp_OrderInfo: {vnp_OrderInfo}</p>
+        <p>vnp_PayDate: {vnp_PayDate}</p>
+        <p>vnp_ResponseCode: {vnp_ResponseCode}</p>
+        <p>vnp_TmnCode: {vnp_TmnCode}</p>
+        <p>vnp_TransactionNo: {vnp_TransactionNo}</p>
+        <p>vnp_TransactionStatus: {vnp_TransactionStatus}</p>
+        <p>vnp_TxnRef: {vnp_TxnRef}</p>
+        <p>vnp_SecureHash: {vnp_SecureHash}</p>
+        <p>order_id: {order_id}</p>
+        <P>result: {result}</p>
+        <script>
+            // Execute the script after the page has fully loaded
+            window.onload = function() {{
+                window.location.assign("http://localhost:8080/home#success");
+            }};
+        </script>
+        <!-- Add your HTML content here -->
+    </body>
+    </html>
+    """
     
     return html_content
 
