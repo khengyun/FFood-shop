@@ -35,10 +35,10 @@
                 <%@ include file="WEB-INF/jspf/admin/components/deleteVoucher.jspf" %>
                 <%@ include file="WEB-INF/jspf/admin/components/updatevoucher.jspf" %>
                 <%@ include file="WEB-INF/jspf/admin/components/failure.jspf" %>
-                <%@ include file="WEB-INF/jspf/admin/components/success.jspf" %>
-                
+                <%@ include file="WEB-INF/jspf/admin/components/success.jspf" %>  
                 <%@ include file="WEB-INF/jspf/admin/components/updateOrder.jspf" %>
                 <%@ include file="WEB-INF/jspf/admin/components/deleteOrder.jspf" %>
+                <%@ include file="WEB-INF/jspf/admin/components/nextOrder.jspf" %>
                 <%@ include file="WEB-INF/jspf/admin/components/adminSidebar.jspf" %>
                 
                 <!-- Main Content -->

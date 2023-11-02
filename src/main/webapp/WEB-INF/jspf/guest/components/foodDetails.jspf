@@ -1,330 +1,331 @@
-<%@ page
-    pageEncoding="UTF-8"
-    %>
-  <div class="modal"
-       tabindex="-1"
-       id="food-details-modal">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered modal-fullscreen-lg-down">
-      <div class="modal-content p-0">
-        <div class="modal-body p-0">
-          <div class="card border-0">
-            <div class="row g-0">
-              <!-- Food image -->
-              <div class="col-lg-6 position-relative">
-                <img src=""
-                     id="food-image"
-                     class="img-fluid w-100 vh-50"
-                     alt="Placeholder image"
-                     loading="lazy"
-                     style="object-fit: cover; object-position: center;">
-                <button type="button"
-                        class="btn-close position-absolute d-flex d-lg-none bg-white fs-1 p-3"
-                        style="top: 2rem; right: 2rem;"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-              </div>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+    <div class="modal"
+         tabindex="-1"
+         id="food-details-modal">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered modal-fullscreen-lg-down">
+            <div class="modal-content p-0">
+                <div class="modal-body p-0">
+                    <div class="card border-0">
+                        <div class="row g-0">
+                            <!-- Food image -->
+                            <div class="col-lg-6 position-relative">
+                                <img src=""
+                                     id="food-image"
+                                     class="img-fluid w-100 vh-50"
+                                     alt="Placeholder image"
+                                     loading="lazy"
+                                     style="object-fit: cover; object-position: center;">
+                                <button type="button"
+                                        class="btn-close position-absolute d-flex d-lg-none bg-white fs-1 p-3"
+                                        style="top: 2rem; right: 2rem;"
+                                        data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
 
-              <!-- Food details -->
-              <div class="col-lg-6">
-                <div class="card-body d-flex flex-column vh-50 p-3 p-lg-4">
-                  <!-- Food name -->
-                  <div id="food-name"
-                       class="d-flex align-items-center justify-content-between">
-                    <h5 class="card-title fw-bolder fs-3 text-1000 mb-1">Tên món</h5>
-                    <button type="button"
-                            class="btn-close d-none d-lg-flex"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                  </div>
+                            <!-- Food details -->
+                            <div class="col-lg-6">
+                                <div class="card-body d-flex flex-column vh-50 p-3 p-lg-4">
+                                    <!-- Food name -->
+                                    <div id="food-name"
+                                         class="d-flex align-items-center justify-content-between">
+                                        <h5 class="card-title fw-bolder fs-3 text-1000 mb-1">Tên món</h5>
+                                        <button type="button"
+                                                class="btn-close d-none d-lg-flex"
+                                                data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
 
-                  <!-- Food rating -->
-                  <div class="card-text text-primary fs-2 my-1">
-                    <i class="ph-bold ph-star"></i>
-                    <i class="ph-bold ph-star"></i>
-                    <i class="ph-bold ph-star"></i>
-                    <i class="ph-bold ph-star"></i>
-                    <i class="ph-bold ph-star"></i>
-                  </div>
+                                    <!-- Food rating -->
+                                    <div class="card-text text-primary fs-2 my-1">
+                                        <i class="ph-bold ph-star"></i>
+                                        <i class="ph-bold ph-star"></i>
+                                        <i class="ph-bold ph-star"></i>
+                                        <i class="ph-bold ph-star"></i>
+                                        <i class="ph-bold ph-star"></i>
+                                    </div>
 
-                  <!-- Food price -->
-                  <div class="card-text mb-3 d-flex flex-wrap align-items-center lh-1">
-                    <span id="food-price-original"
-                          class="fs-1 me-2 text-600">
-                      <s>50.000 đ</s>
-                    </span>
-                    <span id="food-price"
-                          class="text-secondary fw-bolder me-3 fs-3"
-                          style="font-size: 1.2rem">
-                      40.000 đ
-                    </span>
-                    <span id="food-discount"
-                          class="badge bg-success mt-2 mt-sm-0 px-3 py-2 fs-0">
-                      Giảm 10%
-                    </span>
-                  </div>
+                                    <!-- Food price -->
+                                    <div class="card-text mb-3 d-flex flex-wrap align-items-center lh-1">
+                                        <span id="food-price-original"
+                                              class="fs-1 me-2 text-600">
+                                            <s>50.000 đ</s>
+                                        </span>
+                                        <span id="food-price"
+                                              class="text-secondary fw-bolder me-3 fs-3"
+                                              style="font-size: 1.2rem">
+                                            40.000 đ
+                                        </span>
+                                        <span id="food-discount"
+                                              class="badge bg-success mt-2 mt-sm-0 px-3 py-2 fs-0">
+                                            Giảm 10%
+                                        </span>
+                                    </div>
 
-                  <!-- Food description -->
-                  <p id="food-description"
-                     class="card-text fs-1">Mô tả món ăn.</p>
+                                    <!-- Food description -->
+                                    <p id="food-description"
+                                       class="card-text fs-1">Mô tả món ăn.</p>
 
-                  <!-- Empty space -->
-                  <div class="flex-grow-1"></div>
+                                    <!-- Empty space -->
+                                    <div class="flex-grow-1"></div>
 
-                  <!-- Quantity input -->
-                  <div
-                       class="d-flex flex-row flex-wrap mb-4 justify-content-between justify-content-lg-start gap-4 align-items-center">
-                    <label for="quantity"
-                           class="fs-1 fw-bold mb-0">Số lượng</label>
-                    <div class="d-flex input-group align-items-center notranslate"
-                         style="width: fit-content;">
-                      <input type="button"
-                             value="-"
-                             data-field="quantity"
-                             class="btn btn-outline-dark border border-dark border-1 button-minus px-3 py-2">
-                      <input type="number"
-                             step="1"
-                             min="1"
-                             max="10"
-                             maxlength="2"
-                             style="width: 4em;"
-                             name="quantity"
-                             value="1"
-                             class="quantity-input quantity-field border border-dark border-1 border-start-0 border-end-0 text-center py-2">
-                      <input type="button"
-                             value="+"
-                             data-field="quantity"
-                             class="btn btn-outline-dark border border-dark border-1 button-plus px-3 py-2">
+                                    <!-- Quantity input -->
+                                    <div
+                                        class="d-flex flex-row flex-wrap mb-4 justify-content-between justify-content-lg-start gap-4 align-items-center">
+                                        <label for="quantity"
+                                               class="fs-1 fw-bold mb-0">Số lượng</label>
+                                        <div class="d-flex input-group align-items-center notranslate" style="width: fit-content;">
+                                            <input type="button"
+                                                   value="-"
+                                                   data-field="quantity"
+                                                   class="btn btn-outline-dark border border-dark border-1 button-minus px-3 py-2">
+                                            <input type="number"
+                                                   step="1"
+                                                   min="1"
+                                                   max="10"
+                                                   maxlength="2"
+                                                   style="width: 4em;"
+                                                   name="quantity"
+                                                   value="1"
+                                                   class="quantity-input quantity-field border border-dark border-1 border-start-0 border-end-0 text-center py-2">
+                                            <input type="button"
+                                                   value="+"
+                                                   data-field="quantity"
+                                                   class="btn btn-outline-dark border border-dark border-1 button-plus px-3 py-2">
+                                        </div>
+                                    </div>
+
+                                    <!-- Add to cart button whose quantity attribute dynamically changes based on user's choice -->
+                                    <button class="btn btn-lg btn-primary py-3 fs-2 py-lg-2 fs-lg-1 addToCartBtn"
+                                            data-foodid=""
+                                            data-quantity="1"
+                                            >
+                                        Thêm vào Giỏ hàng
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-
-                  <!-- Add to cart button whose quantity attribute dynamically changes based on user's choice -->
-                  <button class="btn btn-lg btn-primary py-3 fs-2 py-lg-2 fs-lg-1 addToCartBtn"
-                          data-foodid=""
-                          data-quantity="1">Thêm vào Giỏ hàng</button>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
 
-  <style>
-    /* Hide number input arrows */
-    #food-details-modal input[type=number]::-webkit-inner-spin-button,
-    #food-details-modal input[type=number]::-webkit-outer-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-  </style>
-
-  <script>
-    // Initialize the modal's content whenever the user clicks on any food card
-    $(document).on("click", ".stretched-link", function () {
-      let foodID = $(this).attr("data-food-id");
-      let foodType = $(this).attr("data-food-type");
-      let foodName = $(this).attr("data-food-name");
-      let foodDescription = $(this).attr("data-food-description");
-      let foodPriceOriginal = $(this).attr("data-food-price-original");
-      let foodPrice = $(this).attr("data-food-price");
-      let foodStatus = $(this).attr("data-food-status");
-      let foodRate = $(this).attr("data-food-rate");
-      let discountPercent = $(this).attr("data-discount-percent");
-      let imageURL = $(this).attr("data-image-url");
-      let quantity = 1;
-
-      let modal = $("#food-details-modal");
-
-      // Set the image of the food
-      modal.find("#food-image").attr("src", imageURL)
-        .attr("alt", foodName);
-
-      // Set the name of the food
-      modal.find("#food-name h5").text(foodName);
-
-      // Set the rating of the food
-      let stars = Array.from(modal.find(".ph-star"));
-      for (let index = 0; index < 5; index++) {
-        star = stars[index];
-        if (index < foodRate) {
-          star.classList.remove("ph-bold");
-          star.classList.add("ph-fill");
-        } else {
-          star.classList.remove("ph-fill");
-          star.classList.add("ph-bold");
+    <style>
+        /* Hide number input arrows */
+        #food-details-modal input[type=number]::-webkit-inner-spin-button,
+        #food-details-modal input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
         }
-      }
+    </style>
 
-      // Parse the food prices to float, then convert them to locale string
-      // Don't use localeParseFloat because the original price that the Java servlet returns
-      // uses a dot instead of a comma as the decimal separator, which confuses the function
-      // and return incorrect results (40000.0000 returns 400000000)
-      foodPriceOriginal = parseFloat(foodPriceOriginal).toLocaleString(pageLocale);
-      foodPrice = parseFloat(foodPrice).toLocaleString(pageLocale);
+    <script>
 
-      // Set the price of the food
-      modal.find("#food-price").text(foodPrice + " đ");
+        // Initialize the modal's content whenever the user clicks on any food card
+        $(document).on("click", ".stretched-link", function () {
+            let foodID = $(this).attr("data-food-id");
+            let foodType = $(this).attr("data-food-type");
+            let foodName = $(this).attr("data-food-name");
+            let foodDescription = $(this).attr("data-food-description");
+            let foodPriceOriginal = $(this).attr("data-food-price-original");
+            let foodPrice = $(this).attr("data-food-price");
+            let foodStatus = $(this).attr("data-food-status");
+            let foodRate = $(this).attr("data-food-rate");
+            let discountPercent = $(this).attr("data-discount-percent");
+            let imageURL = $(this).attr("data-image-url");
+            let quantity = 1;
 
-      // Only set and show the original price and the discount value if the food is discounted
-      if (discountPercent > 0) {
-        modal.find("#food-price-original").html("<s>" + foodPriceOriginal + " đ</s>").removeClass("d-none");
-        modal.find("#food-discount").text("Giảm " + discountPercent + "%").removeClass("d-none");
-      } else {
-        modal.find("#food-price-original").html("").addClass("d-none");
-        modal.find("#food-discount").text("").addClass("d-none");
-      }
+            let modal = $("#food-details-modal");
 
-      // Set the description of the food
-      modal.find("#food-description").html(foodDescription);
+            // Set the image of the food
+            modal.find("#food-image").attr("src", imageURL)
+                    .attr("alt", foodName);
 
-      // Disables the add to cart button if the food is out of stock/unavailable
-      if (foodStatus === "0") {
-        let button = modal.find(".addToCartBtn");
-        button.attr("disabled", "disabled");
-        button.text("Tạm hết món");
-        button.removeAttr("data-quantity");
-        button.removeAttr("data-foodid");
-      } else {
-        let button = modal.find(".addToCartBtn");
-        button.removeAttr("disabled");
-        button.text("Thêm vào Giỏ hàng");
-        button.attr("data-quantity", quantity);
-        button.attr("data-foodid", foodID);
-      }
-    });
+            // Set the name of the food
+            modal.find("#food-name h5").text(foodName);
 
-    // Restrict user input to reject non-numeric characters
-    // except for navigation keys and backspace/delete
-    $('#food-details-modal .quantity-input').on('keydown', (e) => {
-      let key = e.key;
-      let isDigit = /^\d$/.test(key);
-      let target = $(e.target);
-      let allowedKeys = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Backspace', 'Delete'];
-      let isException = allowedKeys.includes(key);
+            // Set the rating of the food
+            let stars = Array.from(modal.find(".ph-star"));
+            for (let index = 0; index < 5; index++) {
+                star = stars[index];
+                if (index < foodRate) {
+                    star.classList.remove("ph-bold");
+                    star.classList.add("ph-fill");
+                } else {
+                    star.classList.remove("ph-fill");
+                    star.classList.add("ph-bold");
+                }
+            }
 
-      // Prevents the user from typing more than 2 digits
-      // If target is of HTML input element, use e.target.value
-      // If target is of jQuery object, use $(e.target).val()
-      if (isDigit) {
-        if (target.val().length >= 2) {
-          e.preventDefault();
+            // Parse the food prices to float, then convert them to locale string
+            // Don't use localeParseFloat because the original price that the Java servlet returns
+            // uses a dot instead of a comma as the decimal separator, which confuses the function
+            // and return incorrect results (40000.0000 returns 400000000)
+            foodPriceOriginal = parseFloat(foodPriceOriginal).toLocaleString(pageLocale);
+            foodPrice = parseFloat(foodPrice).toLocaleString(pageLocale);
+
+            // Set the price of the food
+            modal.find("#food-price").text(foodPrice + " đ");
+
+            // Only set and show the original price and the discount value if the food is discounted
+            if (discountPercent > 0) {
+                modal.find("#food-price-original").html("<s>" + foodPriceOriginal + " đ</s>").removeClass("d-none");
+                modal.find("#food-discount").text("Giảm " + discountPercent + "%").removeClass("d-none");
+            } else {
+                modal.find("#food-price-original").html("").addClass("d-none");
+                modal.find("#food-discount").text("").addClass("d-none");
+            }
+
+            // Set the description of the food
+            modal.find("#food-description").html(foodDescription);
+
+            // Disables the add to cart button if the food is out of stock/unavailable
+            if (foodStatus === "0") {
+                let button = modal.find(".addToCartBtn");
+                button.attr("disabled", "disabled");
+                button.text("Tạm hết món");
+                button.removeAttr("data-quantity");
+                button.removeAttr("data-foodid");
+            } else {
+                let button = modal.find(".addToCartBtn");
+                button.removeAttr("disabled");
+                button.text("Thêm vào Giỏ hàng");
+                button.attr("data-quantity", quantity);
+                button.attr("data-foodid", foodID);
+            }
+        });
+
+        // Restrict user input to reject non-numeric characters
+        // except for navigation keys and backspace/delete
+        $('#food-details-modal .quantity-input').on('keydown', (e) => {
+            let key = e.key;
+            let isDigit = /^\d$/.test(key);
+            let target = $(e.target);
+            let allowedKeys = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Backspace', 'Delete'];
+            let isException = allowedKeys.includes(key);
+
+            // Prevents the user from typing more than 2 digits
+            // If target is of HTML input element, use e.target.value
+            // If target is of jQuery object, use $(e.target).val()
+            if (isDigit) {
+                if (target.val().length >= 2) {
+                    e.preventDefault();
+                }
+            }
+
+            // Check if the key is a number
+            if (!isDigit && !isException) {
+                e.preventDefault();
+            }
+        })
+
+        // All of the event listeners here use the same oldQuantity variable
+        // in cart.jspf, line 228
+        // Set the old quantity variable to the value of the input field (before the user types anything), 
+        // so that this will be used to restore the original quantity in case
+        // the new quantity is invalid
+        $('#food-details-modal .quantity-input').on('focus', (e) => {
+            const target = $(e.target);
+            oldQuantity = parseInt(target.val(), 10);
+        })
+
+        // Validates the user quantity input only when the user clicks outside of the input field
+        // instead of immediately upon value change. Because we want the user to safely delete the old number
+        // and input a new one without the price values going crazy
+        $('#food-details-modal .quantity-input').on('blur', (e) => {
+            // Get the parent table row of the input field
+            const target = $(e.target);
+
+            // Get the quantity entered by the user
+            const currentQuantity = parseInt(event.target.value, 10);
+
+            // Validates the user input, making sure it is within 1-10
+            let newQuantity =
+                    !isNaN(currentQuantity) && currentQuantity >= 1 && currentQuantity <= 10 // user input is valid
+                    ? currentQuantity
+                    : oldQuantity; // This is retrieve before the user typed anything, so this acts as the backup value
+
+            // https://stackoverflow.com/questions/45069106/jquery-doesnt-handle-event-target-properly-why
+            target.val(newQuantity);
+
+            // Update the button's data-quantity attribute
+            updateButtonQuantity(newQuantity);
+        })
+
+        // Updates the quantity of a button in the food details modal.
+        // 
+        // Parameters:
+        // - quantity: The new quantity to set for the button.
+        // 
+        // Returns: 
+        // - None.
+        function updateButtonQuantity(quantity) {
+            let button = $("#food-details-modal .addToCartBtn");
+            button.attr("data-quantity", quantity);
         }
-      }
 
-      // Check if the key is a number
-      if (!isDigit && !isException) {
-        e.preventDefault();
-      }
-    })
+        /**
+         * Increments the value of a field by 1 when triggered by an event.
+         *
+         * @param {Event} e - The event object.
+         * @return {number} The new value.
+         */
+        function incrementValue(e) {
+            e.preventDefault();
+            let target = $(e.target);
+            let fieldName = target.data("field");
+            let parent = target.closest("div");
+            let quantityInput = parent.find("input[name=" + fieldName + "]");
+            let currentQuantity = parseInt(quantityInput.val(), 10);
 
-    // All of the event listeners here use the same oldQuantity variable
-    // in cart.jspf, line 228
-    // Set the old quantity variable to the value of the input field (before the user types anything), 
-    // so that this will be used to restore the original quantity in case
-    // the new quantity is invalid
-    $('#food-details-modal .quantity-input').on('focus', (e) => {
-      const target = $(e.target);
-      oldQuantity = parseInt(target.val(), 10);
-    })
+            // Set the new value, making sure it is within 1-10
+            let newQuantity =
+                    !isNaN(currentQuantity) && currentQuantity >= 1 && currentQuantity < 10
+                    ? currentQuantity + 1
+                    : 10;
+            quantityInput.val(newQuantity);
 
-    // Validates the user quantity input only when the user clicks outside of the input field
-    // instead of immediately upon value change. Because we want the user to safely delete the old number
-    // and input a new one without the price values going crazy
-    $('#food-details-modal .quantity-input').on('blur', (e) => {
-      // Get the parent table row of the input field
-      const target = $(e.target);
+            return newQuantity;
+        }
 
-      // Get the quantity entered by the user
-      const currentQuantity = parseInt(event.target.value, 10);
+        /**
+         * Decrements the value of an input field by 1.
+         *
+         * @param {Event} e - The event object.
+         * @return {number} The new value.
+         */
+        function decrementValue(e) {
+            e.preventDefault();
+            let target = $(e.target);
+            let fieldName = target.data("field");
+            let parent = target.closest("div");
+            let quantityInput = parent.find("input[name=" + fieldName + "]");
+            let currentQuantity = parseInt(quantityInput.val(), 10);
 
-      // Validates the user input, making sure it is within 1-10
-      let newQuantity =
-        !isNaN(currentQuantity) && currentQuantity >= 1 && currentQuantity <= 10 // user input is valid
-          ? currentQuantity
-          : oldQuantity; // This is retrieve before the user typed anything, so this acts as the backup value
+            // Set the new value, making sure it is within 1-10
+            let newQuantity =
+                    !isNaN(currentQuantity) && currentQuantity > 1 && currentQuantity <= 10
+                    ? currentQuantity - 1
+                    : 1;
+            quantityInput.val(newQuantity);
 
-      // https://stackoverflow.com/questions/45069106/jquery-doesnt-handle-event-target-properly-why
-      target.val(newQuantity);
+            return newQuantity;
+        }
 
-      // Update the button's data-quantity attribute
-      updateButtonQuantity(newQuantity);
-    })
+        $("#food-details-modal .input-group").on("click", ".button-plus", (e) => {
+            let quantity = incrementValue(e);
+            // Update the button's data-quantity attribute
+            updateButtonQuantity(quantity);
+        });
 
-    // Updates the quantity of a button in the food details modal.
-    // 
-    // Parameters:
-    // - quantity: The new quantity to set for the button.
-    // 
-    // Returns: 
-    // - None.
-    function updateButtonQuantity(quantity) {
-      let button = $("#food-details-modal .addToCartBtn");
-      button.attr("data-quantity", quantity);
-    }
+        $("#food-details-modal .input-group").on("click", ".button-minus", (e) => {
+            let quantity = decrementValue(e);
+            // Update the button's data-quantity attribute
+            updateButtonQuantity(quantity);
+        });
 
-    /**
-     * Increments the value of a field by 1 when triggered by an event.
-     *
-     * @param {Event} e - The event object.
-     * @return {number} The new value.
-     */
-    function incrementValue(e) {
-      e.preventDefault();
-      let target = $(e.target);
-      let fieldName = target.data("field");
-      let parent = target.closest("div");
-      let quantityInput = parent.find("input[name=" + fieldName + "]");
-      let currentQuantity = parseInt(quantityInput.val(), 10);
-
-      // Set the new value, making sure it is within 1-10
-      let newQuantity =
-        !isNaN(currentQuantity) && currentQuantity >= 1 && currentQuantity < 10
-          ? currentQuantity + 1
-          : 10;
-      quantityInput.val(newQuantity);
-
-      return newQuantity;
-    }
-
-    /**
-     * Decrements the value of an input field by 1.
-     *
-     * @param {Event} e - The event object.
-     * @return {number} The new value.
-     */
-    function decrementValue(e) {
-      e.preventDefault();
-      let target = $(e.target);
-      let fieldName = target.data("field");
-      let parent = target.closest("div");
-      let quantityInput = parent.find("input[name=" + fieldName + "]");
-      let currentQuantity = parseInt(quantityInput.val(), 10);
-
-      // Set the new value, making sure it is within 1-10
-      let newQuantity =
-        !isNaN(currentQuantity) && currentQuantity > 1 && currentQuantity <= 10
-          ? currentQuantity - 1
-          : 1;
-      quantityInput.val(newQuantity);
-
-      return newQuantity;
-    }
-
-    $("#food-details-modal .input-group").on("click", ".button-plus", (e) => {
-      let quantity = incrementValue(e);
-      // Update the button's data-quantity attribute
-      updateButtonQuantity(quantity);
-    });
-
-    $("#food-details-modal .input-group").on("click", ".button-minus", (e) => {
-      let quantity = decrementValue(e);
-      // Update the button's data-quantity attribute
-      updateButtonQuantity(quantity);
-    });
-
-    // Reset the quantity when the modal is closed
-    $('#food-details-modal').on('hidden.bs.modal', (e) => {
-      $('#food-details-modal .quantity-input').val(1);
-    });
-  </script>
+        // Reset the quantity when the modal is closed
+        $('#food-details-modal').on('hidden.bs.modal', (e) => {
+            $('#food-details-modal .quantity-input').val(1);
+        });
+    </script>

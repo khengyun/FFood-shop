@@ -91,7 +91,6 @@ public class LoginController extends HttpServlet {
             }
             // Truy xuất URL hiện tại từ session attribute
             HttpSession session = request.getSession();
-            String previousUrl = (String) session.getAttribute("previousUrl");
             if (success) {
                 
                 account = dao.getAccount(email);
@@ -113,23 +112,52 @@ public class LoginController extends HttpServlet {
                         cUser.setMaxAge(cAge);
                         cUser.setPath("/");
                         response.addCookie(cUserID);
-                        if (previousUrl != null) {
-                            // Chuyển hướng người dùng về trang hiện tại
-                            response.sendRedirect(previousUrl);
-                        } else {
-                            // Nếu không có URL trước đó, chuyển hướng người dùng về trang mặc định
-                            response.sendRedirect("/");
-                        }
-                    } else {
+                        response.sendRedirect("/");
+                    } else if (accountType.equals("admin")) {
                         int cAge = 24 * 60 * 60 * 7; // 7 days
                         account = dao.getAccount(email);
                         String username = account.getUsername();
                         username = URLEncoder.encode(username, "UTF-8");
+                        byte adminID = account.getAdminID();
+                        System.out.println("adminID " + adminID);
+                        session.setAttribute("adminID", adminID);
                         Cookie adminCookie = new Cookie("admin", username);
+                        Cookie adminIDCookie = new Cookie("adminID", Byte.toString(adminID));
                         adminCookie.setMaxAge(cAge);
                         adminCookie.setPath("/");
+                        adminIDCookie.setMaxAge(cAge);
+                        adminIDCookie.setPath("/");
                         response.addCookie(adminCookie);
+                        response.addCookie(adminIDCookie);
                         response.sendRedirect("/admin");
+                    } else if (accountType.equals("staff")) {
+                        int cAge = 24 * 60 * 60 * 7; // 7 days
+                        account = dao.getAccount(email);
+                        String username = account.getUsername();
+                        byte staffID = account.getStaffID();
+                        System.out.println("staffID " + staffID);
+                        session.setAttribute("staffID", staffID);
+                        username = URLEncoder.encode(username, "UTF-8");
+                        Cookie staffCookie = new Cookie("staff", username);
+                        Cookie staffIDCookie = new Cookie("staffID", Byte.toString(staffID));
+                        
+                        staffCookie.setMaxAge(cAge);
+                        staffCookie.setPath("/");
+                        staffIDCookie.setMaxAge(cAge);
+                        staffIDCookie.setPath("/");                        
+                        response.addCookie(staffCookie);
+                        response.addCookie(staffIDCookie);
+                        response.sendRedirect("/staff");
+                    } else if (accountType.equals("promotionManager")) {
+                        int cAge = 24 * 60 * 60 * 7; // 7 days
+                        account = dao.getAccount(email);
+                        String username = account.getUsername();
+                        username = URLEncoder.encode(username, "UTF-8");
+                        Cookie promotionManagerCookie = new Cookie("promotionManager", username);
+                        promotionManagerCookie.setMaxAge(cAge);
+                        promotionManagerCookie.setPath("/");
+                        response.addCookie(promotionManagerCookie);
+                        response.sendRedirect("/promotionManager");
                     }
                 } else {
                     if (accountType.equals("user")) {
@@ -139,18 +167,14 @@ public class LoginController extends HttpServlet {
                         session = request.getSession();
                         session.setAttribute("user", username);
                         session.setAttribute("userID", userID);
-                        if (previousUrl != null) {
-                            // Chuyển hướng người dùng về trang hiện tại
-                            response.sendRedirect(previousUrl);
-                        } else {
-                            // Nếu không có URL trước đó, chuyển hướng người dùng về trang mặc định
-                            response.sendRedirect("/");
-                        }
+                        response.sendRedirect("/");
                     } else if (accountType.equals("admin")) {
                         account = dao.getAccount(email);
                         String username = account.getUsername();
                         session = request.getSession();
-                        session.setAttribute("adminID", account.getAdminID());
+                        byte adminID = account.getAdminID();
+                        System.out.println("adminID " + adminID);
+                        session.setAttribute("adminID", adminID);
                         session.setAttribute("admin", username);
                         response.sendRedirect("/admin");
                     } else if (accountType.equals("staff")) {

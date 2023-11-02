@@ -76,7 +76,9 @@
         <c:when test="${food.status == 1}">
           <button class="btn btn-lg btn-primary px-2 w-100 addToCartBtn z-2"
                   data-foodid="${food.foodID}"
-                  data-quantity="1">Thêm vào Giỏ hàng</button>
+                  data-quantity="1"
+                  onclick="addToCart(${food.foodID}, 1)"
+            >Thêm vào Giỏ hàng</button>
         </c:when>
         <c:otherwise>
           <button class="btn btn-lg btn-primary px-2 w-100"

@@ -50,29 +50,26 @@ $(document).on("click", "#btn-delete-food", function () {
   modal.find("input[name='foodData']").attr("value", foodIds);
 });
 
-function handleSelectChange(selectElement) {
-    // Get the selected value
-    const selectedStatus = selectElement.value;
+$(document).on("click", "#btn-next-order", function () {
+    let modal = $("#next-order-modal");
+    // Clear the list of foods in the modal every time the button is clicked
+    modal.find(".modal-body ul").empty();
 
-    // Get the data-orderid attribute value
-    const orderid = selectElement.getAttribute("data-orderid");
+    // Retrieves selected rows' data in JSON format, so that it can be iterated
+    let orders = JSON.parse($(this).attr("data-orders")); //accounts contain accountID of username
+    
+    // Populate the list of roles in the modal
+    for (let orderId in orders) {
+        let orderID = orders[orderId];
+        modal.find("#next-order-list").append("<li>" + orderID + "</li>");
+    }
 
-    // Send AJAX request to addToCart servlet endpoint
-    $.ajax({
-      type: "GET",
-      url: "staff/order",
-      data: {
-        orderID: orderid,
-        Changestatus: selectedStatus
-      },
-      success: function (response) {
-        console.log("Change order status successfully.");
-      },
-      error: function (error) {
-        console.error("Error occurred: " + error.responseText);
-      }
-    });
-}
+    // Keep food IDs as strings
+    let orderIds = Object.keys(orders).toString();
+
+    // Set the values to the hidden input in the modal
+    modal.find("input[name='orderData']").attr("value", orderIds);
+});
 
 $(document).on("click", "#btn-update-order", function () {
     let orderID = $(this).attr("data-order-id");
