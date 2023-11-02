@@ -2,13 +2,19 @@
  */
 package Controllers;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+
+import org.json.JSONObject;
 
 import DAOs.AccountDAO;
 import DAOs.CartDAO;
@@ -27,6 +33,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+
 
 public class CheckoutController extends HttpServlet {
 
@@ -254,13 +261,65 @@ public class CheckoutController extends HttpServlet {
             // Xóa giỏ hàng từ session
             session.removeAttribute("cart");
             
-            // Điều hướng về trang "home" với tham số "orderid"
-            response.sendRedirect("/home?cis=" + customerID + "#success");
+            if (paymentMethod.equals("COD")) {
+                response.sendRedirect("/home" + "#success");
+            }else if (paymentMethod.equals("VNPAY")) {
+
+                // Tạo URL cho việc gọi API
+                String apiURL = "http://localhost:8001/payment_from_cis?cis=" + customerID;
+
+                // Thực hiện HTTP request để lấy vnpay_payment_url
+                String vnpayPaymentURL = sendGetRequest(apiURL);
+
+                if (vnpayPaymentURL != null && !vnpayPaymentURL.isEmpty()) {
+                    response.sendRedirect(vnpayPaymentURL);
+                } else {
+                    // Xử lý trường hợp không lấy được vnpay_payment_url
+                    response.sendRedirect("/home#failure");
+                }
+
+                
+            // response.sendRedirect("/home?cis=" + customerID + "#success");
+            }
+
         } else {
             // Xử lý trường hợp không thêm đơn hàng thành công
             request.getRequestDispatcher("checkout.jsp").forward(request, response);
         }
     }
+
+    private String sendGetRequest(String apiURL) {
+    try {
+        URL url = new URL(apiURL);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+        connection.setRequestMethod("GET");
+        int responseCode = connection.getResponseCode();
+
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String inputLine;
+            StringBuilder response = new StringBuilder();
+
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+
+            // Parse the response and return the vnpay_payment_url
+            JSONObject obj = new JSONObject(response.toString());
+            String vnpayPaymentURL = obj.getString("vnpay_payment_url");
+            return vnpayPaymentURL;
+        } else {
+            // Xử lý trường hợp không thành công khi gọi API
+            return null;
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+        return null;
+    }
+}
+
 
     protected void doPostCheckout(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
