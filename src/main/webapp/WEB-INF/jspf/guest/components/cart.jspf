@@ -49,7 +49,7 @@
                                     <!-- Quantity -->
                                     <!-- https://codepen.io/anitaparmar26/pen/BaLYMeN -->
                                     <td>
-                                        <div class="d-flex input-group align-items-center">
+                                        <div class="d-flex input-group align-items-center notranslate">
                                           <input type="button" value="-" class="btn btn-outline-dark border border-dark border-1 button-minus px-2 py-1" data-field="quantity-${cart.food.foodID}">
                                           <input type="number" step="1" min="1" max="10" maxlength="2" style="width: 2em;" class="quantity-input quantity-field border border-dark border-1 border-start-0 border-end-0 text-center py-1" name="quantity-${cart.food.foodID}" value="${cart.foodQuantity}">
                                           <input type="button" value="+" class="btn btn-outline-dark border border-dark border-1 button-plus px-2 py-1" data-field="quantity-${cart.food.foodID}">
@@ -361,7 +361,8 @@
      * @return {number} The price as a numeric value.
      */
     function getPrice(str) {
-      return localeParseFloat(str.replace(" đ", ""));
+      // Remove all non-numeric characters from the string
+      return localeParseFloat(str.replace(/[^0-9.]/g, ""));
     }
 
     $(".input-group").on("click", ".button-plus", (e) => {
