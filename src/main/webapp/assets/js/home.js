@@ -110,8 +110,6 @@ addToCartButtons.forEach(function (button) {
 });
 
 
-
-
 /**
  * Show default food items
  *
