@@ -127,10 +127,14 @@
                                 </div>
                                 <div class="col-md-12">
                                     <h4>Phương thức thanh toán</h4>
-                                    <input class="paying-method" checked type="radio" disabled>
-                                    <span class="">Thanh toán khi nhận món (COD)</span>
-                                        <!--<input type="radio" class="btn-check" name="paymentMethod" id="paymentMethod3" >-->
-                                        <!--<label class="btn btn-outline-dark p-3" for="paymentMethod3">Thanh toán khi nhận món (COD)</label>-->
+                                    <fieldset>
+                                        <input class="paying-method" checked type="radio" name="paymentMethod" id="cod-payment" value="COD">
+                                        <label for="paymentMethod1">Thanh toán khi nhận món (COD)</label>
+                                    </fieldset>
+                                    <fieldset>
+                                        <input class="paying-method" type="radio" name="paymentMethod" id="vnpay-payment" value="VNPAY">
+                                        <label for="paymentMethod2">Thanh toán Online (VNPAY)</label>
+                                    </fieldset>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12 my-3">
@@ -154,7 +158,6 @@
                                 <h4 class="d-inline-flex">Tổng thanh toán: ${totalPrice*(voucherpercent)}đ</h4>
                                 <button type="submit"  id=”btnSubmit” name="btnSubmit" value="SubmitOrder" class="btn btn-primary ms-3" onclick="return checkPaying();" >Đặt món</button>
                             </div>
-                        </form>
                     </div>
                 </div>
             </div>
