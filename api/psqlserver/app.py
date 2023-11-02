@@ -150,20 +150,7 @@ async def payment_return(request: Request):
     </head>
     <body>
         <h1>Payment Return Page</h1>
-        <p>Your payment has been processed successfully.</p>
-        <p>vnp_Amount: {vnp_Amount}</p>
-        <p>vnp_BankCode: {vnp_BankCode}</p>
-        <p>vnp_CardType: {vnp_CardType}</p>
-        <p>vnp_OrderInfo: {vnp_OrderInfo}</p>
-        <p>vnp_PayDate: {vnp_PayDate}</p>
-        <p>vnp_ResponseCode: {vnp_ResponseCode}</p>
-        <p>vnp_TmnCode: {vnp_TmnCode}</p>
-        <p>vnp_TransactionNo: {vnp_TransactionNo}</p>
-        <p>vnp_TransactionStatus: {vnp_TransactionStatus}</p>
-        <p>vnp_TxnRef: {vnp_TxnRef}</p>
-        <p>vnp_SecureHash: {vnp_SecureHash}</p>
-        <p>order_id: {order_id}</p>
-        <P>result: {result}</p>
+        <p>Your payment has been processed {tag}.</p>
         <script>
             // Execute the script after the page has fully loaded
             window.onload = function() {{
