@@ -2,13 +2,17 @@
 Tien Thanh --%> <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="WEB-INF/jspf/common/imports/base.jspf" %>
 <!DOCTYPE html>
-<html lang="en-US" dir="ltr">
+<html lang="vi" dir="ltr">
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- Title -->
     <title>FFood | Đặt món nhanh, rẻ, tiện</title>
+
+    <!-- Locale for JSTL fmt tags -->
+    <fmt:setLocale value="vi" scope="session"/>
+
     <%@ include file="WEB-INF/jspf/common/imports/resources.jspf" %>
     <link rel="stylesheet" href="assets/css/style.css" />
 
@@ -44,6 +48,9 @@ Tien Thanh --%> <%@page contentType="text/html" pageEncoding="UTF-8"%>
           %>
           <!-- Food list -->
           <%@ include file="WEB-INF/jspf/guest/components/foodList.jspf" %>
+
+          <!-- Food details -->
+          <%@ include file="WEB-INF/jspf/guest/components/foodDetails.jspf" %>
         </div>
       </section>
 
