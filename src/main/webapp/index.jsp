@@ -49,8 +49,8 @@ Tien Thanh --%> <%@page contentType="text/html" pageEncoding="UTF-8"%>
           <!-- Food list -->
           <%@ include file="WEB-INF/jspf/guest/components/foodList.jspf" %>
 
-          <!-- Food details -->
-          <%@ include file="WEB-INF/jspf/guest/components/foodDetails.jspf" %>
+          <%-- <!-- Food details -->
+          <%@ include file="WEB-INF/jspf/guest/components/foodDetails.jspf" %> --%>
         </div>
       </section>
 
