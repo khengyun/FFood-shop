@@ -25,6 +25,7 @@
                 <%@ include file="WEB-INF/jspf/staff/components/updateFood.jspf" %>
                 <%@ include file="WEB-INF/jspf/staff/components/deleteFood.jspf" %>
                 <%@ include file="WEB-INF/jspf/staff/components/updateOrder.jspf" %>
+                <%@ include file="WEB-INF/jspf/staff/components/nextOrder.jspf" %>
                 <%@ include file="WEB-INF/jspf/staff/components/failure.jspf" %>
                 <%@ include file="WEB-INF/jspf/staff/components/success.jspf" %>
                 <%@ include file="WEB-INF/jspf/staff/components/staffSidebar.jspf" %>
