@@ -80,14 +80,14 @@
                     </div>
                 </form>
             </div>
-            <div class="modal-footer border-top-0 pt-0 flex-wrap">
+            <div class="modal-footer border-top-0 pt-0 flex-wrap gap-2">
               <h5 id="grand-total" class="mb-3 pt-2 w-100 text-end border-top border-black border-2">Tổng thanh toán: <fmt:formatNumber type="number" pattern="###,###"
                 value="${totalPrice}"/> đ</h5>
-              <button type="button" class="btn w-100 w-sm-auto btn-outline-dark px-4" data-bs-dismiss="modal" aria-label="Close">
+              <button type="button" class="btn w-100 w-sm-auto btn-outline-dark fs-2 fs-lg-1 px-4 py-3 py-lg-2" data-bs-dismiss="modal" aria-label="Close">
                 Tiếp tục chọn món
               </button>
               <%-- To solve the issue of submit button outside of the form element, just add "form" attribute --%>
-              <button type="submit" class="btn w-100 w-sm-auto btn-primary px-5" id="btnSubmit" name="btnSubmit" form="cart-form" value="Checkout">
+              <button type="submit" class="btn w-100 w-sm-auto btn-primary fs-2 fs-lg-1 px-5 py-3 py-lg-2" id="btnSubmit" name="btnSubmit" form="cart-form" value="Checkout">
                 Thanh toán
               </button>
             </div>
@@ -203,7 +203,7 @@
 
     // Restrict user input to reject non-numeric characters
     // except for navigation keys and backspace/delete
-    $('.quantity-input').on('keydown', (e) => {
+    $('#cart-modal .quantity-input').on('keydown', (e) => {
       let key = e.key;
       let isDigit = /^\d$/.test(key);
       let target = $(e.target);
@@ -229,7 +229,7 @@
     // Set the old quantity variable to the value of the input field (before the user types anything), 
     // so that this will be used to restore the original quantity in case
     // the new quantity is invalid
-    $('.quantity-input').on('focus', (e) => {
+    $('#cart-modal .quantity-input').on('focus', (e) => {
       const target = $(e.target);      
       oldQuantity = parseInt(target.val(), 10);
     })
@@ -237,7 +237,7 @@
     // Validates the user quantity input only when the user clicks outside of the input field
     // instead of immediately upon value change. Because we want the user to safely delete the old number
     // and input a new one without the price values going crazy
-    $('.quantity-input').on('blur', (e) => {
+    $('#cart-modal .quantity-input').on('blur', (e) => {
       // Get the parent table row of the input field
       const tableRow = event.target.closest("tr");
       const target = $(e.target);
@@ -365,7 +365,7 @@
       return localeParseFloat(str.replace(/[^0-9.]/g, ""));
     }
 
-    $(".input-group").on("click", ".button-plus", (e) => {
+    $("#cart-modal .input-group").on("click", ".button-plus", (e) => {
       let quantity = incrementValue(e);
       let target = $(e.target);
       let tableRow = target.closest("tr");
@@ -380,7 +380,7 @@
       updateTotalPrice();
     });
 
-    $(".input-group").on("click", ".button-minus", (e) => {
+    $("#cart-modal .input-group").on("click", ".button-minus", (e) => {
       let quantity = decrementValue(e);
       let target = $(e.target);
       let tableRow = target.closest("tr");
