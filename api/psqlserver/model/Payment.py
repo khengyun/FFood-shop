@@ -1,7 +1,10 @@
+# Payment.py
 from fastapi import FastAPI, Depends, Query, Request
 from pydantic import BaseModel
 from datetime import datetime
 from model.vn_payment import Vnpay, Settings
+from config import db_config
+from typing import List
 
 
 class PaymentRequest(BaseModel):
@@ -13,14 +16,12 @@ class PaymentRequest(BaseModel):
 class Payment:
     def __init__(self, settings):
         self.settings = settings
+        self.db_config = db_config
         print(self.settings)
         print(self.settings.VNPAY_TMN_CODE)
         print(self.settings.VNPAY_RETURN_URL)
         print(self.settings.VNPAY_PAYMENT_URL)
         print(self.settings.VNPAY_HASH_SECRET_KEY)
-
-    def get_client_ip(self, request):
-        return request.client.host
 
     def __call__(self, payment_data: PaymentRequest, request):
         vnp = Vnpay(self.settings)
@@ -40,6 +41,9 @@ class Payment:
         }
         
         vnpay_payment_url = vnp.get_payment_url()
-        print(vnpay_payment_url)
-        return {"vnpay_payment_url": vnpay_payment_url,
-                "vnp.requestData": vnp.requestData}
+        return {"vnpay_payment_url": vnpay_payment_url}
+        
+    def get_client_ip(self, request):
+        return request.client.host
+    
+    
