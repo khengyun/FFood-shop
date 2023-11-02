@@ -80,14 +80,14 @@
                     </div>
                 </form>
             </div>
-            <div class="modal-footer border-top-0 pt-0 flex-wrap">
+            <div class="modal-footer border-top-0 pt-0 flex-wrap gap-2">
               <h5 id="grand-total" class="mb-3 pt-2 w-100 text-end border-top border-black border-2">Tổng thanh toán: <fmt:formatNumber type="number" pattern="###,###"
                 value="${totalPrice}"/> đ</h5>
-              <button type="button" class="btn w-100 w-sm-auto btn-outline-dark px-4" data-bs-dismiss="modal" aria-label="Close">
+              <button type="button" class="btn w-100 w-sm-auto btn-outline-dark fs-2 fs-lg-1 px-4 py-3 py-lg-2" data-bs-dismiss="modal" aria-label="Close">
                 Tiếp tục chọn món
               </button>
               <%-- To solve the issue of submit button outside of the form element, just add "form" attribute --%>
-              <button type="submit" class="btn w-100 w-sm-auto btn-primary px-5" id="btnSubmit" name="btnSubmit" form="cart-form" value="Checkout">
+              <button type="submit" class="btn w-100 w-sm-auto btn-primary fs-2 fs-lg-1 px-5 py-3 py-lg-2" id="btnSubmit" name="btnSubmit" form="cart-form" value="Checkout">
                 Thanh toán
               </button>
             </div>

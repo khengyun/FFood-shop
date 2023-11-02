@@ -13,7 +13,7 @@
               <div class="col-lg-6">
                 <img src=""
                      id="food-image"
-                     class="img-fluid w-100 vh-50 rounded-start"
+                     class="img-fluid w-100 vh-50"
                      alt="..."
                      loading="lazy"
                      style="object-fit: cover; object-position: center;">
@@ -66,31 +66,31 @@
                   <div class="flex-grow-1"></div>
 
                   <!-- Quantity input -->
-                  <div class="d-flex flex-row flex-wrap mb-4 justify-content-between gap-3 align-items-center">
-                    <label for="quantity">Số lượng</label>
+                  <div class="d-flex flex-row flex-wrap mb-4 justify-content-between justify-content-lg-start gap-4 align-items-center">
+                    <label for="quantity" class="fs-1 fw-bold mb-0">Số lượng</label>
                     <div class="d-flex input-group align-items-center notranslate" style="width: fit-content;">
                       <input type="button"
                              value="-"
                              data-field="quantity"
-                             class="btn btn-outline-dark border border-dark border-1 button-minus px-3 py-1">
+                             class="btn btn-outline-dark border border-dark border-1 button-minus px-3 py-2">
                       <input type="number"
                              step="1"
                              min="1"
                              max="10"
                              maxlength="2"
                              style="width: 4em;"
-                             class="quantity-input quantity-field border border-dark border-1 border-start-0 border-end-0 text-center py-1"
                              name="quantity"
-                             value="1">
+                             value="1"
+                             class="quantity-input quantity-field border border-dark border-1 border-start-0 border-end-0 text-center py-2">
                       <input type="button"
                              value="+"
                              data-field="quantity"
-                             class="btn btn-outline-dark border border-dark border-1 button-plus px-3 py-1">
+                             class="btn btn-outline-dark border border-dark border-1 button-plus px-3 py-2">
                     </div>
                   </div>
 
                   <!-- Add to cart button whose quantity attribute dynamically changes based on user's choice -->
-                  <button class="btn btn-lg btn-primary addToCartBtn"
+                  <button class="btn btn-lg btn-primary py-3 fs-2 py-lg-2 fs-lg-1 addToCartBtn"
                           data-foodid=""
                           data-quantity="1">Thêm vào Giỏ hàng</button>
                 </div>
