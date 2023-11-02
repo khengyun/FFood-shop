@@ -103,4 +103,32 @@ class OrderOperations:
         except Exception as e:
             return str(e)
             
-    
+    def check_order_payment(self, order_id: int):
+        try:
+            conn = pymssql.connect(**self.db_config)
+            cursor = conn.cursor()
+            
+            cursor.execute(f"""
+                SELECT PaymentMethod.payment_method, Payment.payment_time, Payment.order_id, payment_status
+                FROM Payment
+                JOIN PaymentMethod ON Payment.payment_status = PaymentMethod.payment_method_id
+                WHERE Payment.order_id = {order_id};
+            """)
+            
+            result = cursor.fetchall()
+            conn.close()
+            
+            payment_info = []
+            for row in result:
+                payment_method, payment_time, order_id, payment_method_id = row
+                payment_info.append({
+                    "payment_method": payment_method,
+                    "payment_time": payment_time.strftime('%Y-%m-%d %H:%M:%S'),
+                    "order_id": order_id,
+                    "payment_method_id": payment_method_id
+                })
+            
+            return payment_info
+
+        except Exception as e:
+            return {"error": str(e)}
