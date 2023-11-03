@@ -49,6 +49,8 @@ public class HomeController extends HttpServlet {
         
         foodList = foodDAO.getAllList();
         String jsonFoodList = gson.toJson(foodList);
+        // Use triple slash (\\\") to escape ", because JSON.parse() doesn't work nicely with \"
+        jsonFoodList = jsonFoodList.replace("\"", "\\\"");
         session.setAttribute("jsonFoodList", jsonFoodList);
         
         session.setAttribute("foodList", foodList);

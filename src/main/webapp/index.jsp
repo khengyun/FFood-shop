@@ -49,7 +49,7 @@
           <%@ include file="WEB-INF/jspf/guest/components/foodList.jspf" %>
 
           <!-- Food details -->
-          <%--<%@ include file="WEB-INF/jspf/guest/components/foodDetails.jspf" %>--%>
+          <%@ include file="WEB-INF/jspf/guest/components/foodDetails.jspf" %>
         </div>
       </section>
 

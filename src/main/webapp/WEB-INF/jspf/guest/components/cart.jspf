@@ -72,13 +72,31 @@
     // Function to add a food item to the cart
     function addToCart(foodID, quantity) {
         var cartItems = JSON.parse(sessionStorage.getItem("cart")) || [];
+        foodID = (typeof foodID === "string") ? parseInt(foodID, 10) : foodID;
+        quantity = (typeof quantity === "string") ? parseInt(quantity, 10) : quantity;
+
         var existingItem = cartItems.find(item => item.foodID === foodID);
         if (existingItem) {
-            existingItem.quantity += quantity;
+          let newQuantity = existingItem.quantity + quantity;
+          
+          // Limit the quantity range to [1 - 10]
+          if (newQuantity > 10) {
+            newQuantity = 10;
+          } else if (newQuantity < 1) {
+            newQuantity = 1;
+          }
+          
+          // Update the quantity of the existing item
+          existingItem.quantity = newQuantity;
         } else {
             var foodItem = foodLists.find(item => item.foodID === foodID);
             if (foodItem) {
-                cartItems.push({foodID: foodItem.foodID, foodName: foodItem.foodName, quantity: quantity, price: foodItem.foodPrice, discount: foodItem.discountPercent});
+              cartItems.push({foodID: foodItem.foodID,
+                                foodName: foodItem.foodName,
+                                quantity: quantity,
+                                price: foodItem.foodPrice,
+                                imageURL: foodItem.imageURL,
+                                discount: foodItem.discountPercent});
             }
         }
         // Store the updated cart back in session storage
@@ -116,101 +134,103 @@
                 // Create a new table row for each cart item
                 var row = document.createElement("tr");
                 row.id = "cart-item-" + cartItem.foodID;
+                row.classList.add("align-middle");
 
                 // Create table cells for each property of the cart item
-                var nameCell = document.createElement("td");
-                nameCell.textContent = cartItem.foodName;
-                row.appendChild(nameCell);
+                {
+                  // Image and name cell
+                  let imageCell = document.createElement("td");
+                  imageCell.classList.add("table-image-cell");
+                  {
+                    // Image
+                    let image = document.createElement("img");
+                    image.src = cartItem.imageURL;
+                    image.alt = cartItem.foodName;
+                    image.classList.add("d-none", "d-md-inline", "rounded", "shadow-sm", "me-3");
+                    imageCell.appendChild(image);
+  
+                    // Name
+                    let nameSpan = document.createElement("span");
+                    nameSpan.textContent = cartItem.foodName;
+                    imageCell.appendChild(nameSpan);
+                  }
+                  row.appendChild(imageCell);
 
-                var priceCell = document.createElement("td");
-                priceCell.textContent = parseFloat(cartItem.price - (cartItem.price * cartItem.discount / 100)).toLocaleString() + "đ";
-                row.appendChild(priceCell);
+                  var priceCell = document.createElement("td");
+                  priceCell.textContent = parseFloat(cartItem.price - (cartItem.price * cartItem.discount / 100)).toLocaleString(pageLocale) + " đ";
+                  row.appendChild(priceCell);
 
-                // Quantity cell
-                var quantityCell = document.createElement("td");
-                quantityCell.className = "quantity-cell";
+                  // Quantity cell
+                  var quantityCell = document.createElement("td");
+                  quantityCell.className = "quantity-cell";
 
-                var quantityContainer = document.createElement("div");
-                quantityContainer.className = "d-flex input-group align-items-center";
+                  var quantityContainer = document.createElement("div");
+                  quantityContainer.className = "d-flex input-group align-items-center";
 
-                var decreaseButton = document.createElement("input");
-                decreaseButton.type = "button";
-                decreaseButton.value = "-";
-                decreaseButton.className = "btn btn-outline-dark border border-dark border-1 button-minus px-2 py-1";
-                decreaseButton.dataset.field = "quantity-" + cartItem.foodID;
-                decreaseButton.setAttribute("onclick", "decrementValue(event, "+cartItem.foodID+")");
+                  var decreaseButton = document.createElement("input");
+                  decreaseButton.type = "button";
+                  decreaseButton.value = "-";
+                  decreaseButton.className = "btn btn-outline-dark border border-dark border-1 button-minus px-2 py-1";
+                  decreaseButton.dataset.field = "quantity-" + cartItem.foodID;
 
-                var quantityInput = document.createElement("input");
-                quantityInput.type = "number";
-                quantityInput.step = "1";
-                quantityInput.min = "1";
-                quantityInput.max = "10";
-                quantityInput.maxLength = "2";
-                quantityInput.style.width = "2em";
-                quantityInput.className = "quantity-input quantity-field border border-dark border-1 border-start-0 border-end-0 text-center py-1";
-                quantityInput.name = "quantity-" + cartItem.foodID;
-                quantityInput.value = cartItem.quantity;
+                  var quantityInput = document.createElement("input");
+                  quantityInput.type = "number";
+                  quantityInput.step = "1";
+                  quantityInput.min = "1";
+                  quantityInput.max = "10";
+                  quantityInput.maxLength = "2";
+                  quantityInput.style.width = "2em";
+                  quantityInput.className = "quantity-input quantity-field border border-dark border-1 border-start-0 border-end-0 text-center py-1";
+                  quantityInput.name = "quantity-" + cartItem.foodID;
+                  quantityInput.value = cartItem.quantity;
 
-                var increaseButton = document.createElement("input");
-                increaseButton.type = "button";
-                increaseButton.value = "+";
-                increaseButton.className = "btn btn-outline-dark border border-dark border-1 button-plus px-2 py-1";
-                increaseButton.dataset.field = "quantity-" + cartItem.foodID;
-                increaseButton.setAttribute("onclick", "incrementValue(event,"+cartItem.foodID+")");
+                  var increaseButton = document.createElement("input");
+                  increaseButton.type = "button";
+                  increaseButton.value = "+";
+                  increaseButton.className = "btn btn-outline-dark border border-dark border-1 button-plus px-2 py-1";
+                  increaseButton.dataset.field = "quantity-" + cartItem.foodID;
 
-                quantityContainer.appendChild(decreaseButton);
-                quantityContainer.appendChild(quantityInput);
-                quantityContainer.appendChild(increaseButton);
+                  quantityContainer.appendChild(decreaseButton);
+                  quantityContainer.appendChild(quantityInput);
+                  quantityContainer.appendChild(increaseButton);
 
-                quantityCell.appendChild(quantityContainer);
-                row.appendChild(quantityCell);
+                  quantityCell.appendChild(quantityContainer);
+                  row.appendChild(quantityCell);
 
-                // Total cell
-                var totalCell = document.createElement("td");
-                var itemTotal = parseFloat(cartItem.price - (cartItem.price * cartItem.discount / 100)) * cartItem.quantity;
-                totalCell.textContent = itemTotal.toLocaleString() + "đ";
-                totalCell.className = "item-total d-none d-md-table-cell";
-                row.appendChild(totalCell);
+                  // Total cell
+                  var totalCell = document.createElement("td");
+                  var itemTotal = parseFloat(cartItem.price - (cartItem.price * cartItem.discount / 100)) * cartItem.quantity;
+                  totalCell.textContent = itemTotal.toLocaleString(pageLocale) + " đ";
+                  totalCell.className = "item-total d-none d-md-table-cell";
+                  row.appendChild(totalCell);
 
-                // Remove cell
-                var removeCell = document.createElement("td");
-                var removeButton = document.createElement("button");
-                removeButton.type = "button";
-                removeButton.style.width = "fit-content";
-                removeButton.className = "d-flex btn btn-sm btn-outline-danger align-items-center px-2 px-sm-3";
-                removeButton.onclick = function () {
-                    deleteCartItem(cartItem.foodID);
-                };
-                removeButton.innerHTML = '\
-                <i class="ph-bold ph-trash fs-1"></i>' +
-                        '<span class="d-none d-md-flex ms-2">Xoá</span>';
-                removeCell.appendChild(removeButton);
-                row.appendChild(removeCell);
+                  // Remove cell
+                  var removeCell = document.createElement("td");
+                  var removeButton = document.createElement("button");
+                  removeButton.type = "button";
+                  removeButton.style.width = "fit-content";
+                  removeButton.className = "d-flex btn btn-sm btn-outline-danger align-items-center px-2 px-sm-3";
+                  removeButton.onclick = function () {
+                      deleteCartItem(cartItem.foodID);
+                  };
+                  removeButton.innerHTML = '\
+                  <i class="ph-bold ph-trash fs-1"></i>' +
+                          '<span class="d-none d-md-flex ms-2">Xoá</span>';
+                  removeCell.appendChild(removeButton);
+                  row.appendChild(removeCell);
+                }
 
                 // Append the table row to the cart table body
                 cartTableBody.appendChild(row);
 
                 // Update the total price
                 totalPrice += itemTotal;
-
-                // Update quantity on input change
-                quantityInput.addEventListener("change", function () {
-                    cartItem.quantity = parseInt(quantityInput.value);
-                    sessionStorage.setItem("cart", JSON.stringify(cartItems));
-                    updateTotalPrice();
-                });
             });
         }
 
         // Update the total price element in the modal
-        var totalPriceElement = document.getElementById("grand-total");
-        totalPriceElement.textContent = "Tổng thanh toán: " + totalPrice.toLocaleString() + "đ";
+        updateTotalPrice();
     }
-    
-    function formatCurrency(amount) {
-        return amount.toLocaleString(undefined, { style: 'currency', currency: 'VND' });
-    }
-
 
     // Function to update cart information
     function updateCartInformation() {
@@ -222,35 +242,29 @@
 
         const numCartItem = cartItems.length;
        
-
         // If there are no rows or there is an empty cart label, disable the submit button and remove the cart badge
         // Otherwise, enable the submit button and add the cart badge
-        if (numCartItem === 0) {
+        if (numCartItem <= 0) {
             document.getElementById("btnSubmit").disabled = true;
+            
+            // Remove the cart badge. Class selectors return HTMLCollection, so we use a for-of loop
+            // https://stackoverflow.com/questions/22754315/for-loop-for-htmlcollection-elements
             for (const badge of cartBadges) {
-                badge.classList.add("d-none");
+              badge.classList.add("d-none");
+              badge.innerText = "";
             }
         } else {
             document.getElementById("btnSubmit").disabled = false;
 
-            // Remove the cart badge. Class selectors return HTMLCollection, so we use a for-of loop
-            // https://stackoverflow.com/questions/22754315/for-loop-for-htmlcollection-elements
-            for (const badge of cartBadges) {
-                badge.classList.remove("d-none");
-            }
-
             // Set the cart badge text to the number of rows
             for (const badge of cartBadges) {
+                badge.classList.remove("d-none");
                 if (numCartItem > 99) {
                     badge.innerText = "+99";
-                } else if (numCartItem <= 0) {
-                    badge.innerText = "";
                 } else {
                     badge.innerText = numCartItem;
                 }
-                ;
             }
-            ;
         }
 
         // Update the total price
@@ -308,7 +322,7 @@
 
     // Restrict user input to reject non-numeric characters
     // except for navigation keys and backspace/delete
-    $('#cart-table .quantity-input').on('keydown', (e) => {
+    $('#cart-table').on('keydown', '.quantity-input', (e) => {
         let key = e.key;
         let isDigit = /^\d$/.test(key);
         let target = $(e.target);
@@ -328,13 +342,13 @@
         if (!isDigit && !isException) {
             e.preventDefault();
         }
-    })
+    });
 
     let oldQuantity = 1;
     // Set the old quantity variable to the value of the input field (before the user types anything), 
     // so that this will be used to restore the original quantity in case
     // the new quantity is invalid
-    $('#cart-table .quantity-input').on('focus', (e) => {
+    $('#cart-table').on('focus', '.quantity-input', (e) => {
         const target = $(e.target);
         oldQuantity = parseInt(target.val(), 10);
     });
@@ -342,13 +356,19 @@
     // Validates the user quantity input only when the user clicks outside of the input field
     // instead of immediately upon value change. Because we want the user to safely delete the old number
     // and input a new one without the price values going crazy
-    $('#cart-table .quantity-input').on('blur', (e) => {
+    $('#cart-table').on('blur', '.quantity-input', (e) => {
         // Get the parent table row of the input field
         const tableRow = event.target.closest("tr");
         const target = $(e.target);
-        // Get the price per unit of the food from the data attribute or other source
-        const pricePerUnitText = tableRow.querySelector("td:nth-child(2)").textContent.trim();
-        const pricePerUnit = parseFloat(pricePerUnitText.replace("đ", "").replace(",", ""));
+
+        // Extract food ID from tableRow's ID ("cart-item-#")
+        // Also convert it to integer so that it can work with cartItems.find()
+        let foodID = parseInt(tableRow.id.split("-")[2], 10);
+
+        // Retrieve the cart items from sessionStorage, then update the quantity of the item
+        let cartItems = JSON.parse(sessionStorage.getItem("cart")) || [];
+        let existingItem = cartItems.find(item => item.foodID === foodID);
+        let pricePerUnit = parseFloat(existingItem.price - (existingItem.price * existingItem.discount / 100));
 
         // Get the quantity entered by the user
         const currentQuantity = parseInt(event.target.value, 10);
@@ -364,14 +384,34 @@
         // Calculate the new product price
         const itemTotal = pricePerUnit * newQuantity;
 
+        // Update the quantity of the existing item
+        if (existingItem) {
+          existingItem.quantity = newQuantity;
+
+          // Store the updated cart back in session storage
+          sessionStorage.setItem("cart", JSON.stringify(cartItems));
+        }
+        
         // Update the product price cell in the same row
         // Format the total price string so that it can be displayed correctly to the user
-        formattedItemTotal = itemTotal.toLocaleString();
+        formattedItemTotal = itemTotal.toLocaleString(pageLocale);
         $(tableRow).find(".item-total").html(formattedItemTotal + " đ");
 
         // Calculate and update the total price
         updateTotalPrice();
     });
+
+    // Function to parse a float number from a string, using the current locale of the page
+    // https://stackoverflow.com/questions/59678901/using-parsefloat-in-different-locales
+    function localeParseFloat(s) {
+        // Get the thousands and decimal separator characters used in the locale.
+        let [,thousandsSeparator,,,,decimalSeparator] = 1111.1.toLocaleString(pageLocale);
+        // Remove thousand separators, and put a point where the decimal separator occurs
+        s = Array.from(s, c => c === thousandsSeparator ? "" 
+                            : c === decimalSeparator   ? "." : c).join("");
+        // Now it can be parsed
+        return parseFloat(s);
+    }
 
     function updateTotalPrice() {
         let totalPrice = 0;
@@ -387,7 +427,7 @@
 
         // Update the total price element
         const totalPriceElement = document.getElementById("grand-total");
-        totalPriceElement.textContent = "Tổng thanh toán: " + totalPrice.toLocaleString() + "đ";
+        totalPriceElement.textContent = "Tổng thanh toán: " + totalPrice.toLocaleString(pageLocale) + " đ";
     }
 
     /**
@@ -396,37 +436,22 @@
      * @param {Event} e - The event object.
      * @return {number} The new value.
      */
-    function incrementValue(e, foodID) {
-        e.preventDefault();
-        const tableRow = e.target.closest("tr");
-        let target = $(e.target);
-        let fieldName = target.data("field");
-        let parent = target.closest("div");
-        let quantityInput = parent.find("input[name=" + fieldName + "]");
-        let currentQuantity = parseInt(quantityInput.val(), 10);
-        var cartItems = JSON.parse(sessionStorage.getItem("cart")) || [];
-        var existingItem = cartItems.find(item => item.foodID === foodID);
-        var pricePerUnit = parseFloat(existingItem.price - (existingItem.price * existingItem.discount / 100));
-        // Set the new value, making sure it is within 1-10
-        let newQuantity =
-                !isNaN(currentQuantity) && currentQuantity >= 1 && currentQuantity < 10
-                ? currentQuantity + 1
-                : 10;
-        
+    function incrementValue(e) {
+      e.preventDefault();
+      let target = $(e.target);
+      let fieldName = target.data("field");
+      let parent = target.closest("div");
+      let quantityInput = parent.find("input[name=" + fieldName + "]");
+      let currentQuantity = parseInt(quantityInput.val(), 10);
 
-        if (existingItem) {
-            // Update the quantity of the existing item
-            existingItem.quantity = newQuantity;
+      // Set the new value, making sure it is within 1-10
+      let newQuantity =
+        !isNaN(currentQuantity) && currentQuantity >= 1 && currentQuantity < 10
+          ? currentQuantity + 1
+          : 10;
+      quantityInput.val(newQuantity);
 
-            // Store the updated cart back in session storage
-            sessionStorage.setItem("cart", JSON.stringify(cartItems));
-            updateTotalPrice();
-        }
-        const itemTotal = pricePerUnit * newQuantity;
-        formattedItemTotal = itemTotal.toLocaleString();
-        $(tableRow).find(".item-total").html(formattedItemTotal + " đ");
-        
-        quantityInput.val(newQuantity);
+      return newQuantity;
     }
 
     /**
@@ -435,34 +460,94 @@
      * @param {Event} e - The event object.
      * @return {number} The new value.
      */
-    function decrementValue(e, foodID) {
-        e.preventDefault();
-        const tableRow = e.target.closest("tr");
-        let target = $(e.target);
-        let fieldName = target.data("field");
-        let parent = target.closest("div");
-        let quantityInput = parent.find("input[name=" + fieldName + "]");
-        let currentQuantity = parseInt(quantityInput.val(), 10);
-        var cartItems = JSON.parse(sessionStorage.getItem("cart")) || [];
-        var existingItem = cartItems.find(item => item.foodID === foodID);
-        var pricePerUnit = parseFloat(existingItem.price - (existingItem.price * existingItem.discount / 100));
+    function decrementValue(e) {
+      e.preventDefault();
+      let target = $(e.target);
+      let fieldName = target.data("field");
+      let parent = target.closest("div");
+      let quantityInput = parent.find("input[name=" + fieldName + "]");
+      let currentQuantity = parseInt(quantityInput.val(), 10);
 
-        // Set the new value, making sure it is within 1-10
-        let newQuantity =
-                !isNaN(currentQuantity) && currentQuantity > 1 && currentQuantity <= 10
-                ? currentQuantity - 1
-                : 1;
-        if (existingItem) {
-            // Update the quantity of the existing item
-            existingItem.quantity = newQuantity;
+      // Set the new value, making sure it is within 1-10
+      let newQuantity =
+        !isNaN(currentQuantity) && currentQuantity > 1 && currentQuantity <= 10
+          ? currentQuantity - 1
+          : 1;
+      quantityInput.val(newQuantity);
 
-            // Store the updated cart back in session storage
-            sessionStorage.setItem("cart", JSON.stringify(cartItems));
-            updateTotalPrice();
-        }
-        const itemTotal = pricePerUnit * newQuantity;
-        formattedItemTotal = itemTotal.toLocaleString();
-        $(tableRow).find(".item-total").html(formattedItemTotal + " đ");
-        quantityInput.val(newQuantity);
+      return newQuantity;
     }
+
+    /**
+     * Extracts the price from a string representation of a currency value.
+     *
+     * @param {string} str - The string representation of the currency value.
+     * @return {number} The price as a numeric value.
+     */
+    function getPrice(str) {
+      // Remove all non-numeric characters from the string
+      return localeParseFloat(str.replace(/[^0-9.]/g, ""));
+    }
+
+    $("#cart-table").on("click", ".button-plus", (e) => {
+      let newQuantity = incrementValue(e);
+      let target = e.target;
+      let tableRow = target.closest("tr");
+      
+      // Extract food ID from tableRow's ID ("cart-item-#")
+      // Also convert it to integer so that it can work with cartItems.find()
+      let foodID = parseInt(tableRow.id.split("-")[2], 10);
+
+      // Retrieve the cart items from sessionStorage
+      let cartItems = JSON.parse(sessionStorage.getItem("cart")) || [];
+      let existingItem = cartItems.find(item => item.foodID === foodID);
+      let pricePerUnit = parseFloat(existingItem.price - (existingItem.price * existingItem.discount / 100));
+
+      if (existingItem) {
+        // Update the quantity of the existing item
+        existingItem.quantity = newQuantity;
+
+        // Store the updated cart back in session storage
+        sessionStorage.setItem("cart", JSON.stringify(cartItems));
+      }
+
+      let itemTotal = pricePerUnit * newQuantity;
+
+      // Format the total price string so that it can be displayed correctly to the user
+      formattedItemTotal = itemTotal.toLocaleString(pageLocale);
+      $(tableRow).find(".item-total").html(formattedItemTotal + " đ");
+
+      updateTotalPrice();
+    });
+
+    $("#cart-table").on("click", ".button-minus", (e) => {
+      let newQuantity = decrementValue(e);
+      let target = e.target;
+      let tableRow = target.closest("tr");
+      
+      // Extract food ID from tableRow's ID ("cart-item-#")
+      // Also convert it to integer so that it can work with cartItems.find()
+      let foodID = parseInt(tableRow.id.split("-")[2], 10);
+
+      // Retrieve the cart items from sessionStorage
+      let cartItems = JSON.parse(sessionStorage.getItem("cart")) || [];
+      let existingItem = cartItems.find(item => item.foodID === foodID);
+      let pricePerUnit = parseFloat(existingItem.price - (existingItem.price * existingItem.discount / 100));
+
+      if (existingItem) {
+        // Update the quantity of the existing item
+        existingItem.quantity = newQuantity;
+
+        // Store the updated cart back in session storage
+        sessionStorage.setItem("cart", JSON.stringify(cartItems));
+      }
+
+      let itemTotal = pricePerUnit * newQuantity;
+
+      // Format the total price string so that it can be displayed correctly to the user
+      formattedItemTotal = itemTotal.toLocaleString(pageLocale);
+      $(tableRow).find(".item-total").html(formattedItemTotal + " đ");
+
+      updateTotalPrice();
+    });
 </script>
