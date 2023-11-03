@@ -4,6 +4,8 @@
  */
 package Models;
 
+import java.sql.Timestamp;
+
 public class Account {
 
     private int accountID;
@@ -15,6 +17,7 @@ public class Account {
     private String email;
     private String password;
     private String accountType;
+    private Timestamp lasttime_order;
 
     public Account() {
     }
@@ -55,6 +58,16 @@ public class Account {
         this.password = password;
         this.accountType = accountType;
     }
+    
+    public Account(int accountID, int customerID, String username, String email, String password, String accountType, Timestamp lasttime_order) {
+        this.accountID = accountID;
+        this.customerID = customerID;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.accountType = accountType;
+        this.lasttime_order = lasttime_order;
+    }
 
     public Account(int accountID, byte adminID, String username, String email, String password, String accountType) {
         this.accountID = accountID;
@@ -77,6 +90,19 @@ public class Account {
         this.accountType = accountType;
     }
 
+    public Account(int accountID, int customerID, byte proID, byte staffID, byte adminID, String username, String email, String password, String accountType, Timestamp lasttime_order) {
+        this.accountID = accountID;
+        this.customerID = customerID;
+        this.proID = proID;
+        this.staffID = staffID;
+        this.adminID = adminID;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.accountType = accountType;
+        this.lasttime_order = lasttime_order;
+    }
+    
     public int getAccountID() {
         return accountID;
     }
@@ -147,5 +173,13 @@ public class Account {
 
     public void setStaffID(byte staffID) {
         this.staffID = staffID;
+    }
+
+    public Timestamp getLasttime_order() {
+        return lasttime_order;
+    }
+
+    public void setLasttime_order(Timestamp lasttime_order) {
+        this.lasttime_order = lasttime_order;
     }
 }

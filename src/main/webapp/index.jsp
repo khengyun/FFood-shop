@@ -14,7 +14,7 @@
 
     <%@ include file="WEB-INF/jspf/common/imports/resources.jspf" %>
     <link rel="stylesheet" href="assets/css/style.css" />
-
+    
     <script src="https://accounts.google.com/gsi/client" async></script>
   </head>
   <body>
@@ -28,7 +28,7 @@
     <%@ include file="WEB-INF/jspf/guest/components/success.jspf" %> 
     <%@ include file="WEB-INF/jspf/guest/components/failure.jspf" %> 
     <%@ include file="WEB-INF/jspf/guest/components/camera.jspf" %>
-
+    
     <!-- Main Content -->
     <main class="main" id="top">
       <!-- Hero section -->

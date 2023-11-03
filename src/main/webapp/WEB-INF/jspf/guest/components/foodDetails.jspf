@@ -346,5 +346,5 @@
         // Reset the quantity when the modal is closed
         $('#food-details-modal').on('hidden.bs.modal', (e) => {
             $('#food-details-modal .quantity-input').val(1);
-        });
+        });      
     </script>
