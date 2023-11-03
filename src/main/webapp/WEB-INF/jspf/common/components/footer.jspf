@@ -25,7 +25,7 @@
                         </a>
                     </li>
                     <li class="lh-lg text-200 text-decoration-none">
-                        <a href="https://www.facebook.com/ffood" class="navbar-sm-brand text-light text-decoration-none">
+                        <a href="https://www.facebook.com/ffoodshop" class="navbar-sm-brand text-light text-decoration-none">
                             Facebook: FFood Shop
                         </a>
                     </li>
@@ -41,10 +41,10 @@
                 <h5 class="lh-lg fw-bold text-white">HÃY THEO DÕI CHÚNG TÔI</h5>
                 <div class="text-start my-3"> 
                     <a class="text-500" href="https://github.com/khengyun/FFood-shop" target="_blank">
-                        <i class="fab fa-github fa-lg fa-fw me-2"></i>
+                        <i class="ph-bold ph-github-logo fs-3 me-2"></i>
                     </a>
-                    <a class="text-500" href="https://www.linkedin.com/in/tien-thanh-hua/" target="_blank">
-                        <i class="fab fa-linkedin fa-lg fa-fw"></i>
+                    <a class="text-500" href="https://www.facebook.com/ffoodshop/" target="_blank">
+                        <i class="ph-bold ph-facebook-logo fs-3"></i>
                     </a>
                 </div>
             </div>
