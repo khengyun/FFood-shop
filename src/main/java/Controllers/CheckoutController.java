@@ -2,6 +2,20 @@
  */
 package Controllers;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.math.BigDecimal;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+
+import org.json.JSONObject;
+
 import DAOs.AccountDAO;
 import DAOs.CartDAO;
 import DAOs.CartItemDAO;
@@ -14,18 +28,12 @@ import Models.CartItem;
 import Models.Customer;
 import Models.Order;
 import Models.Voucher;
-import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
+
 
 public class CheckoutController extends HttpServlet {
 
@@ -140,6 +148,8 @@ public class CheckoutController extends HttpServlet {
         String phone = request.getParameter("txtPhone");
         String address = request.getParameter("txtAddress");
         String note = request.getParameter("txtNote");
+        //  get payment method
+        String paymentMethod = request.getParameter("paymentMethod");
 
         // Trình tự đặt món: thêm Customer -> Cart -> tất cả Cartitem -> Order
         // Thêm Customer
@@ -247,14 +257,69 @@ public class CheckoutController extends HttpServlet {
         BigDecimal orderTotal = BigDecimal.valueOf(orderTotalDouble);
         order.setOrderTotal(orderTotal);
         result = orderdao.add(order);
-        if (result != 1) {
+        if (result == 1) {
+            // Xóa giỏ hàng từ session
+            session.removeAttribute("cart");
+            
+            if (paymentMethod.equals("COD")) {
+                response.sendRedirect("/home" + "#success");
+            }else if (paymentMethod.equals("VNPAY")) {
+
+                // Tạo URL cho việc gọi API
+                String apiURL = "http://localhost:8001/payment_from_cis?cis=" + customerID;
+
+                // Thực hiện HTTP request để lấy vnpay_payment_url
+                String vnpayPaymentURL = sendGetRequest(apiURL);
+
+                if (vnpayPaymentURL != null && !vnpayPaymentURL.isEmpty()) {
+                    response.sendRedirect(vnpayPaymentURL);
+                } else {
+                    // Xử lý trường hợp không lấy được vnpay_payment_url
+                    response.sendRedirect("/home#failure");
+                }
+
+                
+            // response.sendRedirect("/home?cis=" + customerID + "#success");
+            }
+
+        } else {
+            // Xử lý trường hợp không thêm đơn hàng thành công
             request.getRequestDispatcher("checkout.jsp").forward(request, response);
         }
-
-        session.removeAttribute("cart");
-        // Điều hướng về home sau khi add order thành công
-        response.sendRedirect("/home#success");
     }
+
+    private String sendGetRequest(String apiURL) {
+    try {
+        URL url = new URL(apiURL);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+        connection.setRequestMethod("GET");
+        int responseCode = connection.getResponseCode();
+
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String inputLine;
+            StringBuilder response = new StringBuilder();
+
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+
+            // Parse the response and return the vnpay_payment_url
+            JSONObject obj = new JSONObject(response.toString());
+            String vnpayPaymentURL = obj.getString("vnpay_payment_url");
+            return vnpayPaymentURL;
+        } else {
+            // Xử lý trường hợp không thành công khi gọi API
+            return null;
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+        return null;
+    }
+}
+
 
     protected void doPostCheckout(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

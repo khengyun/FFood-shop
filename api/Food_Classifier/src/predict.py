@@ -2,7 +2,7 @@ import io
 import requests
 from PIL import Image
 import numpy as np
-import tensorflow as tf
+# import tensorflow as tf
 import onnxruntime
 import base64
 
