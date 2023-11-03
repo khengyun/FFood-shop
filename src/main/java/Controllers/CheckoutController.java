@@ -226,9 +226,7 @@ public class CheckoutController extends HttpServlet {
             }
         }
 
-        // Lấy thời gian hiện tại
         LocalDateTime currentTime = LocalDateTime.now();
-        // Chuyển đổi thời gian hiện tại thành Timestamp
         Timestamp orderTime = Timestamp.valueOf(currentTime);
         // Tạo một số ngẫu nhiên từ 5 đến 15
         int randomMinutes = ThreadLocalRandom.current().nextInt(5, 16);
@@ -276,12 +274,12 @@ public class CheckoutController extends HttpServlet {
                 } else {
                     // Xử lý trường hợp không lấy được vnpay_payment_url
                     response.sendRedirect("/home#failure");
-                }
-
-                
+                }  
             // response.sendRedirect("/home?cis=" + customerID + "#success");
             }
-
+            
+            AccountDAO accountDAO = new AccountDAO();
+            accountDAO.updateLastTimeOrder(accountID);
         } else {
             // Xử lý trường hợp không thêm đơn hàng thành công
             request.getRequestDispatcher("checkout.jsp").forward(request, response);
@@ -327,10 +325,10 @@ public class CheckoutController extends HttpServlet {
         LocalTime currentTime = LocalTime.now();
         int hour = currentTime.getHour(); // Get the current hour (24-hour format)
         
-        if (hour >= 20 || hour <= 8) {
-            response.sendRedirect("/home#open_time");
-            return;
-        } 
+//        if (hour >= 20 || hour <= 8) {
+//            response.sendRedirect("/home#open_time");
+//            return;
+//        } 
         
         HttpSession session = request.getSession();
         
