@@ -1,12 +1,163 @@
 <%@ page pageEncoding="UTF-8" %>
 
-<button
-  id="openCameraModal"
-  type="button"
-  class="btn bg-100 border border-400 border-start-0 d-flex align-items-center"
-  data-bs-toggle="modal"
-  data-bs-target="#cameraModal"
-  title="Tìm Môn bằng hình ảnh"
->
-  <i class="ph-fill ph-camera" style="font-size: 1.2rem"></i>
-</button>
+  <style>
+    #image-container {
+      text-align: center;
+    }
+
+    #image-preview {
+      display: none;
+      max-width: 100%;
+      max-height: 200px;
+    }
+  </style>
+
+  <button id="openCameraModal" type="button"
+    class="btn bg-100 border border-400 border-start-0 d-flex align-items-center" data-bs-toggle="modal"
+    data-bs-target="#cameraModal" title="Tìm Môn bằng hình ảnh">
+    <i class="ph-fill ph-camera" style="font-size: 1.2rem"></i>
+  </button>
+
+
+  <div id="image-container" style="display: none;">
+    <img id="image-preview" src="#" alt="Image Preview">
+  </div>
+
+  <div id="results" style="display: none;">
+    <!-- Prediction results will be displayed here -->
+  </div>
+
+  <script>
+    const imageContainer = document.getElementById('image-container');
+    const imagePreview = document.getElementById('image-preview');
+
+    // Prevent default drag behaviors on the entire document
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+      document.addEventListener(eventName, preventDefaults, false);
+    });
+
+    // Highlight the document when an image is dragged over
+    ['dragenter', 'dragover'].forEach(eventName => {
+      document.addEventListener(eventName, highlight, false);
+    });
+
+    // Unhighlight the document when an image is dragged out
+    ['dragleave', 'drop'].forEach(eventName => {
+      document.addEventListener(eventName, unhighlight, false);
+    });
+
+    // Handle dropped files on the document
+    document.addEventListener('drop', handleDrop, false);
+
+    function preventDefaults(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    function highlight() {
+      const allElements = document.body.getElementsByTagName("*");
+      for (let i = 0; i < allElements.length; i++) {
+        // allElements[i].style.backgroundColor = 'lightblue';
+      }
+    }
+
+    function unhighlight() {
+      const allElements = document.body.getElementsByTagName("*");
+      for (let i = 0; i < allElements.length; i++) {
+        // allElements[i].style.backgroundColor = ''; // Reset the background color
+      }
+    }
+
+    function handleDrop(e) {
+      const files = e.dataTransfer.files;
+
+      if (files.length > 0) {
+        const file = files[0];
+        if (file.type.startsWith('image/')) {
+          const reader = new FileReader();
+          reader.onload = function () {
+            imagePreview.src = reader.result;
+            const imageBase64 = reader.result;
+            predict_to_popup(imageBase64);
+          }
+          reader.readAsDataURL(file);
+        } else {
+          alert('Please drop an image file.');
+        }
+      }
+
+      unhighlight();
+    }
+
+    async function predict_to_popup(imageBase64) {
+      try {
+        const response = await fetch("http://localhost:8000/predict_dish", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            image_base64: imageBase64.split(";base64,")[1],
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Predict request failed with status " + response.status);
+        }
+
+        const data = await response.json();
+        console.log("Predicted Dish:", data.predicted_dish);
+
+        if (data.predicted_dish) {
+          const searchURL = "http://localhost:8001/search_food_by_name/" + data.predicted_dish;
+
+          const searchResponse = await fetch(searchURL);
+
+          if (!searchResponse.ok) {
+            throw new Error("Search request failed with status " + searchResponse.status);
+          }
+
+          const searchData = await searchResponse.json();
+          console.log("Search Response:", searchData);
+
+          if (searchData[0]) {
+
+            const foodDetailsModal = document.querySelector("#food-details-modal");
+            if (foodDetailsModal.classList.contains("show")) {
+              // If it's showing, hide it
+              const closeModalButton = foodDetailsModal.querySelector("[data-bs-dismiss='modal']");
+              closeModalButton.click();
+            }
+
+            // Tìm phần tử .stretched-link đã tồn tại
+            const stretchedLink = document.querySelector(".stretched-link");
+
+            if (stretchedLink) {
+              // Cập nhật các thuộc tính của nó
+              stretchedLink.setAttribute("data-food-id", searchData[0].food_id);
+              stretchedLink.setAttribute("data-food-type", searchData[0].food_type_id);
+              stretchedLink.setAttribute("data-food-name", searchData[0].food_name);
+              stretchedLink.setAttribute("data-food-description", searchData[0].food_description);
+              stretchedLink.setAttribute("data-food-price-original", searchData[0].food_price_original);
+              stretchedLink.setAttribute("data-food-price", searchData[0].food_price);
+              stretchedLink.setAttribute("data-food-status", searchData[0].food_status);
+              stretchedLink.setAttribute("data-food-rate", searchData[0].food_rate);
+              stretchedLink.setAttribute("data-discount-percent", searchData[0].discount_percent);
+              stretchedLink.setAttribute("data-image-url", searchData[0].food_url);
+              //  click stretchedLink
+              stretchedLink.click();
+            } else {
+              console.log("No .stretched-link element found.");
+            }
+          }
+
+
+          // addToCart(searchData[0].food_id, 1);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    }
+
+
+  </script>
