@@ -4,6 +4,8 @@
  */
 package Models;
 
+import java.sql.Timestamp;
+
 public class User {
     private int userID;
     private int customerID;
@@ -15,7 +17,7 @@ public class User {
     private String phone;
     private String email;
     private String address;
-
+    private Timestamp lasttime_order;
     public User() {
     }
 
@@ -30,6 +32,20 @@ public class User {
         this.phone = phone;
         this.email = email;
         this.address = address;
+    }
+    
+    public User(int userID, int customerID, String username, String firstName, String lastName, String fullName, String gender, String phone, String email, String address, Timestamp lasttime_order) {
+        this.userID = userID;
+        this.customerID = customerID;
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.fullName = fullName;
+        this.gender = gender;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.lasttime_order = lasttime_order;
     }
 
     public int getUserID() {
@@ -112,4 +128,11 @@ public class User {
         this.address = address;
     }
 
+    public Timestamp getLasttime_order() {
+        return lasttime_order;
+    }
+
+    public void setLasttime_order(Timestamp lasttime_order) {
+        this.lasttime_order = lasttime_order;
+    }
 }

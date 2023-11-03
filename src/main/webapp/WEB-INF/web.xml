@@ -8,7 +8,7 @@
         <filter-name>GDriveFilter</filter-name>
         <servlet-name>AdminController</servlet-name>
     </filter-mapping>
-     <filter-mapping>
+    <filter-mapping>
         <filter-name>GDriveFilter</filter-name>
         <servlet-name>StaffController</servlet-name>
     </filter-mapping>
@@ -103,6 +103,10 @@
     <servlet>
         <servlet-name>PromotionManagerController</servlet-name>
         <servlet-class>Controllers.PromotionManagerController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DailyTask</servlet-name>
+        <servlet-class>DailyTask.DailyTask</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>default</servlet-name>
@@ -227,6 +231,10 @@
     <servlet-mapping>
         <servlet-name>PromotionManagerController</servlet-name>
         <url-pattern>/promotionManager/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DailyTask</servlet-name>
+        <url-pattern>/dailyTask</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

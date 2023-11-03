@@ -42,6 +42,7 @@
                     <th onclick="sortTable(6)">Số điện thoại</th>
                     <th onclick="sortTable(7)">Email</th>
                     <th onclick="sortTable(8)">Địa chỉ</th>
+                    <th onclick="sortTable(9)">Đặt hàng lần cuối</th>
                 </tr>
             </thead>
             <tbody>
@@ -55,7 +56,8 @@
                     <td>${u.gender}</td>
                     <td>${u.phone}</td>
                     <td>${u.email}</td>
-                    <td>${u.address}</td>                   
+                    <td>${u.address}</td>  
+                    <td>${u.lasttime_order}</td>
                 </tr>
             </c:forEach>
             </tbody>
