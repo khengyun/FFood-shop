@@ -74,11 +74,21 @@
         var cartItems = JSON.parse(sessionStorage.getItem("cart")) || [];
         var existingItem = cartItems.find(item => item.foodID === foodID);
         if (existingItem) {
-            existingItem.quantity += quantity;
+          let newQuantity = existingItem.quantity + quantity;
+          
+          // Limit the quantity range to [1 - 10]
+          if (newQuantity > 10) {
+            newQuantity = 10;
+          } else if (newQuantity < 1) {
+            newQuantity = 1;
+          }
+          
+          // Update the quantity of the existing item
+          existingItem.quantity = newQuantity;
         } else {
             var foodItem = foodLists.find(item => item.foodID === foodID);
             if (foodItem) {
-                cartItems.push({foodID: foodItem.foodID,
+              cartItems.push({foodID: foodItem.foodID,
                                 foodName: foodItem.foodName,
                                 quantity: quantity,
                                 price: foodItem.foodPrice,
@@ -322,7 +332,7 @@
 
     // Restrict user input to reject non-numeric characters
     // except for navigation keys and backspace/delete
-    $('#cart-modal .quantity-input').on('keydown', (e) => {
+    $('#cart-table').on('keydown', '.quantity-input', (e) => {
         let key = e.key;
         let isDigit = /^\d$/.test(key);
         let target = $(e.target);
@@ -348,7 +358,7 @@
     // Set the old quantity variable to the value of the input field (before the user types anything), 
     // so that this will be used to restore the original quantity in case
     // the new quantity is invalid
-    $('#cart-modal .quantity-input').on('focus', (e) => {
+    $('#cart-table').on('focus', '.quantity-input', (e) => {
         const target = $(e.target);
         oldQuantity = parseInt(target.val(), 10);
     });
@@ -356,7 +366,7 @@
     // Validates the user quantity input only when the user clicks outside of the input field
     // instead of immediately upon value change. Because we want the user to safely delete the old number
     // and input a new one without the price values going crazy
-    $('#cart-modal .quantity-input').on('blur', (e) => {
+    $('#cart-table').on('blur', '.quantity-input', (e) => {
         // Get the parent table row of the input field
         const tableRow = event.target.closest("tr");
         const target = $(e.target);
@@ -475,7 +485,7 @@
       return localeParseFloat(str.replace(/[^0-9.]/g, ""));
     }
 
-    $("#cart-modal .input-group").on("click", ".button-plus", (e) => {
+    $("#cart-table").on("click", ".button-plus", (e) => {
       let newQuantity = incrementValue(e);
       let target = e.target;
       let tableRow = target.closest("tr");
@@ -506,8 +516,8 @@
       updateTotalPrice();
     });
 
-    $("#cart-modal .input-group").on("click", ".button-minus", (e) => {
-      let newQuantity = incrementValue(e);
+    $("#cart-table").on("click", ".button-minus", (e) => {
+      let newQuantity = decrementValue(e);
       let target = e.target;
       let tableRow = target.closest("tr");
       
