@@ -225,13 +225,6 @@
 
                 // Update the total price
                 totalPrice += itemTotal;
-
-                // Update quantity on input change
-                quantityInput.addEventListener("change", function () {
-                    cartItem.quantity = parseInt(quantityInput.value);
-                    sessionStorage.setItem("cart", JSON.stringify(cartItems));
-                    updateTotalPrice();
-                });
             });
         }
 
@@ -373,9 +366,15 @@
         // Get the parent table row of the input field
         const tableRow = event.target.closest("tr");
         const target = $(e.target);
-        // Get the price per unit of the food from the data attribute or other source
-        const pricePerUnitText = tableRow.querySelector("td:nth-child(2)").textContent.trim();
-        const pricePerUnit = getPrice(pricePerUnitText);
+
+        // Extract food ID from tableRow's ID ("cart-item-#")
+        // Also convert it to integer so that it can work with cartItems.find()
+        let foodID = parseInt(tableRow.id.split("-")[2], 10);
+
+        // Retrieve the cart items from sessionStorage, then update the quantity of the item
+        let cartItems = JSON.parse(sessionStorage.getItem("cart")) || [];
+        let existingItem = cartItems.find(item => item.foodID === foodID);
+        let pricePerUnit = parseFloat(existingItem.price - (existingItem.price * existingItem.discount / 100));
 
         // Get the quantity entered by the user
         const currentQuantity = parseInt(event.target.value, 10);
@@ -391,6 +390,14 @@
         // Calculate the new product price
         const itemTotal = pricePerUnit * newQuantity;
 
+        // Update the quantity of the existing item
+        if (existingItem) {
+          existingItem.quantity = newQuantity;
+
+          // Store the updated cart back in session storage
+          sessionStorage.setItem("cart", JSON.stringify(cartItems));
+        }
+        
         // Update the product price cell in the same row
         // Format the total price string so that it can be displayed correctly to the user
         formattedItemTotal = itemTotal.toLocaleString(pageLocale);
