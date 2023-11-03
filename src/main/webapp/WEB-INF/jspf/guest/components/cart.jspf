@@ -72,6 +72,9 @@
     // Function to add a food item to the cart
     function addToCart(foodID, quantity) {
         var cartItems = JSON.parse(sessionStorage.getItem("cart")) || [];
+        foodID = (typeof foodID === "string") ? parseInt(foodID, 10) : foodID;
+        quantity = (typeof quantity === "string") ? parseInt(quantity, 10) : quantity;
+
         var existingItem = cartItems.find(item => item.foodID === foodID);
         if (existingItem) {
           let newQuantity = existingItem.quantity + quantity;

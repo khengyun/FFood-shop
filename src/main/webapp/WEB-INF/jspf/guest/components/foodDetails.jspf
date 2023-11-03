@@ -98,6 +98,7 @@
                                     <button class="btn btn-lg btn-primary py-3 fs-2 py-lg-2 fs-lg-1 addToCartBtn"
                                             data-foodid=""
                                             data-quantity="1"
+                                            onclick="() => { document.querySelector('#food-details-modal').modal('hide'); }"
                                             >
                                         Thêm vào Giỏ hàng
                                     </button>
@@ -120,7 +121,7 @@
     </style>
 
     <script>
-
+        let quantity = 1;
         // Initialize the modal's content whenever the user clicks on any food card
         $(document).on("click", ".stretched-link", function () {
             let foodID = $(this).attr("data-food-id");
@@ -133,7 +134,7 @@
             let foodRate = $(this).attr("data-food-rate");
             let discountPercent = $(this).attr("data-discount-percent");
             let imageURL = $(this).attr("data-image-url");
-            let quantity = 1;
+            quantity = 1;
 
             let modal = $("#food-details-modal");
 
@@ -186,12 +187,20 @@
                 button.text("Tạm hết món");
                 button.removeAttr("data-quantity");
                 button.removeAttr("data-foodid");
+                button.on("click", null);
             } else {
                 let button = modal.find(".addToCartBtn");
                 button.removeAttr("disabled");
                 button.text("Thêm vào Giỏ hàng");
                 button.attr("data-quantity", quantity);
                 button.attr("data-foodid", foodID);
+                button.on("click", () => {
+                    let foodID = button.attr("data-foodid");
+                    let quantity = button.attr("data-quantity");
+                    addToCart(foodID, quantity);
+                    // The syntax is $(selector).modal('hide')
+                    modal.modal('hide');
+                });
             }
         });
 
@@ -259,9 +268,10 @@
         // 
         // Returns: 
         // - None.
-        function updateButtonQuantity(quantity) {
+        function updateButtonQuantity(newQuantity) {
             let button = $("#food-details-modal .addToCartBtn");
-            button.attr("data-quantity", quantity);
+            button.attr("data-quantity", newQuantity);
+            quantity = newQuantity;
         }
 
         /**
