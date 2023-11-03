@@ -390,7 +390,7 @@ VALUES (2, N'Bánh bột lọc', 25000, 1, 5, 0, 'https://th.bing.com/th/id/OIP.
 INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
 VALUES (2, N'Bánh căn', 35000, 1, 5, 15, 'https://cdn.vatgia.com/pictures/thumb/0x0/2021/03/1616756570-lwn.jpg');
 INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
-VALUES (2, N'Bánh canh', 34000, 1, 5, 0, 'https://statics.vinpearl.com/banh-canh-10_1631867919.jpg');
+VALUES (2, N'Bánh canh', 34000, 1, 5, 0, 'https://th.bing.com/th/id/OIG.UJ7hyP4iO5Y6Cqo7lU5N?pid=ImgGn');
 INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
 VALUES (2, N'Bánh chưng', 40000, 0, 5, 20, 'https://www.cet.edu.vn/wp-content/uploads/2020/01/banh-chung.jpg');
 INSERT INTO Food (food_type_id, food_name, food_price, food_status, food_rate, discount_percent, food_img_url) 
@@ -710,7 +710,7 @@ cart_id, customer_id ,order_status_id, payment_method_id,
 contact_phone, delivery_address, order_time, order_total, 
 order_note, delivery_time, order_cancel_time
 ) values (
-2, 2, 4, 3, 
+2, 5, 4, 3, 
 '0931278397', N'39 Mậu Thân, Ninh Kiều, Cần Thơ', '20231108 15:43:00 PM', 215000, 
 NULL, '20231108 15:43:00 PM', NULL);
 
