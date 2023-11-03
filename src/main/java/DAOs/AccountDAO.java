@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import Models.Account;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -125,14 +127,28 @@ public class AccountDAO {
     }
 
     public int updateCustomerID(Account account) {
-        String sql = "";
+        String sql = "update Account set customer_id = ? where account_id = ?";
         int result = 0;
-
-        try {
-            sql = "update Account set customer_id = ? where account_id = ?";
+        try {           
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, account.getCustomerID());
             ps.setInt(2, account.getAccountID());
+            result = ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
+    
+    public int updateLastTimeOrder(int id) {
+        String sql = "update Account set lastime_order = ? where account_id = ?";
+        int result = 0;
+        LocalDateTime currentTime = LocalDateTime.now();
+        Timestamp orderTime = Timestamp.valueOf(currentTime);
+        try {           
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setTimestamp(1, orderTime);
+            ps.setInt(2, id);
             result = ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -202,12 +218,15 @@ public class AccountDAO {
             while (accountRS.next()) {
                 // Selected account is of User type
                 if (accountRS.getString("account_type").equals("user")) {
-                    Account account = new Account(accountRS.getInt("account_id"),
+                    Account account = new Account(
+                            accountRS.getInt("account_id"),
                             accountRS.getInt("customer_id"),
                             accountRS.getString("account_username"),
                             accountRS.getString("account_email"),
                             accountRS.getString("account_password"),
-                            accountRS.getString("account_type"));
+                            accountRS.getString("account_type"),
+                            accountRS.getTimestamp("lastime_order")
+                    );
                     accountList.add(account);
                 }
             }

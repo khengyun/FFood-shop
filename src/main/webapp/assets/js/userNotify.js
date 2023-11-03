@@ -80,7 +80,14 @@ $(document).ready(function () {
   
   if (window.location.hash === '#changePass_modal') {
     $('#changePass_modal').modal('show');
-    window.location.href = '/home';
+    setTimeout(function () {
+      $('#verify_OTP').modal('hide');
+      window.location.href = '/home';
+    }, 3000);
+  };
+  
+  if (window.location.hash === '#open_time') {
+    $('#open_time').modal('show');
   };
   
 });

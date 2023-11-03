@@ -6,7 +6,7 @@
         <form id="myForm" method="GET" action="/admin/history">
             <table id="log-table" class="table table-hover nowrap align-middle" style="width: 100%;">
                 <h1 class="text-start fw-bold fs-3 mb-3">Lịch sử đơn hàng</h1>
-                <div id="orders-button-container" class="row mb-2">
+                <div id="orders-button-container" class="button-container row mb-2">
                     <div class="col-sm-12 col-lg-5 mt-sm-2 mt-lg-0 d-flex flex-wrap gap-2 justify-content-lg-end">
                          <div class="input-group">
                             <input type="number" class="form-control" id="txtOrderID" name="txtOrderID"  placeholder="Nhập Order ID" required>

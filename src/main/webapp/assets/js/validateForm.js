@@ -41,8 +41,7 @@ function validateForm() {
             txtImageURL: {
                 required: true,
                 url: true,
-                maxlength: 255,
-                googleDrivePattern: true
+                maxlength: 255
             }
         },
         messages: {
@@ -119,8 +118,7 @@ function validateForm() {
             txtImageURL: {
                 required: true,
                 url: true,
-                maxlength: 255,
-                googleDrivePattern: true
+                maxlength: 255
             }
         },
         messages: {
@@ -818,5 +816,4 @@ $(".checkout-form").validate({
             // Handle form submission here
             form.submit();
         }
-    },
 });

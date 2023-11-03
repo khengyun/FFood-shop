@@ -4,7 +4,8 @@
       data-context="signin"
       data-ux_mode="popup"
       data-callback="onSignIn"
-      data-skip_prompt_cookie="user"></div>
+      data-skip_prompt_cookie="user"
+      data-prompt_parent_id="main-navbar"></div>
 
 <div class="g_id_signin"
       data-type="standard"
@@ -14,6 +15,16 @@
       data-size="large"
       data-width=351
       data-logo_alignment="left"></div>
+
+<style>
+  /* Default top value */
+  #credential_picker_container {
+    position: absolute;
+    top: 5rem;
+    right: 1rem;
+  }
+</style>
+
 
 <script>
   function onSignIn(googleUser) {
