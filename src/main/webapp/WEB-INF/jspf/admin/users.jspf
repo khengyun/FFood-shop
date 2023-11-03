@@ -28,14 +28,11 @@
                     </button>
                 </div>
             </div>
-            <button type="button" class="btn btn-sm btn-success py-1 my-2 me-2" data-bs-toggle="modal" data-bs-target="#add-user-modal">
-                Tạo Tài khoản Người dùng
-            </button>
             <thead>
                 <tr>
-                    <th onclick="sortTable(0)">Mã tài khoản</th>
-                    <th onclick="sortTable(1)">Mã người dùng</th>
-                    <th onclick="sortTable(2)">Tên người dùng</th>
+                    <th onclick="sortTable(0)">Mã TK</th>
+                    <th onclick="sortTable(1)">Mã User</th>
+                    <th onclick="sortTable(2)">Tên User</th>
                     <th onclick="sortTable(3)">Họ</th>
                     <th onclick="sortTable(4)">Tên</th>
                     <th onclick="sortTable(5)">Giới tính</th>

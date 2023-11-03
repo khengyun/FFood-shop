@@ -3900,7 +3900,7 @@ textarea.form-control-lg {
   margin-left: -1px;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
-}
+}z
 
 .valid-feedback {
   display: none;
@@ -19643,3 +19643,939 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 -----------------------------------------------*/
 
 /*# sourceMappingURL=theme.css.map */
+
+/*-----------------------------------------------
+|   For Spam code
+-----------------------------------------------*/
+@media (min-width: 992px) {
+  section {
+    padding-top: 7.5rem;
+    padding-bottom: 7.5rem;
+  }
+}
+
+input,
+button,
+select,
+optgroup,
+textarea,
+label,
+.alert,
+.badge,
+.blockquote-footer,
+.btn,
+.navbar,
+.pagination,
+.valid-feedback,
+.invalid-feedback {
+  font-family: Manrope, "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+pre {
+  margin: 0;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+
+strong {
+  font-weight: 600;
+}
+
+label {
+  font-weight: 500 !important;
+  margin-bottom: 0.5rem;
+}
+
+ol,
+ul {
+  padding-left: 1.1rem;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                               Browser Fixing                               */
+/* -------------------------------------------------------------------------- */
+.firefox .dropcap:first-letter {
+  margin-top: 0.175em;
+}
+
+.chrome .btn-close {
+  background-clip: unset;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                    Text                                    */
+/* -------------------------------------------------------------------------- */
+.text-smallcaps {
+  font-variant: small-caps;
+}
+
+.text-superscript {
+  vertical-align: super;
+}
+
+.text-word-break {
+  word-break: break-word;
+}
+
+/*-----------------------------------------------
+|   Font family
+-----------------------------------------------*/
+.font-sans-serif {
+  font-family: Manrope, "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.font-base {
+  font-family: Manrope, "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+/*-----------------------------------------------
+|   Error Page
+-----------------------------------------------*/
+.fs-error {
+  font-size: 7rem;
+}
+
+@media (min-width: 576px) {
+  .fs-error {
+    font-size: 10rem;
+  }
+}
+
+/*-----------------------------------------------
+|   Text alignment
+-----------------------------------------------*/
+.text-justify {
+  text-align: justify !important;
+}
+
+.text-gradient {
+  background: -o-linear-gradient(40deg, #fb3c00, #ffb800);
+  background: linear-gradient(50deg, #fb3c00, #ffb800);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/*-----------------------------------------------
+|   Backgrounds
+-----------------------------------------------*/
+.bg-holder {
+  position: absolute;
+  width: 100%;
+  min-height: 100%;
+  top: 0;
+  left: 0;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  will-change: transform, opacity, filter;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+
+.bg-holder.bg-right {
+  left: auto;
+  right: 0;
+}
+
+.bg-holder.overlay:before {
+  position: absolute;
+  content: "";
+  background: rgba(0, 0, 0, 0.25);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.bg-holder.overlay-0:before {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.bg-holder.overlay-1:before {
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.bg-holder.overlay-2:before {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.bg-holder.overlay-light:before {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.bg-holder .bg-video {
+  position: absolute;
+  display: block;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  -o-object-fit: cover;
+  object-fit: cover;
+  height: 100%;
+  min-width: 100%;
+}
+
+.bg-holder .bg-youtube {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.bg-light-gradient {
+  background: #ffffff;
+  opacity: 0.85;
+}
+
+.bg-primary-gradient {
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(-42.47%, rgba(255, 206, 103, 0.22)), to(rgba(253, 237, 202, 0)));
+  background: -o-linear-gradient(top, rgba(255, 206, 103, 0.22) -42.47%, rgba(253, 237, 202, 0) 100%);
+  background: linear-gradient(180deg, rgba(255, 206, 103, 0.22) -42.47%, rgba(253, 237, 202, 0) 100%);
+}
+
+.bg-dark-gradient {
+  background: -webkit-gradient(linear, left bottom, left top, from(rgba(33, 33, 33, 0.411)), to(rgba(33, 33, 33, 0)));
+  background: -o-linear-gradient(bottom, rgba(33, 33, 33, 0.411) 0%, rgba(33, 33, 33, 0) 100%);
+  background: linear-gradient(0deg, rgba(33, 33, 33, 0.411) 0%, rgba(33, 33, 33, 0) 100%);
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   Borders                                  */
+/* -------------------------------------------------------------------------- */
+.overflow-hidden[class*='rounded'] {
+  -webkit-mask-image: radial-gradient(#FFFEFE, #000);
+  mask-image: radial-gradient(#FFFEFE, #000);
+}
+
+.border-top-2 {
+  border-top-width: 0.125rem !important;
+}
+
+.border-end-2 {
+  border-right-width: 0.125rem !important;
+}
+
+.border-bottom-2 {
+  border-bottom-width: 0.125rem !important;
+}
+
+.border-start-2 {
+  border-left-width: 0.125rem !important;
+}
+
+.hr-vertical {
+  border-left: 2px solid #CFCFCF;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                  Position                                  */
+/* -------------------------------------------------------------------------- */
+.container,
+.container-fluid,
+.container-sm,
+.container-md,
+.container-lg,
+.container-xl,
+.container-xxl {
+  position: relative;
+}
+
+.all-0 {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                    Flex                                    */
+/* -------------------------------------------------------------------------- */
+.flex-center {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.flex-between-center {
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.flex-end-center {
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.flex-1 {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.link-black {
+  color: #000 !important;
+}
+
+.link-black:hover, .link-black:focus {
+  color: black !important;
+}
+
+.link-100 {
+  color: #FCFCFC !important;
+}
+
+.link-100:hover, .link-100:focus {
+  color: #d6d6d6 !important;
+}
+
+.link-200 {
+  color: #F5F5F5 !important;
+}
+
+.link-200:hover, .link-200:focus {
+  color: #cfcfcf !important;
+}
+
+.link-300 {
+  color: #EEEEEE !important;
+}
+
+.link-300:hover, .link-300:focus {
+  color: #c8c8c8 !important;
+}
+
+.link-400 {
+  color: #E0E0E0 !important;
+}
+
+.link-400:hover, .link-400:focus {
+  color: #bababa !important;
+}
+
+.link-500 {
+  color: #BDBDBD !important;
+}
+
+.link-500:hover, .link-500:focus {
+  color: #979797 !important;
+}
+
+.link-600 {
+  color: #9E9E9E !important;
+}
+
+.link-600:hover, .link-600:focus {
+  color: #787878 !important;
+}
+
+.link-700 {
+  color: #757575 !important;
+}
+
+.link-700:hover, .link-700:focus {
+  color: #4f4f4f !important;
+}
+
+.link-800 {
+  color: #616161 !important;
+}
+
+.link-800:hover, .link-800:focus {
+  color: #3b3b3b !important;
+}
+
+.link-900 {
+  color: #424242 !important;
+}
+
+.link-900:hover, .link-900:focus {
+  color: #1c1c1c !important;
+}
+
+.link-1000 {
+  color: #212121 !important;
+}
+
+.link-1000:hover, .link-1000:focus {
+  color: black !important;
+}
+
+.link-white {
+  color: #FFFEFE !important;
+}
+
+.link-white:hover, .link-white:focus {
+  color: #ffb2b2 !important;
+}
+
+.hover-top-shadow {
+  -webkit-transform: translateY(0) translateZ(0);
+  transform: translateY(0) translateZ(0);
+  -webkit-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+
+.hover-top-shadow.hover-top-shadow-lg:hover, .hover-top-shadow.hover-top-shadow-lg:focus {
+  -webkit-transform: translateY(-0.3125rem) translateZ(0);
+  transform: translateY(-0.3125rem) translateZ(0);
+}
+
+.hover-top-shadow:hover, .hover-top-shadow:focus {
+  -webkit-transform: translateY(-0.125rem) translateZ(0);
+  transform: translateY(-0.125rem) translateZ(0);
+  -webkit-box-shadow: 0 0 0.5rem 0 rgba(255, 179, 14, 0.8) !important;
+  box-shadow: 0 0 0.5rem 0 rgba(255, 179, 14, 0.8) !important;
+}
+
+.shadow-transition {
+  -webkit-box-shadow: 0 1.5625rem 2.8125rem rgba(66, 66, 66, 0.075);
+  box-shadow: 0 1.5625rem 2.8125rem rgba(66, 66, 66, 0.075);
+  -webkit-transition: -webkit-box-shadow 0.4s ease;
+  transition: -webkit-box-shadow 0.4s ease;
+  -o-transition: box-shadow 0.4s ease;
+  transition: box-shadow 0.4s ease;
+  transition: box-shadow 0.4s ease, -webkit-box-shadow 0.4s ease;
+}
+
+.shadow-warning {
+  -webkit-box-shadow: 0 0 3rem 0 rgba(255, 179, 14, 0.3) !important;
+  box-shadow: 0 0 3rem 0 rgba(255, 179, 14, 0.3) !important;
+}
+
+.shadow-icon {
+  -webkit-filter: drop-shadow(5px 5px 5px rgba(255, 179, 14, 0.3));
+  filter: drop-shadow(5px 5px 5px rgba(255, 179, 14, 0.3));
+}
+
+/*-----------------------------------------------
+|   Icons group
+-----------------------------------------------*/
+.icon-group {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.icon-group .icon-item:not(:last-child) {
+  margin-right: 0.5rem;
+}
+
+.icon-item {
+  border-radius: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  color: #757575;
+  -webkit-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  height: 2.5rem;
+  width: 2.5rem;
+  border: 0;
+  font-size: 0.875rem;
+  -webkit-box-shadow: 0 1.5625rem 2.8125rem rgba(0, 87, 255, 0.15);
+  box-shadow: 0 1.5625rem 2.8125rem rgba(0, 87, 255, 0.15);
+}
+
+.icon-item:hover, .icon-item:focus {
+  background-color: #F5F5F5;
+}
+
+.icon-item.icon-item-sm {
+  height: 1.875rem;
+  width: 1.875rem;
+}
+
+.icon-item.icon-item-lg {
+  height: 2.75rem;
+  width: 2.75rem;
+}
+
+.fontawesome-i2svg-active .icon-indicator {
+  opacity: 1;
+}
+
+/*-----------------------------------------------
+|   Object fit and Z-index
+-----------------------------------------------*/
+.fit-cover {
+  -o-object-fit: cover;
+  object-fit: cover;
+}
+
+.z-index-1 {
+  z-index: 1;
+}
+
+.z-index-2 {
+  z-index: 2 !important;
+}
+
+.z-index--1 {
+  z-index: -1;
+}
+
+/*-----------------------------------------------
+|   Sidebar
+-----------------------------------------------*/
+.sticky-sidebar {
+  position: -webkit-sticky;
+  position: sticky;
+  z-index: 1020;
+  top: 5.3125rem;
+}
+
+/*-----------------------------------------------
+|   Custom circle
+-----------------------------------------------*/
+.circle-dashed {
+  border: 1px dashed #FFB30E;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 3.5rem;
+  height: 3.5rem;
+}
+
+/*-----------------------------------------------
+|   Miscellaneous
+-----------------------------------------------*/
+.hover-text-decoration-none:hover, .hover-text-decoration-none:focus {
+  text-decoration: none;
+}
+
+.resize-none {
+  resize: none;
+}
+
+.collapsed .collapse-icon {
+  -webkit-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  -webkit-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  transform: rotate(0deg);
+}
+
+.collapse-icon {
+  -webkit-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  -webkit-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+[data-dismiss="dropdown"] *,
+[data-offset-top] *,
+[data-toggle="collapse"] *,
+[data-toggle="tooltip"] *,
+[data-toggle="popover"] * {
+  pointer-events: none;
+}
+
+/*-----------------------------------------------
+|   Outline
+-----------------------------------------------*/
+.outline-none {
+  outline: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.outline-none:hover, .outline-none:focus {
+  outline: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+/*-----------------------------------------------
+|   Vertical Line (used in kanban header)
+-----------------------------------------------*/
+.vertical-line:after {
+  position: absolute;
+  content: "";
+  height: 75%;
+  width: 1px;
+  background: #EEEEEE;
+  right: 0;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.vertical-line.vertical-line-400:after {
+  background-color: #E0E0E0;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                 Transition                                 */
+/* -------------------------------------------------------------------------- */
+.transition-base {
+  -webkit-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+.transition-none {
+  -webkit-transition: none;
+  -o-transition: none;
+  transition: none;
+}
+
+.fsp-75 {
+  font-size: 75%;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                    Width                                   */
+/* -------------------------------------------------------------------------- */
+.min-w-0 {
+  min-width: 0;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                Terms sidebar                               */
+/* -------------------------------------------------------------------------- */
+.terms-sidebar .nav-link {
+  color: #BDBDBD;
+  font-weight: 500;
+  font-family: Manrope, "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.terms-sidebar .nav-link.active {
+  color: #FFB30E;
+}
+
+.icon {
+  padding: 1rem;
+  border-radius: 15px;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  background-color: rgba(255, 254, 254, 0.2);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 254, 254, 0.3);
+}
+
+.icon-primary {
+  color: #FFB30E;
+}
+
+.icon-secondary {
+  color: #2780ED;
+}
+
+.icon-success {
+  color: #79B93C;
+}
+
+.icon-info {
+  color: #24FFEA;
+}
+
+.icon-warning {
+  color: #FFB30E;
+}
+
+.icon-danger {
+  color: #F17228;
+}
+
+.icon-light {
+  color: #F9FAFD;
+}
+
+.icon-dark {
+  color: #212121;
+}
+
+.img-landing-banner {
+  overflow: hidden;
+  -webkit-transform: translateY(-3rem);
+  -ms-transform: translateY(-3rem);
+  transform: translateY(-3rem);
+  margin-bottom: -8rem;
+  -webkit-transition: -webkit-transform 0.4s ease;
+  transition: -webkit-transform 0.4s ease;
+  -o-transition: transform 0.4s ease;
+  transition: transform 0.4s ease;
+  transition: transform 0.4s ease, -webkit-transform 0.4s ease;
+  position: relative;
+  display: block;
+}
+
+@media (min-width: 1540px) {
+  .img-landing-banner {
+    margin-bottom: -22rem;
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1539.98px) {
+  .img-landing-banner {
+    margin-bottom: -18rem;
+  }
+}
+
+.img-landing-banner:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 70%;
+  -webkit-transition: opacity 0.6s;
+  -o-transition: opacity 0.6s;
+  transition: opacity 0.6s;
+}
+
+.img-landing-banner:hover, .img-landing-banner:focus {
+  -webkit-transform: translateY(-5rem);
+  -ms-transform: translateY(-5rem);
+  transform: translateY(-5rem);
+}
+
+.img-landing-banner:hover:after, .img-landing-banner:focus:after {
+  opacity: 0;
+}
+
+/*-----------------------------------------------
+|   LaslesVPN glow buttons
+-----------------------------------------------*/
+.btn-glow {
+  position: relative;
+}
+
+.btn-glow::before {
+  content: '';
+  height: 80%;
+  width: 80%;
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  display: inline-block;
+  background-color: inherit;
+  opacity: 0.55;
+  -webkit-filter: blur(26px);
+  filter: blur(26px);
+  -webkit-transform: translateY(45%);
+  -ms-transform: translateY(45%);
+  transform: translateY(45%);
+  z-index: -1;
+  border-radius: 10px;
+}
+
+.btn-gradient:hover {
+  -webkit-box-shadow: 0 10px 20px #D42DA3, 0 6px 6px #FFB30E;
+  box-shadow: 0 10px 20px #D42DA3, 0 6px 6px #FFB30E;
+}
+
+
+/* Hover */
+.hover-top {
+  -webkit-transform: translateY(0) translateZ(0);
+  transform: translateY(0) translateZ(0);
+  -webkit-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.hover-top.hover-top-shadow-lg:hover, .hover-top.hover-top-shadow-lg:focus {
+  -webkit-transform: translateY(-0.3125rem) translateZ(0);
+  transform: translateY(-0.3125rem) translateZ(0);
+}
+
+.hover-top:hover, .hover-top:focus {
+  -webkit-transform: translateY(-0.125rem) translateZ(0);
+  transform: translateY(-0.125rem) translateZ(0);
+  -webkit-box-shadow: 0.5rem 0.5rem 1.5rem rgba(110, 74, 156, 0.1) !important;
+  box-shadow: 0.5rem 0.5rem 1.5rem rgba(110, 74, 156, 0.1) !important;
+  background-color: #D42DA3;
+  color: #FFFEFE;
+}
+
+.hover-top:hover .heading-color, .hover-top:focus .heading-color {
+  color: #FFFEFE;
+}
+
+/* Icon Forward */
+.hvr-icon-forward {
+  -webkit-transition-duration: 0.1s;
+  -o-transition-duration: 0.1s;
+  transition-duration: 0.1s;
+}
+
+.hvr-icon-forward .hover-icon {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-transition-duration: 0.1s;
+  -o-transition-duration: 0.1s;
+  transition-duration: 0.1s;
+  -webkit-transition-property: -webkit-transform;
+  transition-property: -webkit-transform;
+  -o-transition-property: transform;
+  transition-property: transform;
+  transition-property: transform, -webkit-transform;
+  -webkit-transition-timing-function: ease-out;
+  -o-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+}
+
+.hvr-icon-forward:hover .hover-icon, .hvr-icon-forward:focus .hover-icon, .hvr-icon-forward:active .hover-icon {
+  -webkit-transform: translateX(4px);
+  -ms-transform: translateX(4px);
+  transform: translateX(4px);
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                    Badge                                   */
+/* -------------------------------------------------------------------------- */
+.badge {
+  line-height: 0.8125rem;
+}
+
+.badge-circle {
+  height: 2rem;
+  width: 2rem;
+  border-radius: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 0 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .badge-circle {
+    height: 3.4rem;
+    width: 3.4rem;
+    border-radius: 50%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 0 1rem;
+  }
+}
+
+.badge-foodwagon {
+  border-radius: 0 1.25rem 0 1rem;
+}
+
+.card-badge {
+  position: absolute;
+  top: 13rem;
+  z-index: 1;
+}
+
+.card-actions {
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+  width: 100%;
+}
+
+.carousel-icon {
+  width: auto;
+}
+
+.carousel-icon .carousel-control-prev-icon:hover {
+  background-color: #FFFEFE !important;
+}
+
+.carousel-icon .carousel-control-next-icon:hover {
+  background-color: #FFFEFE !important;
+}
+
+.carousel-icon .carousel-control-prev-icon,
+.carousel-icon .carousel-control-next-icon {
+  border-radius: 50%;
+}
+
+@media (min-width: 576px) {
+  .carousel-control-prev {
+    left: -35px;
+  }
+  .carousel-control-next {
+    right: -35px;
+  }
+}
+
+@media (min-width: 768px) {
+  .carousel-control-prev {
+    left: -50px;
+  }
+  .carousel-control-next {
+    right: -50px;
+  }
+}
+
+@media (min-width: 992px) {
+  .carousel-control-prev {
+    left: 0;
+  }
+  .carousel-control-next {
+    right: 0;
+  }
+}
+
+@media (min-width: 1200px) {
+  .carousel-control-prev {
+    left: -55px;
+  }
+  .carousel-control-next {
+    right: -55px;
+  }
+}
+
+@media (min-width: 1540px) {
+  .carousel-control-prev {
+    left: -70px;
+  }
+  .carousel-control-next {
+    right: -70px;
+  }
+}
+
+@media (min-width: 768px) {
+  .carousel-control-prev.s-icon-prev {
+    left: -20px;
+  }
+  .carousel-control-next.s-icon-next {
+    right: -20px;
+  }
+}

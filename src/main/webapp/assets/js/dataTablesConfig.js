@@ -49,7 +49,7 @@ $(document).ready(function () {
                     "excel",
                     "csv",
                     "print",
-                    "copy",
+                    "copy"
                 ]
             }
         ],
@@ -208,34 +208,34 @@ $(document).ready(function () {
      DO NOT USE ON CLICK EVENTS, this will cause a memory issue that freezes the page if the user clicks on the tab repeatedly.
      UPDATE: This problem can still occur even when using shown.bs.tab event, due to the function being called too many times.
      */
-    
-     // Ensures that the function is called only once for Food & Drinks tab to prevent memory issues
+
+    // Ensures that the function is called only once for Food & Drinks tab to prevent memory issues
     let isFoodInitialized = false;
-    
+
     $("[data-bs-target='#foods']").on('shown.bs.tab', function () {
-      if (!isFoodInitialized) {
-        // Remove searchPanes' expand and collapse all panes button
-        $('.dtsp-showAll').remove();
-        $('.dtsp-collapseAll').remove();
-    
-        // Additional custom styling for searchPane's title row
-        $('.dtsp-titleRow').addClass("d-flex flex-wrap align-items-center gap-2 mt-1");
-        $('.dtsp-titleRow > div').addClass("py-0").after("<div class='flex-grow-1'>");
-        $('.dtsp-titleRow > button').addClass("d-flex align-items-center btn-sm py-2");
-    
-        // Insert the table's button group to existing button container with Add, Update, Delete buttons
-        foodTable.buttons().container().prependTo("#foods-button-container");
-        // Manually configure classes for the newly inserted button group
-        let tableButtons = $("#foods-button-container > div.dt-buttons");
-        tableButtons.removeClass("btn-group");
-        tableButtons.addClass("col-sm-12 col-lg-7 d-flex gap-2");
-        /*$("#foods-button-container > div.dt-buttons > *").addClass("me-1");*/
-    
-        // Fix table headers not resized on page load
-        $('#food-table').resize();
-    
-        isFoodInitialized = true;
-      }
+        if (!isFoodInitialized) {
+            // Remove searchPanes' expand and collapse all panes button
+            $('.dtsp-showAll').remove();
+            $('.dtsp-collapseAll').remove();
+
+            // Additional custom styling for searchPane's title row
+            $('.dtsp-titleRow').addClass("d-flex flex-wrap align-items-center gap-2 mt-1");
+            $('.dtsp-titleRow > div').addClass("py-0").after("<div class='flex-grow-1'>");
+            $('.dtsp-titleRow > button').addClass("d-flex align-items-center btn-sm py-2");
+
+            // Insert the table's button group to existing button container with Add, Update, Delete buttons
+            foodTable.buttons().container().prependTo("#foods-button-container");
+            // Manually configure classes for the newly inserted button group
+            let tableButtons = $("#foods-button-container > div.dt-buttons");
+            tableButtons.removeClass("btn-group");
+            tableButtons.addClass("col-sm-12 col-lg-7 d-flex gap-2");
+            /*$("#foods-button-container > div.dt-buttons > *").addClass("me-1");*/
+
+            // Fix table headers not resized on page load
+            $('#food-table').resize();
+
+            isFoodInitialized = true;
+        }
     });
 //    ================================================ END FOR FOOD ==============================
     let voucherTable = $('#vouchers-table').DataTable({
@@ -399,7 +399,7 @@ $(document).ready(function () {
                 .each((element) => element.classList.add('highlight'));
     });
 
-     function disableUpdateRoleBtn() {
+    function disableUpdateRoleBtn() {
         let btnUpdate = $('#btn-update-role');
         if (btnUpdate) {
             btnUpdate.removeAttr("data-role-accountid");
@@ -442,7 +442,7 @@ $(document).ready(function () {
                 btnUpdate.attr("data-role-fullname", data2[0][3]);
                 btnUpdate.attr("data-role-email", data2[0][4]);
                 let account_type = "";
-                if (data2[0][5] === "Staff"){
+                if (data2[0][5] === "Staff") {
                     account_type = "staff";
                 } else {
                     account_type = "promotionManager";
@@ -454,24 +454,24 @@ $(document).ready(function () {
                 let accounts = {};
                 let temp1s = {};
                 let temp2s = {};
-                
+
                 roles[data2[0][1]] = data2[0][3];
                 accounts[data2[0][0]] = data2[0][2];
                 account_type = "";
                 if (data2[0][5] === "Staff") {
                     account_type = "staff";
-                    temp1s[data2[0][1]] = account_type; 
-                
+                    temp1s[data2[0][1]] = account_type;
+
                     btnDelete.attr("data-temp1s", JSON.stringify(temp1s));
                 } else {
                     account_type = "promotionManager";
-                    temp2s[data2[0][1]] = account_type; 
+                    temp2s[data2[0][1]] = account_type;
                     btnDelete.attr("data-temp2s", JSON.stringify(temp2s));
-                } 
+                }
                 btnDelete.attr("data-roles", JSON.stringify(roles));
                 btnDelete.attr("data-accounts", JSON.stringify(accounts));
-                
-                
+
+
                 btnDelete.removeClass("disabled");
             } else if (data2.length > 1) {
                 let roles = {};
@@ -482,16 +482,16 @@ $(document).ready(function () {
                     let roleId = data2[i][1];
                     let accountId = data2[i][0];
                     roles[i] = data2[i][3];
-                    accounts[accountId] = data2[i][2]; 
-                    
+                    accounts[accountId] = data2[i][2];
+
                     let account_type = "";
                     if (data2[i][5] === "Staff") {
                         account_type = "staff";
-                        temp1s[roleId] = account_type; 
+                        temp1s[roleId] = account_type;
                     } else {
                         account_type = "promotionManager";
-                        temp2s[roleId] = account_type; 
-                    }  
+                        temp2s[roleId] = account_type;
+                    }
                 }
                 btnDelete.attr("data-roles", JSON.stringify(roles));
                 btnDelete.attr("data-temp1s", JSON.stringify(temp1s));
@@ -521,6 +521,21 @@ $(document).ready(function () {
         }
     });
 
+    roleTable.on('select-blur', function (e, dt, target, originalEvent) {
+        // Ignores blur event if user clicks on update/delete/cancel/confirm buttons, or the background of a modal dialog
+        if (target.classList.contains("btn-update")
+                || target.classList.contains("btn-delete")
+                || target.classList.contains("btn-cancel")
+                || target.classList.contains("btn-confirm")
+                || target.id === "update-role-modal"
+                || target.id === "delete-role-modal") {
+            e.preventDefault();
+        } else {
+            disableUpdateRoleBtn();
+            disableDeleteRoleBtn();
+        }
+    });
+
     $("[data-bs-target='#roles']").on('shown.bs.tab', function () {
         // Remove searchPanes' expand and collapse all panes button
         $('.dtsp-showAll').remove();
@@ -532,9 +547,9 @@ $(document).ready(function () {
         $('.dtsp-titleRow > button').addClass("d-flex align-items-center btn-sm py-2");
 
         // Insert the table's button group to existing button container with Add, Update, Delete buttons
-        foodTable.buttons().container().prependTo("#role-button-container");
+        foodTable.buttons().container().prependTo("#roles-button-container");
         // Manually configure classes for the newly inserted button group
-        let tableButtons = $("#role-button-container > div.dt-buttons");
+        let tableButtons = $("#roles-button-container > div.dt-buttons");
         tableButtons.removeClass("btn-group");
         tableButtons.addClass("col-sm-12 col-lg-7 d-flex gap-2");
         /*$("#foods-button-container > div.dt-buttons > *").addClass("me-1");*/
@@ -552,20 +567,9 @@ $(document).ready(function () {
                 userable: false,
                 targets: [-1] // "Image" columns
             }
-        ],
-        dom: "<'row'" +
-                "<'d-row col-sm-12 m-0'" +
-                "<'row'" +
-                "<'col-sm-12 col-lg-6 pt-2'l><'col-sm-12 col-lg-6 pt-1 'f>" + // length and search bar
-                ">" +
-                "<'col-sm-12'tr>" + // table
-                "<'row'" +
-                "<'col-sm-12 col-md-5 mt-1'i><'col-sm-12 col-md-7 mt-2'p>" + // info and pagination
-                ">" +
-                ">" +
-                ">",
+        ]
     });
-    
+
     /*
      Highlights current column that the mouse cursor is hovering on
      This should be used in tandem with default hover option for increased cursor visibility
@@ -637,8 +641,8 @@ $(document).ready(function () {
                 let users = {};
                 let customers = {};
 
-                users[data3[0][0]] = data3[0][2]; 
-                customers[data3[0][1]] = data3[0][4]; 
+                users[data3[0][0]] = data3[0][2];
+                customers[data3[0][1]] = data3[0][4];
                 btnDelete.attr("data-users", JSON.stringify(users));
                 btnDelete.attr("data-customers", JSON.stringify(customers));
                 btnDelete.removeClass("disabled");
@@ -648,8 +652,8 @@ $(document).ready(function () {
                 for (let i = 0; i < data3.length; i++) {
                     let userId = data3[i][0];
                     let customerId = data3[i][1];
-                    users[userId] = data3[i][1]; 
-                    customers[customerId] = data3[i][4]; 
+                    users[userId] = data3[i][1];
+                    customers[customerId] = data3[i][4];
                 }
                 btnDelete.attr("data-users", JSON.stringify(users));
                 btnDelete.attr("data-customers", JSON.stringify(customers));
@@ -659,6 +663,21 @@ $(document).ready(function () {
                 disableUpdateUserBtn();
                 disableDeleteUserBtn();
             }
+        }
+    });
+
+    userTable.on('select-blur', function (e, dt, target, originalEvent) {
+        // Ignores blur event if user clicks on update/delete/cancel/confirm buttons, or the background of a modal dialog
+        if (target.classList.contains("btn-update")
+                || target.classList.contains("btn-delete")
+                || target.classList.contains("btn-cancel")
+                || target.classList.contains("btn-confirm")
+                || target.id === "update-user-modal"
+                || target.id === "delete-user-modal") {
+            e.preventDefault();
+        } else {
+            disableUpdateUserBtn();
+            disableDeleteUserBtn();
         }
     });
 
@@ -718,7 +737,7 @@ $(document).ready(function () {
                 "<'col-sm-12 col-md-5 mt-1'i><'col-sm-12 col-md-7 mt-2'p>" + // info and pagination
                 ">" +
                 ">" +
-                ">",
+                ">"
     });
 
     orderTable.on('mouseenter', 'td', function () {
@@ -733,7 +752,7 @@ $(document).ready(function () {
                 .nodes()
                 .each((element) => element.classList.add('highlight'));
     });
-    
+
     function disableUpdateOrderBtn() {
         let btnUpdate = $('#btn-update-order');
         if (btnUpdate) {
@@ -754,10 +773,18 @@ $(document).ready(function () {
         let btnDelete = $('#btn-delete-order');
         if (btnDelete) {
             btnDelete.removeAttr("data-order-id");
+            btnDelete.removeAttr("data-order-phonenumber");
+            btnDelete.removeAttr("data-order-lastname");
+            btnDelete.removeAttr("data-order-firstname");
+            btnDelete.removeAttr("data-order-address");
+            btnDelete.removeAttr("data-order-paymentmethod");
+            btnDelete.removeAttr("data-order-note");
+            btnDelete.removeAttr("data-order-status");
+            btnDelete.removeAttr("data-order-total");
             btnDelete.addClass("disabled");
         }
     }
-    
+
     orderTable.on('select selectItems deselect', function (e, dt, type, indexes) {
         if (type === 'row' && indexes && Array.isArray(indexes)) {
             let btnUpdate = $('#btn-update-order');
@@ -784,20 +811,20 @@ $(document).ready(function () {
                 btnUpdate.removeClass("disabled");
 
                 let orders = {};
-                orders[data4[0][0]] = data4[0][0]; 
+                orders[data4[0][0]] = data4[0][0];
                 btnDelete.attr("data-orders", JSON.stringify(orders));
                 btnDelete.removeClass("disabled");
             } else if (data4.length > 1) {
                 let orders = {};
                 for (let i = 0; i < data4.length; i++) {
                     let orderId = data4[i][0];
-                    orders[orderId] = data4[i][0]; 
+                    orders[orderId] = data4[i][0];
                 }
                 btnDelete.attr("data-orders", JSON.stringify(orders));
                 btnDelete.removeClass("disabled");
-                disableUpdateUserBtn();
+                disableUpdateOrderBtn();
             } else {
-                disableUpdateUserBtn();
+                disableUpdateOrderBtn();
                 disableDeleteUserBtn();
             }
         }
@@ -814,6 +841,21 @@ $(document).ready(function () {
         } else {
             // Open this row
             row.child(format(row.data())).show();
+        }
+    });
+
+    orderTable.on('select-blur', function (e, dt, target, originalEvent) {
+        // Ignores blur event if user clicks on update/delete/cancel/confirm buttons, or the background of a modal dialog
+        if (target.classList.contains("btn-update")
+                || target.classList.contains("btn-delete")
+                || target.classList.contains("btn-cancel")
+                || target.classList.contains("btn-confirm")
+                || target.id === "update-user-modal"
+                || target.id === "delete-user-modal") {
+            e.preventDefault();
+        } else {
+            disableUpdateOrderBtn();
+            disableDeleteOrderBtn();
         }
     });
 
