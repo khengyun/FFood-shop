@@ -41,16 +41,17 @@ function validateForm() {
             txtImageURL: {
                 required: true,
                 url: true,
-                maxlength: 255,
-                googleDrivePattern: true
+                maxlength: 255
             }
         },
         messages: {
-            txtFoodTypeID: "Vui lòng chọn loại món",
+            txtFoodTypeID: {
+                required: "Vui lòng chọn loại món"
+            },
             txtFoodName: {
                 required: "Tên món không được để trống",
-                maxlength: "Tên món không dài quá 100 kí tự",
-                pattern: "Tên món chỉ chấp nhận chữ, khoảng trắng"
+                maxlength: "Tên món không được dài quá 100 ký tự",
+                pattern: "Tên món chỉ chấp nhận chữ"
             },
             txtFoodDescription: {
                 required: "Tên món không được để trống",
@@ -58,26 +59,36 @@ function validateForm() {
             },
             txtFoodPrice: {
                 required: "Vui lòng nhập Đơn giá",
-                number: "Đơn giá phải là định dạng số",
-                min: "Đơn giá phải là số dương"
+                number: "Đơn giá phải có định dạng số",
+                min: "Đơn giá phải là số dương lớn hơn hoặc bằng 1"
+            },
+            txtDiscountPercent: {
+                required: "Vui lòng nhập Phần trăm giảm giá",
+                digits: "Phần trăm giảm giá phải là số nguyên",
+                min: "Phần trăm giảm giá không được nhỏ hơn 0",
+                max: "Phần trăm giảm giá không được lớn hơn 100"
             },
             txtImageURL: {
                 required: "Vui lòng nhập Đường dẫn ảnh",
-                url: "Giá trị nhập vào phải là đường dẫn",
-                maxlength: "Đường dẫn không dài quá 255 kí tự",
+                url: "Giá trị nhập vào phải là đường dẫn hợp lệ",
+                maxlength: "Đường dẫn không được dài quá 255 ký tự",
+                googleDrivePattern: "Vui lòng nhập đường dẫn ảnh hợp lệ"
             }
         },
         errorElement: "p",
         highlight: function (element, errorClass, validClass) {
             $(element).parents(".col-sm-5").addClass("has-error").removeClass("has-success");
-        },
+        }
+        ,
         unhighlight: function (element, errorClass, validClass) {
             $(element).parents(".col-sm-5").addClass("has-success").removeClass("has-error");
-        },
+        }
+        ,
         submitHandler: function (form) {
             form.submit();
         }
-    });
+    }
+    );
 
     $(".update-food-form").validate({
         rules: {
@@ -107,8 +118,7 @@ function validateForm() {
             txtImageURL: {
                 required: true,
                 url: true,
-                maxlength: 255,
-                googleDrivePattern: true
+                maxlength: 255
             }
         },
         messages: {
@@ -117,8 +127,8 @@ function validateForm() {
             },
             txtFoodName: {
                 required: "Tên món không được để trống",
-                maxlength: "Tên món không dài quá 100 kí tự",
-                pattern: "Tên món chỉ chấp nhận chữ, khoảng trắng"
+                maxlength: "Tên món không được dài quá 100 ký tự",
+                pattern: "Tên món chỉ chấp nhận chữ và khoảng trắng"
             },
             txtFoodDescription: {
                 required: "Mô tả món ăn không được để trống",
@@ -126,19 +136,20 @@ function validateForm() {
             },
             txtFoodPrice: {
                 required: "Vui lòng nhập Đơn giá",
-                number: "Đơn giá phải là định dạng số",
-                min: "Đơn giá phải là số dương"
+                number: "Đơn giá phải có định dạng số",
+                min: "Đơn giá phải là số dương lớn hơn hoặc bằng 1"
             },
             txtDiscountPercent: {
-                required: "Vui lòng nhập giá trị giảm giá",
-                digits: "Giá trị giảm giá phải là số nguyên",
-                min: "Giá trị giảm giá không được dưới 0",
-                max: "Giá trị giảm giá không được quá 100"
+                required: "Vui lòng nhập Phần trăm giảm giá",
+                digits: "Phần trăm giảm giá phải là số nguyên",
+                min: "Phần trăm giảm giá không được nhỏ hơn 0",
+                max: "Phần trăm giảm giá không được lớn hơn 100"
             },
             txtImageURL: {
                 required: "Vui lòng nhập Đường dẫn ảnh",
-                url: "Giá trị nhập vào phải là đường dẫn",
-                maxlength: "Đường dẫn không dài quá 255 kí tự",
+                url: "Giá trị nhập vào phải là đường dẫn hợp lệ",
+                maxlength: "Đường dẫn không được dài quá 255 ký tự",
+                googleDrivePattern: "Đường dẫn phải là đường dẫn từ Google Drive"
             }
         },
         errorElement: "p",
@@ -239,7 +250,7 @@ function validateForm() {
             form.submit();
         }
     });
-    
+
 
     $(".update-user-form").validate({
         rules: {
@@ -324,7 +335,7 @@ function validateForm() {
         }
     });
 
-   
+
     $(".add-voucher-form").validate({
         rules: {
             txtvoucher_name: {
@@ -368,7 +379,7 @@ function validateForm() {
         }
     });
 
-  
+
     $(".update-voucher-form").validate({
         rules: {
             txtvoucher_name: {
@@ -604,7 +615,7 @@ function validateForm() {
             form.submit();
         }
     });
-    
+
     $(".add-role-form").validate({
         rules: {
             txtAccountUsername: {
@@ -661,7 +672,7 @@ function validateForm() {
             form.submit();
         }
     });
-    
+
     $(".update-role-form").validate({
         rules: {
             txtAccountUsername: {
@@ -717,39 +728,39 @@ function validateForm() {
 }
 
 $(".update-order-form").validate({
-        rules: {
-            txtOrderNote: {
-                maxlength: 500
-            },
-            txtPhoneNumber: {
-                required: true,
-                maxlength: 11,
-                number: true
-            },
-            txtAddress: {
-                required: true,
-                maxlength: 200,
-            }
-
+    rules: {
+        txtOrderNote: {
+            maxlength: 500
         },
-        messages: {
-            txtOrderNote: {
-                maxlength: "Ghi chú không được vượt quá 50 ký tự",
-            },
-            txtPhoneNumber: {
-                required: "Vui lòng nhập số điện thoại",
-                maxlength: "Số điện thoại không vượt quá 11 số",
-                number: "Số điện thoại chỉ chấp nhận số"
-            },
-            txtAddress: {
-                required: "Vui lòng nhập địa chỉ đặt hàng",
-                maxlength: "Địa chỉ không được vượt quá 200 ký tự",
-            }
+        txtPhoneNumber: {
+            required: true,
+            maxlength: 11,
+            number: true
         },
-        submitHandler: function (form) {
-            // Handle form submission here
-            form.submit();
+        txtAddress: {
+            required: true,
+            maxlength: 200,
         }
+
+    },
+    messages: {
+        txtOrderNote: {
+            maxlength: "Ghi chú không được vượt quá 50 ký tự",
+        },
+        txtPhoneNumber: {
+            required: "Vui lòng nhập số điện thoại",
+            maxlength: "Số điện thoại không vượt quá 11 số",
+            number: "Số điện thoại chỉ chấp nhận số"
+        },
+        txtAddress: {
+            required: "Vui lòng nhập địa chỉ đặt hàng",
+            maxlength: "Địa chỉ không được vượt quá 200 ký tự",
+        }
+    },
+    submitHandler: function (form) {
+        // Handle form submission here
+        form.submit();
+    }
 });
 
 $(".checkout-form").validate({
@@ -805,4 +816,4 @@ $(".checkout-form").validate({
             // Handle form submission here
             form.submit();
         }
-    });
+});

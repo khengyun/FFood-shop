@@ -5,3 +5,4 @@ fastapi
 protobuf==3.20
 pymssql
 google-auth
+Unidecode

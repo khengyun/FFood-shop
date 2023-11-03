@@ -4,7 +4,7 @@
     <div class="container-fluid p-4 shadow rounded-4 bg-white">
         <table id="user-table" class="table table-hover nowrap align-middle" style="width: 100%;">
             <h1 class="text-start fw-bold fs-3 mb-3">Quản lý Người dùng</h1>
-            <div id="users-button-container" class="row mb-2">
+            <div id="users-button-container" class="button-container row mb-2">
                 <div class="col-sm-12 col-lg-5 mt-sm-2 mt-lg-0 d-flex flex-wrap gap-2 justify-content-lg-end">
                     <button type="button" class="btn btn-success d-flex align-items-center flex-shrink-0" 
                             data-bs-toggle="modal"
@@ -13,14 +13,14 @@
                         Thêm người dùng
                     </button>
                     <button type="button" id="btn-update-user"
-                            class="btn btn-primary btn-update d-flex align-items-center flex-shrink-0" 
+                            class="btn btn-primary btn-update d-flex disabled align-items-center flex-shrink-0" 
                             data-bs-toggle="modal"
                             data-bs-target="#update-user-modal">
                         <i class="ph-bold ph-pencil fs-1 me-2"></i>
                         Cập nhật
                     </button>
                     <button type="button" id="btn-delete-user"
-                            class="btn btn-danger btn-delete d-flex align-items-center flex-shrink-0" 
+                            class="btn btn-danger btn-delete d-flex disabled align-items-center flex-shrink-0" 
                             data-bs-toggle="modal"
                             data-bs-target="#delete-user-modal">
                         <i class="ph-bold ph-trash fs-1 me-2"></i>
@@ -28,14 +28,11 @@
                     </button>
                 </div>
             </div>
-            <button type="button" class="btn btn-sm btn-success py-1 my-2 me-2" data-bs-toggle="modal" data-bs-target="#add-user-modal">
-                Tạo Tài khoản Người dùng
-            </button>
             <thead>
                 <tr>
-                    <th onclick="sortTable(0)">Mã tài khoản</th>
-                    <th onclick="sortTable(1)">Mã người dùng</th>
-                    <th onclick="sortTable(2)">Tên người dùng</th>
+                    <th onclick="sortTable(0)">Mã TK</th>
+                    <th onclick="sortTable(1)">Mã User</th>
+                    <th onclick="sortTable(2)">Tên User</th>
                     <th onclick="sortTable(3)">Họ</th>
                     <th onclick="sortTable(4)">Tên</th>
                     <th onclick="sortTable(5)">Giới tính</th>
