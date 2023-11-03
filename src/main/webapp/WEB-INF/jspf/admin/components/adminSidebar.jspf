@@ -76,7 +76,11 @@
       <i class="ph ph-user-circle"></i>
     </button>
     <ul class="dropdown-menu text-small shadow">
-      <li><a class="dropdown-item" href="/admin/help">Trợ giúp</a></li>
+      <li>
+        <a class="dropdown-item" data-bs-toggle="offcanvas" data-bs-target="#help" role="button" aria-controls="helpMenu">
+          Trợ giúp
+        </a>
+      </li>
       <li>
         <hr class="dropdown-divider">
       </li>
@@ -173,7 +177,11 @@
       <div class="flex-grow-0"></div>
     </button>
     <ul class="dropdown-menu text-small shadow">
-      <li><a class="dropdown-item" href="/admin/help">Trợ giúp</a></li>
+      <li>
+        <a class="dropdown-item" data-bs-toggle="offcanvas" data-bs-target="#help" role="button" aria-controls="helpMenu">
+          Trợ giúp
+        </a>
+      </li>
       <li>
         <hr class="dropdown-divider">
       </li>
@@ -181,6 +189,9 @@
     </ul>
   </div>
 </div>
+
+<!-- Help offcanvas -->
+<%@ include file="help.jspf" %>
 
 <script>
   <!-- Add hover interactivity to minimized sidebar -->

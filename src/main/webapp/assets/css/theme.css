@@ -5359,9 +5359,9 @@ fieldset:disabled .btn {
 
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
-  color: var(--bs-black) !important;
+  color: var(--bs-white) !important;
   font-weight: 800;
-  background-color: var(--bs-primary70);
+  background-color: var(--bs-primary60);
 }
 
 .nav-fill > .nav-link,

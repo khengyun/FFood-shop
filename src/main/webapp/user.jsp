@@ -176,11 +176,7 @@
                               <p>Tổng thanh toán:
                                 <fmt:formatNumber type="number" pattern="###,###" value="${o.orderTotal}" />đ
                               <p class="payment_check"></p>
-                              </p>
-
                             </div>
-
-
                           </div>
                       </c:forEach>
                     </div>
