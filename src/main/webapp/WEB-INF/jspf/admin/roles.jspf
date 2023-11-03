@@ -12,13 +12,13 @@
                         Thêm Account
                     </button>
                     <button type="button" id="btn-update-role"
-                            class="btn btn-primary btn-update d-flex  align-items-center flex-shrink-0" data-bs-toggle="modal"
+                            class="btn btn-primary btn-update d-flex disabled align-items-center flex-shrink-0" data-bs-toggle="modal"
                             data-bs-target="#update-role-modal">
                         <i class="ph-bold ph-pencil fs-1 me-2"></i>
                         Cập nhật
                     </button>
                     <button type="button" id="btn-delete-role"
-                            class="btn btn-danger btn-delete d-flex align-items-center flex-shrink-0" data-bs-toggle="modal"
+                            class="btn btn-danger btn-delete d-flex disabled align-items-center flex-shrink-0" data-bs-toggle="modal"
                             data-bs-target="#delete-role-modal">
                         <i class="ph-bold ph-trash fs-1 me-2"></i>
                         Xoá Role

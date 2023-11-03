@@ -13,13 +13,13 @@
                         Thêm Voucher
                     </button>
                     <button type="button" id="btn-update-voucher"
-                            class="btn btn-primary btn-update d-flex  align-items-center flex-shrink-0" data-bs-toggle="modal"
+                            class="btn btn-primary btn-update d-flex disabled align-items-center flex-shrink-0" data-bs-toggle="modal"
                             data-bs-target="#update-voucher-modal">
                         <i class="ph-bold ph-pencil fs-1 me-2"></i>
                         Cập nhật
                     </button>
                     <button type="button" id="btn-delete-voucher"
-                            class="btn btn-danger btn-delete d-flex align-items-center flex-shrink-0" data-bs-toggle="modal"
+                            class="btn btn-danger btn-delete d-flex disabled align-items-center flex-shrink-0" data-bs-toggle="modal"
                             data-bs-target="#delete-voucher-modal">
                         <i class="ph-bold ph-trash fs-1 me-2"></i>
                         Xoá Voucher

@@ -13,14 +13,14 @@
                         Thêm người dùng
                     </button>
                     <button type="button" id="btn-update-user"
-                            class="btn btn-primary btn-update d-flex align-items-center flex-shrink-0" 
+                            class="btn btn-primary btn-update d-flex disabled align-items-center flex-shrink-0" 
                             data-bs-toggle="modal"
                             data-bs-target="#update-user-modal">
                         <i class="ph-bold ph-pencil fs-1 me-2"></i>
                         Cập nhật
                     </button>
                     <button type="button" id="btn-delete-user"
-                            class="btn btn-danger btn-delete d-flex align-items-center flex-shrink-0" 
+                            class="btn btn-danger btn-delete d-flex disabled align-items-center flex-shrink-0" 
                             data-bs-toggle="modal"
                             data-bs-target="#delete-user-modal">
                         <i class="ph-bold ph-trash fs-1 me-2"></i>
