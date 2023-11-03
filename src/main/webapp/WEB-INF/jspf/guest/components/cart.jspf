@@ -242,35 +242,29 @@
 
         const numCartItem = cartItems.length;
        
-
         // If there are no rows or there is an empty cart label, disable the submit button and remove the cart badge
         // Otherwise, enable the submit button and add the cart badge
-        if (numCartItem === 0) {
+        if (numCartItem <= 0) {
             document.getElementById("btnSubmit").disabled = true;
+            
+            // Remove the cart badge. Class selectors return HTMLCollection, so we use a for-of loop
+            // https://stackoverflow.com/questions/22754315/for-loop-for-htmlcollection-elements
             for (const badge of cartBadges) {
-                badge.classList.add("d-none");
+              badge.classList.add("d-none");
+              badge.innerText = "";
             }
         } else {
             document.getElementById("btnSubmit").disabled = false;
 
-            // Remove the cart badge. Class selectors return HTMLCollection, so we use a for-of loop
-            // https://stackoverflow.com/questions/22754315/for-loop-for-htmlcollection-elements
-            for (const badge of cartBadges) {
-                badge.classList.remove("d-none");
-            }
-
             // Set the cart badge text to the number of rows
             for (const badge of cartBadges) {
+                badge.classList.remove("d-none");
                 if (numCartItem > 99) {
                     badge.innerText = "+99";
-                } else if (numCartItem <= 0) {
-                    badge.innerText = "";
                 } else {
                     badge.innerText = numCartItem;
                 }
-                ;
             }
-            ;
         }
 
         // Update the total price
