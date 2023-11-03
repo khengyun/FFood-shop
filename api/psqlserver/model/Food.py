@@ -53,18 +53,14 @@ class FoodOperations:
         
 
     def generate_variants(self, food_name):
-        # Tách tên món ăn thành các từ riêng lẻ
         words = food_name.split()
         variants = set()
         
-        # Thêm tên món ăn gốc
         variants.add(food_name)
         
-        # Tạo các biến thể từng từ
         for word in words:
             variants.add(word)
         
-        # Tạo các biến thể từ kết hợp các từ
         for r in range(2, len(words) + 1):
             for combo in permutations(words, r):
                 variants.add(' '.join(combo))
@@ -72,7 +68,6 @@ class FoodOperations:
         return variants
 
     def similarity_score(self, food_name, food):
-        # Tính điểm tương đồng bằng cách đếm số từ giống nhau trong food_name và food_name của món ăn
         print(food_name, food.food_name)
         food_name_lower = food_name.lower()
         food_name_tokens = food_name_lower.split()

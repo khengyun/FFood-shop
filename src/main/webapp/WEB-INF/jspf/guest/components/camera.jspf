@@ -1,268 +1,234 @@
 <%@ page pageEncoding="UTF-8" %>
-<div
-  class="modal fade"
-  id="cameraModal"
-  tabindex="-1"
-  aria-labelledby="cameraModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="cameraModalLabel">Tìm Món bằng hình ảnh</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <p>Vui lòng đưa món gần camera hơn.</p>
-        <div class="camera">
-          <video id="video" class="w-100">Không thể hiển thị hình ảnh.</video>
-          <select id="cameraSelect" class="form-select"></select>
+  <div class="modal fade" id="cameraModal" tabindex="-1" aria-labelledby="cameraModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="cameraModalLabel">Tìm Món bằng hình ảnh</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Vui lòng đưa món gần camera hơn.</p>
+          <div class="camera">
+            <video id="video" class="w-100">Không thể hiển thị hình ảnh.</video>
+            <select id="cameraSelect" class="form-select"></select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="startbutton" data-bs-target="#cameraModal2" data-bs-toggle="modal" data-bs-dismiss="modal"
+            class="btn btn-primary">
+            Chụp ảnh
+          </button>
         </div>
       </div>
-      <div class="modal-footer">
-        <button
-          id="startbutton"
-          data-bs-target="#cameraModal2"
-          data-bs-toggle="modal"
-          data-bs-dismiss="modal"
-          class="btn btn-primary"
-        >
-          Chụp ảnh
-        </button>
+    </div>
+  </div>
+
+  <div class="modal fade" id="cameraModal2" tabindex="-1" aria-labelledby="cameraModalLabel2" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="cameraModalLabel2">Kết quả Tìm Món bằng hình ảnh</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p id="results_camera_detect"></p>
+          <canvas id="canvas" class="d-block mx-auto"> </canvas>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" data-bs-target="#cameraModal" data-bs-toggle="modal" data-bs-dismiss="modal"
+            data-bs-toggle="popover" data-bs-trigger="focus" title="Quét tiếp tục nếu món ăn không như bạn muốn.">
+            Thử lại
+          </button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<div
-  class="modal fade"
-  id="cameraModal2"
-  tabindex="-1"
-  aria-labelledby="cameraModalLabel2"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="cameraModalLabel2">Kết quả Tìm Món bằng hình ảnh</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <p id="results"></p>
-        <canvas id="canvas" class="d-block mx-auto"> </canvas>
-      </div>
-      <div class="modal-footer">
-        <button
-          class="btn btn-primary"
-          data-bs-target="#cameraModal"
-          data-bs-toggle="modal"
-          data-bs-dismiss="modal"
-          data-bs-toggle="popover"
-          data-bs-trigger="focus"
-          title="Quét tiếp tục nếu món ăn không như bạn muốn."
-        >
-          Thử lại
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
+  <script>
+    // Constants for photo dimensions
+    let IMAGE_VALUE = null;
+    const PHOTO_WIDTH = 450;
+    let PHOTO_HEIGHT = 0;
 
-<script>
-  // Constants for photo dimensions
-  let IMAGE_VALUE = null;
-  const PHOTO_WIDTH = 450;
-  let PHOTO_HEIGHT = 0;
+    // declear variable
+    let video = null;
+    let canvas = null;
+    let photo = null;
+    let startButton = null;
+    let cameraSelect = null;
+    let results_value = null;
 
-  // declear variable
-  let video = null;
-  let canvas = null;
-  let photo = null;
-  let startButton = null;
-  let cameraSelect = null;
-  let results_value = null;
+    let inference_time = null;
+    let predicted_dish = null;
 
-  let inference_time = null;
-  let predicted_dish = null;
-
-  function showViewLiveResultButton() {
-    if (window.self !== window.top) {
-      const contentArea = document.querySelector(".contentarea");
-      if (contentArea) {
-        contentArea.remove();
-        const button = document.createElement("button");
-        button.textContent = "View live result of the example code above";
-        document.body.append(button);
-        button.addEventListener("click", () => window.open(location.href));
-        return true;
-      }
-    }
-    return false;
-  }
-
-  async function showCameraOptions() {
-    // checked
-    try {
-      const devices = await navigator.mediaDevices.enumerateDevices();
-      const videoDevices = devices.filter(
-        (device) => device.kind === "videoinput"
-      );
-      console.log("videoDevices: ", videoDevices);
-      if (videoDevices.length > 0) {
-        videoDevices.forEach((device) => {
-          console.log("device.deviceId: ", device.deviceId);
-          const option = document.createElement("option");
-          option.value = device.deviceId;
-          option.text =
-            device.label || `Camera ${videoDevices.indexOf(device) + 1}`;
-          cameraSelect.appendChild(option);
-        });
-
-        video.srcObject = null;
-        video.srcObject = await navigator.mediaDevices.getUserMedia({
-          video: {
-            deviceId: { exact: cameraSelect.value },
-          },
-          audio: false,
-        });
-        video.play();
-        video.addEventListener("canplay", () => {
-          if (!video.streaming) {
-            PHOTO_HEIGHT = video.videoHeight / (video.videoWidth / PHOTO_WIDTH);
-            if (isNaN(PHOTO_HEIGHT)) {
-              PHOTO_HEIGHT = PHOTO_WIDTH / (4 / 3);
-            }
-            video.setAttribute("width", PHOTO_WIDTH);
-            video.setAttribute("height", PHOTO_HEIGHT);
-            canvas.setAttribute("width", PHOTO_WIDTH);
-            canvas.setAttribute("height", PHOTO_HEIGHT);
-            video.streaming = true;
-          }
-        });
-      }
-    } catch (error) {
-      console.error(`An error occurred while enumerating devices: ${error}`);
-    }
-  }
-
-  function setupVideo() {
-    cameraSelect = document.getElementById("cameraSelect");
-    showCameraOptions();
-  }
-
-  function clearPhoto() {
-    const context = canvas.getContext("2d");
-    context.fillStyle = "#AAA";
-    context.fillRect(0, 0, canvas.width, canvas.height);
-    const data = canvas.toDataURL("image/png");
-    IMAGE_VALUE = data;
-  }
-
-  async function predict(imageBase64) {
-    try {
-      const response = await fetch("http://localhost:8000/predict_dish", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          image_base64: imageBase64.split(";base64,")[1],
-        }),
-      });
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-
-        predicted_dish = data.predicted_dish;
-        inference_time = data.inference_time;
-        results_value = document.getElementById("results");
-        if (data.predicted_dish && data.inference_time) {
-          let predict_value =
-            '<p>Kết quả Món ăn: <span id="predicted_dish_value">' +
-            predicted_dish +
-            '</span></p><p>Thời gian suy luận: <span id="inference_time_value">' +
-            inference_time +
-            "</span> giây</p>";
-          results_value.innerHTML = predict_value;
+    function showViewLiveResultButton() {
+      if (window.self !== window.top) {
+        const contentArea = document.querySelector(".contentarea");
+        if (contentArea) {
+          contentArea.remove();
+          const button = document.createElement("button");
+          button.textContent = "View live result of the example code above";
+          document.body.append(button);
+          button.addEventListener("click", () => window.open(location.href));
+          return true;
         }
-      } else {
-        console.log("Error: ", response.status);
       }
-    } catch (error) {
-      console.log(error);
+      return false;
     }
-  }
 
-  function takePicture() {
-    const context = canvas.getContext("2d");
-    if (PHOTO_WIDTH && PHOTO_HEIGHT) {
-      canvas.width = PHOTO_WIDTH;
-      canvas.height = PHOTO_HEIGHT;
-      context.drawImage(video, 0, 0, PHOTO_WIDTH, PHOTO_HEIGHT);
+    async function showCameraOptions() {
+      // checked
+      try {
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        const videoDevices = devices.filter(
+          (device) => device.kind === "videoinput"
+        );
+        console.log("videoDevices: ", videoDevices);
+        if (videoDevices.length > 0) {
+          videoDevices.forEach((device) => {
+            console.log("device.deviceId: ", device.deviceId);
+            const option = document.createElement("option");
+            option.value = device.deviceId;
+            option.text =
+              device.label || `Camera ${videoDevices.indexOf(device) + 1}`;
+            cameraSelect.appendChild(option);
+          });
+
+          video.srcObject = null;
+          video.srcObject = await navigator.mediaDevices.getUserMedia({
+            video: {
+              deviceId: { exact: cameraSelect.value },
+            },
+            audio: false,
+          });
+          video.play();
+          video.addEventListener("canplay", () => {
+            if (!video.streaming) {
+              PHOTO_HEIGHT = video.videoHeight / (video.videoWidth / PHOTO_WIDTH);
+              if (isNaN(PHOTO_HEIGHT)) {
+                PHOTO_HEIGHT = PHOTO_WIDTH / (4 / 3);
+              }
+              video.setAttribute("width", PHOTO_WIDTH);
+              video.setAttribute("height", PHOTO_HEIGHT);
+              canvas.setAttribute("width", PHOTO_WIDTH);
+              canvas.setAttribute("height", PHOTO_HEIGHT);
+              video.streaming = true;
+            }
+          });
+        }
+      } catch (error) {
+        console.error(`An error occurred while enumerating devices: ${error}`);
+      }
+    }
+
+    function setupVideo() {
+      cameraSelect = document.getElementById("cameraSelect");
+      showCameraOptions();
+    }
+
+    function clearPhoto() {
+      const context = canvas.getContext("2d");
+      context.fillStyle = "#AAA";
+      context.fillRect(0, 0, canvas.width, canvas.height);
       const data = canvas.toDataURL("image/png");
-
       IMAGE_VALUE = data;
-      predict(data);
-    } else {
-      console.log("Clear photo");
+    }
+
+    async function predict(imageBase64) {
+      try {
+        const response = await fetch("http://localhost:8000/predict_dish", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            image_base64: imageBase64.split(";base64,")[1],
+          }),
+        });
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data);
+
+          predicted_dish = data.predicted_dish;
+          inference_time = data.inference_time;
+          results_value = document.getElementById("results_camera_detect");
+          if (data.predicted_dish && data.inference_time) {
+            let predict_value =
+              '<p>Kết quả Món ăn: <span id="predicted_dish_value">' +
+              predicted_dish +
+              '</span></p><p>Thời gian suy luận: <span id="inference_time_value">' +
+              inference_time +
+              "</span> giây</p>";
+            results_value.innerHTML = predict_value;
+          }
+        } else {
+          console.log("Error: ", response.status);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    function takePicture() {
+      const context = canvas.getContext("2d");
+      if (PHOTO_WIDTH && PHOTO_HEIGHT) {
+        canvas.width = PHOTO_WIDTH;
+        canvas.height = PHOTO_HEIGHT;
+        context.drawImage(video, 0, 0, PHOTO_WIDTH, PHOTO_HEIGHT);
+        const data = canvas.toDataURL("image/png");
+
+        IMAGE_VALUE = data;
+        predict(data);
+      } else {
+        console.log("Clear photo");
+        clearPhoto();
+      }
+    }
+
+    function startup() {
+      if (showViewLiveResultButton()) {
+        return;
+      }
+
+      video = document.getElementById("video");
+      canvas = document.getElementById("canvas");
+      photo = document.getElementById("photo");
+      startButton = document.getElementById("startbutton");
+      video.streaming = false;
+
+      setupVideo();
+
+      startButton.addEventListener("click", (ev) => {
+        console.log("Take photo");
+        takePicture();
+        ev.preventDefault();
+      });
+
       clearPhoto();
     }
-  }
 
-  function startup() {
-    if (showViewLiveResultButton()) {
-      return;
-    }
-
-    video = document.getElementById("video");
-    canvas = document.getElementById("canvas");
-    photo = document.getElementById("photo");
-    startButton = document.getElementById("startbutton");
-    video.streaming = false;
-
-    setupVideo();
-
-    startButton.addEventListener("click", (ev) => {
-      console.log("Take photo");
-      takePicture();
-      ev.preventDefault();
+    // const modalcamera = new bootstrap.Modal(document.getElementById('cameraModal'));
+    var myModalEl = document.getElementById("cameraModal");
+    myModalEl.addEventListener("show.bs.modal", function (event) {
+      startup();
     });
 
-    clearPhoto();
-  }
+    // document.getElementById('cameraModal').addEventListener('show.bs.modal', () => {
+    //     // modalcamera.show();
+    //     startup();
+    // });
 
-  // const modalcamera = new bootstrap.Modal(document.getElementById('cameraModal'));
-  var myModalEl = document.getElementById("cameraModal");
-  myModalEl.addEventListener("show.bs.modal", function (event) {
-    startup();
-  });
-
-  // document.getElementById('cameraModal').addEventListener('show.bs.modal', () => {
-  //     // modalcamera.show();
-  //     startup();
-  // });
-
-  document
-    .getElementById("cameraModal")
-    .addEventListener("hidden.bs.modal", () => {
-      // Stop the video stream when the modal is hidden
-      if (video && video.srcObject) {
-        const stream = video.srcObject;
-        const tracks = stream.getTracks();
-        tracks.forEach((track) => track.stop());
-        video.srcObject = null;
-        cameraSelect = document.getElementById("cameraSelect");
-        cameraSelect.innerHTML = "";
-      }
-    });
-</script>
+    document
+      .getElementById("cameraModal")
+      .addEventListener("hidden.bs.modal", () => {
+        // Stop the video stream when the modal is hidden
+        if (video && video.srcObject) {
+          const stream = video.srcObject;
+          const tracks = stream.getTracks();
+          tracks.forEach((track) => track.stop());
+          video.srcObject = null;
+          cameraSelect = document.getElementById("cameraSelect");
+          cameraSelect.innerHTML = "";
+        }
+      });
+  </script>
