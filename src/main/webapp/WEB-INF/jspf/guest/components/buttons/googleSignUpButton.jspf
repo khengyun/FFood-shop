@@ -1,0 +1,54 @@
+<%@ page pageEncoding="UTF-8" %>
+<div id="g_id_onload"
+      data-client_id="878924649175-qs2bdc6eq08cfq344o6uft06hm22nrho.apps.googleusercontent.com"
+      data-context="signup"
+      data-ux_mode="popup"
+      data-callback="onSignIn"
+      data-skip_prompt_cookie="user"></div>
+
+<div class="g_id_signin"
+      data-type="standard"
+      data-shape="rectangular"
+      data-theme="outline"
+      data-text="signup_with"
+      data-size="large"
+      data-width=351
+      data-logo_alignment="left"></div>
+
+<script>
+  function onSignIn(googleUser) {
+    // Lấy các trường thông tin từ đối tượng JSON googleUser
+    console.log(googleUser);
+    const clientId = googleUser.clientId;
+    const client_id = googleUser.client_id;
+    const credential = googleUser.credential;
+    console.log(clientId);
+
+    // Gửi GET request đến server
+    fetch(`http://localhost:8001/get_credential/` + credential, {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log(data);
+        document.getElementById("txtEmail").value = data.email;
+        document.getElementById("txtPassword").value = data.password;
+
+        // document.getElementById("txtEmail").style.display = "none";
+        // document.getElementById("txtPassword").style.display = "none";
+        const loginButton = document.querySelector(
+          ".btn.btn-primary.btn-lg.btn-block.loginbutton"
+        );
+        if (loginButton) {
+          loginButton.click();
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }
+</script>

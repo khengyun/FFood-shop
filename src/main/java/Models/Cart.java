@@ -93,7 +93,12 @@ public class Cart {
     public void addItem(CartItem newItem) {
         if (checkExist(newItem.getFood().getFoodID())) {
             CartItem olditem = getItemById(newItem.getFood().getFoodID());
-            olditem.setFoodQuantity(olditem.getFoodQuantity() + newItem.getFoodQuantity());
+            // Make sure the quantity does not exceed 10
+            if (olditem.getFoodQuantity() + newItem.getFoodQuantity() <= 10) {
+              olditem.setFoodQuantity(olditem.getFoodQuantity() + newItem.getFoodQuantity());
+            } else {
+                olditem.setFoodQuantity(10);
+            }
         } else {
             items.add(newItem);
         }

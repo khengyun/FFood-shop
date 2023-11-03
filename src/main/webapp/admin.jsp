@@ -6,12 +6,14 @@
 <%@ include file="WEB-INF/jspf/common/imports/base.jspf" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="vi" dir="ltr">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>FFood | Admin Dashboard</title>
+        <!-- Locale for JSTL fmt tags -->
+        <fmt:setLocale value="vi" scope="session"/>
         <%@ include file="WEB-INF/jspf/common/imports/resources.jspf" %>
         <%@ include file="WEB-INF/jspf/admin/imports/dataTablesStyle.jspf" %>
         <%@ include file="WEB-INF/jspf/admin/imports/chartjs.jspf" %>
@@ -33,10 +35,12 @@
                 <%@ include file="WEB-INF/jspf/admin/components/deleteVoucher.jspf" %>
                 <%@ include file="WEB-INF/jspf/admin/components/updatevoucher.jspf" %>
                 <%@ include file="WEB-INF/jspf/admin/components/failure.jspf" %>
-                <%@ include file="WEB-INF/jspf/admin/components/success.jspf" %>
+                <%@ include file="WEB-INF/jspf/admin/components/success.jspf" %>  
                 <%@ include file="WEB-INF/jspf/admin/components/updateOrder.jspf" %>
                 <%@ include file="WEB-INF/jspf/admin/components/deleteOrder.jspf" %>
+                <%@ include file="WEB-INF/jspf/admin/components/nextOrder.jspf" %>
                 <%@ include file="WEB-INF/jspf/admin/components/adminSidebar.jspf" %>
+                
                 <!-- Main Content -->
                 <main class="w-100 p-4 bg-surface">
                     <div class="tab-content">
@@ -54,6 +58,8 @@
                         <%@ include file="WEB-INF/jspf/admin/users.jspf" %>
                         <!-- Orders Tab Content -->
                         <%@ include file="WEB-INF/jspf/admin/orders.jspf" %>
+                        <!-- History Tab Content -->
+                        <%@ include file="WEB-INF/jspf/admin/history.jspf" %>
                     </div>
                 </main>
             </div>

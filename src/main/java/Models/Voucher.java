@@ -93,6 +93,13 @@ public class Voucher {
     public byte getVoucher_discount_percent() {
         return voucher_discount_percent;
     }
+    
+    public double getVoucherDiscount() {
+        int intValue = Byte.toUnsignedInt(voucher_discount_percent); 
+        System.out.println("intValue " + intValue);
+        double percentage = (double) intValue / 100;
+        return percentage;
+    }
 
     public void setVoucher_discount_percent(byte voucher_discount_percent) {
         this.voucher_discount_percent = voucher_discount_percent;

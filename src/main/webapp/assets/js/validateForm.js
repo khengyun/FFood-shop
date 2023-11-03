@@ -26,7 +26,6 @@ function validateForm() {
             txtFoodDescription: {
                 required: true,
                 maxlength: 500,
-                pattern: /^[\p{L}\s]+$/u
             },
             txtFoodPrice: {
                 required: true,
@@ -56,9 +55,8 @@ function validateForm() {
                 pattern: "Tên món chỉ chấp nhận chữ"
             },
             txtFoodDescription: {
-                required: "Mô tả món không được để trống",
-                maxlength: "Mô tả món không được dài quá 500 ký tự",
-                pattern: "Mô tả món chỉ chấp nhận chữ"
+                required: "Tên món không được để trống",
+                maxlength: "Tên món không dài quá 500 kí tự"
             },
             txtFoodPrice: {
                 required: "Vui lòng nhập Đơn giá",
@@ -106,7 +104,6 @@ function validateForm() {
             txtFoodDescription: {
                 required: true,
                 maxlength: 500,
-                pattern: /^[\p{L}\s]+$/u
             },
             txtFoodPrice: {
                 required: true,
@@ -136,9 +133,8 @@ function validateForm() {
                 pattern: "Tên món chỉ chấp nhận chữ và khoảng trắng"
             },
             txtFoodDescription: {
-                required: "Mô tả món không được để trống",
-                maxlength: "Mô tả món không được dài quá 500 ký tự",
-                pattern: "Mô tả món chỉ chấp nhận chữ và khoảng trắng"
+                required: "Mô tả món ăn không được để trống",
+                maxlength: "Mô tả món ăn không dài quá 500 kí tự"
             },
             txtFoodPrice: {
                 required: "Vui lòng nhập Đơn giá",
@@ -571,6 +567,26 @@ function validateForm() {
             form.submit();
         }
     });
+    
+    $("#voucher-form").validate({
+        rules: {
+            voucherCode: {
+                required: true,
+                maxlength: 16,
+            }
+        },
+        messages: {
+            voucherCode: {
+                required: "Vui lòng nhập mã giảm giá",
+                maxlength: "Mã giảm giá không được vượt quá 16 ký tự"
+            }
+
+        },
+        submitHandler: function (form) {
+            // Handle form submission here
+            form.submit();
+        }
+    });
 
     $("#changePass-form").validate({
         rules: {
@@ -750,50 +766,57 @@ $(".update-order-form").validate({
 });
 
 $(".checkout-form").validate({
-    rules: {
-        txtLastName: {
-            required: true,
-            maxlength: 50,
-            pattern: /^[\p{L}\s]+$/u
+        rules: {
+            txtLastName: {
+                required: true,
+                maxlength: 50,
+                pattern: /^[\p{L}\s]+$/u
+            },
+            txtFirstName: {
+                required: true,
+                maxlength: 50,
+                pattern: /^[\p{L}\s]+$/u
+            },
+            txtPhone: {
+                required: true,
+                maxlength: 11,
+                number: true
+            },
+            txtAddress: {
+                required: true,
+                maxlength: 255
+            },
+            txtVoucherCode: {
+                maxlength: 16
+            }
         },
-        txtFirstName: {
-            required: true,
-            maxlength: 50,
-            pattern: /^[\p{L}\s]+$/u
+        messages: {
+            txtLastName: {
+                required: "Vui lòng nhập họ",
+                maxlength: "Họ Người dùng không được vượt quá 50 ký tự",
+                pattern: "Họ Người dùng chỉ chấp nhận chữ, khoảng trắng"
+            },
+            txtFirstName: {
+                required: "Vui lòng nhập tên",
+                maxlength: "Tên Người dùng không được vượt quá 50 ký tự",
+                pattern: "Tên Người dùng chỉ chấp nhận chữ, khoảng trắng"
+            },
+            txtPhone: {
+                required: "Vui lòng nhập số điện thoại",
+                maxlength: "Số điện thoại không được vượt quá 11 kí tự",
+                number: "Số điện thoại chỉ chấp nhận số"
+            },
+            txtAddress: {
+                required: "Vui lòng nhập địa chỉ của Người dùng",
+                maxlength: "Địa chỉ không được vượt quá 255 kí tự"
+            },
+            txtVoucherCode: {
+                maxlength: "Mã giảm giá không được vượt quá 16 kí tự"
+            }
         },
-        txtPhone: {
-            required: true,
-            maxlength: 11,
-            number: true
-        },
-        txtAddress: {
-            required: true,
-            maxlength: 255
+        submitHandler: function (form) {
+            // Handle form submission here
+            form.submit();
         }
     },
-    messages: {
-        txtLastName: {
-            required: "Vui lòng nhập họ",
-            maxlength: "Họ Người dùng không được vượt quá 50 ký tự",
-            pattern: "Họ Người dùng chỉ chấp nhận chữ, khoảng trắng"
-        },
-        txtFirstName: {
-            required: "Vui lòng nhập tên",
-            maxlength: "Tên Người dùng không được vượt quá 50 ký tự",
-            pattern: "Tên Người dùng chỉ chấp nhận chữ, khoảng trắng"
-        },
-        txtPhone: {
-            required: "Vui lòng nhập số điện thoại",
-            maxlength: "Số điện thoại không được vượt quá 11 kí tự",
-            number: "Số điện thoại chỉ chấp nhận số"
-        },
-        txtAddress: {
-            required: "Vui lòng nhập địa chỉ của Người dùng",
-            maxlength: "Địa chỉ không được vượt quá 255 kí tự"
-        }
-    },
-    submitHandler: function (form) {
-        // Handle form submission here
-        form.submit();
-    }
 });

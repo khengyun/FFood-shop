@@ -1,0 +1,47 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="modal" tabindex="-1" id="update-food-modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form class="update-food-form" method="POST" action="/promotionManager">
+                <div class="modal-header">
+                    <h5 class="modal-title">Cập nhật Món</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body px-5">
+                    <!-- Hidden - Food ID -->
+                    <input type="hidden" id="txtFoodID" name="txtFoodID" value=""/>
+                    <!-- Food Type -->
+                    <div class="mb-3">
+                        <label for="txtFoodTypeID" class="form-label">Loại món</label>
+                        <select class="form-select" id="txtFoodTypeID" name="txtFoodTypeID" required disabled>
+                            <option value="1">Cơm</option>
+                            <option value="2">Mì</option>
+                            <option value="3">Bánh mì</option>
+                            <option value="4">Đồ ăn vặt</option>
+                            <option value="5">Tráng miệng</option>
+                            <option value="6">Đồ uống</option>
+                        </select>
+                    </div>
+                    <!-- Food Name -->
+                    <div class="mb-3">
+                        <label for="txtFoodName" class="form-label">Tên món</label>
+                        <input type="text" class="form-control" id="txtFoodName" name="txtFoodName" maxlength="50" required value="" disabled>
+                    </div>
+                    <!-- Discount Percentage -->
+                    <div class="mb-3">
+                        <label for="txtDiscountPercent" class="form-label">Giảm giá (%)</label>
+                        <input type="number" class="form-control" id="txtDiscountPercent" name="txtDiscountPercent" min="0" max="100" required value="">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <!-- Submit Button -->
+                    <button type="button" class="btn btn-danger btn-cancel" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-success btn-confirm" onclick="validateForm()">Cập nhật</button>
+                    <!-- Hidden Submit Value -->
+                    <input type="hidden" id="btnSubmit" name="btnSubmit" value="SubmitUpdateFood">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

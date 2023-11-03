@@ -1,15 +1,16 @@
 <%@ page pageEncoding="UTF-8" %>
-<div class="tab-pane fade" id="orders">
+<div class="tab-pane fade ${(tabID == 2) ? "active show" : ""}" id="orders">
     <div class="container-fluid p-4 shadow rounded-4 bg-white">
         <table id="order-table" class="table table-hover nowrap align-middle" style="width: 100%;">
             <h1 class="text-start fw-bold fs-3 mb-3">Quản lý Đơn món</h1>
             <div id="orders-button-container" class="row mb-2">
                 <div class="col-sm-12 col-lg-5 mt-sm-2 mt-lg-0 d-flex flex-wrap gap-2 justify-content-lg-end">
-<!--                    <button type="button" class="btn btn-success d-flex align-items-center flex-shrink-0" data-bs-toggle="modal"
-                            data-bs-target="#add-food-modal">
-                        <i class="ph-bold ph-plus fs-1 me-2"></i>
-                        Thêm món
-                    </button>-->
+                    <button type="button" id="btn-next-order"
+                            class="btn btn-primary btn-success d-flex  align-items-center flex-shrink-0" data-bs-toggle="modal"
+                            data-bs-target="#next-order-modal">
+                        <i class="ph-bold ph-pencil fs-1 me-2"></i>
+                        Trạng thái tiếp theo
+                    </button>
                     <button type="button" id="btn-update-order"
                             class="btn btn-primary btn-update d-flex  align-items-center flex-shrink-0" data-bs-toggle="modal"
                             data-bs-target="#update-order-modal">
@@ -32,7 +33,6 @@
                     <th>Ghi chú</th>                          
                     <th>Thanh toán</th> 
                     <th>Trạng thái</th>
-                    <th style="display: none;" >Trạng thái</th>
                     <th>Thời gian đặt</th>
                 </tr>
             </thead>
@@ -60,16 +60,7 @@
                     </td>
                     <td>${(o.orderNote == null) ? "" : o.orderNote}</td>        
                     <td><fmt:formatNumber type="number" pattern="###,###,###.##" value="${o.orderTotal}"/>đ</td>
-                <td>
-                    <select name="orderStatus" id="orderStatus" data-orderid="${o.orderID}" onchange="handleSelectChange(this)">
-                        <option value="Chờ xác nhận" ${o.orderStatus == 'Chờ xác nhận' ? 'selected' : ''}>Chờ xác nhận</option>
-                        <option value="Đang chuẩn bị món" ${o.orderStatus == 'Đang chuẩn bị món' ? 'selected' : ''}>Đang chuẩn bị</option>
-                        <option value="Đang giao" ${o.orderStatus == 'Đang giao' ? 'selected' : ''}>Đang giao</option>
-                        <option value="Đã giao" ${o.orderStatus == 'Đã giao' ? 'selected' : ''}>Đã giao</option>
-                        <option value="Đã hủy" ${o.orderStatus == 'Đã hủy' ? 'selected' : ''}>Đã hủy</option>
-                    </select>
-                </td>
-                <td style="display: none;">${o.orderStatus}</td>
+                <td>${o.orderStatus}</td>
                 <td style="word-wrap: break-word; white-space: pre-wrap;">${o.orderTime}</td>
                 </tr>
             </c:forEach>

@@ -14,16 +14,32 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-             <exec.args>/c java -classpath %classpath wshackle.mavenproject2.Main</exec.args>
-            <exec.executable>cmd</exec.executable>
+        <exec.args>/c java -classpath %classpath wshackle.mavenproject2.Main</exec.args>
+        <exec.executable>cmd</exec.executable>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20210307</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.8</version> <!-- Use the latest version -->
+        </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <version>3.12.4</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.10.1</version>
+            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -68,7 +84,6 @@
 
     <build>
         <plugins>
-
 
 
             <plugin>

@@ -9,7 +9,7 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="cameraModalLabel">Detect Your Food</h5>
+        <h5 class="modal-title" id="cameraModalLabel">Tìm Món bằng hình ảnh</h5>
         <button
           type="button"
           class="btn-close"
@@ -18,9 +18,9 @@
         ></button>
       </div>
       <div class="modal-body">
-        <p>Bring the camera closer to your food</p>
+        <p>Vui lòng đưa món gần camera hơn.</p>
         <div class="camera">
-          <video id="video" class="w-100">Video stream not available.</video>
+          <video id="video" class="w-100">Không thể hiển thị hình ảnh.</video>
           <select id="cameraSelect" class="form-select"></select>
         </div>
       </div>
@@ -32,7 +32,7 @@
           data-bs-dismiss="modal"
           class="btn btn-primary"
         >
-          Take photo
+          Chụp ảnh
         </button>
       </div>
     </div>
@@ -49,7 +49,7 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="cameraModalLabel2">Result</h5>
+        <h5 class="modal-title" id="cameraModalLabel2">Kết quả Tìm Món bằng hình ảnh</h5>
         <button
           type="button"
           class="btn-close"
@@ -71,7 +71,7 @@
           data-bs-trigger="focus"
           title="Quét tiếp tục nếu món ăn không như bạn muốn."
         >
-          Try again
+          Thử lại
         </button>
       </div>
     </div>
@@ -188,11 +188,11 @@
         results_value = document.getElementById("results");
         if (data.predicted_dish && data.inference_time) {
           let predict_value =
-            '<p>Predicted Dish: <span id="predicted_dish_value">' +
+            '<p>Kết quả Món ăn: <span id="predicted_dish_value">' +
             predicted_dish +
-            '</span></p><p>Inference Time: <span id="inference_time_value">' +
+            '</span></p><p>Thời gian suy luận: <span id="inference_time_value">' +
             inference_time +
-            "</span> seconds</p>";
+            "</span> giây</p>";
           results_value.innerHTML = predict_value;
         }
       } else {

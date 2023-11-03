@@ -3,7 +3,7 @@
 <%@page import="java.util.Collections"%>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
-<div class="tab-pane fade" id="insights">
+<div class="tab-pane fade ${(tabID == 1) ? "active show" : ""}" id="insights">
     <%
         // Giả định bạn đã có một danh sách dữ liệu doanh thu hàng tuần từ Java
         List<Integer> weeklyRevenueData = new ArrayList<Integer>();
@@ -128,7 +128,7 @@
             <canvas id="revenueChart" width="400" height="200"></canvas> <!-- Thêm thẻ canvas cho biểu đồ -->
             <!-- Nội dung chương trình khuyến mãi -->
         </div>
-        <div class="p-4 col-5 shadow rounded-4 bg-white">
+        <div class="p-4 col-5 shadow rounded-4 bg-white align-self-stretch">
             <h2 class="text-start fs-2">Số lượng khách hàng</h2>
 
             <canvas id="customerChart" width="400" height="200"></canvas> <!-- Thêm thẻ canvas cho biểu đồ số lượng khách hàng -->
@@ -140,7 +140,7 @@
             <canvas id="averageOrderChart" width="400" height="200"></canvas> <!-- Thêm thẻ canvas cho biểu đồ đơn hàng trung bình -->
 
         </div>
-        <div class="p-4 col-5 shadow rounded-4 bg-white">
+        <div class="p-4 col-5 shadow rounded-4 bg-white align-self-stretch">
             <h2 class="text-start fs-2">Top 5 món bán chạy</h2>
             <% for (Models.MenuItem item : topSellingItems) {%>
             <div class="d-flex align-items-center">

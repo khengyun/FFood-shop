@@ -1,0 +1,57 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+
+<div class="tab-pane fade ${(tabID == 7) ? "active show" : ""}" id="orderLogs">
+    <div class="container-fluid p-4 shadow rounded-4 bg-white">
+        <form id="myForm" method="GET" action="/admin/history">
+            <table id="log-table" class="table table-hover nowrap align-middle" style="width: 100%;">
+                <h1 class="text-start fw-bold fs-3 mb-3">Lịch sử đơn hàng</h1>
+                <div id="orders-button-container" class="row mb-2">
+                    <div class="col-sm-12 col-lg-5 mt-sm-2 mt-lg-0 d-flex flex-wrap gap-2 justify-content-lg-end">
+                         <div class="input-group">
+                            <input type="number" class="form-control" id="txtOrderID" name="txtOrderID"  placeholder="Nhập Order ID" required>
+                            <button type="submit" class="btn btn-primary">Lịch sử</button>
+                        </div>
+                    </div>
+                </div> 
+                <thead>
+                    <tr>
+                        <th>Mã đơn</th>
+                        <th>Staff</th>
+                        <th>Admin</th>
+                        <th>Tên</th>
+                        <th>Thao tác</th>
+                        <th>Thời gian</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${logList}" var="log">
+                    <tr>
+                        <td>${log.order_id}</td>
+                        <td>${log.staff_id}</td>
+                        <td>${log.admin_id}</td>
+                        <td>${log.fullname}</td>
+                        <td>${log.log_activity}</td>
+                        <td>${log.log_time}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+
+<%-- JavaScript code --%>
+<script>
+    function toggleDetails(orderID) {
+        var detailsDiv = document.getElementById("details_" + orderID);
+        if (detailsDiv.style.display === "none" || detailsDiv.style.display === "") {
+            detailsDiv.style.display = "block";
+        } else {
+            detailsDiv.style.display = "none";
+        }
+    }
+
+
+</script>
+

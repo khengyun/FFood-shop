@@ -1,30 +1,33 @@
-<%-- Document : index Created on : Jun 3, 2023, 5:07:28 PM Author : CE171454 Hua
-Tien Thanh --%> <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="WEB-INF/jspf/common/imports/base.jspf" %>
 <!DOCTYPE html>
-<html lang="en-US" dir="ltr">
+<html lang="vi" dir="ltr">
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- Title -->
     <title>FFood | Đặt món nhanh, rẻ, tiện</title>
+
+    <!-- Locale for JSTL fmt tags -->
+    <fmt:setLocale value="vi" scope="session"/>
+
     <%@ include file="WEB-INF/jspf/common/imports/resources.jspf" %>
     <link rel="stylesheet" href="assets/css/style.css" />
 
     <script src="https://accounts.google.com/gsi/client" async></script>
   </head>
   <body>
-    <%@ include file="WEB-INF/jspf/common/components/header.jspf" %> <%@ include
-    file="WEB-INF/jspf/guest/components/cart.jspf" %> <%@ include
-    file="WEB-INF/jspf/guest/components/login.jspf" %> <%@ include
-    file="WEB-INF/jspf/guest/components/signup.jspf" %> <%@ include
-    file="WEB-INF/jspf/guest/components/forget.jspf" %> <%@ include
-    file="WEB-INF/jspf/guest/components/changePassword.jspf" %> <%@ include
-    file="WEB-INF/jspf/guest/components/verify.jspf" %> <%@ include
-    file="WEB-INF/jspf/guest/components/success.jspf" %> <%@ include
-    file="WEB-INF/jspf/guest/components/failure.jspf" %> <%@ include
-    file="WEB-INF/jspf/guest/components/camera.jspf" %>
+    <%@ include file="WEB-INF/jspf/common/components/header.jspf" %> 
+    <%@ include file="WEB-INF/jspf/guest/components/cart.jspf" %> 
+    <%@ include file="WEB-INF/jspf/guest/components/login.jspf" %> 
+    <%@ include file="WEB-INF/jspf/guest/components/signup.jspf" %> 
+    <%@ include file="WEB-INF/jspf/guest/components/forget.jspf" %> 
+    <%@ include file="WEB-INF/jspf/guest/components/changePassword.jspf" %> 
+    <%@ include file="WEB-INF/jspf/guest/components/verify.jspf" %> 
+    <%@ include file="WEB-INF/jspf/guest/components/success.jspf" %> 
+    <%@ include file="WEB-INF/jspf/guest/components/failure.jspf" %> 
+    <%@ include file="WEB-INF/jspf/guest/components/camera.jspf" %>
 
     <!-- Main Content -->
     <main class="main" id="top">
@@ -34,7 +37,7 @@ Tien Thanh --%> <%@page contentType="text/html" pageEncoding="UTF-8"%>
       <!-- Food menu -->
       <section class="py-4 overflow-hidden">
         <div class="container">
-          <div class="row flex-grow-1 mb-6">
+          <div class="row flex-grow-1 mb-2">
             <div class="col-lg-7 mx-auto text-center mt-5 mb-3">
               <h5 class="fw-bold fs-3 fs-lg-5 lh-sm">Danh sách món ăn</h5>
             </div>
@@ -44,6 +47,9 @@ Tien Thanh --%> <%@page contentType="text/html" pageEncoding="UTF-8"%>
           %>
           <!-- Food list -->
           <%@ include file="WEB-INF/jspf/guest/components/foodList.jspf" %>
+
+          <!-- Food details -->
+          <%@ include file="WEB-INF/jspf/guest/components/foodDetails.jspf" %>
         </div>
       </section>
 
@@ -71,8 +77,8 @@ Tien Thanh --%> <%@page contentType="text/html" pageEncoding="UTF-8"%>
       <!-- Footer -->
       <%@ include file="WEB-INF/jspf/common/components/footer.jspf" %>
     </main>
-    <%@ include file="WEB-INF/jspf/common/imports/javascript.jspf" %> <%@
-    include file="WEB-INF/jspf/common/imports/validation.jspf" %>
+    <%@ include file="WEB-INF/jspf/common/imports/javascript.jspf" %> 
+    <%@ include file="WEB-INF/jspf/common/imports/validation.jspf" %>
     <script src="assets/js/home.js"></script>
     <script src="assets/js/userNotify.js"></script>
   </body>

@@ -1,0 +1,30 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="modal" tabindex="-1" id="next-order-modal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <form class="next-order-form" method="POST" action="/admin">
+        <div class="modal-header">
+          <h5 class="modal-title">Trạng thái tiếp theo đơn hàng</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p class="mb-1">Những ID đơn hàng sau đây sẽ bị chuyển trạng thái tiếp theo:</p>
+          <ul id="next-order-list"></ul>
+          <p class="mb-0">Bạn chắc chắn muốn chuyển những đơn hàng này không? <br>
+            <span class="error fw-bolder">Hành động này không thể hoàn tác.</span>
+          </p>
+        </div>
+        <div class="modal-footer">
+          <!-- Submit Button -->
+          <button type="button" class="btn btn-success btn-cancel" data-bs-dismiss="modal">Huỷ</button>
+          <button type="submit" id="btn-confirm-next-order" href="/admin" class="btn btn-danger btn-confirm">Chuyển</button>
+
+          <!-- Hidden Submit Value -->
+          <input type="hidden" name="orderData" value='{"key":"value"}'>
+          <input type="hidden" id="btnSubmit" name="btnSubmit" value="SubmitNextOrder">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -13,8 +13,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     object-fit: cover;
 }
 
-.error {
+.error, .lblError {
     color: red;
+    padding-top: 0.5em;
+    margin: 0;
 }
 
 .btn-categories {

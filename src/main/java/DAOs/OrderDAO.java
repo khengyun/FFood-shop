@@ -222,20 +222,6 @@ public class OrderDAO {
         }
         return result;
     }
-    
-    public int updateOrderStatus(Order order) {
-        String sql = "UPDATE [Order] SET order_status_id = ? WHERE order_id = ?";
-        int result = 0;
-        try {
-            ps = conn.prepareStatement(sql);
-            ps.setByte(1, order.getOrderStatusID());       
-            ps.setInt(2, order.getOrderID());
-            result = ps.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return result;
-    }
 
     public int cancelOrder(int orderID, Timestamp cancelTime) {
         String sql = "UPDATE [Order] SET order_status_id = ?, order_cancel_time = ? WHERE order_id = ?";
@@ -363,6 +349,50 @@ public class OrderDAO {
             conn.setAutoCommit(false); // Start transaction
             for (Integer orderID : orderIDs) {
                 if (delete(orderID) == 1) {
+                    result++; // Count number of successful deletions
+                } else {
+                    conn.rollback(); // Rollback transaction if deletion fails
+                    return 0;
+                }
+            }
+            conn.commit(); // Commit transaction if all deletions succeed
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                conn.rollback(); // Rollback transaction if any exception occurs
+            } catch (SQLException rollbackEx) {
+                Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, rollbackEx);
+            }
+            return 0;
+        } finally {
+            try {
+                conn.setAutoCommit(true); // Reset auto commit
+            } catch (SQLException finalEx) {
+                Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, finalEx);
+            }
+        }
+        return result;
+    }
+    
+    public int updateOrderStatus(int order_id) {
+        String sql = "UPDATE [Order] SET order_status_id = order_status_id + 1 WHERE order_id = ?";
+        int result = 0;
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, order_id);
+            result = ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
+    
+    public int changeStatusMultiple(List<Integer> orderIDs) {
+        int result = 0;
+        try {
+            conn.setAutoCommit(false); // Start transaction
+            for (Integer orderID : orderIDs) {
+                if (updateOrderStatus(orderID) == 1) {
                     result++; // Count number of successful deletions
                 } else {
                     conn.rollback(); // Rollback transaction if deletion fails

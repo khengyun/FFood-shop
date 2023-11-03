@@ -9,6 +9,7 @@ import DAOs.AdminDAO;
 import DAOs.CustomerDAO;
 import DAOs.FoodDAO;
 import DAOs.OrderDAO;
+import DAOs.OrderLogDAO;
 import DAOs.PromotionManagerDAO;
 import DAOs.StaffDAO;
 import DAOs.VoucherDAO;
@@ -17,6 +18,7 @@ import Models.Admin;
 import Models.Customer;
 import Models.Food;
 import Models.Order;
+import Models.OrderLog;
 import Models.PromotionManager;
 import Models.Role;
 import Models.Staff;
@@ -26,7 +28,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
@@ -38,87 +40,8 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @author CE171454 Hua Tien Thanh
- */
 public class AdminController extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AdminController</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AdminController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    private void doGetUser(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String path = request.getRequestURI();
-        if (path.startsWith("/admin/user/delete")) {
-            String[] s = path.split("/");
-            int accountID = Integer.parseInt(s[s.length - 1]);
-            AccountDAO dao = new AccountDAO();
-            int result = dao.delete(accountID);
-
-            if (result == 1) {
-                response.sendRedirect("/admin#success_delete_user");
-            } else {
-                response.sendRedirect("/admin#failure_delete_user");
-            }
-
-        }
-    }
-
-    private void doGetFood(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String path = request.getRequestURI();
-        if (path.startsWith("/admin/food/delete")) {
-            String[] s = path.split("/");
-            short foodID = Short.parseShort(s[s.length - 1]);
-            FoodDAO dao = new FoodDAO();
-            int result = dao.delete(foodID);
-            if (result == 1) {
-                response.sendRedirect("/admin#success_delete_food");
-            } else {
-                response.sendRedirect("/admin#failure_delete_food");
-            }
-        }
-    }
-
-    private void doGetVoucher(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String path = request.getRequestURI();
-        if (path.startsWith("/admin/voucher/delete")) {
-            String[] s = path.split("/");
-            byte voucherID = Byte.parseByte(s[s.length - 1]);
-            VoucherDAO dao = new VoucherDAO();
-            int result = dao.delete(voucherID);
-            if (result == 1) {
-                response.sendRedirect("/admin#success_delete_voucher");
-            } else {
-                response.sendRedirect("/admin#failure_delete_voucher");
-            }
-        }
-    }
-
+ 
     private void doGetList(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         FoodDAO foodDAO = new FoodDAO();
@@ -219,7 +142,7 @@ public class AdminController extends HttpServlet {
             orderList.get(i).setFirstname(Orderfirstname);
             orderList.get(i).setLastname(Orderlastname);
         }
-
+        
         VoucherDAO voucherDAO = new VoucherDAO();
         List<Voucher> voucherList = voucherDAO.getAllList();
         request.setAttribute("foodList", foodList);
@@ -247,7 +170,8 @@ public class AdminController extends HttpServlet {
             return;
         }
         int result = foodDAO.add(food);
-
+        HttpSession session = request.getSession();
+        session.setAttribute("tabID", 3);
         if (result == 1) {
             response.sendRedirect("/admin#success_add_food");
             return;
@@ -272,7 +196,8 @@ public class AdminController extends HttpServlet {
         FoodDAO foodDAO = new FoodDAO();
         Food food = new Food(foodID, foodName, foodDescription, foodPrice, foodStatus, foodRate, discountPercent, imageURL, foodTypeID);
         int result = foodDAO.update(food);
-
+        HttpSession session = request.getSession();
+        session.setAttribute("tabID", 3);
         if (result == 1) {
             response.sendRedirect("/admin#success_update_food");
             return;
@@ -297,10 +222,11 @@ public class AdminController extends HttpServlet {
         // Delete each food item, and count deleted items
         FoodDAO dao = new FoodDAO();
         int result = dao.deleteMultiple(foodIDList);
-
+        HttpSession session = request.getSession();
+        session.setAttribute("tabID", 3);
         // TODO implement a deletion status message after page reload
         // Redirect or forward to another page if necessary
-        if (result == 1) {
+        if (result > 1) {
             response.sendRedirect("/admin#success_delete_food");
             return;
         } else {
@@ -329,7 +255,8 @@ public class AdminController extends HttpServlet {
         }
 
         Customer newCustomer = new Customer(firstname, lastname, gender, phoneNumber, address);
-
+        HttpSession session = request.getSession();
+        session.setAttribute("tabID", 4);
         CustomerDAO customerDAO = new CustomerDAO();
         int result = customerDAO.add(newCustomer);
 
@@ -366,6 +293,8 @@ public class AdminController extends HttpServlet {
 
         AccountDAO accountDAO = new AccountDAO();
         CustomerDAO customerDAO = new CustomerDAO();
+        HttpSession session = request.getSession();
+        session.setAttribute("tabID", 4);
         Account account = new Account(username, email, password, "user");
         account.setAccountID(userID);
         Customer customer = new Customer(firstname, lastname, gender, phoneNumber, address);
@@ -407,7 +336,9 @@ public class AdminController extends HttpServlet {
         for (int i = 0; i < customerIDs.length; i++) {
             customerIDList.add(Integer.parseInt(customerIDs[i]));
         }
-        
+        HttpSession session = request.getSession();
+        session.setAttribute("tabID", 4);
+
         // Delete each food item, and count deleted items
         AccountDAO accountDAO = new AccountDAO();
         int result1 = accountDAO.deleteMultiple(userIDList);
@@ -415,7 +346,7 @@ public class AdminController extends HttpServlet {
         if (result1 == 1) {
             CustomerDAO customerDAO = new CustomerDAO();
             result2 = customerDAO.deleteMultiple(customerIDList);
-            if (result2 == 1) {
+            if (result2 > 1) {
                 response.sendRedirect("/admin#success_delete_user");
             } else {
                 response.sendRedirect("/admin#failure_delete_user");
@@ -439,6 +370,8 @@ public class AdminController extends HttpServlet {
             response.sendRedirect("/admin#failure_add_role_exist");
             return;
         }
+        HttpSession session = request.getSession();
+        session.setAttribute("tabID", 5);
 
         if (role.equals("staff")) {
             Staff newstaff = new Staff(fullname);
@@ -494,6 +427,8 @@ public class AdminController extends HttpServlet {
         AccountDAO accountDAO = new AccountDAO();
         Account account = new Account(username, email, password, role);
         account.setAccountID(accountID);
+        HttpSession session = request.getSession();
+        session.setAttribute("tabID", 5);
         if (role.equals("staff")) {
             Staff updatestaff = new Staff(roleID, fullname);
             StaffDAO staffDAO = new StaffDAO();
@@ -521,8 +456,6 @@ public class AdminController extends HttpServlet {
             if (result == 1) {
                 account.setProID(roleID);
                 int result1 = accountDAO.add(account);
-                System.out.println(result1);
-
                 if (result1 == 1) {
                     response.sendRedirect("/admin#success_update_role");
                     return;
@@ -572,6 +505,8 @@ public class AdminController extends HttpServlet {
         AccountDAO accountDAO = new AccountDAO();
         int result1 = accountDAO.deleteMultiple(accountIDList);
         int result2 = 0;
+        HttpSession session = request.getSession();
+        session.setAttribute("tabID", 5);
         if (result1 == 1) {
             if (StaffIDList.size() != 0) {
                 StaffDAO staffDAO = new StaffDAO();
@@ -582,7 +517,7 @@ public class AdminController extends HttpServlet {
                 result2 = proDAO.deleteMultiple(ProIDList);
             }
 
-            if (result2 == 1) {
+            if (result2 > 1) {
                 response.sendRedirect("/admin#success_delete_role");
             } else {
                 response.sendRedirect("/admin#failure_delete_role");
@@ -612,6 +547,8 @@ public class AdminController extends HttpServlet {
         }
 
         int result = voucherDAO.add(voucher);
+        HttpSession session = request.getSession();
+        session.setAttribute("tabID", 2);
 
         if (result == 1) {
             response.sendRedirect("/admin#success_add_voucher");
@@ -638,7 +575,8 @@ public class AdminController extends HttpServlet {
         voucher.setVoucherID(voucherID);
 
         int result = voucherDAO.update(voucher);
-
+        HttpSession session = request.getSession();
+        session.setAttribute("tabID", 2);
         if (result == 1) {
             response.sendRedirect("/admin#success_update_voucher");
             return;
@@ -663,10 +601,11 @@ public class AdminController extends HttpServlet {
         // Delete each food item, and count deleted items
         VoucherDAO dao = new VoucherDAO();
         int result = dao.deleteMultiple(voucherIDList);
-
+        HttpSession session = request.getSession();
+        session.setAttribute("tabID", 2);
         // TODO implement a deletion status message after page reload
         // Redirect or forward to another page if necessary
-        if (result == 1) {
+        if (result > 1) {
             response.sendRedirect("/admin#success_delete_voucher");
             return;
         } else {
@@ -705,38 +644,40 @@ public class AdminController extends HttpServlet {
             paymentMethodID = 2;
         }
         
+        HttpSession session = request.getSession();
         OrderDAO orderDAO = new OrderDAO();
         Order order = new Order(orderID, orderStatusID, paymentMethodID, phonenumber, address, note, orderTotalPay);
         
+        Order oldOrder = orderDAO.getOrder(orderID);
+        
         int result = orderDAO.updateForAdmin(order);
-     
+        session.setAttribute("tabID", 6);
         if (result == 1) {
+            OrderLogDAO logDAO = new OrderLogDAO();
+            LocalDateTime currentTime = LocalDateTime.now();
+            Timestamp logTime = Timestamp.valueOf(currentTime);
+            byte adminID = (byte) session.getAttribute("adminID");
+            OrderLog log = new OrderLog(orderID, "Cập nhật thông tin đơn hàng", logTime);
+            log.setAdmin_id(adminID);
+            logDAO.addAdminLog(log);
+            if (oldOrder.getOrderStatusID() != orderStatusID){
+                OrderLog logStatusOrder = new OrderLog(orderID, "Cập nhật trạng thái đơn hàng: " + status, logTime);
+                logStatusOrder.setAdmin_id(adminID);
+                logDAO.addAdminLog(logStatusOrder);
+            }
+            
+            if (oldOrder.getOrderTotal() != orderTotalPay){
+                OrderLog logTotalOrder = new OrderLog(orderID, "Cập nhật thanh toán đơn hàng: " + orderTotalPay, logTime);
+                logTotalOrder.setAdmin_id(adminID);
+                logDAO.addAdminLog(logTotalOrder);
+            }
+
             response.sendRedirect("/admin#success_update_order");
             return;
         } else {
             response.sendRedirect("/admin#failure_update_order");
             return;
         }
-    }
-    
-    private void doGetOrder(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        int orderID = Integer.parseInt(request.getParameter("orderID"));
-        String status = request.getParameter("Changestatus");
-        byte orderStatusID = 5;
-        if (status.equals("Chờ xác nhận")){
-            orderStatusID = 1;
-        } else if (status.equals("Đang chuẩn bị món")){
-            orderStatusID = 2;
-        } else if (status.equals("Đang giao")){
-            orderStatusID = 3;
-        } else if (status.equals("Đã giao")){
-            orderStatusID = 4;
-        } 
-        
-        OrderDAO orderDAO = new OrderDAO();
-        Order order = new Order(orderID, orderStatusID);
-        int result = orderDAO.updateOrderStatus(order);
     }
     
     private void doPostDeleteOrder(HttpServletRequest request, HttpServletResponse response)
@@ -752,18 +693,89 @@ public class AdminController extends HttpServlet {
         }
 
         // Delete each food item, and count deleted items
+        HttpSession session = request.getSession();
         OrderDAO dao = new OrderDAO();
         int result = dao.deleteMultiple(orderIDList);
-
+        
+        session.setAttribute("tabID", 6);
         // TODO implement a deletion status message after page reload
         // Redirect or forward to another page if necessary
-        if (result == 1) {
+        if (result > 1) {
+            OrderLogDAO logDAO = new OrderLogDAO();
+            LocalDateTime currentTime = LocalDateTime.now();
+            byte adminID = (byte) session.getAttribute("adminID");
+            Timestamp logTime = Timestamp.valueOf(currentTime);
+            for (int i = 0; i < orderIDList.size(); i++) {  
+                OrderLog log = new OrderLog(orderIDList.get(i), "Xóa đơn hàng", logTime);
+                log.setAdmin_id(adminID);               
+                logDAO.addAdminLog(log);
+            }
             response.sendRedirect("/admin#success_delete_order");
             return;
         } else {
             response.sendRedirect("/admin#failure_delete_order");
             return;
         }
+    }
+    
+    private void doPostNextOrder(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        // Get the string of food IDs from the request
+        String[] orderIDs = request.getParameter("orderData").split(",");
+
+        // Convert the strings to numbers
+        List<Integer> orderIDList = new ArrayList<>();
+        for (int i = 0; i < orderIDs.length; i++) {
+            orderIDList.add(Integer.parseInt(orderIDs[i]));
+        }
+
+        // Delete each food item, and count deleted items
+        HttpSession session = request.getSession();
+        OrderDAO dao = new OrderDAO();
+        int result = dao.changeStatusMultiple(orderIDList);
+        
+        session.setAttribute("tabID", 6);
+        // TODO implement a deletion status message after page reload
+        // Redirect or forward to another page if necessary
+        if (result > 1) {
+            OrderLogDAO logDAO = new OrderLogDAO();
+            LocalDateTime currentTime = LocalDateTime.now();
+            byte adminID = (byte) session.getAttribute("adminID");
+            Timestamp logTime = Timestamp.valueOf(currentTime);
+            for (int i = 0; i < orderIDList.size(); i++) {  
+                OrderLog log = new OrderLog(orderIDList.get(i), "Cập nhật trạng thái đơn hàng", logTime);
+                log.setAdmin_id(adminID);               
+                logDAO.addAdminLog(log);
+            }
+            response.sendRedirect("/admin#success_next_order");
+            return;
+        } else {
+            response.sendRedirect("/admin#failure_next_order");
+            return;
+        }
+    }
+    
+    private void doGetOrderHistory(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        session.setAttribute("tabID", 7);
+        int orderID = Integer.parseInt(request.getParameter("txtOrderID"));
+        OrderLogDAO dao = new OrderLogDAO();
+        StaffDAO staffDAO = new StaffDAO();
+        AdminDAO adminDAO = new AdminDAO();
+        List<OrderLog> logList = new ArrayList<>();
+        logList = dao.getAllListByOrderID(orderID);
+        for (int i = 0; i < logList.size(); i++){
+            if (logList.get(i).getAdmin_id() != 0) {
+                logList.get(i).setFullname(adminDAO.getAdmin(logList.get(i).getAdmin_id()).getFullName());
+            } if (logList.get(i).getStaff_id()!= 0) {
+                logList.get(i).setFullname(staffDAO.getStaff(logList.get(i).getStaff_id()).getFullName());
+            }
+        }
+
+        session.setAttribute("logList", logList);
+        response.sendRedirect("/admin");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
@@ -784,16 +796,9 @@ public class AdminController extends HttpServlet {
             doGetList(request, response);
         } else if (path.endsWith("/admin/")) {
             response.sendRedirect("/admin");
-        } else if (path.startsWith("/admin/food")) {
-            doGetFood(request, response);
-        } else if (path.startsWith("/admin/user")) {
-            doGetUser(request, response);
-        } else if (path.startsWith("/admin/voucher")) {
-            doGetVoucher(request, response);
-        } else if (path.startsWith("/admin/order")) {
-            doGetOrder(request, response);
+        } else if (path.startsWith("/admin/history")) {
+            doGetOrderHistory(request, response);
         } else {
-            // response.setContentType("text/css");
             request.getRequestDispatcher("/admin.jsp").forward(request, response);
         }
     }
@@ -852,6 +857,9 @@ public class AdminController extends HttpServlet {
                     break;
                 case "SubmitDeleteOrder":
                     doPostDeleteOrder(request, response);
+                    break;
+                case "SubmitNextOrder":
+                    doPostNextOrder(request, response);
                     break;
                 default:
                     break;

@@ -441,13 +441,7 @@ $(document).ready(function () {
                 btnUpdate.attr("data-role-username", data2[0][2]);
                 btnUpdate.attr("data-role-fullname", data2[0][3]);
                 btnUpdate.attr("data-role-email", data2[0][4]);
-                let account_type = "";
-                if (data2[0][5] === "Staff") {
-                    account_type = "staff";
-                } else {
-                    account_type = "promotionManager";
-                }
-                btnUpdate.attr("data-role-type", account_type);
+                btnUpdate.attr("data-role-type", data2[0][5]);
                 btnUpdate.removeClass("disabled");
 
                 let roles = {};
@@ -457,7 +451,7 @@ $(document).ready(function () {
 
                 roles[data2[0][1]] = data2[0][3];
                 accounts[data2[0][0]] = data2[0][2];
-                account_type = "";
+                let account_type = "";
                 if (data2[0][5] === "Staff") {
                     account_type = "staff";
                     temp1s[data2[0][1]] = account_type;
@@ -470,8 +464,9 @@ $(document).ready(function () {
                 }
                 btnDelete.attr("data-roles", JSON.stringify(roles));
                 btnDelete.attr("data-accounts", JSON.stringify(accounts));
-
-
+                btnDelete.attr("data-temp1s", JSON.stringify(temp1s));
+                btnDelete.attr("data-temp2s", JSON.stringify(temp2s));
+                
                 btnDelete.removeClass("disabled");
             } else if (data2.length > 1) {
                 let roles = {};
@@ -547,7 +542,7 @@ $(document).ready(function () {
         $('.dtsp-titleRow > button').addClass("d-flex align-items-center btn-sm py-2");
 
         // Insert the table's button group to existing button container with Add, Update, Delete buttons
-        foodTable.buttons().container().prependTo("#roles-button-container");
+        roleTable.buttons().container().prependTo("#role-button-container");
         // Manually configure classes for the newly inserted button group
         let tableButtons = $("#roles-button-container > div.dt-buttons");
         tableButtons.removeClass("btn-group");
@@ -784,11 +779,20 @@ $(document).ready(function () {
             btnDelete.addClass("disabled");
         }
     }
-
+    
+    function disableNextOrderBtn() {
+        let btnNext = $('#btn-next-order');
+        if (btnNext) {
+            btnNext.removeAttr("data-order-id");
+            btnNext.addClass("disabled");
+        }
+    }
+    
     orderTable.on('select selectItems deselect', function (e, dt, type, indexes) {
         if (type === 'row' && indexes && Array.isArray(indexes)) {
             let btnUpdate = $('#btn-update-order');
             let btnDelete = $('#btn-delete-order');
+            let btnNext = $('#btn-next-order');
 
             // Retrieves selected rows
             let data4 = orderTable.rows({selected: true}).data();
@@ -805,27 +809,37 @@ $(document).ready(function () {
                 btnUpdate.attr("data-order-note", data4[0][9]);
                 let total = data4[0][10]
                         .substring(0, data4[0][10].length - 1) // Removes currency symbol
-                        .replace(',', '') // Removes thousand separators
+                        .replace(',', ''); // Removes thousand separators
                 btnUpdate.attr("data-order-total", total);
-                btnUpdate.attr("data-order-status", data4[0][12]);
+                btnUpdate.attr("data-order-status", data4[0][11]);
                 btnUpdate.removeClass("disabled");
 
                 let orders = {};
-                orders[data4[0][0]] = data4[0][0];
+                
+                if (data4[0][11] != "Đã giao" && data4[0][11] != "Đã hủy"){
+                    orders[data4[0][0]] = data4[0][0]; 
+                }
                 btnDelete.attr("data-orders", JSON.stringify(orders));
+                btnNext.attr("data-orders", JSON.stringify(orders));
                 btnDelete.removeClass("disabled");
+                btnNext.removeClass("disabled");
             } else if (data4.length > 1) {
                 let orders = {};
                 for (let i = 0; i < data4.length; i++) {
-                    let orderId = data4[i][0];
-                    orders[orderId] = data4[i][0];
+                    if (data4[i][11] != "Đã giao" && data4[i][11] != "Đã hủy"){
+                        let orderId = data4[i][0];
+                        orders[orderId] = data4[i][0]; 
+                    }
                 }
                 btnDelete.attr("data-orders", JSON.stringify(orders));
+                btnNext.attr("data-orders", JSON.stringify(orders));
                 btnDelete.removeClass("disabled");
+                btnNext.removeClass("disabled");
                 disableUpdateOrderBtn();
             } else {
                 disableUpdateOrderBtn();
-                disableDeleteUserBtn();
+                disableDeleteOrderBtn();
+                disableNextOrderBtn();
             }
         }
     });

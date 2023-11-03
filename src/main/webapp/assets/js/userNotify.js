@@ -5,14 +5,16 @@ $(document).ready(function () {
     $('#success_register').modal('show');
     setTimeout(function () {
       $('#success_register').modal('hide');
-    }, 2000);
+      window.location.href = '/home';
+    }, 3000);
   };
   
   if (window.location.hash === '#success_changePassword') {
     $('#success_changePassword').modal('show');
     setTimeout(function () {
       $('#success_changePassword').modal('hide');
-    }, 2000);
+      window.location.href = '/home';
+    }, 3000);
   };
 });
 
@@ -24,41 +26,47 @@ $(document).ready(function () {
     $('#failure').modal('show');
     setTimeout(function () {
       $('#failure').modal('hide');
-    }, 2000);
+      window.location.href = '/home';
+    }, 3000);
   };
 //Login
   if (window.location.hash === '#failure_login') {
     $('#failure_login').modal('show');
     setTimeout(function () {
       $('#failure_login').modal('hide');
-    }, 2000);
+      window.location.href = '/home';
+    }, 3000);
   };
   
   if (window.location.hash === '#failure_login_info') {
     $('#failure_login_info').modal('show');
     setTimeout(function () {
       $('#failure_login_info').modal('hide');
-    }, 2000);
+      window.location.href = '/home';
+    }, 3000);
   };
 //  Register
   if (window.location.hash === '#failure_register') {
     $('#failure_register').modal('show');
     setTimeout(function () {
       $('#failure_register').modal('hide');
-    }, 2000);
+      window.location.href = '/home';
+    }, 3000);
   };
   if (window.location.hash === '#failure_register_exist') {
     $('#failure_register_exist').modal('show');
     setTimeout(function () {
       $('#failure_register_exist').modal('hide');
-    }, 2000);
+      window.location.href = '/home';
+    }, 3000);
   };
   
   if (window.location.hash === '#failure_changePassword') {
     $('#failure_changePassword').modal('show');
     setTimeout(function () {
       $('#failure_changePassword').modal('hide');
-    }, 2000);
+      window.location.href = '/home';
+    }, 3000);
   };
  
 //  Verify
@@ -66,11 +74,13 @@ $(document).ready(function () {
     $('#verify_OTP').modal('show');
     setTimeout(function () {
       $('#verify_OTP').modal('hide');
+      window.location.href = '/home';
     }, 120000);
   };
   
   if (window.location.hash === '#changePass_modal') {
     $('#changePass_modal').modal('show');
+    window.location.href = '/home';
   };
   
 });

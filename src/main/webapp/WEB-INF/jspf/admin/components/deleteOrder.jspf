@@ -11,7 +11,7 @@
         <div class="modal-body">
           <p class="mb-1">Những ID đơn hàng sau đây sẽ bị xoá:</p>
           <ul id="delete-order-list"></ul>
-          <p class="mb-0">Bạn chắc chắn muốn xoá những món này không? <br>
+          <p class="mb-0">Bạn chắc chắn muốn xoá những đơn hàng này không? <br>
             <span class="error fw-bolder">Hành động này không thể hoàn tác.</span>
           </p>
         </div>

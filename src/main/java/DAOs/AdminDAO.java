@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import Models.Admin;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AdminDAO {
 
@@ -28,6 +30,25 @@ public class AdminDAO {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
             return rs;
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    public List<Admin> getAllAdmin() {
+        ResultSet staffRS = this.getAll();
+        try {
+            List<Admin> adminList = new ArrayList<>();
+            while (staffRS.next()) {
+                // Selected account is of User type               
+                Admin admin = new Admin(
+                        staffRS.getByte("admin_id"),
+                        staffRS.getString("admin_fullname")
+                );              
+                adminList.add(admin);               
+            }
+            return adminList;
         } catch (SQLException ex) {
             Logger.getLogger(AdminDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
