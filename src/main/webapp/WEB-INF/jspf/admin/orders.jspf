@@ -36,7 +36,7 @@
                     <th>Địa chỉ nhận</th>
                     <th>Hình thức thanh toán</th>
                     <th>Các món đặt</th>
-                    <th>Ghi chú</th>                          
+                    <th class="d-none">Ghi chú</th>                          
                     <th>Thanh toán</th> 
                     <th>Trạng thái</th>
                     <th>Thời gian đặt</th>
@@ -64,16 +64,24 @@
                             </c:forEach>
                         </ul>
                     </td>
-                    <td>${(o.orderNote == null) ? "" : o.orderNote}</td>        
+                    <td class="d-none">${(o.orderNote == null) ? "" : o.orderNote}</td>        
                     <td><fmt:formatNumber type="number" pattern="###,###,###.##" value="${o.orderTotal}"/>đ</td>
                 <td> ${o.orderStatus} </td>
-                <td style="word-wrap: break-word; white-space: pre-wrap;">${o.orderTime}</td>
+                <td class="text-wrap">
+                  <fmt:formatDate value="${o.orderTime}" pattern="HH:mm dd/MM/yyyy"/>
+                </td>
                 </tr>
             </c:forEach>
             </tbody>
         </table>
     </div>
 </div>
+
+<style>
+    tr.odd.selected > td > a.text-decoration-none {
+        color: #ffffff; !important;
+    }
+</style>
 
 <%-- JavaScript code --%>
 <script>

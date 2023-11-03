@@ -28,10 +28,10 @@
             </div>
             <thead>
                 <tr>
-                    <th class="col-sm-3 col-gap-5">Mã Khuyến mãi</th>  
+                    <th class="col-sm-3 col-gap-5">Mã KM</th>  
                     <th>Tên Khuyến mãi</th>
                     <th>Mã Code</th>
-                    <th>Phần trăm KM</th>
+                    <th>Giá trị KM</th>
                     <th>Số lượng</th>
                     <th>Trạng thái</th>
                     <th>Thời gian</th>
@@ -48,7 +48,7 @@
                     <td>${(v.voucher_discount_percent == null) ? 0 : v.voucher_discount_percent}%</td>                                 
                     <td>${v.voucher_quantity}</td>
                     <td>${v.voucher_status eq 0 ? 'Hết' : 'Còn'}</td>
-                    <td>${v.voucher_date}</td>
+                    <td><fmt:formatDate value="${v.voucher_date}" pattern="HH:mm dd/MM/yyyy"/></td>
                 </tr>
             </c:forEach>
             </tbody>

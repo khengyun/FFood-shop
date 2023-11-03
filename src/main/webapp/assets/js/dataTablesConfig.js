@@ -37,6 +37,9 @@ $(document).ready(function () {
 			blurable: false, // Temporary disabled due to conflicts with selectAll button
 			info: false,
 		},
+    searchPanes: {
+      orderable: false,
+    },
 		buttons: [
 			"selectAll",
 			"selectNone",
@@ -65,6 +68,9 @@ $(document).ready(function () {
 					targets: [-1], // "Image" columns
 				},
 			],
+      searchPanes: {
+        columns: [1, 4, 5, 6, 7],
+      },
 		});
 
 		function disableUpdateFoodBtn() {
@@ -193,6 +199,9 @@ $(document).ready(function () {
 					targets: [-1], // "Image" columns
 				},
 			],
+      searchPanes: {
+        columns: [3, 4, 5],
+      },
 		});
 
 		function disableUpdateVoucherBtn() {
@@ -304,6 +313,9 @@ $(document).ready(function () {
 					targets: [-1], // "Image" columns
 				},
 			],
+      searchPanes: {
+        columns: [1, 5],
+      },
 		});
 
 		function disableUpdateRoleBtn() {
