@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.Gson;
+import java.io.PrintWriter;
 
 public class HomeController extends HttpServlet {
 
@@ -41,6 +42,7 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+                  
         // Set the JSON string in the session
         HttpSession session = request.getSession();
         Gson gson = new Gson();

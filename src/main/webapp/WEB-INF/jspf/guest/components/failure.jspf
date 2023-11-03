@@ -66,3 +66,14 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="open_time" tabindex="-1" role="dialog" aria-labelledby="failureLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h3 class="text-center p-3">Quán mở cửa từ lúc 8 giờ sáng đến 8 giờ tối!</h3>
+      </div>
+    </div>
+  </div>
+</div>

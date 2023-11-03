@@ -33,6 +33,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.time.LocalTime;
 
 
 public class CheckoutController extends HttpServlet {
@@ -136,6 +137,7 @@ public class CheckoutController extends HttpServlet {
 
     protected void doPostOrder(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         int accountID = 0;
         if (request.getParameter("txtAccountID") != null
                 && !request.getParameter("txtAccountID").isEmpty()) {
@@ -223,8 +225,6 @@ public class CheckoutController extends HttpServlet {
                 return;
             }
         }
-        
-        
 
         // Lấy thời gian hiện tại
         LocalDateTime currentTime = LocalDateTime.now();
@@ -323,7 +323,15 @@ public class CheckoutController extends HttpServlet {
 
     protected void doPostCheckout(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
+        LocalTime currentTime = LocalTime.now();
+        int hour = currentTime.getHour(); // Get the current hour (24-hour format)
+        
+        if (hour >= 20 || hour <= 8) {
+            response.sendRedirect("/home#open_time");
+            return;
+        } 
+        
         HttpSession session = request.getSession();
         
         String voucherStatus = "Vui lòng nhập mã giảm giá nếu bạn có";
