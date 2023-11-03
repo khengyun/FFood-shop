@@ -13,10 +13,11 @@ class FoodModel(BaseModel):
     food_name: str
     food_description: str = None
     food_price: float
-    food_rate: int
     food_status: bool
-    food_type_id: int
+    food_rate: int = None  # Corrected data type to int
+    discount_percent: int  # Corrected data type to int
     food_url: str = None
+    food_type_id: int = None
 
 class FoodOperations:
     def __init__(self):
@@ -36,10 +37,12 @@ class FoodOperations:
                     food_name=record[1],
                     food_description=record[2],
                     food_price=float(record[3]),
-                    food_rate=int(record[4]),
-                    food_status=bool(record[5]),
-                    food_type_id=int(record[6]),
-                    food_url=record[7]
+                    food_status=bool(record[4]),
+                    food_rate=int(record[5]),
+                    discount_percent=int(record[6]),
+                    food_url=record[7],
+                    food_type_id=record[8]
+                    
                 )
                 food_data.append(food.dict())
             conn.close()
@@ -89,6 +92,7 @@ class FoodOperations:
             cursor.execute(query, tuple('%' + variant + '%' for variant in variants))
             records = cursor.fetchall()
             food_data = []
+            print(records)
 
             for record in records:
                 food = FoodModel(
@@ -96,12 +100,14 @@ class FoodOperations:
                     food_name=record[1],
                     food_description=record[2],
                     food_price=float(record[3]),
-                    food_rate=int(record[4]),
-                    food_status=bool(record[5]),
-                    food_type_id=int(record[6]),
-                    food_url=record[7]
+                    food_status=bool(record[4]),
+                    food_rate=int(record[5]),
+                    discount_percent=int(record[6]),
+                    food_url=record[7],
+                    food_type_id=record[8]
                 )
                 food_data.append(food)
+            print(food_data)
 
             # Sort food_data based on similarity_score
             food_data = sorted(food_data, key=lambda x: self.similarity_score(food_name, x), reverse=True)
