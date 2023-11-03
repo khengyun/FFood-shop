@@ -623,7 +623,7 @@ $(document).ready(function () {
 		function disableNextOrderBtn() {
 			let btnNext = $("#btn-next-order");
 			if (btnNext) {
-				btnNext.removeAttr("data-order-id");
+				btnNext.removeAttr("data-orders");
 				btnNext.addClass("disabled");
 			}
 		}
@@ -698,6 +698,22 @@ $(document).ready(function () {
 				row.child(format(row.data())).show();
 			}
 		});
+
+    orderTable.on('select-blur', function (e, dt, target) {
+      // Ignores blur event if user clicks on update/delete/cancel/confirm buttons, or the background of a modal dialog
+      if (target.classList.contains("btn-update")
+              || target.classList.contains("btn-delete")
+              || target.classList.contains("btn-cancel")
+              || target.classList.contains("btn-confirm")
+              || target.id === "update-order-modal"
+              || target.id === "delete-order-modal") {
+          e.preventDefault();
+      } else {
+          disableUpdateOrderBtn();
+          disableDeleteOrderBtn();
+      }
+  });
+
 		dataTables.push(orderTable);
 	}
 

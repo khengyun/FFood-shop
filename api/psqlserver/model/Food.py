@@ -4,6 +4,9 @@ import pymssql
 from typing import List
 from config import db_config
 from datetime import date,timedelta
+from unidecode import unidecode
+
+
 
 class FoodModel(BaseModel):
     food_id: int
@@ -47,13 +50,15 @@ class FoodOperations:
 
     def search_food_by_name(self, food_name: str):
         try:
-            food_name = food_name.replace(" ", "%").lower()
+            # Chuyển đổi food_name thành văn bản không dấu
+            normalized_food_name = unidecode(food_name).replace(" ", "%").lower()
+            
             conn = pymssql.connect(**self.db_config)
             cursor = conn.cursor()
 
-            # Use the LIKE operator in the SQL query
-            # The '%' characters are used as wildcards for pattern matching
-            cursor.execute("SELECT * FROM Food WHERE food_name LIKE %s", ('%' + food_name + '%',))
+            # Sử dụng LIKE operator trong truy vấn SQL với tên đã được chuyển đổi
+            # Dấu '%' được sử dụng làm wildcards cho pattern matching
+            cursor.execute("SELECT * FROM Food WHERE food_name LIKE %s", ('%' + normalized_food_name + '%',))
             records = cursor.fetchall()
             food_data = []
 
@@ -67,7 +72,6 @@ class FoodOperations:
                     food_status=bool(record[5]),
                     food_type_id=int(record[6]),
                     food_url=record[7]
-                    
                 )
                 food_data.append(food.dict())
 
