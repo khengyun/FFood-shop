@@ -68,15 +68,22 @@ class FoodOperations:
         
         return variants
 
+    def similarity_score(self, food_name, food):
+        # Tính điểm tương đồng bằng cách đếm số từ giống nhau trong food_name và food_name của món ăn
+        print(food_name, food.food_name)
+        food_name_lower = food_name.lower()
+        food_name_tokens = food_name_lower.split()
+        food_tokens = food.food_name.lower().split()
+        score = sum(1 for token in food_tokens if token in food_name_tokens)
+        return score
+
     def search_food_by_name(self, food_name: str):
         try:
             conn = pymssql.connect(**self.db_config)
             cursor = conn.cursor()
-            # Lấy các biến thể của tên món ăn
             variants = self.generate_variants(food_name)
             
             query = "SELECT * FROM Food WHERE "
-            # Sử dụng Unicode Collation trong truy vấn SQL
             query += " OR ".join(["food_name COLLATE Vietnamese_CI_AS LIKE %s" for _ in variants])
             
             cursor.execute(query, tuple('%' + variant + '%' for variant in variants))
@@ -94,10 +101,14 @@ class FoodOperations:
                     food_type_id=int(record[6]),
                     food_url=record[7]
                 )
-                food_data.append(food.dict())
+                food_data.append(food)
+
+            # Sort food_data based on similarity_score
+            food_data = sorted(food_data, key=lambda x: self.similarity_score(food_name, x), reverse=True)
 
             conn.close()
-            return food_data
+
+            return [food.dict() for food in food_data]
 
         except Exception as e:
             return str(e)
