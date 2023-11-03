@@ -37,9 +37,6 @@ $(document).ready(function () {
 			blurable: false, // Temporary disabled due to conflicts with selectAll button
 			info: false,
 		},
-    searchPanes: {
-      orderable: false,
-    },
 		buttons: [
 			"selectAll",
 			"selectNone",
@@ -70,6 +67,9 @@ $(document).ready(function () {
 			],
       searchPanes: {
         columns: [1, 4, 5, 6, 7],
+        orderable: false,
+        collapse: false,
+        cascadePanes: true
       },
 		});
 
@@ -201,6 +201,9 @@ $(document).ready(function () {
 			],
       searchPanes: {
         columns: [3, 4, 5],
+        orderable: false,
+        collapse: false,
+        cascadePanes: true
       },
 		});
 
@@ -315,6 +318,9 @@ $(document).ready(function () {
 			],
       searchPanes: {
         columns: [1, 5],
+        orderable: false,
+        collapse: false,
+        cascadePanes: true
       },
 		});
 
