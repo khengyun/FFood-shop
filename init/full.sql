@@ -681,16 +681,42 @@ contact_phone, delivery_address, order_time, order_total,
 order_note, delivery_time, order_cancel_time
 ) values (
 1, 1, 4, 1, 
-'0931278397', N'39 Mậu Thân, Ninh Kiều, Cần Thơ', '20230708 10:34:00 AM', 190000, 
-NULL, '20230708 10:49:00 AM', NULL);
+'0931278397', N'39 Mậu Thân, Ninh Kiều, Cần Thơ', '20231108 10:49:00 AM', 190000, 
+NULL, '20231108 10:49:00 AM', NULL);
 
 insert into Payment (
     order_id, payment_method_id, payment_total, payment_content, payment_bank, payment_code, payment_status, payment_time
 ) values (
-    1,1,190000,N'Thanh toán đơn hàng ffood',N'NCB','14111641',1,'20230708 11:20:00 AM'
+    1,1,190000,N'Thanh toán đơn hàng ffood',N'NCB','14111641',1,'20231108 11:20:00 AM'
 );
 
-insert into OrderLog (order_id, staff_id, log_activity, log_time) values (1, 1, N'Cập nhật thông tin đơn hàngg','20230708 10:51:00 AM');
-insert into OrderLog (order_id, staff_id, log_activity, log_time) values (1, 2, N'Cập nhật trạng thái đơn hàng','20230708 11:03:00 AM');
-insert into OrderLog (order_id, staff_id, log_activity, log_time) values (1, 3, N'Cập nhật trạng thái đơn hàng','20230708 11:18:00 AM');
-insert into OrderLog (order_id, staff_id, log_activity, log_time) values (1, 4, N'Cập nhật trạng thái đơn hàng','20230708 11:20:00 AM');
+update Account set lastime_order = '20231108 10:34:00 AM' where account_id = 201
+
+insert into OrderLog (order_id, staff_id, log_activity, log_time) values (1, 1, N'Cập nhật thông tin đơn hàngg','20231108 10:51:00 AM');
+insert into OrderLog (order_id, staff_id, log_activity, log_time) values (1, 1, N'Cập nhật trạng thái đơn hàng','20231108 11:03:00 AM');
+insert into OrderLog (order_id, staff_id, log_activity, log_time) values (1, 2, N'Cập nhật trạng thái đơn hàng','20231108 11:18:00 AM');
+insert into OrderLog (order_id, staff_id, log_activity, log_time) values (1, 3, N'Cập nhật trạng thái đơn hàng','20231108 11:20:00 AM');
+
+-- Cart, CartItem, Order test data
+insert into Cart (customer_id) values (2);
+
+insert into CartItem (cart_id, food_id, food_price, food_quantity) values (2, 5, 40000, 2);
+insert into CartItem (cart_id, food_id, food_price, food_quantity) values (2, 14, 25000, 3);
+insert into CartItem (cart_id, food_id, food_price, food_quantity) values (2, 23, 20000, 3);
+
+-- Insert an Order for the Cart
+insert into [Order] (
+cart_id, customer_id ,order_status_id, payment_method_id,
+contact_phone, delivery_address, order_time, order_total, 
+order_note, delivery_time, order_cancel_time
+) values (
+2, 2, 4, 3, 
+'0931278397', N'39 Mậu Thân, Ninh Kiều, Cần Thơ', '20231108 15:43:00 PM', 215000, 
+NULL, '20231108 15:43:00 PM', NULL);
+
+update Account set lastime_order = '20231108 15:43:00 PM' where account_id = 205
+
+insert into OrderLog (order_id, staff_id, log_activity, log_time) values (2, 1, N'Cập nhật trạng thái đơn hàng','20231108 15:50:00 PM');
+insert into OrderLog (order_id, staff_id, log_activity, log_time) values (2, 2, N'Cập nhật trạng thái đơn hàng','20231108 16:05:00 PM');
+insert into OrderLog (order_id, staff_id, log_activity, log_time) values (2, 3, N'Cập nhật trạng thái đơn hàng','20231108 16:20:00 PM');
+
