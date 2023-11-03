@@ -5,7 +5,7 @@ from typing import List
 from config import db_config
 from datetime import date,timedelta
 from unidecode import unidecode
-
+from itertools import permutations
 
 
 class FoodModel(BaseModel):
@@ -47,18 +47,39 @@ class FoodOperations:
 
         except Exception as e:
             return str(e)
+        
+
+    def generate_variants(self, food_name):
+        # Tách tên món ăn thành các từ riêng lẻ
+        words = food_name.split()
+        variants = set()
+        
+        # Thêm tên món ăn gốc
+        variants.add(food_name)
+        
+        # Tạo các biến thể từng từ
+        for word in words:
+            variants.add(word)
+        
+        # Tạo các biến thể từ kết hợp các từ
+        for r in range(2, len(words) + 1):
+            for combo in permutations(words, r):
+                variants.add(' '.join(combo))
+        
+        return variants
 
     def search_food_by_name(self, food_name: str):
         try:
-            # Chuyển đổi food_name thành văn bản không dấu
-            normalized_food_name = unidecode(food_name).replace(" ", "%").lower()
-            
             conn = pymssql.connect(**self.db_config)
             cursor = conn.cursor()
-
-            # Sử dụng LIKE operator trong truy vấn SQL với tên đã được chuyển đổi
-            # Dấu '%' được sử dụng làm wildcards cho pattern matching
-            cursor.execute("SELECT * FROM Food WHERE food_name LIKE %s", ('%' + normalized_food_name + '%',))
+            # Lấy các biến thể của tên món ăn
+            variants = self.generate_variants(food_name)
+            
+            query = "SELECT * FROM Food WHERE "
+            # Sử dụng Unicode Collation trong truy vấn SQL
+            query += " OR ".join(["food_name COLLATE Vietnamese_CI_AS LIKE %s" for _ in variants])
+            
+            cursor.execute(query, tuple('%' + variant + '%' for variant in variants))
             records = cursor.fetchall()
             food_data = []
 
@@ -80,6 +101,8 @@ class FoodOperations:
 
         except Exception as e:
             return str(e)
+
+
         
     def get_daily_revenue(self):
         try:
