@@ -78,7 +78,12 @@
         } else {
             var foodItem = foodLists.find(item => item.foodID === foodID);
             if (foodItem) {
-                cartItems.push({foodID: foodItem.foodID, foodName: foodItem.foodName, quantity: quantity, price: foodItem.foodPrice, discount: foodItem.discountPercent});
+                cartItems.push({foodID: foodItem.foodID,
+                                foodName: foodItem.foodName,
+                                quantity: quantity,
+                                price: foodItem.foodPrice,
+                                imageURL: foodItem.imageURL,
+                                discount: foodItem.discountPercent});
             }
         }
         // Store the updated cart back in session storage
@@ -119,72 +124,88 @@
                 row.classList.add("align-middle");
 
                 // Create table cells for each property of the cart item
-                var nameCell = document.createElement("td");
-                nameCell.textContent = cartItem.foodName;
-                row.appendChild(nameCell);
+                {
+                  // Image and name cell
+                  let imageCell = document.createElement("td");
+                  imageCell.classList.add("table-image-cell");
+                  {
+                    // Image
+                    let image = document.createElement("img");
+                    image.src = cartItem.imageURL;
+                    image.alt = cartItem.foodName;
+                    image.classList.add("d-none", "d-md-inline", "rounded", "shadow-sm", "me-3");
+                    imageCell.appendChild(image);
+  
+                    // Name
+                    let nameSpan = document.createElement("span");
+                    nameSpan.textContent = cartItem.foodName;
+                    imageCell.appendChild(nameSpan);
+                  }
+                  row.appendChild(imageCell);
 
-                var priceCell = document.createElement("td");
-                priceCell.textContent = parseFloat(cartItem.price - (cartItem.price * cartItem.discount / 100)).toLocaleString() + "đ";
-                row.appendChild(priceCell);
+                  var priceCell = document.createElement("td");
+                  priceCell.textContent = parseFloat(cartItem.price - (cartItem.price * cartItem.discount / 100)).toLocaleString(pageLocale) + " đ";
+                  row.appendChild(priceCell);
 
-                // Quantity cell
-                var quantityCell = document.createElement("td");
-                quantityCell.className = "quantity-cell";
+                  // Quantity cell
+                  var quantityCell = document.createElement("td");
+                  quantityCell.className = "quantity-cell";
 
-                var quantityContainer = document.createElement("div");
-                quantityContainer.className = "d-flex input-group align-items-center";
+                  var quantityContainer = document.createElement("div");
+                  quantityContainer.className = "d-flex input-group align-items-center";
 
-                var decreaseButton = document.createElement("input");
-                decreaseButton.type = "button";
-                decreaseButton.value = "-";
-                decreaseButton.className = "btn btn-outline-dark border border-dark border-1 button-minus px-2 py-1";
-                decreaseButton.dataset.field = "quantity-" + cartItem.foodID;
+                  var decreaseButton = document.createElement("input");
+                  decreaseButton.type = "button";
+                  decreaseButton.value = "-";
+                  decreaseButton.className = "btn btn-outline-dark border border-dark border-1 button-minus px-2 py-1";
+                  decreaseButton.dataset.field = "quantity-" + cartItem.foodID;
 
-                var quantityInput = document.createElement("input");
-                quantityInput.type = "number";
-                quantityInput.step = "1";
-                quantityInput.min = "1";
-                quantityInput.max = "10";
-                quantityInput.maxLength = "2";
-                quantityInput.style.width = "2em";
-                quantityInput.className = "quantity-input quantity-field border border-dark border-1 border-start-0 border-end-0 text-center py-1";
-                quantityInput.name = "quantity-" + cartItem.foodID;
-                quantityInput.value = cartItem.quantity;
+                  var quantityInput = document.createElement("input");
+                  quantityInput.type = "number";
+                  quantityInput.step = "1";
+                  quantityInput.min = "1";
+                  quantityInput.max = "10";
+                  quantityInput.maxLength = "2";
+                  quantityInput.style.width = "2em";
+                  quantityInput.className = "quantity-input quantity-field border border-dark border-1 border-start-0 border-end-0 text-center py-1";
+                  quantityInput.name = "quantity-" + cartItem.foodID;
+                  quantityInput.value = cartItem.quantity;
 
-                var increaseButton = document.createElement("input");
-                increaseButton.type = "button";
-                increaseButton.value = "+";
-                increaseButton.className = "btn btn-outline-dark border border-dark border-1 button-plus px-2 py-1";
-                increaseButton.dataset.field = "quantity-" + cartItem.foodID;
+                  var increaseButton = document.createElement("input");
+                  increaseButton.type = "button";
+                  increaseButton.value = "+";
+                  increaseButton.className = "btn btn-outline-dark border border-dark border-1 button-plus px-2 py-1";
+                  increaseButton.dataset.field = "quantity-" + cartItem.foodID;
 
-                quantityContainer.appendChild(decreaseButton);
-                quantityContainer.appendChild(quantityInput);
-                quantityContainer.appendChild(increaseButton);
+                  quantityContainer.appendChild(decreaseButton);
+                  quantityContainer.appendChild(quantityInput);
+                  quantityContainer.appendChild(increaseButton);
 
-                quantityCell.appendChild(quantityContainer);
-                row.appendChild(quantityCell);
+                  quantityCell.appendChild(quantityContainer);
+                  row.appendChild(quantityCell);
 
-                // Total cell
-                var totalCell = document.createElement("td");
-                var itemTotal = parseFloat(cartItem.price - (cartItem.price * cartItem.discount / 100)) * cartItem.quantity;
-                totalCell.textContent = itemTotal.toLocaleString() + "đ";
-                totalCell.className = "item-total d-none d-md-table-cell";
-                row.appendChild(totalCell);
+                  // Total cell
+                  var totalCell = document.createElement("td");
+                  var itemTotal = parseFloat(cartItem.price - (cartItem.price * cartItem.discount / 100)) * cartItem.quantity;
+                  totalCell.textContent = itemTotal.toLocaleString(pageLocale) + " đ";
+                  totalCell.className = "item-total d-none d-md-table-cell";
+                  row.appendChild(totalCell);
 
-                // Remove cell
-                var removeCell = document.createElement("td");
-                var removeButton = document.createElement("button");
-                removeButton.type = "button";
-                removeButton.style.width = "fit-content";
-                removeButton.className = "d-flex btn btn-sm btn-outline-danger align-items-center px-2 px-sm-3";
-                removeButton.onclick = function () {
-                    deleteCartItem(cartItem.foodID);
-                };
-                removeButton.innerHTML = '\
-                <i class="ph-bold ph-trash fs-1"></i>' +
-                        '<span class="d-none d-md-flex ms-2">Xoá</span>';
-                removeCell.appendChild(removeButton);
-                row.appendChild(removeCell);
+                  // Remove cell
+                  var removeCell = document.createElement("td");
+                  var removeButton = document.createElement("button");
+                  removeButton.type = "button";
+                  removeButton.style.width = "fit-content";
+                  removeButton.className = "d-flex btn btn-sm btn-outline-danger align-items-center px-2 px-sm-3";
+                  removeButton.onclick = function () {
+                      deleteCartItem(cartItem.foodID);
+                  };
+                  removeButton.innerHTML = '\
+                  <i class="ph-bold ph-trash fs-1"></i>' +
+                          '<span class="d-none d-md-flex ms-2">Xoá</span>';
+                  removeCell.appendChild(removeButton);
+                  row.appendChild(removeCell);
+                }
 
                 // Append the table row to the cart table body
                 cartTableBody.appendChild(row);
@@ -204,11 +225,6 @@
         // Update the total price element in the modal
         updateTotalPrice();
     }
-    
-    function formatCurrency(amount) {
-        return amount.toLocaleString(undefined, { style: 'currency', currency: 'VND' });
-    }
-
 
     // Function to update cart information
     function updateCartInformation() {
@@ -364,7 +380,7 @@
 
         // Update the product price cell in the same row
         // Format the total price string so that it can be displayed correctly to the user
-        formattedItemTotal = itemTotal.toLocaleString();
+        formattedItemTotal = itemTotal.toLocaleString(pageLocale);
         $(tableRow).find(".item-total").html(formattedItemTotal + " đ");
 
         // Calculate and update the total price
