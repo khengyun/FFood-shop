@@ -687,7 +687,7 @@ $(document).ready(function () {
 	let areTablesInitialized = false;
 	// This triggers once any tab links are clicked, regardless of the destination tab
 	$("ul [data-bs-target]").on("shown.bs.tab", function () {
-		// Initialize all tables
+		// Initialize all tables exactly once
 		if (!areTablesInitialized) {
 			// Remove searchPanes' expand and collapse all panes button
 			$(".dtsp-showAll").remove();
@@ -739,11 +739,16 @@ $(document).ready(function () {
 				tableButtons.addClass("col-sm-12 col-lg-7 d-flex gap-2");
 				/*$("#foods-button-container > div.dt-buttons > *").addClass("me-1");*/
 
-				// Fix table headers not resized on page load
-				$(table).resize();
+				// Mark state of all tables as initialized
+				areTablesInitialized = true;
 			});
 
-			areTablesInitialized = true;
+
 		}
+
+		// Get target tab's ID, which can be used to find its table
+		let tabID = $(this).attr("data-bs-target");
+		// Resize the table	
+		$(tabID).find("table").resize();
 	});
 });
