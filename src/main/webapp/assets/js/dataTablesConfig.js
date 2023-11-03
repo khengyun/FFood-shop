@@ -68,8 +68,7 @@ $(document).ready(function () {
       searchPanes: {
         columns: [1, 4, 5, 6, 7],
         orderable: false,
-        collapse: false,
-        cascadePanes: true
+        collapse: false
       },
 		});
 
@@ -202,8 +201,7 @@ $(document).ready(function () {
       searchPanes: {
         columns: [3, 4, 5],
         orderable: false,
-        collapse: false,
-        cascadePanes: true
+        collapse: false
       },
 		});
 
@@ -319,8 +317,7 @@ $(document).ready(function () {
       searchPanes: {
         columns: [1, 5],
         orderable: false,
-        collapse: false,
-        cascadePanes: true
+        collapse: false
       },
 		});
 
