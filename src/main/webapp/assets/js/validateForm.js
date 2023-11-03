@@ -816,5 +816,4 @@ $(".checkout-form").validate({
             // Handle form submission here
             form.submit();
         }
-    },
 });

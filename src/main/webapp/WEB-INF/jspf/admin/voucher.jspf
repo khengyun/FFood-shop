@@ -48,7 +48,7 @@
                     <td>${(v.voucher_discount_percent == null) ? 0 : v.voucher_discount_percent}%</td>                                 
                     <td>${v.voucher_quantity}</td>
                     <td>${v.voucher_status eq 0 ? 'Hết' : 'Còn'}</td>
-                    <td><fmt:formatDate value="${v.voucher_date}" pattern="HH:mm dd/MM/yyyy"/></td>
+                    <td>${v.voucher_date}</td>
                 </tr>
             </c:forEach>
             </tbody>
