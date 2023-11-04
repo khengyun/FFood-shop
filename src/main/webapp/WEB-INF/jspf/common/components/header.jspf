@@ -63,7 +63,7 @@
                 <%@ include file="../../hyperfeat/fooddetechbutton.jspf" %>
                 
                 <!-- Search by keyword button -->
-                <div class="list-group d-flex flex-column gap-3 card p-3 rounded-2 shadow search-results w-100" style="position: absolute; top: 50px;" id="search-results-list"></div>
+                <div class="list-group d-none flex-column gap-3 card p-3 rounded-2 overflow-auto shadow search-results w-100" style="position: absolute; top: 50px; max-height: 27rem;" id="search-results-list"></div>
                 <button class="btn btn-primary px-4" type="button" onclick="searchFoodByKeyword()" title="Tìm Món bằng từ khoá">
                   <i class="ph-bold ph-magnifying-glass"></i>
                 </button>

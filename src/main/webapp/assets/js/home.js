@@ -171,7 +171,8 @@ function searchFoodByKeyword() {
   searchResultsList.innerHTML = "";
 
   if (searchInput.value.trim() === "") {
-    searchResultsList.style.display = "none";
+    searchResultsList.classList.remove("d-flex");
+    searchResultsList.classList.add("d-none");
     return;
   }
 
@@ -238,6 +239,23 @@ function searchFoodByKeyword() {
             cardTitle.classList.add("card-title");
             cardTitle.textContent = item.food_name;
             cardBody.appendChild(cardTitle);
+
+            // If the food is unavailable/out of stock, add a "Tạm hết" badge
+            if (!item.food_status) {
+              // Create card badge
+              const discountBadge = document.createElement("span");
+              discountBadge.classList.add(
+                "badge",
+                "bg-danger",
+                "text-white",
+                "ms-2",
+                "px-2",
+                "py-2",
+                "fs-0"
+              );
+              discountBadge.textContent = "Tạm hết";
+              priceContainer.append(discountBadge);
+            }
           }
 
           // Create container for rating and price
@@ -253,45 +271,46 @@ function searchFoodByKeyword() {
             cardBody.appendChild(ratingPriceContainer);
           }
 
-          // Create card text for the price
-          const priceText = document.createElement("p");
+          // Create container for price
+          const priceContainer = document.createElement("p");
           {
-            priceText.classList.add(
-              "card-text",
-              "text-secondary",
-              "fw-bold",
-              "mb-0"
-            );
+            priceContainer.classList.add("card-text", "mb-0");
+
+            // Create price span
+            const priceText = document.createElement("span");
+            priceText.classList.add("fs-1", "text-secondary", "fw-bold");
 
             const price =
-              item.food_discount > 0
-                ? item.food_price - (item.food_price * item.food_discount) / 100
+              item.discount_percent > 0
+                ? item.food_price -
+                  (item.food_price * item.discount_percent) / 100
                 : item.food_price;
             // Calculate the discounted price
-            priceText.textContent = `${item.food_price} đ`;
-            ratingPriceContainer.appendChild(priceText);
+            priceText.textContent = `${price} đ`;
+            priceContainer.appendChild(priceText);
+            ratingPriceContainer.appendChild(priceContainer);
 
             // If the food has a discount
-            if (item.food_discount > 0) {
+            if (item.discount_percent > 0) {
               // Create card text for the original price, based on the given HTML markup
               const originalPriceText = document.createElement("span");
-              originalPriceText.id = "food-price-original";
-              originalPriceText.classList.add("fs-1", "me-2", "text-600");
+              originalPriceText.classList.add("ms-2", "text-600");
               originalPriceText.innerHTML = `<s>${item.food_price} đ</s>`;
-              priceText.prepend(originalPriceText);
+              priceContainer.append(originalPriceText);
 
               // Create card badge for the discount
               const discountBadge = document.createElement("span");
               discountBadge.classList.add(
                 "badge",
-                "bg-secondary",
+                "bg-success",
                 "text-white",
-                "px-3",
+                "ms-2",
+                "px-2",
                 "py-2",
                 "fs-0"
               );
-              discountBadge.textContent = `Giảm ${item.food_discount}%`;
-              priceText.append(discountBadge);
+              discountBadge.textContent = `Giảm ${item.discount_percent}%`;
+              priceContainer.append(discountBadge);
             }
           }
 
@@ -300,7 +319,7 @@ function searchFoodByKeyword() {
           {
             ratingText.classList.add("card-text", "text-primary");
             for (let index = 0; index < 5; index++) {
-              if (index < item.food_rating) {
+              if (index < item.food_rate) {
                 ratingText.innerHTML += '<i class="ph-fill ph-star"></i>';
               } else {
                 ratingText.innerHTML += '<i class="ph-bold ph-star"></i>';
@@ -315,7 +334,7 @@ function searchFoodByKeyword() {
           const stretchedLink = document.querySelector(
             ".stretched-link[data-food-id='" + foodID + "']"
           );
-          
+
           if (stretchedLink) {
             // Duplicate the stretched link
             const duplicatedLink = stretchedLink.cloneNode(true);
@@ -327,9 +346,11 @@ function searchFoodByKeyword() {
 
           searchResultsList.appendChild(card);
         });
-        searchResultsList.style.display = "block";
+        searchResultsList.classList.remove("d-none");
+        searchResultsList.classList.add("d-flex");
       } else {
-        searchResultsList.style.display = "none";
+        searchResultsList.classList.remove("d-flex");
+        searchResultsList.classList.add("d-none");
       }
     })
     .catch((error) => console.error(error));
