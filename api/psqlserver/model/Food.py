@@ -5,7 +5,7 @@ from typing import List
 from config import db_config
 from datetime import date,timedelta
 from unidecode import unidecode
-
+from itertools import permutations
 
 
 class FoodModel(BaseModel):
@@ -13,10 +13,11 @@ class FoodModel(BaseModel):
     food_name: str
     food_description: str = None
     food_price: float
-    food_rate: int
     food_status: bool
-    food_type_id: int
+    food_rate: int = None  # Corrected data type to int
+    discount_percent: int  # Corrected data type to int
     food_url: str = None
+    food_type_id: int = None
 
 class FoodOperations:
     def __init__(self):
@@ -36,10 +37,12 @@ class FoodOperations:
                     food_name=record[1],
                     food_description=record[2],
                     food_price=float(record[3]),
-                    food_rate=int(record[4]),
-                    food_status=bool(record[5]),
-                    food_type_id=int(record[6]),
-                    food_url=record[7]
+                    food_status=bool(record[4]),
+                    food_rate=int(record[5]),
+                    discount_percent=int(record[6]),
+                    food_url=record[7],
+                    food_type_id=record[8]
+                    
                 )
                 food_data.append(food.dict())
             conn.close()
@@ -47,20 +50,44 @@ class FoodOperations:
 
         except Exception as e:
             return str(e)
+        
+
+    def generate_variants(self, food_name):
+        words = food_name.split()
+        variants = set()
+        
+        variants.add(food_name)
+        
+        for word in words:
+            variants.add(word)
+        
+        for r in range(2, len(words) + 1):
+            for combo in permutations(words, r):
+                variants.add(' '.join(combo))
+        
+        return variants
+
+    def similarity_score(self, food_name, food):
+        print(food_name, food.food_name)
+        food_name_lower = food_name.lower()
+        food_name_tokens = food_name_lower.split()
+        food_tokens = food.food_name.lower().split()
+        score = sum(1 for token in food_tokens if token in food_name_tokens)
+        return score
 
     def search_food_by_name(self, food_name: str):
         try:
-            # Chuyển đổi food_name thành văn bản không dấu
-            normalized_food_name = unidecode(food_name).replace(" ", "%").lower()
-            
             conn = pymssql.connect(**self.db_config)
             cursor = conn.cursor()
-
-            # Sử dụng LIKE operator trong truy vấn SQL với tên đã được chuyển đổi
-            # Dấu '%' được sử dụng làm wildcards cho pattern matching
-            cursor.execute("SELECT * FROM Food WHERE food_name LIKE %s", ('%' + normalized_food_name + '%',))
+            variants = self.generate_variants(food_name)
+            
+            query = "SELECT * FROM Food WHERE "
+            query += " OR ".join(["food_name COLLATE Vietnamese_CI_AS LIKE %s" for _ in variants])
+            
+            cursor.execute(query, tuple('%' + variant + '%' for variant in variants))
             records = cursor.fetchall()
             food_data = []
+            print(records)
 
             for record in records:
                 food = FoodModel(
@@ -68,18 +95,26 @@ class FoodOperations:
                     food_name=record[1],
                     food_description=record[2],
                     food_price=float(record[3]),
-                    food_rate=int(record[4]),
-                    food_status=bool(record[5]),
-                    food_type_id=int(record[6]),
-                    food_url=record[7]
+                    food_status=bool(record[4]),
+                    food_rate=int(record[5]),
+                    discount_percent=int(record[6]),
+                    food_url=record[7],
+                    food_type_id=record[8]
                 )
-                food_data.append(food.dict())
+                food_data.append(food)
+            print(food_data)
+
+            # Sort food_data based on similarity_score
+            food_data = sorted(food_data, key=lambda x: self.similarity_score(food_name, x), reverse=True)
 
             conn.close()
-            return food_data
+
+            return [food.dict() for food in food_data]
 
         except Exception as e:
             return str(e)
+
+
         
     def get_daily_revenue(self):
         try:

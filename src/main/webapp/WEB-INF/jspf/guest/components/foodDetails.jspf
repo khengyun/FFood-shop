@@ -196,14 +196,16 @@
                 button.text("Tạm hết món");
                 button.removeAttr("data-quantity");
                 button.removeAttr("data-foodid");
-                button.on("click", null);
+                button.off("click");
             } else {
                 let button = modal.find(".addToCartBtn");
                 button.removeAttr("disabled");
                 button.text("Thêm vào Giỏ hàng");
                 button.attr("data-quantity", quantity);
                 button.attr("data-foodid", foodID);
-                button.on("click", () => {
+                // Unlike normal JavaScript, jQuery doesn't replace an existing event handler
+                // Instead it adds a new one, so to replace the click event, we need to remove the old one first
+                button.off("click").on("click", () => {
                     let foodID = button.attr("data-foodid");
                     let quantity = button.attr("data-quantity");
                     addToCart(foodID, quantity);
@@ -346,5 +348,6 @@
         // Reset the quantity when the modal is closed
         $('#food-details-modal').on('hidden.bs.modal', (e) => {
             $('#food-details-modal .quantity-input').val(1);
+            quantity = 1;
         });      
     </script>
