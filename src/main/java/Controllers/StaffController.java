@@ -82,6 +82,7 @@ public class StaffController extends HttpServlet {
         String foodDescription = (String) request.getParameter("txtFoodDescription");
         BigDecimal foodPrice = BigDecimal.valueOf(Double.parseDouble(request.getParameter("txtFoodPrice")));
         byte discountPercent = Byte.parseByte(request.getParameter("txtDiscountPercent"));
+        Short foodQuantity = Short.parseShort(request.getParameter("txtFoodQuantity"));
         byte foodRate = Byte.parseByte(request.getParameter("txtFoodRate"));
         byte foodStatus = Byte.parseByte(request.getParameter("txtFoodStatus"));
         String imageURL = (String) request.getAttribute("txtImageURL");
@@ -90,13 +91,14 @@ public class StaffController extends HttpServlet {
         session.setAttribute("tabID", 1);
 
         Food food = new Food(foodName, foodDescription, foodPrice, foodStatus, foodRate, discountPercent, imageURL, foodTypeID);
+        food.setQuantity(foodQuantity);
         if (foodDAO.getFood(foodName) != null) {
             response.sendRedirect("/staff#failure_add_food_exist");
         }
-
+        
         int result = foodDAO.add(food);
 
-        if (result == 1) {
+        if (result >= 1) {
             response.sendRedirect("/staff#success_add_food");
             return;
         } else {
@@ -112,6 +114,7 @@ public class StaffController extends HttpServlet {
         String foodName = request.getParameter("txtFoodName");
         String foodDescription = (String) request.getParameter("txtFoodDescription");
         BigDecimal foodPrice = BigDecimal.valueOf(Double.parseDouble(request.getParameter("txtFoodPrice")));
+        Short foodQuantity = Short.parseShort(request.getParameter("txtFoodQuantity"));
         byte foodRate = Byte.parseByte(request.getParameter("txtFoodRate"));
         byte foodStatus = Byte.parseByte(request.getParameter("txtFoodStatus"));
         byte discountPercent = Byte.parseByte(request.getParameter("txtDiscountPercent"));
@@ -119,10 +122,11 @@ public class StaffController extends HttpServlet {
 
         FoodDAO foodDAO = new FoodDAO();
         Food food = new Food(foodID, foodName, foodDescription, foodPrice, foodStatus, foodRate, discountPercent, imageURL, foodTypeID);
+        food.setQuantity(foodQuantity);
         int result = foodDAO.update(food);
         HttpSession session = request.getSession();
         session.setAttribute("tabID", 1);
-        if (result == 1) {
+        if (result >= 1) {
             response.sendRedirect("/staff#success_update_food");
             return;
         } else {
@@ -151,7 +155,7 @@ public class StaffController extends HttpServlet {
         // Redirect or forward to another page if necessary
         request.setAttribute("tabID", 3);
 
-        if (result > 1) {
+        if (result >= 1) {
             response.sendRedirect("/staff#success_delete_food");
         } else {
             response.sendRedirect("/staff#failure_delete_food");
@@ -195,7 +199,7 @@ public class StaffController extends HttpServlet {
         
         int result = orderDAO.updateForAdmin(order);
         
-        if (result == 1) {
+        if (result >= 1) {
             LocalDateTime currentTime = LocalDateTime.now();
             Timestamp logTime = Timestamp.valueOf(currentTime);
             byte staffID = (byte) session.getAttribute("staffID");
@@ -244,7 +248,7 @@ public class StaffController extends HttpServlet {
         session.setAttribute("tabID", 2);
         // TODO implement a deletion status message after page reload
         // Redirect or forward to another page if necessary
-        if (result > 1) {
+        if (result >= 1) {
             OrderLogDAO logDAO = new OrderLogDAO();
             LocalDateTime currentTime = LocalDateTime.now();
             byte staffID = (byte) session.getAttribute("staffID");

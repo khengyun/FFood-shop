@@ -21,6 +21,7 @@
                     <th style="display: none;">Mô tả</th>
                     <th>Đơn giá</th>
                     <th>Đánh giá</th>
+                    <th>Số lượng</th>
                     <th>Trạng thái</th>
                     <th>Giảm giá</th>
                     <th>Hình ảnh</th>
@@ -35,6 +36,7 @@
                     <td style="display: none;">${f.description}</td>
                     <td><fmt:formatNumber type="number" pattern="###,###" value="${f.foodPrice}"/>đ</td>
                 <td> ${f.rate} Sao</td>
+                <td> ${f.quantity}</td>
                 <td> ${f.status eq 0 ? 'Hết' : 'Còn'}</td>
                 <td>${(f.discountPercent == null) ? 0 : f.discountPercent}%</td>
                 <td class="table-image-cell">

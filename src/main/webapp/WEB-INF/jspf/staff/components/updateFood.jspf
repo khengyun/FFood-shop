@@ -38,6 +38,11 @@
                         <label for="txtFoodPrice" class="form-label">Đơn giá</label>
                         <input type="number" step="0.01" class="form-control" id="txtFoodPrice" name="txtFoodPrice" min="0" required value="">
                     </div>
+                     <!-- Quantity -->
+                    <div class="mb-3">
+                        <label for="txtFoodQuantity" class="form-label">Số lượng</label>
+                        <input type="number" step="0.01" class="form-control" id="txtFoodQuantity" name="txtFoodQuantity" min="0" required>
+                    </div>
                     <!--Food Status-->
                     <div class="mb-3">
                         <label for="txtFoodStatus" class="form-label">Trạng thái</label>

@@ -41,6 +41,11 @@
                         <label for="txtDiscountPercent" class="form-label">Giảm giá (%)</label>
                         <input type="number" class="form-control" id="txtDiscountPercent" name="txtDiscountPercent" min="0" max="100" required>
                     </div>
+                     <!-- Quantity -->
+                    <div class="mb-3">
+                        <label for="txtFoodQuantity" class="form-label">Số lượng</label>
+                        <input type="number" step="0.01" class="form-control" id="txtFoodQuantity" name="txtFoodQuantity" min="0" required>
+                    </div>
                     <div class="mb-3">
                         <label for="txtFoodStatus" class="form-label">Trạng thái</label>
                         <select class="form-select" id="txtFoodStatus" name="txtFoodStatus" required>
