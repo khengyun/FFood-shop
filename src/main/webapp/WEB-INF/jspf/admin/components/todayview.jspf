@@ -1,45 +1,47 @@
 <%@ page pageEncoding="UTF-8" %>
-<div class="container-fluid p-4 shadow rounded-4 bg-white mb-3">
-  <h2 class="text-start fs-2">Số liệu hôm nay</h2>
-  <div class="d-flex flex-row flex-wrap flex-between-center gap-3 mt-3">
-    <div>
-      <p class="fs-4 fw-bold mb-1">20.035.000đ</p>
-      <h6>Doanh thu bán hàng</h6>
-    </div>
-    <div>
-      <p class="fs-4 fw-bold mb-1" id="order_value">354</p>
-      <h6>Đơn hàng</h6>
-    </div>
-    <div>
-      <p class="fs-4 fw-bold mb-1">2.138</p>
-      <h6>Khách thăm</h6>
-    </div>
-    <div>
-      <p class="fs-4 fw-bold mb-1" id="today-vip">21</p>
-      <h6>khách vip hôm nay</h6>
-    </div>
-    <div>
-      <p class="fs-4 fw-bold mb-1">Cơm gà xối mỡ</p>
-      <h6>Món bán chạy nhất</h6>
+  <div class="container-fluid p-4 shadow rounded-4 bg-white mb-3">
+    <h2 class="text-start fs-2">Số liệu hôm nay</h2>
+    <div class="d-flex flex-row flex-wrap flex-between-center gap-3 mt-3">
+      <div>
+        <p class="fs-4 fw-bold mb-1">20.035.000đ</p>
+        <h6>Doanh thu bán hàng</h6>
+      </div>
+      <div>
+        <p class="fs-4 fw-bold mb-1" id="order_value">354</p>
+        <h6>Đơn hàng</h6>
+      </div>
+      <div>
+        <p class="fs-4 fw-bold mb-1" id="total_account">2.138</p>
+        <h6>tổng account</h6>
+      </div>
+      <div>
+        <p class="fs-4 fw-bold mb-1" id="today-vip">21</p>
+        <h6>khách vip hôm nay</h6>
+      </div>
+      <div>
+        <p class="fs-4 fw-bold mb-1">Cơm gà xối mỡ</p>
+        <h6>Món bán chạy nhất</h6>
+      </div>
     </div>
   </div>
-</div>
 
-<script>
-  // Tạo một yêu cầu HTTP đến API
-  fetch("http://localhost:8001/get_daily_revenue")
-    .then(function (response) {
-      return response.json(); // Chuyển đổi phản hồi thành đối tượng JSON
-    })
-    .then(function (data) {
-      // Cập nhật nội dung trang web với dữ liệu từ API
-      document.querySelector(".fs-4.fw-bold.mb-1").textContent =
-        data.daily_revenue + "đ";
-      document.querySelector("#order_value").textContent = data.daily_orders;
-      document.querySelector("#today-vip").textContent =
-        data.customer_with_most_orders;
-    })
-    .catch(function (error) {
-      console.log("Lỗi: " + error);
-    });
-</script>
+  <script>
+    // Tạo một yêu cầu HTTP đến API
+    fetch("http://localhost:8001/get_daily_revenue")
+      .then(function (response) {
+        return response.json(); // Chuyển đổi phản hồi thành đối tượng JSON
+      })
+      .then(function (data) {
+        // Cập nhật nội dung trang web với dữ liệu từ API
+        document.querySelector("#total_account").textContent =
+          data.total_accounts;
+        document.querySelector(".fs-4.fw-bold.mb-1").textContent =
+          formatCurrency(data.daily_revenue) + "đ";
+        document.querySelector("#order_value").textContent = data.daily_orders;
+        document.querySelector("#today-vip").textContent =
+          data.customer_with_most_orders[0].account_username;
+      })
+      .catch(function (error) {
+        console.log("Lỗi: " + error);
+      });
+  </script>
