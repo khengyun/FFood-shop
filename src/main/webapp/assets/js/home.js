@@ -11,12 +11,12 @@ let itemsShown = 0;
 
 //show success order food
 $(document).ready(function () {
-  notSort = document.querySelectorAll("div[id^='food-']"); 
+  notSort = document.querySelectorAll("div[id^='food-']");
   if (window.location.hash === "#success") {
     $("#success").modal("show");
     setTimeout(function () {
       $("#success").modal("hide");
-      window.location.href = '/home';
+      window.location.href = "/home";
     }, 3000);
   }
   showInitialFoodItems();
@@ -43,7 +43,9 @@ $(document).on("click", ".btn-categories", function () {
 
     // Find the img of the previous button, and remove its border
     if (prevCategoryID !== null) {
-      let prevImg = $(".btn-categories[data-food-type-id=" + prevCategoryID + "]").find("img");
+      let prevImg = $(
+        ".btn-categories[data-food-type-id=" + prevCategoryID + "]"
+      ).find("img");
       prevImg.removeClass("border-4 border-primary shadow");
     }
 
@@ -66,10 +68,12 @@ $(document).on("click", ".btn-categories", function () {
 
     // Find the img of the previous button, and remove its border
     if (prevCategoryID !== null) {
-      let prevImg = $(".btn-categories[data-food-type-id=" + prevCategoryID + "]").find("img");
+      let prevImg = $(
+        ".btn-categories[data-food-type-id=" + prevCategoryID + "]"
+      ).find("img");
       prevImg.removeClass("border-4 border-primary shadow");
     }
-    
+
     prevCategoryID = null; // Remove the id of the previous button
 
     // Restore the original list
@@ -105,10 +109,9 @@ addToCartButtons.forEach(function (button) {
         console.error("Error occurred: " + error.responseText);
       },
     });
-//    window.location.reload();
+    //    window.location.reload();
   });
 });
-
 
 /**
  * Show default food items
@@ -139,7 +142,7 @@ function showInitialFoodItems() {
 showMoreButton.addEventListener("click", function () {
   // Stores the number of items shown before the click
   let itemsShownBeforeClick = itemsShown;
-  
+
   // Show the next 12 items
   for (let i = itemsShown; i < itemsShownBeforeClick + itemsToShow; i++) {
     if (i < foodItems.length) {
@@ -178,57 +181,149 @@ function searchFoodByKeyword() {
     .then((data) => {
       if (data.length > 0) {
         data.forEach((item) => {
+          console.log(item);
           // Create a card
           const card = document.createElement("div");
-          card.classList.add("card", "mb-3");
+          card.classList.add("card", "shadow");
 
           // Create a row for card content
           const row = document.createElement("div");
-          row.classList.add("row", "g-0");
+          {
+            row.classList.add("row", "g-0");
+            card.appendChild(row);
+          }
 
           // Create a column for the image
           const imageCol = document.createElement("div");
-          imageCol.classList.add("col-md-4");
+          {
+            imageCol.classList.add("col-sm-3");
+            row.appendChild(imageCol);
+          }
 
           // Create an image for the card
           const img = document.createElement("img");
-          img.src = item.food_url;
-          img.alt = item.food_name;
-          img.classList.add("img-fluid", "rounded-start", "food-thumbnail");
+          {
+            img.src = item.food_url;
+            img.alt = item.food_name;
+            img.classList.add(
+              "d-none",
+              "d-sm-block",
+              "img-fluid",
+              "rounded-start",
+              "h-100",
+              "object-fit-cover",
+              "food-thumbnail"
+            );
+            img.style.objectPosition = "center";
+            imageCol.appendChild(img);
+          }
 
           // Create a column for the card body
           const bodyCol = document.createElement("div");
-          bodyCol.classList.add("col-md-8");
+          {
+            bodyCol.classList.add("col-sm-9");
+            row.appendChild(bodyCol);
+          }
 
           // Create a card body
           const cardBody = document.createElement("div");
-          cardBody.classList.add("card-body");
+          {
+            cardBody.classList.add("card-body");
+            bodyCol.appendChild(cardBody);
+          }
 
           // Create card title
           const cardTitle = document.createElement("h5");
-          cardTitle.classList.add("card-title");
-          cardTitle.textContent = item.food_name;
+          {
+            cardTitle.classList.add("card-title");
+            cardTitle.textContent = item.food_name;
+            cardBody.appendChild(cardTitle);
+          }
 
-          // Create card text
-          const cardText = document.createElement("p");
-          cardText.classList.add("card-text");
-          cardText.textContent = item.food_description;
+          // Create container for rating and price
+          const ratingPriceContainer = document.createElement("div");
+          {
+            ratingPriceContainer.classList.add(
+              "d-flex",
+              "flex-row",
+              "flex-wrap",
+              "justify-content-between",
+              "align-items-center"
+            );
+            cardBody.appendChild(ratingPriceContainer);
+          }
 
           // Create card text for the price
           const priceText = document.createElement("p");
-          priceText.classList.add("card-text");
-          priceText.classList.add("text-muted");
-          priceText.textContent = `${item.food_price} VNĐ`;
+          {
+            priceText.classList.add(
+              "card-text",
+              "text-secondary",
+              "fw-bold",
+              "mb-0"
+            );
 
-          // Append elements to the card and row
-          card.appendChild(row);
-          row.appendChild(imageCol);
-          row.appendChild(bodyCol);
-          imageCol.appendChild(img);
-          bodyCol.appendChild(cardBody);
-          cardBody.appendChild(cardTitle);
-          cardBody.appendChild(cardText);
-          cardBody.appendChild(priceText);
+            const price =
+              item.food_discount > 0
+                ? item.food_price - (item.food_price * item.food_discount) / 100
+                : item.food_price;
+            // Calculate the discounted price
+            priceText.textContent = `${item.food_price} đ`;
+            ratingPriceContainer.appendChild(priceText);
+
+            // If the food has a discount
+            if (item.food_discount > 0) {
+              // Create card text for the original price, based on the given HTML markup
+              const originalPriceText = document.createElement("span");
+              originalPriceText.id = "food-price-original";
+              originalPriceText.classList.add("fs-1", "me-2", "text-600");
+              originalPriceText.innerHTML = `<s>${item.food_price} đ</s>`;
+              priceText.prepend(originalPriceText);
+
+              // Create card badge for the discount
+              const discountBadge = document.createElement("span");
+              discountBadge.classList.add(
+                "badge",
+                "bg-secondary",
+                "text-white",
+                "px-3",
+                "py-2",
+                "fs-0"
+              );
+              discountBadge.textContent = `Giảm ${item.food_discount}%`;
+              priceText.append(discountBadge);
+            }
+          }
+
+          // Create card text for the rating
+          const ratingText = document.createElement("div");
+          {
+            ratingText.classList.add("card-text", "text-primary");
+            for (let index = 0; index < 5; index++) {
+              if (index < item.food_rating) {
+                ratingText.innerHTML += '<i class="ph-fill ph-star"></i>';
+              } else {
+                ratingText.innerHTML += '<i class="ph-bold ph-star"></i>';
+              }
+            }
+            ratingPriceContainer.appendChild(ratingText);
+          }
+
+          // Add á stretched link to the card
+          // Find the corresponding stretched link
+          const foodID = item.food_id;
+          const stretchedLink = document.querySelector(
+            ".stretched-link[data-food-id='" + foodID + "']"
+          );
+          
+          if (stretchedLink) {
+            // Duplicate the stretched link
+            const duplicatedLink = stretchedLink.cloneNode(true);
+            // Add the new link to the card
+            card.appendChild(duplicatedLink);
+          } else {
+            console.log("No .stretched-link element found.");
+          }
 
           searchResultsList.appendChild(card);
         });
