@@ -11,7 +11,7 @@
         <h6>Đơn hàng</h6>
       </div>
       <div>
-        <p class="fs-4 fw-bold mb-1" id="total_account">2.138</p>
+        <p class="fs-4 fw-bold mb-1" id="total_accounts">2.138</p>
         <h6>tổng account</h6>
       </div>
       <div>
@@ -32,9 +32,10 @@
         return response.json(); // Chuyển đổi phản hồi thành đối tượng JSON
       })
       .then(function (data) {
-        // Cập nhật nội dung trang web với dữ liệu từ API
-        document.querySelector("#total_account").textContent =
-          data.total_accounts;
+
+        console.log(data);
+        document.querySelector("#total_accounts").textContent =
+          data.total_account;
         document.querySelector(".fs-4.fw-bold.mb-1").textContent =
           formatCurrency(data.daily_revenue) + "đ";
         document.querySelector("#order_value").textContent = data.daily_orders;
