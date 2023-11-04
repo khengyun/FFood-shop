@@ -129,21 +129,11 @@
               closeModalButton.click();
             }
 
-            // Tìm phần tử .stretched-link đã tồn tại
-            const stretchedLink = document.querySelector(".stretched-link");
+            // Find the corresponding stretched link
+            const foodID = searchData[0].food_id;
+            const stretchedLink = document.querySelector(".stretched-link[data-food-id='" + foodID + "']");
 
             if (stretchedLink) {
-              // Cập nhật các thuộc tính của nó
-              stretchedLink.setAttribute("data-food-id", searchData[0].food_id);
-              stretchedLink.setAttribute("data-food-type", searchData[0].food_type_id);
-              stretchedLink.setAttribute("data-food-name", searchData[0].food_name);
-              stretchedLink.setAttribute("data-food-description", searchData[0].food_description);
-              stretchedLink.setAttribute("data-food-price-original", searchData[0].food_price_original);
-              stretchedLink.setAttribute("data-food-price", searchData[0].food_price);
-              stretchedLink.setAttribute("data-food-status", searchData[0].food_status);
-              stretchedLink.setAttribute("data-food-rate", searchData[0].food_rate);
-              stretchedLink.setAttribute("data-discount-percent", searchData[0].discount_percent);
-              stretchedLink.setAttribute("data-image-url", searchData[0].food_url);
               //  click stretchedLink
               stretchedLink.click();
             } else {
