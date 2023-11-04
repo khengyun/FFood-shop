@@ -5,9 +5,12 @@
 package Controllers;
 
 import DAOs.AccountDAO;
+import DAOs.AdminDAO;
+import DAOs.CustomerDAO;
 import DAOs.FoodDAO;
 import DAOs.OrderDAO;
 import DAOs.OrderLogDAO;
+import DAOs.StaffDAO;
 import DAOs.VoucherDAO;
 import Models.Account;
 import Models.Food;
@@ -21,58 +24,93 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class StaffController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet StaffController</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet StaffController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+    // send request function
+    private String sendGetRequest(String apiURL) {
+        try {
+            URL url = new URL(apiURL);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+            connection.setRequestMethod("GET");
+            int responseCode = connection.getResponseCode();
+
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String inputLine;
+                StringBuilder response = new StringBuilder();
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+
+                // Parse the JSON array response
+                JSONArray jsonArray = new JSONArray(response.toString());
+
+                // Check if the array is not empty
+                if (jsonArray.length() > 0) {
+                    // Get the first object from the array
+                    JSONObject jsonObject = jsonArray.getJSONObject(0);
+                    // Extract payment_time from the object
+                    String paymentTime = jsonObject.getString("payment_time");
+                    return paymentTime;
+                } else {
+                    // Handle empty JSON array (no elements found)
+                    return null;
+                }
+
+            } else {
+                // Xử lý trường hợp không thành công khi gọi API
+                return null;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
-    private void doGetFood(HttpServletRequest request, HttpServletResponse response)
+    protected void doGetList(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        FoodDAO foodDAO = new FoodDAO();
+        List<Food> foodList = foodDAO.getAllList();
 
-        String path = request.getRequestURI();
-        if (path.startsWith("/staff/food/delete")) {
-            String[] s = path.split("/");
-            short foodID = Short.parseShort(s[s.length - 1]);
-            FoodDAO dao = new FoodDAO();
-            int result = dao.delete(foodID);
-            request.setAttribute("tabID", 3);
-            if (result == 1) {
-                response.sendRedirect("/staff#success_delete_food");
-            } else {
-                response.sendRedirect("/staff#failure_delete_food");
+        CustomerDAO customerDAO = new CustomerDAO();
+        OrderDAO orderDAO = new OrderDAO();
+        List<Order> orderList = orderDAO.getAllList();
+
+        for (int i = 0; i < orderList.size(); i++) {
+            String Orderfirstname = customerDAO.getCustomer(orderList.get(i).getCustomerID()).getFirstName();
+            String Orderlastname = customerDAO.getCustomer(orderList.get(i).getCustomerID()).getLastName();
+            String payment_status = "Chưa thanh toán";
+            // Tạo URL cho việc gọi API
+            String apiURL = "http://localhost:8001/check_order_payment/" + orderList.get(i).getOrderID();
+            // Thực hiện HTTP request để lấy vnpay_payment_url            
+            String payment_time = sendGetRequest(apiURL);
+            if (payment_time != null) {
+                payment_status = "Đã thanh toán";
             }
-
-            response.sendRedirect("/staff#failure_delete_food");
+            orderList.get(i).setPayment_status(payment_status);
+            orderList.get(i).setFirstname(Orderfirstname);
+            orderList.get(i).setLastname(Orderlastname);
         }
+
+        request.setAttribute("foodList", foodList);
+        request.setAttribute("orderList", orderList);
+        request.getRequestDispatcher("/staff.jsp").forward(request, response);
+
     }
 
     private void doPostAddFood(HttpServletRequest request, HttpServletResponse response)
@@ -95,7 +133,7 @@ public class StaffController extends HttpServlet {
         if (foodDAO.getFood(foodName) != null) {
             response.sendRedirect("/staff#failure_add_food_exist");
         }
-        
+
         int result = foodDAO.add(food);
 
         if (result >= 1) {
@@ -196,9 +234,9 @@ public class StaffController extends HttpServlet {
         OrderDAO orderDAO = new OrderDAO();
         Order order = new Order(orderID, orderStatusID, paymentMethodID, phonenumber, address, note, orderTotalPay);
         Order oldOrder = orderDAO.getOrder(orderID);
-        
+
         int result = orderDAO.updateForAdmin(order);
-        
+
         if (result >= 1) {
             LocalDateTime currentTime = LocalDateTime.now();
             Timestamp logTime = Timestamp.valueOf(currentTime);
@@ -207,19 +245,19 @@ public class StaffController extends HttpServlet {
             log.setStaff_id(staffID);
             OrderLogDAO logDAO = new OrderLogDAO();
             logDAO.addStaffLog(log);
-            
-            if (oldOrder.getOrderStatusID() != orderStatusID){
+
+            if (oldOrder.getOrderStatusID() != orderStatusID) {
                 OrderLog logStatusOrder = new OrderLog(orderID, "Cập nhật trạng thái đơn hàng: " + status, logTime);
                 logStatusOrder.setStaff_id(staffID);
                 logDAO.addStaffLog(logStatusOrder);
             }
-            
-            if (oldOrder.getOrderTotal() != orderTotalPay){
+
+            if (oldOrder.getOrderTotal() != orderTotalPay) {
                 OrderLog logTotalOrder = new OrderLog(orderID, "Cập nhật thanh toán đơn hàng: " + orderTotalPay, logTime);
                 logTotalOrder.setStaff_id(staffID);
                 logDAO.addStaffLog(logTotalOrder);
             }
-            
+
             response.sendRedirect("/staff#success_update_order");
             return;
         } else {
@@ -280,18 +318,9 @@ public class StaffController extends HttpServlet {
             throws ServletException, IOException {
         String path = request.getRequestURI();
         if (path.endsWith("/staff")) {
-            FoodDAO foodDAO = new FoodDAO();
-            List<Food> foodList = foodDAO.getAllList();
-
-            OrderDAO orderDAO = new OrderDAO();
-            List<Order> orderList = orderDAO.getAllList();
-            request.setAttribute("foodList", foodList);
-            request.setAttribute("orderList", orderList);
-            request.getRequestDispatcher("/staff.jsp").forward(request, response);
+            doGetList(request, response);
         } else if (path.endsWith("/staff/")) {
             response.sendRedirect("/staff");
-        } else if (path.startsWith("/staff/food")) {
-            doGetFood(request, response);
         } else {
             // response.setContentType("text/css");
             request.getRequestDispatcher("/staff.jsp").forward(request, response);
