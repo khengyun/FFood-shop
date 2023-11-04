@@ -3,7 +3,7 @@ import pymssql
 from typing import List
 from config import db_config
 from datetime import datetime
-
+import pytz
 class Order(BaseModel):
     order_id: int
     cart_id: int
@@ -74,7 +74,7 @@ class OrderOperations:
         except Exception as e:
             return [{"error": str(e)}]
         
-    def insert_payment(self, order_id: int, vnp_Amount: int,vnp_TxnRef: str,vnp_BankCode: str):
+    def insert_payment(self, order_id: int, vnp_Amount: int, vnp_TxnRef: str, vnp_BankCode: str):
         try:
             conn = pymssql.connect(**self.db_config)
             cursor = conn.cursor()
@@ -87,12 +87,12 @@ class OrderOperations:
             values = (
                 order_id,  
                 1, 
-                int(vnp_Amount)/100, 
+                int(vnp_Amount) / 100, 
                 "Thanh toán đơn hàng ffood",  
                 vnp_BankCode, 
                 vnp_TxnRef, 
                 1,  
-                datetime.now().strftime('%Y-%m-%d %H:%M:%S')  
+                datetime.now(pytz.timezone('Asia/Ho_Chi_Minh')).strftime('%Y-%m-%d %H:%M:%S')  
             )
 
             cursor.execute(sql, values)
@@ -102,7 +102,7 @@ class OrderOperations:
 
         except Exception as e:
             return str(e)
-            
+                
     def check_order_payment(self, order_id: int):
         try:
             conn = pymssql.connect(**self.db_config)
