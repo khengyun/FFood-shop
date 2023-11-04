@@ -2,8 +2,7 @@
 <%@ page pageEncoding="UTF-8" %>
 
 <!-- ++++++++++++++++++Voucher+++++++++++++++++ -->
-<div class="modal fade" id="success_add_voucher" tabindex="-1" role="dialog" aria-labelledby="successLabel"
-     aria-hidden="true">
+<div class="modal fade" id="success_add_voucher" tabindex="-1" role="dialog" aria-labelledby="successLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-body">

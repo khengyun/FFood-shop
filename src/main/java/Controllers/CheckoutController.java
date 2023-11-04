@@ -275,7 +275,6 @@ public class CheckoutController extends HttpServlet {
                     // Xử lý trường hợp không lấy được vnpay_payment_url
                     response.sendRedirect("/home#failure");
                 }  
-            // response.sendRedirect("/home?cis=" + customerID + "#success");
             }
             
             AccountDAO accountDAO = new AccountDAO();

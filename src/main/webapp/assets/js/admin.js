@@ -288,20 +288,6 @@ $(document).on("click", "#btn-next-order", function () {
 
 $(document).on("click", "#btn-history-order", function () {
         let orderID = $(this).attr("data-order-id");
-        // Send AJAX request to addToCart servlet endpoint
-        $.ajax({
-          type: "GET",
-          url: "admin/history",
-          data: {
-            orderID: orderID
-          },
-          success: function (response) {
-            console.log("Change order status successfully.");
-          },
-          error: function (error) {
-            console.error("Error occurred: " + error.responseText);
-          }
-        });
-//        window.location.href = 'admin#history';
-        window.location.reload();
+        window.location.href = '/admin/history/' + orderID;
+//        window.location.reload();
 });
