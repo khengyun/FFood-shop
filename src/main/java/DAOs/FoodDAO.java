@@ -38,21 +38,23 @@ public class FoodDAO {
     }
 
     public List<Food> getAllList() {
-        ResultSet foodRS = this.getAll();
+        ResultSet rs = this.getAll();
         List<Food> foodList = new ArrayList<>();
+        Food food = null;
         try {
-            while (foodRS.next()) {
-                Food food = new Food(
-                        foodRS.getShort("food_id"),
-                        foodRS.getString("food_name"),
-                        foodRS.getString("food_description"),
-                        foodRS.getBigDecimal("food_price"),
-                        foodRS.getByte("food_status"),
-                        foodRS.getByte("food_rate"),
-                        foodRS.getByte("discount_percent"),
-                        foodRS.getString("food_img_url"),
-                        foodRS.getByte("food_type_id"),
-                        this.getFoodType(foodRS.getByte("food_type_id")));
+            while (rs.next()) {
+                food = new Food(
+                        rs.getShort("food_id"),
+                        rs.getString("food_name"),
+                        rs.getString("food_description"),
+                        rs.getBigDecimal("food_price"),
+                        rs.getShort("food_limit"),
+                        rs.getByte("food_status"),
+                        rs.getByte("food_rate"),
+                        rs.getByte("discount_percent"),
+                        rs.getString("food_img_url"),
+                        rs.getByte("food_type_id"),
+                        this.getFoodType(rs.getByte("food_type_id")));
                 foodList.add(food);
             }
         } catch (SQLException ex) {
@@ -73,6 +75,7 @@ public class FoodDAO {
                         rs.getString("food_name"),
                         rs.getString("food_description"),
                         rs.getBigDecimal("food_price"),
+                        rs.getShort("food_limit"),
                         rs.getByte("food_status"),
                         rs.getByte("food_rate"),
                         rs.getByte("discount_percent"),
@@ -85,7 +88,7 @@ public class FoodDAO {
         }
         return food;
     }
-    
+
     public Food getFood(String food_name) {
         Food food = null;
         try {
@@ -98,6 +101,7 @@ public class FoodDAO {
                         rs.getString("food_name"),
                         rs.getString("food_description"),
                         rs.getBigDecimal("food_price"),
+                        rs.getShort("food_limit"),
                         rs.getByte("food_status"),
                         rs.getByte("food_rate"),
                         rs.getByte("discount_percent"),
@@ -112,19 +116,19 @@ public class FoodDAO {
     }
 
     public int add(Food food) {
-        String sql = "insert into Food (food_name, food_description, food_price, food_status, food_rate, discount_percent, food_img_url, food_type_id) values (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "insert into Food (food_name, food_description, food_price, food_limit, food_status, food_rate, discount_percent, food_img_url, food_type_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         int result = 0;
-        System.out.println("url: " + food.getImageURL());
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, food.getFoodName());
             ps.setString(2, food.getDescription());
             ps.setBigDecimal(3, food.getFoodPrice());
-            ps.setByte(4, food.getStatus());
-            ps.setByte(5, food.getRate());
-            ps.setByte(6, food.getDiscountPercent());
-            ps.setString(7, food.getImageURL());
-            ps.setByte(8, food.getFoodTypeID());
+            ps.setShort(4, food.getQuantity());
+            ps.setByte(5, food.getStatus());
+            ps.setByte(6, food.getRate());
+            ps.setByte(7, food.getDiscountPercent());
+            ps.setString(8, food.getImageURL());
+            ps.setByte(9, food.getFoodTypeID());
             result = ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(FoodDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -178,26 +182,56 @@ public class FoodDAO {
     }
 
     public int update(Food food) {
-        String sql = "update Food set food_name = ?, food_description = ?, food_price = ?, food_status = ?, food_rate = ?, discount_percent = ?, food_img_url = ?, food_type_id = ? where food_id = ?";
+        String sql = "update Food set food_name = ?, food_description = ?, food_price = ?, food_limit = ?, food_status = ?, food_rate = ?, discount_percent = ?, food_img_url = ?, food_type_id = ? where food_id = ?";
         int result = 0;
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, food.getFoodName());
-             ps.setString(2, food.getDescription());
+            ps.setString(2, food.getDescription());
             ps.setBigDecimal(3, food.getFoodPrice());
-            ps.setByte(4, food.getStatus());
-            ps.setByte(5, food.getRate());
-            ps.setByte(6, food.getDiscountPercent());
-            ps.setString(7, food.getImageURL());
-            ps.setByte(8, food.getFoodTypeID());
-            ps.setShort(9, food.getFoodID());
+            ps.setShort(4, food.getQuantity());
+            ps.setByte(5, food.getStatus());
+            ps.setByte(6, food.getRate());
+            ps.setByte(7, food.getDiscountPercent());
+            ps.setString(8, food.getImageURL());
+            ps.setByte(9, food.getFoodTypeID());
+            ps.setShort(10, food.getFoodID());
             result = ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(FoodDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return result;
     }
-    
+
+    public int updateQuantityOfFood(Short id, int quantity) {
+        String selectSql = "SELECT food_limit FROM Food WHERE food_id = ?";
+        String updateSql = "UPDATE Food SET food_limit = ? WHERE food_id = ?";
+        int result = 0;
+
+        try {
+            // Get the current food_limit for the given food_id
+            PreparedStatement selectStatement = conn.prepareStatement(selectSql);
+            selectStatement.setShort(1, id);
+            ResultSet resultSet = selectStatement.executeQuery();
+
+            if (resultSet.next()) {
+                int currentLimit = resultSet.getShort("food_limit");
+                int newLimit = (int) (currentLimit - quantity);
+                if (newLimit < 0){
+                    newLimit = 0;
+                }
+                // Update the food_limit with the new value
+                PreparedStatement updateStatement = conn.prepareStatement(updateSql);
+                updateStatement.setInt(1, newLimit);
+                updateStatement.setShort(2, id);
+                result = updateStatement.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FoodDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
+
     public int updateDiscount(Food food) {
         String sql = "update Food set discount_percent = ? where food_id = ?";
         int result = 0;
@@ -243,23 +277,24 @@ public class FoodDAO {
     }
 
     public List<Food> searchByNameList(String txtSearch) {
-        ResultSet searchRS = searchByName(txtSearch);
+        ResultSet rs = searchByName(txtSearch);
         List<Food> list = new ArrayList<>();
         String query = "select * from Food\n"
                 + "where [food_name] like ?";
         try {
-            while (searchRS.next()) {
+            while (rs.next()) {
                 Food food = new Food(
-                        searchRS.getShort("food_id"),
-                        searchRS.getString("food_name"),
-                        searchRS.getString("food_description"),
-                        searchRS.getBigDecimal("food_price"),
-                        searchRS.getByte("food_status"),
-                        searchRS.getByte("food_rate"),
-                        searchRS.getByte("discount_percent"),
-                        searchRS.getString("food_img_url"),
-                        searchRS.getByte("food_type_id"),
-                        this.getFoodType(searchRS.getByte("food_type_id")));
+                        rs.getShort("food_id"),
+                        rs.getString("food_name"),
+                        rs.getString("food_description"),
+                        rs.getBigDecimal("food_price"),
+                        rs.getShort("food_limit"),
+                        rs.getByte("food_status"),
+                        rs.getByte("food_rate"),
+                        rs.getByte("discount_percent"),
+                        rs.getString("food_img_url"),
+                        rs.getByte("food_type_id"),
+                        this.getFoodType(rs.getByte("food_type_id")));
                 list.add(food);
             }
         } catch (SQLException ex) {
@@ -282,11 +317,14 @@ public class FoodDAO {
                         rs.getString("food_name"),
                         rs.getString("food_description"),
                         rs.getBigDecimal("food_price"),
+                        rs.getShort("food_limit"),
                         rs.getByte("food_status"),
                         rs.getByte("food_rate"),
                         rs.getByte("discount_percent"),
                         rs.getString("food_img_url"),
-                        rs.getByte("food_type_id")));
+                        rs.getByte("food_type_id"),
+                        this.getFoodType(rs.getByte("food_type_id"))
+                ));
             }
         } catch (Exception e) {
         }

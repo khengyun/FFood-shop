@@ -80,6 +80,7 @@ $(document).ready(function () {
                 btnUpdate.removeAttr("data-food-name");
                 btnUpdate.removeAttr("data-food-description");
                 btnUpdate.removeAttr("data-food-price");
+                btnUpdate.removeAttr("data-food-quantity");
                 btnUpdate.removeAttr("data-food-status");
                 btnUpdate.removeAttr("data-food-rate");
                 btnUpdate.removeAttr("data-discount-percent");
@@ -121,8 +122,9 @@ $(document).ready(function () {
                                     .substring(0, data[0][4].length - 1) // Removes currency symbol
                                     .replace(",", ""); // Removes thousand separators
                             btnUpdate.attr("data-food-price", price);
+                            btnUpdate.attr("data-food-quantity", data[0][6]);
                             let status = 0;
-                            if (data[0][6] == "Hết") {
+                            if (data[0][7] == "Hết") {
                                 status = 0;
                             } else {
                                 status = 1;
@@ -132,9 +134,9 @@ $(document).ready(function () {
                             btnUpdate.attr("data-food-rate", rate);
                             btnUpdate.attr(
                                     "data-discount-percent",
-                                    data[0][7].substring(0, data[0][7].length - 1)
+                                    data[0][8].substring(0, data[0][8].length - 1)
                                     ); // Removes percent symbol
-                            let url = data[0][8].match(/src="([^"]*)"/)[1];
+                            let url = data[0][9].match(/src="([^"]*)"/)[1];
                             btnUpdate.attr("data-image-url", url); // Keeps the image URL as the original string is the entire <img> tag
                             btnUpdate.removeClass("disabled");
                             let foods = {};

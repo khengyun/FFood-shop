@@ -20,6 +20,7 @@ import DAOs.AccountDAO;
 import DAOs.CartDAO;
 import DAOs.CartItemDAO;
 import DAOs.CustomerDAO;
+import DAOs.FoodDAO;
 import DAOs.OrderDAO;
 import DAOs.VoucherDAO;
 import Models.Account;
@@ -155,14 +156,21 @@ public class CheckoutController extends HttpServlet {
 
         // Trình tự đặt món: thêm Customer -> Cart -> tất cả Cartitem -> Order
         // Thêm Customer
-        Customer customer = new Customer(firstname, lastname, gender, phone, address);
+        // Lấy Cart từ session -> thêm vào db
+        HttpSession session = request.getSession();
         CustomerDAO customerdao = new CustomerDAO();
+        AccountDAO accountDAO = new AccountDAO();
+        FoodDAO foodDAO = new FoodDAO();
+        OrderDAO orderdao = new OrderDAO();
+        CartDAO cartdao = new CartDAO();
+        VoucherDAO voucherDAO = new VoucherDAO();
+        Customer customer = new Customer(firstname, lastname, gender, phone, address);
         int customerID = 0;
 
         int result = 0;
         if (accountID != 0) {
             // Nếu có accountID -> đã login thành công
-            AccountDAO accountDAO = new AccountDAO();
+           
             Account account = accountDAO.getAccount(accountID);
             if (account.getCustomerID() != 0) {
                 // Tài khoản này đã có thông tin KH
@@ -194,12 +202,9 @@ public class CheckoutController extends HttpServlet {
             customer = customerdao.getLatestCustomer();  // customerId lay tu DB ra tang dan
             customerID = customer.getCustomerID();
         }
-
-        // Lấy Cart từ session -> thêm vào db
-        HttpSession session = request.getSession();
+  
         Cart cart = (Cart) session.getAttribute("cart");
-        CartDAO cartdao = new CartDAO();
-
+        
         cart.setUserId(customerID);
         result = cartdao.add(cart);
         if (result != 1) {
@@ -233,12 +238,12 @@ public class CheckoutController extends HttpServlet {
         // Tính toán deliveryTime bằng cách cộng thời gian giao hàng ngẫu nhiên với orderTime
         LocalDateTime deliveryDateTime = currentTime.plusMinutes(randomMinutes);
         Timestamp deliveryTime = Timestamp.valueOf(deliveryDateTime);
-        OrderDAO orderdao = new OrderDAO();
+        
         Order order = new Order(cartID, customerID, (byte) 1, (byte) 3, phone, address, orderTime, note, deliveryTime);
         // Do khi khởi tạo giá trị mặc định của orderTotal = 0
         // nên ta tự set cho nó
         
-        VoucherDAO voucherDAO = new VoucherDAO();
+        
         if (request.getParameter("txtVoucherCode") != null) {
             String voucherCode = request.getParameter("txtVoucherCode");
             Voucher voucher = voucherDAO.getVoucherByCode(voucherCode);
@@ -246,9 +251,7 @@ public class CheckoutController extends HttpServlet {
                 orderTotalDouble = orderTotalDouble * voucher.getVoucherDiscount();
                 voucherDAO.updateQuantity(voucher);
                 order.setVoucherID(voucher.getVoucherID());
-                System.out.println("Giam gia");
             } else {
-                System.out.println("Khong giam gia");
             }
         }
         
@@ -258,7 +261,7 @@ public class CheckoutController extends HttpServlet {
         if (result == 1) {
             // Xóa giỏ hàng từ session
             session.removeAttribute("cart");
-            
+
             if (paymentMethod.equals("COD")) {
                 response.sendRedirect("/home" + "#success");
             }else if (paymentMethod.equals("VNPAY")) {
@@ -277,7 +280,11 @@ public class CheckoutController extends HttpServlet {
                 }  
             }
             
-            AccountDAO accountDAO = new AccountDAO();
+            for (CartItem item : cartItemList) {
+                Short foodID = item.getFood().getFoodID();
+                int result2 = foodDAO.updateQuantityOfFood(foodID, item.getFoodQuantity());
+            }
+            
             accountDAO.updateLastTimeOrder(accountID);
         } else {
             // Xử lý trường hợp không thêm đơn hàng thành công
