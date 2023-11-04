@@ -6,10 +6,13 @@
             <div id="orders-button-container" class="button-container row mb-2">
                 <div class="col-sm-12 col-lg-5 mt-sm-2 mt-lg-0 d-flex flex-wrap gap-2 justify-content-lg-end">
                     <button type="button" id="btn-next-order"
-                            class="btn btn-primary btn-success d-flex disabled align-items-center flex-shrink-0" data-bs-toggle="modal"
+                            class="btn btn-success btn-update d-flex disabled align-items-center flex-shrink-0" data-bs-toggle="modal"
                             data-bs-target="#next-order-modal">
-                        <i class="ph-bold ph-pencil fs-1 me-2"></i>
-                        Trạng thái tiếp theo
+                        TT tiếp theo
+                    </button>
+                    <button type="button" id="btn-history-order"
+                            class="btn btn-primary btn-update d-flex disabled align-items-center flex-shrink-0">
+                        Lịch sử
                     </button>
                     <button type="button" id="btn-update-order"
                             class="btn btn-primary btn-update d-flex disabled align-items-center flex-shrink-0" data-bs-toggle="modal"
@@ -27,18 +30,19 @@
             </div>
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>Order ID</th>
                     <th style="display: none;">KH ID</th>
-                    <th>SĐT liên lạc</th>
+                    <th>SĐT</th>
                     <th style="display: none;">SĐT liên lạc</th>
                     <th>Họ</th>
                     <th>Tên</th> 
                     <th>Địa chỉ nhận</th>
-                    <th>Hình thức thanh toán</th>
+                    <th>HT thanh toán</th>
                     <th>Các món đặt</th>
-                    <th class="d-none">Ghi chú</th>                          
+                    <th>Ghi chú</th>                          
                     <th>Thanh toán</th> 
-                    <th>Trạng thái</th>
+                    <th>Trạng thái TT</th> 
+                    <th>Trạng thái ÐH</th>
                     <th>Thời gian đặt</th>
                 </tr>
             </thead>
@@ -64,12 +68,13 @@
                             </c:forEach>
                         </ul>
                     </td>
-                    <td class="d-none">${(o.orderNote == null) ? "" : o.orderNote}</td>        
+                    <td>${(o.orderNote == null) ? "" : o.orderNote}</td>        
                     <td><fmt:formatNumber type="number" pattern="###,###,###.##" value="${o.orderTotal}"/>đ</td>
-                <td> ${o.orderStatus} </td>
-                <td class="text-wrap">
-                  <fmt:formatDate value="${o.orderTime}" pattern="HH:mm dd/MM/yyyy"/>
-                </td>
+                    <td> ${o.paymentMethod eq 'COD' ? '' : o.payment_status} </td>
+                    <td> ${o.orderStatus} </td>
+                    <td class="text-wrap">
+                      <fmt:formatDate value="${o.orderTime}" pattern="HH:mm dd/MM/yyyy"/>
+                    </td>
                 </tr>
             </c:forEach>
             </tbody>

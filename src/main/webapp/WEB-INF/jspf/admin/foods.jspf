@@ -12,7 +12,7 @@
                         Thêm món
                     </button>
                     <button type="button" id="btn-update-food"
-                            class="btn btn-secondary btn-update d-flex disabled align-items-center flex-shrink-0" data-bs-toggle="modal"
+                            class="btn btn-primary btn-update d-flex disabled align-items-center flex-shrink-0" data-bs-toggle="modal"
                             data-bs-target="#update-food-modal">
                         <i class="ph-bold ph-pencil fs-1 me-2"></i>
                         Cập nhật
