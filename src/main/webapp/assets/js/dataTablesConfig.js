@@ -608,11 +608,19 @@ $(document).ready(function () {
                 btnUpdate.addClass("disabled");
             }
         }
+        
+        function disableHistoryOrderBtn() {
+            let btnHistory = $("#btn-history-order");
+            if (btnHistory) {
+                btnHistory.removeAttr("data-order-id");
+                btnHistory.addClass("disabled");
+            }
+        }
 
         function disableDeleteOrderBtn() {
             let btnDelete = $("#btn-delete-order");
             if (btnDelete) {
-                btnDelete.removeAttr("data-order-id");
+                btnDelete.removeAttr("data-orders");
                 btnDelete.addClass("disabled");
             }
         }
@@ -624,7 +632,7 @@ $(document).ready(function () {
                 btnNext.addClass("disabled");
             }
         }
-
+        
         orderTable.on(
                 "select selectItems deselect",
                 function (e, dt, type, indexes) {
@@ -632,6 +640,7 @@ $(document).ready(function () {
                         let btnUpdate = $("#btn-update-order");
                         let btnDelete = $("#btn-delete-order");
                         let btnNext = $("#btn-next-order");
+                        let btnHistory = $("#btn-history-order");
 
                         // Retrieves selected rows
                         let data4 = orderTable.rows({selected: true}).data();
@@ -641,6 +650,7 @@ $(document).ready(function () {
                             // data's type is a 2D array since the table's data is DOM-sourced
                             // https://datatables.net/reference/api/row().data()
                             btnUpdate.attr("data-order-id", data4[0][0]);
+                            btnHistory.attr("data-order-id", data4[0][0]);
                             btnUpdate.attr("data-order-phonenumber", data4[0][3]);
                             btnUpdate.attr("data-order-address", data4[0][6]);
                             btnUpdate.attr("data-order-paymentmethod", data4[0][7]);
@@ -649,22 +659,25 @@ $(document).ready(function () {
                                     .substring(0, data4[0][10].length - 1) // Removes currency symbol
                                     .replace(",", ""); // Removes thousand separators
                             btnUpdate.attr("data-order-total", total);
-                            btnUpdate.attr("data-order-status", data4[0][11]);
+                            btnUpdate.attr("data-order-status", data4[0][12]);
                             btnUpdate.removeClass("disabled");
+                            btnHistory.removeClass("disabled");
 
                             let orders = {};
 
-                            if (data4[0][11] != "Đã giao" && data4[0][11] != "Đã hủy") {
+                            if (data4[0][12] !== "Đã giao" && data4[0][12] !== "Đã hủy") {
                                 orders[data4[0][0]] = data4[0][0];
                             }
+                            orders[data4[0][0]] = data4[0][0];
                             btnDelete.attr("data-orders", JSON.stringify(orders));
                             btnNext.attr("data-orders", JSON.stringify(orders));
                             btnDelete.removeClass("disabled");
                             btnNext.removeClass("disabled");
+                            
                         } else if (data4.length > 1) {
                             let orders = {};
                             for (let i = 0; i < data4.length; i++) {
-                                if (data4[i][11] != "Đã giao" && data4[i][11] != "Đã hủy") {
+                                if (data4[i][12] !== "Đã giao" && data4[i][12] !== "Đã hủy") {
                                     let orderId = data4[i][0];
                                     orders[orderId] = data4[i][0];
                                 }
@@ -674,8 +687,10 @@ $(document).ready(function () {
                             btnDelete.removeClass("disabled");
                             btnNext.removeClass("disabled");
                             disableUpdateOrderBtn();
+                            disableHistoryOrderBtn();
                         } else {
                             disableUpdateOrderBtn();
+                            disableHistoryOrderBtn();
                             disableDeleteOrderBtn();
                             disableNextOrderBtn();
                         }
@@ -703,11 +718,16 @@ $(document).ready(function () {
                     || target.classList.contains("btn-cancel")
                     || target.classList.contains("btn-confirm")
                     || target.id === "update-order-modal"
-                    || target.id === "delete-order-modal") {
+                    || target.id === "delete-order-modal" 
+                    || target.id === "next-order-modal"
+                    || target.id === "history-order-modal")
+            {
                 e.preventDefault();
             } else {
                 disableUpdateOrderBtn();
+                disableHistoryOrderBtn();
                 disableDeleteOrderBtn();
+                disableNextOrderBtn();
             }
         });
 
