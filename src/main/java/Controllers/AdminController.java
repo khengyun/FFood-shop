@@ -387,16 +387,8 @@ public class AdminController extends HttpServlet {
         // Delete each food item, and count deleted items
         AccountDAO accountDAO = new AccountDAO();
         int result1 = accountDAO.deleteMultiple(userIDList);
-        int result2 = 0;
         if (result1 >= 1) {
-            CustomerDAO customerDAO = new CustomerDAO();
-            result2 = customerDAO.deleteMultiple(customerIDList);
-            if (result2 >= 1) {
-                response.sendRedirect("/admin#success_delete_user");
-            } else {
-                response.sendRedirect("/admin#failure_delete_user");
-            }
-
+            response.sendRedirect("/admin#success_delete_user");            
         } else {
             response.sendRedirect("/admin#failure_delete_user");
         }
@@ -502,7 +494,7 @@ public class AdminController extends HttpServlet {
 
             if (result >= 1) {
                 account.setProID(roleID);
-                int result1 = accountDAO.add(account);
+                int result1 = accountDAO.update(account);
                 if (result1 >= 1) {
                     response.sendRedirect("/admin#success_update_role");
                     return;
@@ -533,20 +525,23 @@ public class AdminController extends HttpServlet {
             roleIDList.add(Byte.parseByte(roleIDs[i]));
         }
 
-//        // Convert the strings to numbers
+        // Convert the strings to numbers
         List<Integer> accountIDList = new ArrayList<>();
         for (int i = 0; i < accountIDs.length; i++) {
             accountIDList.add(Integer.parseInt(accountIDs[i]));
         }
-//        
-//        // Convert the strings to numbers
+        
         List<Byte> StaffIDList = new ArrayList<>();
-        for (int i = 0; i < temp1IDs.length; i++) {
-            StaffIDList.add(Byte.parseByte(temp1IDs[i]));
-        }
         List<Byte> ProIDList = new ArrayList<>();
-        for (int i = 0; i < temp2IDs.length; i++) {
-            ProIDList.add(Byte.parseByte(temp2IDs[i]));
+        if (!temp1IDs[0].equals("")) {
+            // Convert the strings to numbers            
+            for (int i = 0; i < temp1IDs.length; i++) {
+                StaffIDList.add(Byte.parseByte(temp1IDs[i]));
+            }
+        } else {            
+            for (int i = 0; i < temp2IDs.length; i++) {
+                ProIDList.add(Byte.parseByte(temp2IDs[i]));
+            }
         }
 
         // Delete each food item, and count deleted items

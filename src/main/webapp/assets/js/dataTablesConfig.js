@@ -377,10 +377,9 @@ $(document).ready(function () {
                             roles[data2[0][1]] = data2[0][3];
                             accounts[data2[0][0]] = data2[0][2];
                             let account_type = "";
-                            if (data2[0][5] === "Staff") {
+                            if (data2[0][5] === "staff") {
                                 account_type = "staff";
                                 temp1s[data2[0][1]] = account_type;
-
                                 btnDelete.attr("data-temp1s", JSON.stringify(temp1s));
                             } else {
                                 account_type = "promotionManager";
@@ -405,7 +404,7 @@ $(document).ready(function () {
                                 accounts[accountId] = data2[i][2];
 
                                 let account_type = "";
-                                if (data2[i][5] === "Staff") {
+                                if (data2[i][5] === "staff") {
                                     account_type = "staff";
                                     temp1s[roleId] = account_type;
                                 } else {
