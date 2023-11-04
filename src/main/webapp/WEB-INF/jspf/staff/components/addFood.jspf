@@ -29,7 +29,7 @@
                     <!--Food Description-->
                     <div class="mb-3">
                         <label for="txtFoodDescription" class="form-label">Mô tả</label>
-                        <textarea  type="text" class="form-control" id="txtFoodDescription" name="txtFoodDescription" maxlength="500" required style="min-height: 100px; max-height: 400px;"></textarea>
+                        <textarea  type="text" class="form-control" id="txtFoodDescription" name="txtFoodDescription" maxlength="500" style="min-height: 100px; max-height: 400px;"></textarea>
                     </div>
                     <!-- Price -->
                     <div class="mb-3">
