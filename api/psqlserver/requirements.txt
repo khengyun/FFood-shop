@@ -7,3 +7,4 @@ pymssql
 google-auth
 Unidecode
 wikipedia
+bardapi
