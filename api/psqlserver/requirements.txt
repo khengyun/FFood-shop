@@ -8,3 +8,4 @@ google-auth
 Unidecode
 wikipedia
 bardapi
+pytz
