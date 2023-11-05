@@ -6,7 +6,9 @@ from config import db_config
 from datetime import date,timedelta
 from unidecode import unidecode
 from itertools import permutations
-
+import wikipedia
+from bardapi import Bard
+import json
 
 class FoodModel(BaseModel):
     food_id: int
@@ -18,6 +20,15 @@ class FoodModel(BaseModel):
     discount_percent: int  # Corrected data type to int
     food_url: str = None
     food_type_id: int = None
+    food_stock_quantity: int = None
+    
+    
+class DailyReport:
+    def __init__(self,total_account=None, daily_revenue=None, daily_orders=None, customer_with_most_orders=None):
+        self.total_account = total_account
+        self.daily_revenue = daily_revenue
+        self.daily_orders = daily_orders
+        self.customer_with_most_orders = customer_with_most_orders
 
 class FoodOperations:
     def __init__(self):
@@ -37,11 +48,12 @@ class FoodOperations:
                     food_name=record[1],
                     food_description=record[2],
                     food_price=float(record[3]),
-                    food_status=bool(record[4]),
-                    food_rate=int(record[5]),
-                    discount_percent=int(record[6]),
-                    food_url=record[7],
-                    food_type_id=record[8]
+                    food_stock_quantity=int(record[4]),
+                    food_status=bool(record[5]),
+                    food_rate=int(record[6]),
+                    discount_percent=int(record[7]),
+                    food_url=record[8],
+                    food_type_id=record[9]
                     
                 )
                 food_data.append(food.dict())
@@ -89,17 +101,29 @@ class FoodOperations:
             food_data = []
             print(records)
 
+            
+            
             for record in records:
+                # add if record[2] is null call wikipedia_summary
+                print("record[2]: ",record[2])
+                print("record[2] type: ",type(record[2]))
+                # content = record[2]
+                # if content == None:
+                # content = self.wikipedia_summary(record[1])
+                
+                # print("content: ",content)
+                
                 food = FoodModel(
                     food_id=record[0],
                     food_name=record[1],
                     food_description=record[2],
                     food_price=float(record[3]),
-                    food_status=bool(record[4]),
-                    food_rate=int(record[5]),
-                    discount_percent=int(record[6]),
-                    food_url=record[7],
-                    food_type_id=record[8]
+                    food_stock_quantity=int(record[4]),
+                    food_status=bool(record[5]),
+                    food_rate=int(record[6]),
+                    discount_percent=int(record[7]),
+                    food_url=record[8],
+                    food_type_id=record[9]
                 )
                 food_data.append(food)
             print(food_data)
@@ -120,45 +144,55 @@ class FoodOperations:
         try:
             with pymssql.connect(**self.db_config) as conn:
                 cursor = conn.cursor()
+                
+                # total_account
+                cursor.execute("""SELECT COUNT(account_id) FROM Account""")
+                rows0 = cursor.fetchall()
+                total_account = int(rows0[0][0]) if rows0 and rows0[0][0] is not None else 0
+
+                # Truy vấn 1: Lấy thông tin về khách hàng có nhiều đơn hàng nhất
                 cursor.execute("""
-                WITH DailySales AS (
-                SELECT
-                    A.account_username,
-                    CI.food_id,
-                    SUM(CI.food_quantity) AS total_items_sold
-                FROM [Order] AS O
-                INNER JOIN CartItem AS CI ON O.cart_id = CI.cart_id
-                INNER JOIN Account AS A ON O.customer_id = A.customer_id
-                WHERE CAST(CONVERT(DATE, O.order_time) AS DATE) = CAST(GETDATE() AS DATE)
-                GROUP BY A.account_username, CI.food_id
+                SELECT TOP 5 A.account_id, A.account_username, COUNT(O.order_id) AS total_orders
+                FROM Account AS A
+                JOIN [Order] AS O ON A.customer_id = O.customer_id
+                JOIN Payment AS P ON O.order_id = P.order_id
+                WHERE P.payment_time IS NOT NULL
+                GROUP BY A.account_id, A.account_username
+                ORDER BY total_orders DESC;
+                """)
+                rows1 = cursor.fetchall()
+                customer_with_most_orders = [{"account_id": row[0], "account_username": row[1], "total_orders": row[2]} for row in rows1] if rows1 else []
+
+                # Truy vấn 2: Tính tổng số tiền thanh toán trong ngày hôm nay
+                cursor.execute("""
+                SELECT SUM(payment_total) AS total_payment_today
+                FROM Payment
+                WHERE CONVERT(date, SWITCHOFFSET(CONVERT(datetimeoffset, payment_time), '+07:00')) = CONVERT(date, SWITCHOFFSET(CONVERT(datetimeoffset, SYSDATETIME()), '+07:00'));
+                """)
+                rows2 = cursor.fetchall()
+                daily_revenue = float(rows2[0][0]) if rows2 and rows2[0][0] is not None else 0.0
+
+                # Truy vấn 3: Đếm tổng số đơn hàng trong ngày hôm nay
+                cursor.execute("""
+                SELECT COUNT(order_id) AS total_orders_today
+                FROM [Order]
+                WHERE CONVERT(date, SWITCHOFFSET(CONVERT(datetimeoffset, order_time), '+07:00')) = CONVERT(date, SWITCHOFFSET(CONVERT(datetimeoffset, SYSDATETIME()), '+07:00'));
+                """)
+                rows3 = cursor.fetchall()
+                daily_orders = int(rows3[0][0]) if rows3 and rows3[0][0] is not None else 0
+
+                result = DailyReport(
+                    total_account=total_account,
+                    daily_revenue=daily_revenue,
+                    daily_orders=daily_orders,
+                    customer_with_most_orders=customer_with_most_orders
                 )
 
-
-
-                SELECT
-                SUM(CI.food_quantity * F.food_price) AS daily_revenue,
-                COUNT(O.order_id) AS daily_orders,
-                A.account_username AS customer_with_most_orders
-                FROM [Order] AS O
-                INNER JOIN CartItem AS CI ON O.cart_id = CI.cart_id
-                INNER JOIN Food AS F ON CI.food_id = F.food_id
-                INNER JOIN Account AS A ON O.customer_id = A.customer_id
-                WHERE CAST(CONVERT(DATE, O.order_time) AS DATE) = CAST(GETDATE() AS DATE)
-                GROUP BY A.account_username;
-
-                """)
-                row = cursor.fetchone()
-
-                result = {
-                    'daily_revenue': float(row[0]) if row else 0.0,
-                    'daily_orders': int(row[1]) if row else 0,
-                    'customer_with_most_orders': row[2] if row else 0
-                }
-
-                return result
+                return result.__dict__
 
         except Exception as e:
-            return {'error': str(e)}
+            return json.dumps({'error': str(e)})
+
 
     def get_top_selling_foods(self):
         try:
@@ -199,23 +233,38 @@ class FoodOperations:
             with pymssql.connect(**self.db_config) as conn:
                 cursor = conn.cursor()
 
-                daily_sales = []
-                for i in range(7):
-                    target_date = date.today() - timedelta(days=i)
+                daily_payments = []
 
+                for i in range(7):  # Lấy dữ liệu trong 7 ngày gần đây
+                    target_date = (date.today()+timedelta(days=1)) - timedelta(days=i)
+                    print(target_date)
+                    print(date.today())
+                    print("======================")
                     cursor.execute("""
-                        SELECT ISNULL(SUM(CI.food_quantity * F.food_price), 0) AS daily_revenue
-                        FROM [Order] AS O
-                        LEFT JOIN CartItem AS CI ON O.cart_id = CI.cart_id
-                        LEFT JOIN Food AS F ON CI.food_id = F.food_id
-                        WHERE CAST(O.order_time AS DATE) = %s
+                        SELECT CAST(payment_time AS DATE) AS payment_date, SUM(payment_total) AS total_payment
+                        FROM Payment
+                        WHERE CAST(payment_time AS DATE) = %s
+                        GROUP BY CAST(payment_time AS DATE)
                     """, (target_date,))
+                    
                     row = cursor.fetchone()
-                    daily_revenue = float(row[0]) if row else 0.0
+                    daily_revenue = float(row[1]) if row else 0.0
 
-                    daily_sales.append({"date": target_date, "daily_revenue": daily_revenue})
+                    daily_payments.append({"date": target_date, "total_payment": daily_revenue})
 
-                return daily_sales
+                return daily_payments
 
         except Exception as e:
             return str(e)
+        
+        
+    def wikipedia_summary(self, food_name: str):
+        token = 'cwhc0nEvP6vBJCnYULFK5k-1qPGVgnt6KmCtEXv7pIZEMrnROoiRXYqwYUopCJMc1ubDEw.'
+        bard = Bard(token=token)
+        content = bard.get_answer(f'As a waiter of a restaurant, generate a description of {food_name} '
+         'in a non-scientific way. The description should be easy to understand for normal people. '
+         'The description must be written in Vietnamese with a language that is close to human language '
+         'as possible. Avoid descriptive and robotic descriptions. The description length must be limited '
+         'to 1 paragraph and must not exceed 30 words. Do not add recommendations in the last sentence.')['content']
+        
+        return content

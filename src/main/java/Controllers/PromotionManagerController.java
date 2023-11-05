@@ -62,7 +62,7 @@ public class PromotionManagerController extends HttpServlet {
             VoucherDAO dao = new VoucherDAO();
             int result = dao.delete(voucherID);
             
-            if (result == 1) {
+            if (result >= 1) {
                 response.sendRedirect("/promotionManager#success_delete_voucher");
             } else {
                 response.sendRedirect("/promotionManager#failure_delete_voucher");
@@ -92,7 +92,7 @@ public class PromotionManagerController extends HttpServlet {
         session.setAttribute("tabID", 2);
         int result = voucherDAO.add(voucher);
 
-        if (result == 1) {
+        if (result >= 1) {
             response.sendRedirect("/promotionManager#success_add_voucher");
             return;
         } else {
@@ -119,7 +119,7 @@ public class PromotionManagerController extends HttpServlet {
         int result = voucherDAO.update(voucher);
         HttpSession session = request.getSession();
         session.setAttribute("tabID", 2);
-        if (result == 1) {
+        if (result >= 1) {
             response.sendRedirect("/promotionManager#success_update_voucher");
             return;
         } else {
@@ -149,7 +149,7 @@ public class PromotionManagerController extends HttpServlet {
         request.setAttribute("tabID", 3);
         HttpSession session = request.getSession();
         session.setAttribute("tabID", 2);
-        if (result == 1) {
+        if (result >= 1) {
             response.sendRedirect("/promotionManager#success_delete_voucher");
         } else {
             response.sendRedirect("/promotionManager#failure_delete_voucher");
@@ -168,7 +168,7 @@ public class PromotionManagerController extends HttpServlet {
         int result = foodDAO.updateDiscount(food);
         HttpSession session = request.getSession();
         session.setAttribute("tabID", 1);
-        if (result == 1) {
+        if (result >= 1) {
             response.sendRedirect("/promotionManager#success_update_food");
             return;
         } else {

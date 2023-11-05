@@ -39,6 +39,7 @@
                 <%@ include file="WEB-INF/jspf/admin/components/updateOrder.jspf" %>
                 <%@ include file="WEB-INF/jspf/admin/components/deleteOrder.jspf" %>
                 <%@ include file="WEB-INF/jspf/admin/components/nextOrder.jspf" %>
+                <%@ include file="WEB-INF/jspf/admin/components/history.jspf" %>
                 <%@ include file="WEB-INF/jspf/admin/components/adminSidebar.jspf" %>
                 
                 <!-- Main Content -->
@@ -58,8 +59,6 @@
                         <%@ include file="WEB-INF/jspf/admin/users.jspf" %>
                         <!-- Orders Tab Content -->
                         <%@ include file="WEB-INF/jspf/admin/orders.jspf" %>
-                        <!-- History Tab Content -->
-                        <%@ include file="WEB-INF/jspf/admin/history.jspf" %>
                     </div>
                 </main>
             </div>

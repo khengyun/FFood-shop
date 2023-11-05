@@ -266,4 +266,8 @@ $(document).ready(function () {
       $('#failure_next_order').modal('hide');
     }, 3000);
   };
+  
+  if (window.location.hash === '#history') {
+    $('#history-order-modal').modal('show');
+  };
 });

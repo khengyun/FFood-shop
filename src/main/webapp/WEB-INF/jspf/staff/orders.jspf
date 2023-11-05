@@ -23,16 +23,17 @@
                 <tr>
                     <th>ID</th>
                     <th style="display: none;">KH ID</th>
-                    <th>SĐT liên lạc</th>
+                    <th>SĐT</th>
                     <th style="display: none;">SĐT liên lạc</th>
                     <th>Họ</th>
                     <th>Tên</th> 
                     <th>Địa chỉ nhận</th>
-                    <th>Hình thức thanh toán</th>
+                    <th>Hình thức TT</th>
                     <th>Các món đặt</th>
                     <th>Ghi chú</th>                          
                     <th>Thanh toán</th> 
-                    <th>Trạng thái</th>
+                    <th>Trạng thái TT</th> 
+                    <th>Trạng thái ÐH</th>
                     <th>Thời gian đặt</th>
                 </tr>
             </thead>
@@ -60,6 +61,7 @@
                     </td>
                     <td>${(o.orderNote == null) ? "" : o.orderNote}</td>        
                     <td><fmt:formatNumber type="number" pattern="###,###,###.##" value="${o.orderTotal}"/>đ</td>
+                <td> ${o.paymentMethod eq 'COD' ? '' : o.payment_status} </td>
                 <td>${o.orderStatus}</td>
                 <td style="word-wrap: break-word; white-space: pre-wrap;">${o.orderTime}</td>
                 </tr>
