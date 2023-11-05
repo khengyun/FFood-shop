@@ -81,8 +81,8 @@
                                             <input type="number"
                                                    step="1"
                                                    min="1"
-                                                   max="10"
-                                                   maxlength="2"
+                                                   max="5"
+                                                   maxlength="1"
                                                    style="width: 4em;"
                                                    name="quantity"
                                                    value="1"
@@ -92,6 +92,8 @@
                                                    data-field="quantity"
                                                    class="btn btn-outline-dark border border-dark border-1 button-plus px-3 py-2">
                                         </div>
+                                        <label for="quantity" id="food-stock-quantity"
+                                               class="fs-1 mb-0">Còn 10 món</label>
                                     </div>
 
                                     <!-- Add to cart button whose quantity attribute dynamically changes based on user's choice -->
@@ -121,6 +123,7 @@
     </style>
 
     <script>
+        let stockQuantity = 0;
         let quantity = 1;
         // Initialize the modal's content whenever the user clicks on any food card
         $(document).on("click", ".stretched-link", function () {
@@ -134,6 +137,7 @@
             let foodRate = $(this).attr("data-food-rate");
             let discountPercent = $(this).attr("data-discount-percent");
             let imageURL = $(this).attr("data-image-url");
+            stockQuantity = $(this).attr("data-stock-quantity");
             quantity = 1;
 
             let modal = $("#food-details-modal");
@@ -183,11 +187,17 @@
             // Disables (but still shows) quantity input group if the food is out of stock/unavailable
             if (foodStatus === "0") {
               let inputs = modal.find("#food-quantity input");
+              modal.find("#food-stock-quantity").text("Tạm hết món");
               inputs.attr("disabled", "disabled");
             } else {
               let inputs = modal.find("#food-quantity input");
+              const limit = (stockQuantity < 5) ? stockQuantity : 5;
+              modal.find("input[type='number']").attr("max", limit);
+              modal.find("#food-stock-quantity").text("Còn " + stockQuantity + " món");
               inputs.removeAttr("disabled");
             }
+
+            
 
             // Disables the add to cart button if the food is out of stock/unavailable
             if (foodStatus === "0") {
@@ -228,7 +238,7 @@
             // If target is of HTML input element, use e.target.value
             // If target is of jQuery object, use $(e.target).val()
             if (isDigit) {
-                if (target.val().length >= 2) {
+                if (target.val().length >= 1) {
                     e.preventDefault();
                 }
             }
@@ -258,10 +268,12 @@
 
             // Get the quantity entered by the user
             const currentQuantity = parseInt(event.target.value, 10);
+            let maxQuantity = stockQuantity < 5 ? stockQuantity : 5;
+            const minQuantity = 1;
 
             // Validates the user input, making sure it is within 1-10
             let newQuantity =
-                    !isNaN(currentQuantity) && currentQuantity >= 1 && currentQuantity <= 10 // user input is valid
+                    !isNaN(currentQuantity) && currentQuantity >= minQuantity && currentQuantity <= maxQuantity // user input is valid
                     ? currentQuantity
                     : oldQuantity; // This is retrieve before the user typed anything, so this acts as the backup value
 
@@ -298,12 +310,14 @@
             let parent = target.closest("div");
             let quantityInput = parent.find("input[name=" + fieldName + "]");
             let currentQuantity = parseInt(quantityInput.val(), 10);
+            let maxQuantity = stockQuantity < 5 ? stockQuantity : 5;
+            let minQuantity = 1;
 
             // Set the new value, making sure it is within 1-10
             let newQuantity =
-                    !isNaN(currentQuantity) && currentQuantity >= 1 && currentQuantity < 10
+                    !isNaN(currentQuantity) && currentQuantity >= minQuantity && currentQuantity < maxQuantity
                     ? currentQuantity + 1
-                    : 10;
+                    : maxQuantity;
             quantityInput.val(newQuantity);
 
             return newQuantity;
@@ -322,12 +336,14 @@
             let parent = target.closest("div");
             let quantityInput = parent.find("input[name=" + fieldName + "]");
             let currentQuantity = parseInt(quantityInput.val(), 10);
+            let maxQuantity = stockQuantity < 5 ? stockQuantity : 5;
+            let minQuantity = 1;
 
             // Set the new value, making sure it is within 1-10
             let newQuantity =
-                    !isNaN(currentQuantity) && currentQuantity > 1 && currentQuantity <= 10
+                    !isNaN(currentQuantity) && currentQuantity > minQuantity && currentQuantity <= maxQuantity
                     ? currentQuantity - 1
-                    : 1;
+                    : minQuantity;
             quantityInput.val(newQuantity);
 
             return newQuantity;
