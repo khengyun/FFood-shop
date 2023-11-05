@@ -19,7 +19,7 @@
         <h6>khách vip hôm nay</h6>
       </div>
       <div>
-        <p class="fs-4 fw-bold mb-1">Cơm gà xối mỡ</p>
+        <p class="fs-4 fw-bold mb-1" id="best_sellers">Cơm gà xối mỡ</p>
         <h6>Món bán chạy nhất</h6>
       </div>
     </div>
@@ -34,7 +34,7 @@
       .then(function (data) {
         // Cập nhật nội dung trang web với dữ liệu từ API
         document.querySelector("#total_account").textContent =
-          data.total_accounts;
+          data.total_account;
         document.querySelector(".fs-4.fw-bold.mb-1").textContent =
           formatCurrency(data.daily_revenue) + "đ";
         document.querySelector("#order_value").textContent = data.daily_orders;
@@ -44,4 +44,18 @@
       .catch(function (error) {
         console.log("Lỗi: " + error);
       });
+
+
+    fetch("http://localhost:8001/get_top_selling_foods")
+      .then((response) => response.json())
+      .then((data) => {
+        const topSellingFoodsList = document.getElementById(
+          "best_sellers"
+        );
+        topSellingFoodsList.textContent = data[0].name;
+      })
+
+
+
+
   </script>
