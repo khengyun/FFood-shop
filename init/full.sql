@@ -389,15 +389,15 @@ values (1, N'Bún thịt nướng', 35000, 50, 1, 5, 5, 'https://th.bing.com/th/
 insert into Food (food_type_id, food_name, food_price, food_limit, food_status, food_rate, discount_percent, food_img_url) 
 values (1, N'Mì quảng', 50000, 20, 1, 5, 0, 'https://beptruong.edu.vn/wp-content/uploads/2022/10/mi-quang-chay-voi-vi-thanh-dam.jpg');
 insert into Food (food_type_id, food_name, food_price, food_limit, food_status, food_rate, discount_percent, food_img_url) 
-values (1, N'Ramen', 63000, 100, 0, 5, 0, 'https://www.justonecookbook.com/wp-content/uploads/2023/04/Spicy-Shoyu-Ramen-8055-I.jpg');
+values (1, N'Ramen', 63000, 100, 1, 5, 0, 'https://www.justonecookbook.com/wp-content/uploads/2023/04/Spicy-Shoyu-Ramen-8055-I.jpg');
 insert into Food (food_type_id, food_name, food_price, food_limit, food_status, food_rate, discount_percent, food_img_url)  
 values (1, N'Hủ Tiếu', 38000, 30, 1, 5, 10, 'https://vcdn1-giadinh.vnecdn.net/2023/05/15/Bc8Thnhphm18-1684125639-9811-1684125654.jpg?w=1200&h=0&q=100&dpr=1&fit=crop&s=i0OuvKxyIvG-1BRluganjQ');
 insert into Food (food_type_id, food_name, food_price, food_limit, food_status, food_rate, discount_percent, food_img_url)  
-values (1, N'Ravioli', 30000, 40, 1, 5, 15, 'https://cdn11.bigcommerce.com/s-cjh14ahqln/product_images/uploaded_images/cheese-ravioli-2-web.jpg');
+values (1, N'Ravioli', 30000, 40, 0, 5, 15, 'https://cdn11.bigcommerce.com/s-cjh14ahqln/product_images/uploaded_images/cheese-ravioli-2-web.jpg');
 insert into Food (food_type_id, food_name, food_price, food_limit, food_status, food_rate, discount_percent, food_img_url)  
 values (1, N'Spaghetti Bolognese', 58000, 30, 1, 5, 15, 'https://supervalu.ie/image/var/files/real-food/recipes/Uploaded-2020/spaghetti-bolognese-recipe.jpg');
 insert into Food (food_type_id, food_name, food_price, food_limit, food_status, food_rate, discount_percent, food_img_url)  
-values (1, N'Spaghetti Carbonara', 60000, 20, 0, 5, 5, 'https://static01.nyt.com/images/2021/02/14/dining/carbonara-horizontal/carbonara-horizontal-threeByTwoMediumAt2X-v2.jpg');
+values (1, N'Spaghetti Carbonara', 60000, 20, 1, 5, 5, 'https://static01.nyt.com/images/2021/02/14/dining/carbonara-horizontal/carbonara-horizontal-threeByTwoMediumAt2X-v2.jpg');
 
 -- Banh - Banh Mi
 insert into Food (food_type_id, food_name, food_price, food_limit, food_status, food_rate, discount_percent, food_img_url)  

@@ -11,7 +11,6 @@
     fetch("http://localhost:8001/get_daily_sales")
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         // Reverse the daily_revenue array to display older dates first
         const weeklyRevenue = data.map((item) => item.total_payment).reverse();
         const dates = data.map((item) => item.date).reverse();
