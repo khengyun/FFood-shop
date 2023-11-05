@@ -81,8 +81,8 @@
                                             <input type="number"
                                                    step="1"
                                                    min="1"
-                                                   max="10"
-                                                   maxlength="2"
+                                                   max="5"
+                                                   maxlength="1"
                                                    style="width: 4em;"
                                                    name="quantity"
                                                    value="1"
@@ -228,7 +228,7 @@
             // If target is of HTML input element, use e.target.value
             // If target is of jQuery object, use $(e.target).val()
             if (isDigit) {
-                if (target.val().length >= 2) {
+                if (target.val().length >= 1) {
                     e.preventDefault();
                 }
             }
@@ -258,10 +258,12 @@
 
             // Get the quantity entered by the user
             const currentQuantity = parseInt(event.target.value, 10);
+            const maxQuantity = 5;
+            const minQuantity = 1;
 
             // Validates the user input, making sure it is within 1-10
             let newQuantity =
-                    !isNaN(currentQuantity) && currentQuantity >= 1 && currentQuantity <= 10 // user input is valid
+                    !isNaN(currentQuantity) && currentQuantity >= minQuantity && currentQuantity <= maxQuantity // user input is valid
                     ? currentQuantity
                     : oldQuantity; // This is retrieve before the user typed anything, so this acts as the backup value
 
@@ -298,12 +300,14 @@
             let parent = target.closest("div");
             let quantityInput = parent.find("input[name=" + fieldName + "]");
             let currentQuantity = parseInt(quantityInput.val(), 10);
+            let maxQuantity = 5;
+            let minQuantity = 1;
 
             // Set the new value, making sure it is within 1-10
             let newQuantity =
-                    !isNaN(currentQuantity) && currentQuantity >= 1 && currentQuantity < 10
+                    !isNaN(currentQuantity) && currentQuantity >= minQuantity && currentQuantity < maxQuantity
                     ? currentQuantity + 1
-                    : 10;
+                    : maxQuantity;
             quantityInput.val(newQuantity);
 
             return newQuantity;
@@ -322,12 +326,14 @@
             let parent = target.closest("div");
             let quantityInput = parent.find("input[name=" + fieldName + "]");
             let currentQuantity = parseInt(quantityInput.val(), 10);
+            let maxQuantity = 5;
+            let minQuantity = 1;
 
             // Set the new value, making sure it is within 1-10
             let newQuantity =
-                    !isNaN(currentQuantity) && currentQuantity > 1 && currentQuantity <= 10
+                    !isNaN(currentQuantity) && currentQuantity > minQuantity && currentQuantity <= maxQuantity
                     ? currentQuantity - 1
-                    : 1;
+                    : minQuantity;
             quantityInput.val(newQuantity);
 
             return newQuantity;
