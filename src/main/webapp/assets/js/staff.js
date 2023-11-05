@@ -1,34 +1,48 @@
-$(document).on("click", "#btn-update-food", function () {
-  let foodID = $(this).attr("data-food-id");
-  let foodType = $(this).attr("data-food-type");
-  let foodName = $(this).attr("data-food-name");
-  let foodDescription = $(this).attr("data-food-description");
-  let foodPrice = $(this).attr("data-food-price");
-  let foodQuantity = $(this).attr("data-food-quantity");
-  let foodStatus = $(this).attr("data-food-status");
-  let foodRate = $(this).attr("data-food-rate");
-  let discountPercent = $(this).attr("data-discount-percent");
-  let imageURL = $(this).attr("data-image-url");
+// Function to parse a float number from a string, using the current locale of the page
+  // https://stackoverflow.com/questions/59678901/using-parsefloat-in-different-locales
+  function localeParseFloat(s) {
+    // Get the thousands and decimal separator characters used in the locale.
+    let [,thousandsSeparator,,,,decimalSeparator] = 1111.1.toLocaleString(pageLocale);
+    // Remove thousand separators, and put a point where the decimal separator occurs
+    s = Array.from(s, c => c === thousandsSeparator ? "" 
+                        : c === decimalSeparator   ? "." : c).join("");
+    // Now it can be parsed
+    return parseFloat(s);
+}
 
-  // Set the values of the corresponding form inputs in the modal
-  let modal = $("#update-food-modal");
-  modal.find("input[name='txtFoodID']").attr("value", foodID);
-  modal.find("#txtFoodName").attr("value", foodName);
-  modal.find("#txtFoodDescription").val(foodDescription);
-  modal.find("#txtFoodPrice").attr("value", Number(foodPrice).toFixed(2));
-  modal.find("#txtFoodQuantity").attr("value", foodQuantity);
-  modal.find("#txtFoodStatus").attr("value", foodStatus);
-  modal.find("#txtFoodRate").attr("value", foodRate);
-  modal.find("#txtDiscountPercent").attr("value", discountPercent);
-  modal.find("#txtImageURL").attr("value", imageURL);
-  for (let i = 1; i < 7; i++) {
-    let foodTypes = {1: "Mì và Bún", 2: "Bánh và Bánh Mì", 3: "Hải Sản", 4: "Món Ăn Truyền Thống", 5: "Món Ăn Châu Á", 6: "Món Thịt", 7: "Món ăn nhanh", 8: "Món ăn nhẹ", 9:"Món Tráng Miệng", 10: "Đồ uống"};
-    if (foodType === foodTypes[i]) {
-      modal.find("#txtFoodTypeID option[value = " + i + "]").attr("selected", "selected");
-    } else {
-      modal.find("#txtFoodTypeID option[value = " + i + "]").removeAttr("selected");
+$(document).on("click", "#btn-update-food", function () {
+    let foodID = $(this).attr("data-food-id");
+    let foodType = $(this).attr("data-food-type");
+    let foodName = $(this).attr("data-food-name");
+    let foodDescription = $(this).attr("data-food-description");
+    let foodPrice = $(this).attr("data-food-price");
+    let foodQuantity = $(this).attr("data-food-quantity");
+    let foodStatus = $(this).attr("data-food-status");
+    let foodRate = $(this).attr("data-food-rate");
+    let discountPercent = $(this).attr("data-discount-percent");
+    let imageURL = $(this).attr("data-image-url");
+
+    // Set the values of the corresponding form inputs in the modal
+    let modal = $("#update-food-modal");
+    modal.find("input[name='txtFoodID']").attr("value", foodID);
+    modal.find("#txtFoodName").attr("value", foodName);
+    modal.find("#txtFoodDescription").val(foodDescription);
+    foodPrice = localeParseFloat(foodPrice);
+    modal.find("#txtFoodPrice").attr("value", foodPrice);
+    modal.find("#txtFoodQuantity").attr("value", foodQuantity);
+    modal.find("#txtFoodStatus").val(foodStatus);
+    modal.find("#txtFoodRate").val(foodRate);
+
+    modal.find("#txtDiscountPercent").attr("value", discountPercent);
+    modal.find("#txtImageURL").attr("value", imageURL);
+    for (let i = 1; i < 10; i++) {
+        let foodTypes = {1: "Mì và Bún", 2: "Bánh và Bánh Mì", 3: "Hải Sản", 4: "Món Ăn Truyền Thống", 5: "Món Ăn Châu Á", 6: "Món Thịt", 7: "Món ăn nhanh", 8: "Món ăn nhẹ", 9:"Món Tráng Miệng", 10: "Đồ uống"};
+        if (foodType === foodTypes[i]) {
+            modal.find("#txtFoodTypeID option[value = " + i + "]").attr("selected", "selected");
+        } else {
+            modal.find("#txtFoodTypeID option[value = " + i + "]").removeAttr("selected");
+        }
     }
-  }
 });
 
 $(document).on("click", "#btn-delete-food", function () {

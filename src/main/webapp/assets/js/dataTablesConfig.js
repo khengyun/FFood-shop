@@ -121,7 +121,8 @@ $(document).ready(function () {
                             btnUpdate.attr("data-food-description", data[0][3]);
                             let price = data[0][4]
                                     .substring(0, data[0][4].length - 1) // Removes currency symbol
-                                    .replace(",", ""); // Removes thousand separators
+                                    .replace(",", "")
+                                    .replace(".", ""); // Removes thousand separators
                             btnUpdate.attr("data-food-price", price);
                             btnUpdate.attr("data-food-quantity", data[0][6]);
                             let status = 0;
@@ -659,6 +660,7 @@ $(document).ready(function () {
                             btnUpdate.attr("data-order-note", data4[0][9]);
                             let total = data4[0][10]
                                     .substring(0, data4[0][10].length - 1) // Removes currency symbol
+                                    .replace(",", "")
                                     .replace(".", ""); // Removes thousand separators
                             btnUpdate.attr("data-order-total", total);
                             btnUpdate.attr("data-order-status", data4[0][12]);

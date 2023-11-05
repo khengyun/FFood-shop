@@ -60,10 +60,10 @@
                         </ul>
                     </td>
                     <td>${(o.orderNote == null) ? "" : o.orderNote}</td>        
-                    <td><fmt:formatNumber type="number" pattern="###,###,###.##" value="${o.orderTotal}"/>đ</td>
-                <td> ${o.paymentMethod eq 'COD' ? '' : o.payment_status} </td>
-                <td>${o.orderStatus}</td>
-                <td style="word-wrap: break-word; white-space: pre-wrap;">${o.orderTime}</td>
+                    <td><fmt:formatNumber type="number" pattern="###,###" value="${o.orderTotal}"/>đ</td>
+                    <td> ${o.paymentMethod eq 'COD' ? '' : o.payment_status} </td>
+                    <td>${o.orderStatus}</td>
+                    <td style="word-wrap: break-word; white-space: pre-wrap;">${o.orderTime}</td>
                 </tr>
             </c:forEach>
             </tbody>

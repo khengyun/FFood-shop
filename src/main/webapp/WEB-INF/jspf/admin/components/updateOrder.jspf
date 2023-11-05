@@ -44,7 +44,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="txtOrderTotal" class="form-label">Thanh toán</label>
-                        <input type="number" step="0.01" class="form-control" id="txtOrderTotal" name="txtOrderTotal" min="0" required value="">
+                        <input type="number" step="1" class="form-control" id="txtOrderTotal" name="txtOrderTotal" min="0" required value="">
                     </div>
                 </div>
                 <div class="modal-footer">

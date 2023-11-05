@@ -40,7 +40,7 @@
                     <!-- Price -->
                     <div class="mb-3">
                         <label for="txtFoodPrice" class="form-label">Đơn giá</label>
-                        <input type="number" step="1000" class="form-control" id="txtFoodPrice" name="txtFoodPrice" min="0" required value="">
+                        <input type="number" step="1" class="form-control" id="txtFoodPrice" name="txtFoodPrice" min="0" required value="">
                     </div>
                      <!-- Quantity -->
                     <div class="mb-3">
