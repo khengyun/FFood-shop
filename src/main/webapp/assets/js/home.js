@@ -176,13 +176,20 @@ function searchFoodByKeyword() {
     return;
   }
 
+  document.getElementsByTagName("body")[0].onclick = (e) => {
+    if(e.target != searchResultsList && e.target != searchInput) {
+      searchResultsList.innerHTML = "";
+      searchResultsList.classList.remove("d-flex");
+      searchResultsList.classList.add("d-none");
+    }
+  }
+
   // Fetch search results based on the input
   fetch(`http://localhost:8001/search_food_by_name/${searchInput.value}`)
     .then((response) => response.json())
     .then((data) => {
       if (data.length > 0) {
         data.forEach((item) => {
-          console.log(item);
           // Create a card
           const card = document.createElement("div");
           card.classList.add("card", "shadow");
@@ -195,9 +202,11 @@ function searchFoodByKeyword() {
           }
 
           // Create a column for the image
+          // Thís column's height is 100% of its sibling's height
           const imageCol = document.createElement("div");
           {
-            imageCol.classList.add("col-sm-3");
+            imageCol.classList.add("col-sm-2");
+            
             row.appendChild(imageCol);
           }
 
@@ -222,7 +231,7 @@ function searchFoodByKeyword() {
           // Create a column for the card body
           const bodyCol = document.createElement("div");
           {
-            bodyCol.classList.add("col-sm-9");
+            bodyCol.classList.add("col-sm-10");
             row.appendChild(bodyCol);
           }
 
@@ -243,8 +252,8 @@ function searchFoodByKeyword() {
             // If the food is unavailable/out of stock, add a "Tạm hết" badge
             if (!item.food_status) {
               // Create card badge
-              const discountBadge = document.createElement("span");
-              discountBadge.classList.add(
+              const outOfStockBadge = document.createElement("span");
+              outOfStockBadge.classList.add(
                 "badge",
                 "bg-danger",
                 "text-white",
@@ -253,8 +262,8 @@ function searchFoodByKeyword() {
                 "py-2",
                 "fs-0"
               );
-              discountBadge.textContent = "Tạm hết";
-              priceContainer.append(discountBadge);
+              outOfStockBadge.textContent = "Tạm hết";
+              cardTitle.append(outOfStockBadge);
             }
           }
 
