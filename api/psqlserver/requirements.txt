@@ -6,3 +6,6 @@ protobuf==3.20
 pymssql
 google-auth
 Unidecode
+wikipedia
+bardapi
+pytz

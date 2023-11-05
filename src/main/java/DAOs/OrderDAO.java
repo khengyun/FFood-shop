@@ -80,7 +80,8 @@ public class OrderDAO {
             ps.setInt(1, orderID);
             rs = ps.executeQuery();
             if (rs.next()) {
-                order = new Order(rs.getInt("order_id"),
+                order = new Order(
+                        rs.getInt("order_id"),
                         rs.getInt("cart_id"),
                         rs.getInt("customer_id"),
                         rs.getByte("order_status_id"),

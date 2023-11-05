@@ -24,6 +24,7 @@ public class Order {
     private String orderStatus;
     private byte paymentMethodID;
     private String paymentMethod;
+    private String payment_status;
     private int voucherID;
     private String contactPhone;
     private String deliveryAddress;
@@ -283,7 +284,15 @@ public class Order {
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
-    
+
+    public String getPayment_status() {
+        return payment_status;
+    }
+
+    public void setPayment_status(String payment_status) {
+        this.payment_status = payment_status;
+    }
+
     // Method to hash an integer as a string using MD5
     public String md5Hash(String input) {
         try {
