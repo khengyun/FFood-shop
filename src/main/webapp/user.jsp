@@ -41,7 +41,7 @@
               <!-- Tab panes -->
               <div class="tab-content my-3">
                 <!-- Edit Information Tab -->
-                <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="info-tab">
+                <div class="tab-pane fade ${(tabID == 0 || tabID == null) ? "active show" : ""}" id="info" role="tabpanel" aria-labelledby="info-tab">
                   <div class="row">
                     <!-- Edit user information form -->
                     <form class="update-info-form mx-auto col-12 col-md-10 col-lg-8" method="post" action="/user/info">
@@ -101,9 +101,9 @@
                 </div>
 
                 <!-- Change Login Info Tab -->
-                <div class="tab-pane fade" id="account" role="tabpanel" aria-labelledby="account-tab">
+                <div class="tab-pane fade ${(tabID == 1) ? "active show" : ""}" id="account" role="tabpanel" aria-labelledby="account-tab">
                   <div class="row">
-                    <form class="update-user-form mx-auto col-12 col-md-10 col-lg-8" method="post" action="/user">
+                    <form class="update-user-account-form mx-auto col-12 col-md-10 col-lg-8" method="post" action="/user">
                       <!-- Hidden - User Account ID -->
                       <input type="hidden" id="txtAccountID" name="txtAccountID" value="${currentAccount.accountID}" />
                       <div class="col">
@@ -118,21 +118,18 @@
                         <!-- Change email  -->
                         <div class="mb-3">
                           <label for="txtEmail" class="form-label">Email</label>
-                          <input type="email" class="form-control" id="txtEmail" name="txtEmail"
-                            value="${currentAccount.email}" required="">
+                          <input type="email" class="form-control" id="txtEmail" name="txtEmail" value="${currentAccount.email}" readonly>
                         </div>
                       </div>
                       <div class="col">
                         <!-- Change password -->
                         <div class="mb-3">
-                          <label for="txtAccountPassword" class="form-label">Mật khẩu mới</label>
-                          <input type="password" class="form-control" id="txtUpdateAccountPassword"
-                            name="txtAccountPassword">
+                          <label for="txtUserAccountPassword" class="form-label">Mật khẩu mới</label>
+                          <input type="password" class="form-control" id="txtUserAccountPassword" name="txtUserAccountPassword">
                         </div>
                         <div class="mb-3">
                           <label for="txtAccountRePassword" class="form-label">Nhập lại Mật khẩu mới</label>
-                          <input type="password" class="form-control" id="txtAccountRePassword"
-                            name="txtAccountRePassword">
+                          <input type="password" class="form-control" id="txtUserAccountRePassword" name="txtAccountRePassword">
                         </div>
                         <button type="submit" class="btn btn-success">Cập nhật</button>
                         <!-- Hidden Submit Value -->
@@ -143,7 +140,7 @@
                 </div>
 
                 <!-- Order History Tab -->
-                <div class="tab-pane fade" id="order" role="tabpanel" aria-labelledby="order-tab">
+                <div class="tab-pane fade ${(tabID == 2) ? "active show" : ""}" id="order" role="tabpanel" aria-labelledby="order-tab">
                   <div class="row">
                     <div class="mx-auto col-12 col-md-10 col-lg-8"><!-- Display order history as cards -->
                       <c:if test="${empty orderList}">

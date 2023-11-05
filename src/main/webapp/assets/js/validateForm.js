@@ -339,6 +339,42 @@ function validateForm() {
             form.submit();
         }
     });
+    
+    
+    $(".update-user-account-form").validate({
+        rules: {
+            txtAccountUsername: {
+                required: true,
+                maxlength: 50,
+                pattern: /^[a-zA-Z0-9-'_]+$/
+            },
+            txtAccountPassword: {
+                minlength: 8
+            },
+            txtAccountRePassword: {
+                minlength: 8,
+                equalTo: "#txtUserAccountRePassword"
+            }
+        },
+        messages: {
+            txtAccountUsername: {
+                required: "Vui lòng nhập Tên Tài khoản",
+                maxlength: "Tên Tài khoản không được vượt quá 50 ký tự",
+                pattern: "Tên Tài khoản chỉ chấp nhận chữ, số, dấu gạch ngang, gạch dưới, nháy đơn và không chứa khoảng trắng"
+            },           
+            txtAccountPassword: {
+                minlength: "Mật khẩu phải có ít nhất 8 ký tự"
+            },
+            txtAccountRePassword: {
+                minlength: "Mật khẩu phải có ít nhất 8 ký tự",
+                equalTo: "Mật khẩu không khớp"
+            }
+        },
+        submitHandler: function (form) {
+            // Handle form submission here
+            form.submit();
+        }
+    });
 
 
     $(".add-voucher-form").validate({
