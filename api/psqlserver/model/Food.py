@@ -81,7 +81,7 @@ class FoodOperations:
             cursor = conn.cursor()
             variants = self.generate_variants(food_name)
             
-            query = "SELECT * FROM Food WHERE "
+            query = "SELECT TOP 10 * FROM Food WHERE "
             query += " OR ".join(["food_name COLLATE Vietnamese_CI_AI LIKE %s" for _ in variants])
             
             cursor.execute(query, tuple('%' + variant + '%' for variant in variants))
