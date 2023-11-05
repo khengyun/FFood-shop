@@ -25,7 +25,6 @@
                         <select class="form-select" id="txtPaymentMethod" name="txtPaymentMethod" required>
                             <option value="COD">COD</option>
                             <option value="Thẻ tín dụng">Thẻ tín dụng</option>
-                            <option value="Thẻ ghi nợ">Thẻ ghi nợ</option>
                         </select>
                     </div>
                     <div class="mb-3">
