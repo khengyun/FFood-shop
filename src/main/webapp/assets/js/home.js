@@ -374,7 +374,8 @@ function searchFoodByKeyword() {
                 );
                 img.style.objectPosition = "center";
                 // Calculate the image height based on the card body height
-                img.style.height = `${bodyCol.offsetHeight}px`;
+                const contentHeight = bodyCol.offsetHeight > 0 ? `${bodyCol.offsetHeight}px` : "5.7rem";
+                img.style.height = contentHeight;
                 imageCol.appendChild(img);
               }
 
