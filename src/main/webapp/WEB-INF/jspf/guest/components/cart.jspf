@@ -397,10 +397,12 @@
 
         // Get the quantity entered by the user
         const currentQuantity = parseInt(event.target.value, 10);
+        const maxQuantity = existingItem.stockQuantity < 5 ? existingItem.stockQuantity : 5;
+        const minQuantity = 1;
 
         // Validates the user input, making sure it is within 1-10
         let newQuantity =
-                !isNaN(currentQuantity) && currentQuantity >= 1 && currentQuantity <= 10 // user input is valid
+                !isNaN(currentQuantity) && currentQuantity >= minQuantity && currentQuantity <= maxQuantity // user input is valid
                 ? currentQuantity
                 : oldQuantity; // This is retrieve before the user typed anything, so this acts as the backup value
 
