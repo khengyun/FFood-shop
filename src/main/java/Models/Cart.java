@@ -94,7 +94,7 @@ public class Cart {
     public void addItem(CartItem newItem) {
       int stockQuantity = newItem.getFood().getQuantity();
       int quantity = newItem.getFoodQuantity();
-      int maxQuantity = 10;
+      int maxQuantity = 5;
       int minQuantity = 1;
       
       if (checkExist(newItem.getFood().getFoodID())) {

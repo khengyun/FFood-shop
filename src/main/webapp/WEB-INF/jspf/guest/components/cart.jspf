@@ -76,7 +76,7 @@
         quantity = (typeof quantity === "string") ? parseInt(quantity, 10) : quantity;
 
         const existingItem = cartItems.find(item => item.foodID === foodID);
-        const maxQuantity = 10;
+        const maxQuantity = 5;
         const minQuantity = 1;
 
         if (existingItem) {
@@ -201,8 +201,9 @@
                   quantityInput.type = "number";
                   quantityInput.step = "1";
                   quantityInput.min = "1";
-                  quantityInput.max = "10";
-                  quantityInput.maxLength = "2";
+                  const limit = (cartItem.stockQuantity < 5) ? cartItem.stockQuantity : 5;
+                  quantityInput.max = limit;
+                  quantityInput.maxLength = "1";
                   quantityInput.style.width = "2em";
                   quantityInput.className = "quantity-input quantity-field border border-dark border-1 border-start-0 border-end-0 text-center py-1";
                   quantityInput.name = "quantity-" + cartItem.foodID;
@@ -357,7 +358,7 @@
         // If target is of HTML input element, use e.target.value
         // If target is of jQuery object, use $(e.target).val()
         if (isDigit) {
-            if (target.val().length >= 2) {
+            if (target.val().length >= 1) {
                 e.preventDefault();
             }
         }
@@ -396,10 +397,12 @@
 
         // Get the quantity entered by the user
         const currentQuantity = parseInt(event.target.value, 10);
+        const maxQuantity = existingItem.stockQuantity < 5 ? existingItem.stockQuantity : 5;
+        const minQuantity = 1;
 
         // Validates the user input, making sure it is within 1-10
         let newQuantity =
-                !isNaN(currentQuantity) && currentQuantity >= 1 && currentQuantity <= 10 // user input is valid
+                !isNaN(currentQuantity) && currentQuantity >= minQuantity && currentQuantity <= maxQuantity // user input is valid
                 ? currentQuantity
                 : oldQuantity; // This is retrieve before the user typed anything, so this acts as the backup value
 
@@ -529,7 +532,7 @@
 
       if (existingItem) {
         const stockQuantity = existingItem.stockQuantity;
-        const maxQuantity = 10;
+        const maxQuantity = 5;
         const minQuantity = 1;
 
         // Make sure the quantity does not exceed 10 and does not exceed the food's stock quantity
@@ -585,7 +588,7 @@
 
       if (existingItem) {
         const stockQuantity = existingItem.stockQuantity;
-        const maxQuantity = 10;
+        const maxQuantity = 5;
         const minQuantity = 1;
 
         // Make sure the quantity does not exceed 10 and does not exceed the food's stock quantity
