@@ -658,7 +658,7 @@ $(document).ready(function () {
                             btnUpdate.attr("data-order-note", data4[0][9]);
                             let total = data4[0][10]
                                     .substring(0, data4[0][10].length - 1) // Removes currency symbol
-                                    .replace(",", ""); // Removes thousand separators
+                                    .replace(".", ""); // Removes thousand separators
                             btnUpdate.attr("data-order-total", total);
                             btnUpdate.attr("data-order-status", data4[0][12]);
                             btnUpdate.removeClass("disabled");

@@ -695,7 +695,6 @@ public class AdminController extends HttpServlet {
         OrderDAO orderDAO = new OrderDAO();
         Order order = new Order(orderID, orderStatusID, paymentMethodID, phonenumber, address, note, orderTotalPay);
 
-        Order oldOrder = orderDAO.getOrder(orderID);
 
         int result = orderDAO.updateForAdmin(order);
         session.setAttribute("tabID", 6);
@@ -707,16 +706,10 @@ public class AdminController extends HttpServlet {
             OrderLog log = new OrderLog(orderID, "Cập nhật thông tin đơn hàng", logTime);
             log.setAdmin_id(adminID);
             logDAO.addAdminLog(log);
-            if (oldOrder.getOrderStatusID() != orderStatusID) {
-                OrderLog logStatusOrder = new OrderLog(orderID, "Cập nhật trạng thái đơn hàng: " + status, logTime);
+            if (orderStatusID == 5) {
+                OrderLog logStatusOrder = new OrderLog(orderID, "Hủy đơn hàng", logTime);
                 logStatusOrder.setAdmin_id(adminID);
                 logDAO.addAdminLog(logStatusOrder);
-            }
-
-            if (oldOrder.getOrderTotal() != orderTotalPay) {
-                OrderLog logTotalOrder = new OrderLog(orderID, "Cập nhật thanh toán đơn hàng: " + orderTotalPay, logTime);
-                logTotalOrder.setAdmin_id(adminID);
-                logDAO.addAdminLog(logTotalOrder);
             }
 
             response.sendRedirect("/admin#success_update_order");
