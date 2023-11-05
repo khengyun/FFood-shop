@@ -13,7 +13,7 @@
   </style>
 
   <button id="openCameraModal" type="button"
-    class="btn bg-100 border border-400 border-start-0 d-flex align-items-center" data-bs-toggle="modal"
+    class="btn bg-100 border border-primary border-2 border-start-0 d-flex align-items-center" data-bs-toggle="modal"
     data-bs-target="#cameraModal" title="Tìm Môn bằng hình ảnh">
     <i class="ph-fill ph-camera" style="font-size: 1.2rem"></i>
   </button>
