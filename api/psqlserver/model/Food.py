@@ -20,6 +20,7 @@ class FoodModel(BaseModel):
     discount_percent: int  # Corrected data type to int
     food_url: str = None
     food_type_id: int = None
+    food_stock_quantity: int = None
     
     
 class DailyReport:
@@ -47,11 +48,12 @@ class FoodOperations:
                     food_name=record[1],
                     food_description=record[2],
                     food_price=float(record[3]),
-                    food_status=bool(record[4]),
-                    food_rate=int(record[5]),
-                    discount_percent=int(record[6]),
-                    food_url=record[7],
-                    food_type_id=record[8]
+                    food_stock_quantity=int(record[4]),
+                    food_status=bool(record[5]),
+                    food_rate=int(record[6]),
+                    discount_percent=int(record[7]),
+                    food_url=record[8],
+                    food_type_id=record[9]
                     
                 )
                 food_data.append(food.dict())
@@ -116,11 +118,12 @@ class FoodOperations:
                     food_name=record[1],
                     food_description=record[2],
                     food_price=float(record[3]),
-                    food_status=bool(record[4]),
-                    food_rate=int(record[5]),
-                    discount_percent=int(record[6]),
-                    food_url=record[7],
-                    food_type_id=record[8]
+                    food_stock_quantity=int(record[4]),
+                    food_status=bool(record[5]),
+                    food_rate=int(record[6]),
+                    discount_percent=int(record[7]),
+                    food_url=record[8],
+                    food_type_id=record[9]
                 )
                 food_data.append(food)
             print(food_data)
@@ -258,6 +261,11 @@ class FoodOperations:
     def wikipedia_summary(self, food_name: str):
         token = 'cwhc0nEvP6vBJCnYULFK5k-1qPGVgnt6KmCtEXv7pIZEMrnROoiRXYqwYUopCJMc1ubDEw.'
         bard = Bard(token=token)
-        content = bard.get_answer(f'{food_name} là gì trong ẩm thực. chỉ cần đưa ra thông tin, dưới 180 từ ?')['content']
+        content = bard.get_answer(f'As a waiter of a restaurant, generate a description of {food_name} '
+         'in a non-scientific way. The description should be easy to understand for normal people. '
+         'The description must be written in Vietnamese with a language that is close to human language '
+         'as possible. Avoid descriptive and robotic descriptions. The description length must be limited '
+         'to 1 paragraph and must not exceed 30 words. Do not add recommendations in the last sentence.')
+         ['content']
         
         return content
