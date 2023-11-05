@@ -70,7 +70,7 @@ $(document).on("click", "#btn-update-food", function () {
     modal.find("#txtFoodName").attr("value", foodName);
     modal.find("#txtDiscountPercent").attr("value", discountPercent);
     for (let i = 1; i < 7; i++) {
-        let foodTypes = {1: "Cơm", 2: "Mì", 3: "Bánh mì", 4: "Đồ ăn vặt", 5: "Tráng miệng", 6: "Đồ uống"};
+        let foodTypes = {1: "Mì và Bún", 2: "Bánh và Bánh Mì", 3: "Hải Sản", 4: "Món Ăn Truyền Thống", 5: "Món Ăn Châu Á", 6: "Món Thịt", 7: "Món ăn nhanh", 8: "Món ăn nhẹ", 9:"Món Tráng Miệng", 10: "Đồ uống"};
         if (foodType === foodTypes[i]) {
             modal.find("#txtFoodTypeID option[value = " + i + "]").attr("selected", "selected");
         } else {

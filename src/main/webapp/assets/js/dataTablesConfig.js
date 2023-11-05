@@ -116,6 +116,7 @@ $(document).ready(function () {
                             // https://datatables.net/reference/api/row().data()
                             btnUpdate.attr("data-food-id", data[0][0]);
                             btnUpdate.attr("data-food-type", data[0][1]);
+                            console.log(data[0][1]);
                             btnUpdate.attr("data-food-name", data[0][2]);
                             btnUpdate.attr("data-food-description", data[0][3]);
                             let price = data[0][4]

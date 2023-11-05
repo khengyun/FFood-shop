@@ -13,12 +13,16 @@
                     <div class="mb-3">
                         <label for="txtFoodTypeID" class="form-label">Loại món</label>
                         <select class="form-select" id="txtFoodTypeID" name="txtFoodTypeID" required>
-                            <option value="1" selected>Cơm</option>
-                            <option value="2">Mì</option>
-                            <option value="3">Bánh mì</option>
-                            <option value="4">Đồ ăn vặt</option>
-                            <option value="5">Tráng miệng</option>
-                            <option value="6">Đồ uống</option>
+                            <option value="1" selected>Mì và Bún</option>
+                            <option value="2">Bánh và Bánh Mì</option>
+                            <option value="3">Hải Sản</option>
+                            <option value="4">Món Ăn Truyền Thống</option>
+                            <option value="5">Món Ăn Châu Á</option>
+                            <option value="6">Món Thịt</option>
+                            <option value="7">Món ăn nhanh</option>
+                            <option value="8">Món ăn nhẹ</option>
+                            <option value="9">Món Tráng Miệng</option>
+                            <option value="10">Đồ uống</option>
                         </select>
                     </div>
                     <!-- Food Name -->
