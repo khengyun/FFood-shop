@@ -265,7 +265,6 @@ class FoodOperations:
          'in a non-scientific way. The description should be easy to understand for normal people. '
          'The description must be written in Vietnamese with a language that is close to human language '
          'as possible. Avoid descriptive and robotic descriptions. The description length must be limited '
-         'to 1 paragraph and must not exceed 30 words. Do not add recommendations in the last sentence.')
-         ['content']
+         'to 1 paragraph and must not exceed 30 words. Do not add recommendations in the last sentence.')['content']
         
         return content
