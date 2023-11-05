@@ -233,7 +233,7 @@ class FoodOperations:
                 daily_payments = []
 
                 for i in range(7):  # Lấy dữ liệu trong 7 ngày gần đây
-                    target_date = (date.today()+timedelta(days=1)) - timedelta(days=i)
+                    target_date = date.today() - timedelta(days=i)
                     print(target_date)
                     print(date.today())
                     print("======================")
@@ -261,3 +261,29 @@ class FoodOperations:
         content = bard.get_answer(f'{food_name} là gì trong ẩm thực. chỉ cần đưa ra thông tin, dưới 180 từ ?')['content']
         
         return content
+    
+    def get_today_income(self):
+        try:
+            with pymssql.connect(**self.db_config) as conn:
+                cursor = conn.cursor()
+
+                daily_payments = []
+
+                cursor.execute("""
+                    SELECT SUM(payment_total) AS total_payment_today
+                    FROM Payment
+                    WHERE
+                        DAY(payment_time) = DAY(SYSDATETIME())
+                        AND MONTH(payment_time) = MONTH(SYSDATETIME())
+                        AND YEAR(payment_time) = YEAR(SYSDATETIME());
+                """)
+
+                row = cursor.fetchone()
+                today_income = float(row[0]) if row and row[0] is not None else 0.0
+
+                daily_payments.append({"today_income": today_income})
+
+                return daily_payments
+
+        except Exception as e:
+            return str(e)
