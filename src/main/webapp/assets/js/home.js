@@ -168,8 +168,8 @@ function searchFoodByKeyword() {
   const searchInput = document.getElementById("search-bar");
   const searchResultsList = document.getElementById("search-results-list");
 
-  // Clear previous search results
-  searchResultsList.innerHTML = "";
+  // Clear previous search results and display loading message
+  searchResultsList.innerHTML = "Đang tìm món...";
 
   if (searchInput.value.trim() === "") {
     searchResultsList.classList.remove("d-flex");
@@ -195,6 +195,8 @@ function searchFoodByKeyword() {
       .then((response) => response.json())
       .then((data) => {
         if (data.length > 0) {
+          // Clear loading message
+          searchResultsList.innerHTML = "";
           data.forEach((item) => {
             // Create a card
             const card = document.createElement("div");
@@ -273,7 +275,7 @@ function searchFoodByKeyword() {
                           (item.food_price * item.discount_percent) / 100
                         : item.food_price;
                     // Calculate the discounted price
-                    priceText.textContent = `${price} đ`;
+                    priceText.textContent = `${price.toLocaleString(pageLocale)} đ`;
                     priceContainer.appendChild(priceText);
                     ratingPriceContainer.appendChild(priceContainer);
 
@@ -282,7 +284,7 @@ function searchFoodByKeyword() {
                       // Create card text for the original price, based on the given HTML markup
                       const originalPriceText = document.createElement("span");
                       originalPriceText.classList.add("ms-2", "text-600");
-                      originalPriceText.innerHTML = `<s>${item.food_price} đ</s>`;
+                      originalPriceText.innerHTML = `<s>${(item.food_price).toLocaleString(pageLocale)} đ</s>`;
                       priceContainer.append(originalPriceText);
 
                       // Create card badge for the discount
@@ -382,8 +384,7 @@ function searchFoodByKeyword() {
           searchResultsList.classList.remove("d-none");
           searchResultsList.classList.add("d-flex");
         } else {
-          searchResultsList.classList.remove("d-flex");
-          searchResultsList.classList.add("d-none");
+          searchResultsList.innerHTML = "Không tìm thấy món";
         }
       })
       .catch((error) => console.error(error));
