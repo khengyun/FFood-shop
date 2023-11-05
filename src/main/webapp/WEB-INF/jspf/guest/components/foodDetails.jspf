@@ -92,6 +92,8 @@
                                                    data-field="quantity"
                                                    class="btn btn-outline-dark border border-dark border-1 button-plus px-3 py-2">
                                         </div>
+                                        <label for="quantity" id="food-stock-quantity"
+                                               class="fs-1 mb-0">Còn 10 món</label>
                                     </div>
 
                                     <!-- Add to cart button whose quantity attribute dynamically changes based on user's choice -->
@@ -134,6 +136,7 @@
             let foodRate = $(this).attr("data-food-rate");
             let discountPercent = $(this).attr("data-discount-percent");
             let imageURL = $(this).attr("data-image-url");
+            let stockQuantity = $(this).attr("data-stock-quantity");
             quantity = 1;
 
             let modal = $("#food-details-modal");
@@ -188,6 +191,8 @@
               let inputs = modal.find("#food-quantity input");
               inputs.removeAttr("disabled");
             }
+
+            modal.find("#food-stock-quantity").text("Còn " + stockQuantity + " món");
 
             // Disables the add to cart button if the food is out of stock/unavailable
             if (foodStatus === "0") {
