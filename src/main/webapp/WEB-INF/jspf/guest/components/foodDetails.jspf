@@ -123,6 +123,7 @@
     </style>
 
     <script>
+        let stockQuantity = 0;
         let quantity = 1;
         // Initialize the modal's content whenever the user clicks on any food card
         $(document).on("click", ".stretched-link", function () {
@@ -136,7 +137,7 @@
             let foodRate = $(this).attr("data-food-rate");
             let discountPercent = $(this).attr("data-discount-percent");
             let imageURL = $(this).attr("data-image-url");
-            let stockQuantity = $(this).attr("data-stock-quantity");
+            stockQuantity = $(this).attr("data-stock-quantity");
             quantity = 1;
 
             let modal = $("#food-details-modal");
@@ -189,6 +190,8 @@
               inputs.attr("disabled", "disabled");
             } else {
               let inputs = modal.find("#food-quantity input");
+              const limit = (stockQuantity < 5) ? stockQuantity : 5;
+              modal.find("input[type='number']").attr("max", limit);
               inputs.removeAttr("disabled");
             }
 
@@ -263,7 +266,7 @@
 
             // Get the quantity entered by the user
             const currentQuantity = parseInt(event.target.value, 10);
-            const maxQuantity = 5;
+            let maxQuantity = stockQuantity < 5 ? stockQuantity : 5;
             const minQuantity = 1;
 
             // Validates the user input, making sure it is within 1-10
@@ -305,7 +308,7 @@
             let parent = target.closest("div");
             let quantityInput = parent.find("input[name=" + fieldName + "]");
             let currentQuantity = parseInt(quantityInput.val(), 10);
-            let maxQuantity = 5;
+            let maxQuantity = stockQuantity < 5 ? stockQuantity : 5;
             let minQuantity = 1;
 
             // Set the new value, making sure it is within 1-10
@@ -331,7 +334,7 @@
             let parent = target.closest("div");
             let quantityInput = parent.find("input[name=" + fieldName + "]");
             let currentQuantity = parseInt(quantityInput.val(), 10);
-            let maxQuantity = 5;
+            let maxQuantity = stockQuantity < 5 ? stockQuantity : 5;
             let minQuantity = 1;
 
             // Set the new value, making sure it is within 1-10

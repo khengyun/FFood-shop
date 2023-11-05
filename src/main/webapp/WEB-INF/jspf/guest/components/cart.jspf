@@ -201,7 +201,8 @@
                   quantityInput.type = "number";
                   quantityInput.step = "1";
                   quantityInput.min = "1";
-                  quantityInput.max = "5";
+                  const limit = (cartItem.stockQuantity < 5) ? cartItem.stockQuantity : 5;
+                  quantityInput.max = limit;
                   quantityInput.maxLength = "1";
                   quantityInput.style.width = "2em";
                   quantityInput.className = "quantity-input quantity-field border border-dark border-1 border-start-0 border-end-0 text-center py-1";
