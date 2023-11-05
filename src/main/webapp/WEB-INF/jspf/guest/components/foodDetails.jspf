@@ -187,15 +187,17 @@
             // Disables (but still shows) quantity input group if the food is out of stock/unavailable
             if (foodStatus === "0") {
               let inputs = modal.find("#food-quantity input");
+              modal.find("#food-stock-quantity").text("Tạm hết món");
               inputs.attr("disabled", "disabled");
             } else {
               let inputs = modal.find("#food-quantity input");
               const limit = (stockQuantity < 5) ? stockQuantity : 5;
               modal.find("input[type='number']").attr("max", limit);
+              modal.find("#food-stock-quantity").text("Còn " + stockQuantity + " món");
               inputs.removeAttr("disabled");
             }
 
-            modal.find("#food-stock-quantity").text("Còn " + stockQuantity + " món");
+            
 
             // Disables the add to cart button if the food is out of stock/unavailable
             if (foodStatus === "0") {
