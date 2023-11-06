@@ -106,13 +106,15 @@ public class ChangePasswordController extends HttpServlet {
             int result = accountDAO.update(updateAccount);
             session.removeAttribute("account");
             if (result == 1) {
-                response.sendRedirect("/home#success_changePassword");
-                
+                session.setAttribute("toastMessage", "success-change-password");
+                response.sendRedirect("/");
             } else {
-                response.sendRedirect("/home#failure_changePassword");
+                session.setAttribute("toastMessage", "error-change-password");
+                response.sendRedirect("/");
             }
         } else {
-            response.sendRedirect("/home");
+            session.setAttribute("toastMessage", "error-change-password");
+            response.sendRedirect("/");
         }
        
     }

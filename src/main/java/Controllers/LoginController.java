@@ -158,6 +158,9 @@ public class LoginController extends HttpServlet {
                         promotionManagerCookie.setPath("/");
                         response.addCookie(promotionManagerCookie);
                         response.sendRedirect("/promotionManager");
+                    } else {
+                      session.setAttribute("toastMessage", "error-login");
+                        response.sendRedirect("/");
                     }
                 } else {
                     if (accountType.equals("user")) {
@@ -191,11 +194,13 @@ public class LoginController extends HttpServlet {
                         session.setAttribute("promotionManager", username);
                         response.sendRedirect("/promotionManager");
                     } else {
-                        response.sendRedirect("/home#failure_login");
+                      session.setAttribute("toastMessage", "error-login");
+                        response.sendRedirect("/");
                     }
                 }
             } else {
-                response.sendRedirect("/home#failure_login_info");
+                session.setAttribute("toastMessage", "error-login-credentials");
+                response.sendRedirect("/");
             }
                    
         }

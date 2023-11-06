@@ -263,7 +263,8 @@ public class CheckoutController extends HttpServlet {
             session.removeAttribute("cart");
 
             if (paymentMethod.equals("COD")) {
-                response.sendRedirect("/home" + "#success");
+                session.setAttribute("toastMessage", "success-order");
+                response.sendRedirect("/" + "#success");
             }else if (paymentMethod.equals("VNPAY")) {
 
                 // Tạo URL cho việc gọi API
@@ -276,7 +277,8 @@ public class CheckoutController extends HttpServlet {
                     response.sendRedirect(vnpayPaymentURL);
                 } else {
                     // Xử lý trường hợp không lấy được vnpay_payment_url
-                    response.sendRedirect("/home#failure");
+                    request.setAttribute("toastMessage", "error-order-vnpay");
+                    request.getRequestDispatcher("/checkout").forward(request, response);
                 }  
             }
             
@@ -288,7 +290,8 @@ public class CheckoutController extends HttpServlet {
             accountDAO.updateLastTimeOrder(accountID);
         } else {
             // Xử lý trường hợp không thêm đơn hàng thành công
-            request.getRequestDispatcher("checkout.jsp").forward(request, response);
+            request.setAttribute("toastMessage", "error-order");
+            request.getRequestDispatcher("/checkout").forward(request, response);
         }
     }
 

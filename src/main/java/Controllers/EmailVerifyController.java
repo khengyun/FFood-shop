@@ -7,7 +7,6 @@ package Controllers;
 
 import DAOs.AccountDAO;
 import Models.Account;
-import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -29,7 +28,6 @@ public class EmailVerifyController extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -74,9 +72,9 @@ public class EmailVerifyController extends HttpServlet {
         }
         
         if (otp == 0){
-            response.sendRedirect("/home");
+            session.setAttribute("toastMessage", "error-verify-email");
+            response.sendRedirect("/");
         }
-        RequestDispatcher dispatcher = null;
         AccountDAO accountDAO = new AccountDAO();
         
         if (value == otp) {
@@ -87,10 +85,11 @@ public class EmailVerifyController extends HttpServlet {
                 int result = accountDAO.add(account);
                 session.removeAttribute("registerUser");
                 if (result == 1) {
-                    response.sendRedirect("/home#success_register");
-                
+                    session.setAttribute("toastMessage", "success-register");
+                    response.sendRedirect("/");
                 } else {
-                    response.sendRedirect("/home#failure_register");
+                    session.setAttribute("toastMessage", "error-register");
+                    response.sendRedirect("/");
                 }
             }else if (type_otp.equals("forget")){
                 String email = (String) session.getAttribute("email");
