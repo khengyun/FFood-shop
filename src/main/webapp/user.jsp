@@ -13,12 +13,12 @@
       <%@ include file="WEB-INF/jspf/common/imports/resources.jspf" %>
     </head>
 
-    <body>
+    <body class="d-flex flex-column">
       <%@ include file="WEB-INF/jspf/common/imports/base.jspf" %>
         <%@ include file="WEB-INF/jspf/common/components/header.jspf" %>
           <%@ include file="WEB-INF/jspf/guest/components/cart.jspf" %>
 
-            <div class="container my-5">
+            <div class="container flex-grow-1 my-5">
               <!-- Nav tabs -->
               <ul id="user-tab" class="nav nav-tabs flex-center" role="tablist">
                 <li class="nav-item" role="presentation">
