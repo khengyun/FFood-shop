@@ -56,7 +56,7 @@ $(document).ready(function () {
     let dataTables = [];
 
     // Food table config
-    {
+    if (document.querySelector("#food-table")) {
         let foodTable = $("#food-table").DataTable({
             columnDefs: [
                 {
@@ -193,7 +193,7 @@ $(document).ready(function () {
     }
 
     // Voucher table config
-    {
+    if (document.querySelector("#vouchers-table")) {
         let voucherTable = $("#vouchers-table").DataTable({
             columnDefs: [
                 {
@@ -309,7 +309,7 @@ $(document).ready(function () {
     }
 
     // Role table config
-    {
+    if (document.querySelector("#roles-table")) {
         let roleTable = $("#roles-table").DataTable({
             columnDefs: [
                 {
@@ -449,7 +449,7 @@ $(document).ready(function () {
     }
 
     // User table config
-    {
+    if (document.querySelector("#user-table")) {
         let userTable = $("#user-table").DataTable({
             columnDefs: [
                 {
@@ -573,7 +573,7 @@ $(document).ready(function () {
     }
 
     // Order table config
-    {
+    if (document.querySelector("#order-table")) {
         let orderTable = $("#order-table").DataTable({
             columnDefs: [
                 {
