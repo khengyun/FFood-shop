@@ -94,6 +94,8 @@
           
           // Update the quantity of the existing item
           existingItem.quantity = newQuantity;
+          const successToast = document.getElementById('success');
+          showToast(successToast, "success-cart");
         } else {
             var foodItem = foodLists.find(item => item.foodID === foodID);
             const stockQuantity = foodItem.quantity;
@@ -121,6 +123,7 @@
                                 imageURL: foodItem.imageURL,
                                 discount: foodItem.discountPercent,
                                 stockQuantity: foodItem.quantity});
+              showToast(successToast, "success-cart");
             }
         }
         // Store the updated cart back in session storage

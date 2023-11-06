@@ -1,83 +1,94 @@
-//===============================SUCCESS================================
-//show success register account
+// Requires importing toast.jspf
+
+const successToast = document.getElementById('success');
+const errorToast = document.getElementById('error');
+
+// Initialize toasts
+const toastElList = [successToast, errorToast];
+const toastList = [...toastElList].map(toastEl => new bootstrap.Toast(toastEl, {
+  delay: 3000
+}))
+
+const toastDetails = {
+  "success-cart": {
+    title: "Thêm món thành công",
+    message: "Đã thêm món vào giỏ hàng.",
+  },
+  "success-order": {
+    title: "Đặt món thành công",
+    message: "Chúng tôi sẽ chuẩn bị món cho bạn.",
+  },
+  "success-register": {
+    title: "Đăng ký thành công",
+    message: "Đăng nhập tài khoản để được hưởng ưu đãi nhé!",
+  },
+  "success-change-password": {
+    title: "Đổi mật khẩu thành công",
+    message: "",
+  },
+  "error-cart": {
+    title: "Không thể thêm món",
+    message: "Hãy thử lại sau ít phút, hoặc liên hệ chúng tôi để đặt món.",
+  },
+  "error-order": {
+    title: "Không thể đặt đơn",
+    message: "Hãy thử lại sau ít phút, hoặc liên hệ chúng tôi đặt đơn này.",
+  },
+  "error-register": {
+    title: "Không thể đăng ký tài khoản",
+    message: "Hãy thử lại sau ít phút, hoặc liên hệ chúng tôi để tạo tài khoản.",
+  },
+  "error-verify-email": {
+    title: "Không thể xác thực email",
+    message: "Liên hệ chúng tôi để xác thực tài khoản.",
+  },
+  "error-send-otp": {
+    title: "Không thể gửi mã OTP",
+    message: "Hãy thử lại sau ít phút, hoặc liên hệ chúng tôi để xác thực tài khoản.",
+  },
+  "error-change-password": {
+    title: "Không thể đổi mật khẩu",
+    message: "Hãy thử lại sau ít phút, hoặc liên hệ chúng tôi để đổi mật khẩu.",
+  },
+  "error-login": {
+    title: "Không thể đăng nhập",
+    message: "Hãy thử lại sau ít phút.",
+  },
+  "error-login-credentials": {
+    title: "Không thể đăng nhập",
+    message: "Hãy kiểm tra lại email và mật khẩu của bạn.",
+  },
+}
+
+// Get the message from the session scope
+let toastContent = successToast.getAttribute('data-message');
+
 $(document).ready(function () {
-  if (window.location.hash === '#success_register') {
-    $('#success_register').modal('show');
-    setTimeout(function () {
-      $('#success_register').modal('hide');
-    }, 3000);
-  };
-  
-  if (window.location.hash === '#success_changePassword') {
-    $('#success_changePassword').modal('show');
-    setTimeout(function () {
-      $('#success_changePassword').modal('hide');
-    }, 3000);
-  };
+  toastContent = successToast.getAttribute('data-message');
+  // Show success or error toast based on the message
+  if (toastContent) {
+    if (toastContent.includes('success')) {
+      hideToast(errorToast);
+      showToast(successToast, toastContent);
+    } else if (toastContent.includes('error')) {
+      hideToast(successToast);
+      showToast(errorToast, toastContent);
+    }
+  }
 });
 
+function showToast(toast, toastContent) {
+  const toastElement = bootstrap.Toast.getOrCreateInstance(toast);
 
-// =================================== failure ======================================
+  const toastTitle = toast.getElementsByClassName('toast-title')[0];
+  const toastMessage = toast.getElementsByClassName('toast-message')[0];
+  
+  toastTitle.innerHTML = toastDetails[toastContent].title;
+  toastMessage.innerHTML = toastDetails[toastContent].message;
+  
+  toastElement.show();
+}
 
-$(document).ready(function () {
-  if (window.location.hash === '#failure') {
-    $('#failure').modal('show');
-    setTimeout(function () {
-      $('#failure').modal('hide');
-    }, 3000);
-  };
-//Login
-  if (window.location.hash === '#failure_login') {
-    $('#failure_login').modal('show');
-    setTimeout(function () {
-      $('#failure_login').modal('hide');
-    }, 3000);
-  };
-  
-  if (window.location.hash === '#failure_login_info') {
-    $('#failure_login_info').modal('show');
-    setTimeout(function () {
-      $('#failure_login_info').modal('hide');
-    }, 3000);
-  };
-//  Register
-  if (window.location.hash === '#failure_register') {
-    $('#failure_register').modal('show');
-    setTimeout(function () {
-      $('#failure_register').modal('hide');
-    }, 3000);
-  };
-  if (window.location.hash === '#failure_register_exist') {
-    $('#failure_register_exist').modal('show');
-    setTimeout(function () {
-      $('#failure_register_exist').modal('hide');
-    }, 3000);
-  };
-  
-  if (window.location.hash === '#failure_changePassword') {
-    $('#failure_changePassword').modal('show');
-    setTimeout(function () {
-      $('#failure_changePassword').modal('hide');
-    }, 3000);
-  };
- 
-//  Verify
-   if (window.location.hash === '#verify_OTP') {
-    $('#verify_OTP').modal('show');
-    setTimeout(function () {
-      $('#verify_OTP').modal('hide');
-    }, 120000);
-  };
-  
-  if (window.location.hash === '#changePass_modal') {
-    $('#changePass_modal').modal('show');
-    setTimeout(function () {
-      $('#verify_OTP').modal('hide');
-    }, 3000);
-  };
-  
-  if (window.location.hash === '#open_time') {
-    $('#open_time').modal('show');
-  };
-  
-});
+function hideToast(toast) {
+  bootstrap.Toast.getInstance(toast).hide();
+}
