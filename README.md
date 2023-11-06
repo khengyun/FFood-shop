@@ -69,9 +69,7 @@ FFood is a food website that lets customers order food in a quick and convenient
 >docker compose up --build
 >```
 
-
-
-No, FFood running locally on your machine at: http://localhost:8080
+Now, FFood running locally on your machine at: http://localhost:8080
 
 ## License
 
