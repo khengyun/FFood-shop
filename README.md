@@ -13,7 +13,7 @@ FFood is a food website that lets customers order food in a quick and convenient
 - [Introduction](#introduction)
 - [Features](#features)
 - [Technologies](#technologies)
-- [Installation](#dockerized-project)
+- [Installation](#dockerized-project-)
 - [License](#license)
 
 ## Introduction
