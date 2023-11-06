@@ -12,7 +12,7 @@
                         Thêm món
                     </button>
                     <button type="button" id="btn-update-food"
-                            class="btn btn-secondary btn-update d-flex disabled align-items-center flex-shrink-0" data-bs-toggle="modal"
+                            class="btn btn-primary btn-update d-flex disabled align-items-center flex-shrink-0" data-bs-toggle="modal"
                             data-bs-target="#update-food-modal">
                         <i class="ph-bold ph-pencil fs-1 me-2"></i>
                         Cập nhật
@@ -33,6 +33,7 @@
                     <th style="display: none;">Mô tả</th>
                     <th>Đơn giá</th>
                     <th>Đánh giá</th>
+                    <th>Số lượng</th>
                     <th>Trạng thái</th>
                     <th>Giảm giá</th>
                     <th>Hình ảnh</th>
@@ -46,12 +47,13 @@
                     <td>${f.foodName}</td>
                     <td style="display: none;">${f.description}</td>
                     <td><fmt:formatNumber type="number" pattern="###,###" value="${f.foodPrice}"/>đ</td>
-                <td> ${f.rate} Sao</td>
-                <td> ${f.status eq 0 ? 'Hết' : 'Còn'}</td>
-                <td>${(f.discountPercent == null) ? 0 : f.discountPercent}%</td>
-                <td class="table-image-cell">
-                    <img src="${f.imageURL}" alt="${f.foodName}" loading="lazy" class="d-md-inline rounded me-3"/>
-                </td>
+                    <td> ${f.rate} Sao</td>
+                    <td> ${f.quantity}</td>
+                    <td> ${f.status eq 0 ? 'Hết' : 'Còn'}</td>
+                    <td>${(f.discountPercent == null) ? 0 : f.discountPercent}%</td>
+                    <td class="table-image-cell">
+                        <img src="${f.imageURL}" alt="${f.foodName}" loading="lazy" class="d-md-inline rounded me-3"/>
+                    </td>
                 </tr>
             </c:forEach>
             </tbody>

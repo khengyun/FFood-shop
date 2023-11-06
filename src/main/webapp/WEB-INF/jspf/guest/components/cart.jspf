@@ -75,28 +75,52 @@
         foodID = (typeof foodID === "string") ? parseInt(foodID, 10) : foodID;
         quantity = (typeof quantity === "string") ? parseInt(quantity, 10) : quantity;
 
-        var existingItem = cartItems.find(item => item.foodID === foodID);
+        const existingItem = cartItems.find(item => item.foodID === foodID);
+        const maxQuantity = 5;
+        const minQuantity = 1;
+
         if (existingItem) {
+          const stockQuantity = existingItem.stockQuantity;
           let newQuantity = existingItem.quantity + quantity;
           
-          // Limit the quantity range to [1 - 10]
-          if (newQuantity > 10) {
-            newQuantity = 10;
-          } else if (newQuantity < 1) {
-            newQuantity = 1;
+          // Same as below
+          if (newQuantity > maxQuantity) {
+              newQuantity = maxQuantity;
+          } else if (newQuantity > stockQuantity) {
+              newQuantity = stockQuantity;
+          } else if (newQuantity < minQuantity) {
+              newQuantity = minQuantity;
           }
           
           // Update the quantity of the existing item
           existingItem.quantity = newQuantity;
         } else {
             var foodItem = foodLists.find(item => item.foodID === foodID);
+            const stockQuantity = foodItem.quantity;
+
+            // Make sure the quantity does not exceed 10 and does not exceed the food's stock quantity
+            // The range of acceptable quantity is [1, 10]. Note that the stock quantity can limit the upper range
+            // There are 4 cases:
+            // Case 1: newQuantity is within the range, and stockQuantity is out of the range
+            // Case 2: newQuantity is within the range, but stockQuantity is within the range
+            // Case 3: newQuantity is out of the upper range
+            // Case 4: newQuantity is out of the lower range
+            if (quantity > maxQuantity) {
+                quantity = maxQuantity;
+            } else if (quantity > stockQuantity) {
+                quantity = stockQuantity;
+            } else if (quantity < minQuantity) {
+                quantity = minQuantity;
+            }
+
             if (foodItem) {
               cartItems.push({foodID: foodItem.foodID,
                                 foodName: foodItem.foodName,
                                 quantity: quantity,
                                 price: foodItem.foodPrice,
                                 imageURL: foodItem.imageURL,
-                                discount: foodItem.discountPercent});
+                                discount: foodItem.discountPercent,
+                                stockQuantity: foodItem.quantity});
             }
         }
         // Store the updated cart back in session storage
@@ -177,8 +201,9 @@
                   quantityInput.type = "number";
                   quantityInput.step = "1";
                   quantityInput.min = "1";
-                  quantityInput.max = "10";
-                  quantityInput.maxLength = "2";
+                  const limit = (cartItem.stockQuantity < 5) ? cartItem.stockQuantity : 5;
+                  quantityInput.max = limit;
+                  quantityInput.maxLength = "1";
                   quantityInput.style.width = "2em";
                   quantityInput.className = "quantity-input quantity-field border border-dark border-1 border-start-0 border-end-0 text-center py-1";
                   quantityInput.name = "quantity-" + cartItem.foodID;
@@ -333,7 +358,7 @@
         // If target is of HTML input element, use e.target.value
         // If target is of jQuery object, use $(e.target).val()
         if (isDigit) {
-            if (target.val().length >= 2) {
+            if (target.val().length >= 1) {
                 e.preventDefault();
             }
         }
@@ -372,10 +397,12 @@
 
         // Get the quantity entered by the user
         const currentQuantity = parseInt(event.target.value, 10);
+        const maxQuantity = existingItem.stockQuantity < 5 ? existingItem.stockQuantity : 5;
+        const minQuantity = 1;
 
         // Validates the user input, making sure it is within 1-10
         let newQuantity =
-                !isNaN(currentQuantity) && currentQuantity >= 1 && currentQuantity <= 10 // user input is valid
+                !isNaN(currentQuantity) && currentQuantity >= minQuantity && currentQuantity <= maxQuantity // user input is valid
                 ? currentQuantity
                 : oldQuantity; // This is retrieve before the user typed anything, so this acts as the backup value
 
@@ -491,8 +518,8 @@
 
     $("#cart-table").on("click", ".button-plus", (e) => {
       let newQuantity = incrementValue(e);
-      let target = e.target;
-      let tableRow = target.closest("tr");
+      let target = $(e.target);
+      let tableRow = target.closest("tr").get(0);
       
       // Extract food ID from tableRow's ID ("cart-item-#")
       // Also convert it to integer so that it can work with cartItems.find()
@@ -504,8 +531,33 @@
       let pricePerUnit = parseFloat(existingItem.price - (existingItem.price * existingItem.discount / 100));
 
       if (existingItem) {
+        const stockQuantity = existingItem.stockQuantity;
+        const maxQuantity = 5;
+        const minQuantity = 1;
+
+        // Make sure the quantity does not exceed 10 and does not exceed the food's stock quantity
+        // The range of acceptable quantity is [1, 10]. Note that the stock quantity can limit the upper range
+        // There are 4 cases:
+        // Case 1: newQuantity is within the range, and stockQuantity is out of the range
+        // Case 2: newQuantity is within the range, but stockQuantity is within the range
+        // Case 3: newQuantity is out of the upper range
+        // Case 4: newQuantity is out of the lower range
+        if (newQuantity > maxQuantity) {
+            newQuantity = maxQuantity;
+        } else if (newQuantity > stockQuantity) {
+            newQuantity = stockQuantity;
+        } else if (newQuantity < minQuantity) {
+            newQuantity = minQuantity;
+        }
+
         // Update the quantity of the existing item
         existingItem.quantity = newQuantity;
+
+        // Update the validated quantity input
+        let fieldName = target.data("field");
+        let parent = target.closest("div");
+        let quantityInput = parent.find("input[name=" + fieldName + "]");
+        quantityInput.val(newQuantity);
 
         // Store the updated cart back in session storage
         sessionStorage.setItem("cart", JSON.stringify(cartItems));
@@ -522,8 +574,8 @@
 
     $("#cart-table").on("click", ".button-minus", (e) => {
       let newQuantity = decrementValue(e);
-      let target = e.target;
-      let tableRow = target.closest("tr");
+      let target = $(e.target);
+      let tableRow = target.closest("tr").get(0);
       
       // Extract food ID from tableRow's ID ("cart-item-#")
       // Also convert it to integer so that it can work with cartItems.find()
@@ -535,6 +587,31 @@
       let pricePerUnit = parseFloat(existingItem.price - (existingItem.price * existingItem.discount / 100));
 
       if (existingItem) {
+        const stockQuantity = existingItem.stockQuantity;
+        const maxQuantity = 5;
+        const minQuantity = 1;
+
+        // Make sure the quantity does not exceed 10 and does not exceed the food's stock quantity
+        // The range of acceptable quantity is [1, 10]. Note that the stock quantity can limit the upper range
+        // There are 4 cases:
+        // Case 1: newQuantity is within the range, and stockQuantity is out of the range
+        // Case 2: newQuantity is within the range, but stockQuantity is within the range
+        // Case 3: newQuantity is out of the upper range
+        // Case 4: newQuantity is out of the lower range
+        if (newQuantity > maxQuantity) {
+            newQuantity = maxQuantity;
+        } else if (newQuantity > stockQuantity) {
+            newQuantity = stockQuantity;
+        } else if (newQuantity < minQuantity) {
+            newQuantity = minQuantity;
+        }
+
+        // Update the validated quantity input
+        let fieldName = target.data("field");
+        let parent = target.closest("div");
+        let quantityInput = parent.find("input[name=" + fieldName + "]");
+        quantityInput.val(newQuantity);
+
         // Update the quantity of the existing item
         existingItem.quantity = newQuantity;
 

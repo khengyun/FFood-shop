@@ -70,7 +70,8 @@
           data-food-status="${food.status}"
           data-food-rate="${food.rate}"
           data-discount-percent="${food.discountPercent}"
-          data-image-url="${food.imageURL}">
+          data-image-url="${food.imageURL}"
+          data-stock-quantity="${food.quantity}"></a>
       </a>
       <c:choose>
         <c:when test="${food.status == 1}">

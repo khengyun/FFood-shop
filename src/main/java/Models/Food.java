@@ -13,6 +13,7 @@ public class Food {
     private String foodName;
     private String description;
     private BigDecimal foodPrice;
+    private Short quantity;
     private byte status;
     private byte rate;
     private byte discountPercent;   
@@ -63,6 +64,20 @@ public class Food {
         this.foodName = foodName;
         this.description = description;
         this.foodPrice = foodPrice;
+        this.status = status;
+        this.rate = rate;
+        this.discountPercent = discountPercent;
+        this.imageURL = imageURL;
+        this.foodTypeID = foodTypeID;
+        this.foodType = foodType;
+    }
+    
+     public Food(short foodID, String foodName, String description, BigDecimal foodPrice, Short quantity, byte status, byte rate, byte discountPercent, String imageURL, byte foodTypeID, String foodType) {
+        this.foodID = foodID;
+        this.foodName = foodName;
+        this.description = description;
+        this.foodPrice = foodPrice;
+        this.quantity = quantity;
         this.status = status;
         this.rate = rate;
         this.discountPercent = discountPercent;
@@ -166,5 +181,13 @@ public class Food {
 
     public void setRate(byte rate) {
         this.rate = rate;
+    }
+
+    public Short getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Short quantity) {
+        this.quantity = quantity;
     }
 }

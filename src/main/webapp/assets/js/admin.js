@@ -16,6 +16,7 @@ $(document).on("click", "#btn-update-food", function () {
     let foodName = $(this).attr("data-food-name");
     let foodDescription = $(this).attr("data-food-description");
     let foodPrice = $(this).attr("data-food-price");
+    let foodQuantity = $(this).attr("data-food-quantity");
     let foodStatus = $(this).attr("data-food-status");
     let foodRate = $(this).attr("data-food-rate");
     let discountPercent = $(this).attr("data-discount-percent");
@@ -28,13 +29,14 @@ $(document).on("click", "#btn-update-food", function () {
     modal.find("#txtFoodDescription").val(foodDescription);
     foodPrice = localeParseFloat(foodPrice);
     modal.find("#txtFoodPrice").attr("value", foodPrice);
+    modal.find("#txtFoodQuantity").attr("value", foodQuantity);
     modal.find("#txtFoodStatus").val(foodStatus);
     modal.find("#txtFoodRate").val(foodRate);
 
     modal.find("#txtDiscountPercent").attr("value", discountPercent);
     modal.find("#txtImageURL").attr("value", imageURL);
-    for (let i = 1; i < 7; i++) {
-        let foodTypes = {1: "Cơm", 2: "Mì", 3: "Bánh mì", 4: "Đồ ăn vặt", 5: "Tráng miệng", 6: "Đồ uống"};
+    for (let i = 1; i < 10; i++) {
+        let foodTypes = {1: "Mì và Bún", 2: "Bánh và Bánh Mì", 3: "Hải Sản", 4: "Món Ăn Truyền Thống", 5: "Món Ăn Châu Á", 6: "Món Thịt", 7: "Món ăn nhanh", 8: "Món ăn nhẹ", 9:"Món Tráng Miệng", 10: "Đồ uống"};
         if (foodType === foodTypes[i]) {
             modal.find("#txtFoodTypeID option[value = " + i + "]").attr("selected", "selected");
         } else {
@@ -288,20 +290,6 @@ $(document).on("click", "#btn-next-order", function () {
 
 $(document).on("click", "#btn-history-order", function () {
         let orderID = $(this).attr("data-order-id");
-        // Send AJAX request to addToCart servlet endpoint
-        $.ajax({
-          type: "GET",
-          url: "admin/history",
-          data: {
-            orderID: orderID
-          },
-          success: function (response) {
-            console.log("Change order status successfully.");
-          },
-          error: function (error) {
-            console.error("Error occurred: " + error.responseText);
-          }
-        });
-//        window.location.href = 'admin#history';
-        window.location.reload();
+        window.location.href = '/admin/history/' + orderID;
+//        window.location.reload();
 });

@@ -4,15 +4,6 @@
  */
 $(document).ready(validateForm);
 function validateForm() {
-    $.validator.addMethod("googleDrivePattern", function (value, element) {
-        // Define the regex patterns
-        let pattern1 = /^https:\/\/drive\.google\.com\/uc\?id=.*/; // Used to embed images on websites
-        let pattern2 = /^https:\/\/drive\.google\.com\/file\/d\/.*\/view\?usp=drive_link$/; // Initial image link
-
-        // Test the value against the regex patterns
-        return pattern1.test(value) || pattern2.test(value);
-    }, "Định dạng đường dẫn không đúng");
-
     $(".add-food-form").validate({
         rules: {
             txtFoodTypeID: {
@@ -24,10 +15,14 @@ function validateForm() {
                 pattern: /^[\p{L}\s]+$/u
             },
             txtFoodDescription: {
-                required: true,
-                maxlength: 500,
+                maxlength: 500
             },
             txtFoodPrice: {
+                required: true,
+                number: true,
+                min: 1
+            },
+            txtFoodQuantity: {
                 required: true,
                 number: true,
                 min: 1
@@ -41,7 +36,7 @@ function validateForm() {
             txtImageURL: {
                 required: true,
                 url: true,
-                maxlength: 255
+                maxlength: 500
             }
         },
         messages: {
@@ -54,13 +49,17 @@ function validateForm() {
                 pattern: "Tên món chỉ chấp nhận chữ"
             },
             txtFoodDescription: {
-                required: "Tên món không được để trống",
                 maxlength: "Tên món không dài quá 500 kí tự"
             },
             txtFoodPrice: {
                 required: "Vui lòng nhập Đơn giá",
                 number: "Đơn giá phải có định dạng số",
                 min: "Đơn giá phải là số dương lớn hơn hoặc bằng 1"
+            },
+            txtFoodQuantity: {
+                required: "Vui lòng nhập số lượng món",
+                number: "Số lượng phải có định dạng số",
+                min: "Số lượng phải là số dương lớn hơn hoặc bằng 1"
             },
             txtDiscountPercent: {
                 required: "Vui lòng nhập Phần trăm giảm giá",
@@ -71,8 +70,7 @@ function validateForm() {
             txtImageURL: {
                 required: "Vui lòng nhập Đường dẫn ảnh",
                 url: "Giá trị nhập vào phải là đường dẫn hợp lệ",
-                maxlength: "Đường dẫn không được dài quá 255 ký tự",
-                googleDrivePattern: "Vui lòng nhập đường dẫn ảnh hợp lệ"
+                maxlength: "Đường dẫn không được dài quá 500 ký tự",
             }
         },
         errorElement: "p",
@@ -101,10 +99,14 @@ function validateForm() {
                 pattern: /^[\p{L}\s]+$/u
             },
             txtFoodDescription: {
-                required: true,
-                maxlength: 500,
+                maxlength: 500
             },
             txtFoodPrice: {
+                required: true,
+                number: true,
+                min: 1
+            },
+            txtFoodQuantity: {
                 required: true,
                 number: true,
                 min: 1
@@ -118,7 +120,7 @@ function validateForm() {
             txtImageURL: {
                 required: true,
                 url: true,
-                maxlength: 255
+                maxlength: 500
             }
         },
         messages: {
@@ -131,13 +133,17 @@ function validateForm() {
                 pattern: "Tên món chỉ chấp nhận chữ và khoảng trắng"
             },
             txtFoodDescription: {
-                required: "Mô tả món ăn không được để trống",
                 maxlength: "Mô tả món ăn không dài quá 500 kí tự"
             },
             txtFoodPrice: {
                 required: "Vui lòng nhập Đơn giá",
                 number: "Đơn giá phải có định dạng số",
                 min: "Đơn giá phải là số dương lớn hơn hoặc bằng 1"
+            },
+            txtFoodQuantity: {
+                required: "Vui lòng nhập số lượng món",
+                number: "Số lượng phải có định dạng số",
+                min: "Số lượng phải là số dương lớn hơn hoặc bằng 1"
             },
             txtDiscountPercent: {
                 required: "Vui lòng nhập Phần trăm giảm giá",
@@ -148,8 +154,7 @@ function validateForm() {
             txtImageURL: {
                 required: "Vui lòng nhập Đường dẫn ảnh",
                 url: "Giá trị nhập vào phải là đường dẫn hợp lệ",
-                maxlength: "Đường dẫn không được dài quá 255 ký tự",
-                googleDrivePattern: "Đường dẫn phải là đường dẫn từ Google Drive"
+                maxlength: "Đường dẫn không được dài quá 50 ký tự",
             }
         },
         errorElement: "p",
@@ -321,6 +326,42 @@ function validateForm() {
                 required: "Vui lòng nhập địa chỉ",
                 maxlength: "Địa chỉ không được vượt quá 200 ký tự",
             },
+            txtAccountPassword: {
+                minlength: "Mật khẩu phải có ít nhất 8 ký tự"
+            },
+            txtAccountRePassword: {
+                minlength: "Mật khẩu phải có ít nhất 8 ký tự",
+                equalTo: "Mật khẩu không khớp"
+            }
+        },
+        submitHandler: function (form) {
+            // Handle form submission here
+            form.submit();
+        }
+    });
+    
+    
+    $(".update-user-account-form").validate({
+        rules: {
+            txtAccountUsername: {
+                required: true,
+                maxlength: 50,
+                pattern: /^[a-zA-Z0-9-'_]+$/
+            },
+            txtAccountPassword: {
+                minlength: 8
+            },
+            txtAccountRePassword: {
+                minlength: 8,
+                equalTo: "#txtUserAccountRePassword"
+            }
+        },
+        messages: {
+            txtAccountUsername: {
+                required: "Vui lòng nhập Tên Tài khoản",
+                maxlength: "Tên Tài khoản không được vượt quá 50 ký tự",
+                pattern: "Tên Tài khoản chỉ chấp nhận chữ, số, dấu gạch ngang, gạch dưới, nháy đơn và không chứa khoảng trắng"
+            },           
             txtAccountPassword: {
                 minlength: "Mật khẩu phải có ít nhất 8 ký tự"
             },

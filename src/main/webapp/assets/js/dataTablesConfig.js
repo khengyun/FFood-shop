@@ -56,7 +56,7 @@ $(document).ready(function () {
     let dataTables = [];
 
     // Food table config
-    {
+    if (document.querySelector("#food-table")) {
         let foodTable = $("#food-table").DataTable({
             columnDefs: [
                 {
@@ -80,6 +80,7 @@ $(document).ready(function () {
                 btnUpdate.removeAttr("data-food-name");
                 btnUpdate.removeAttr("data-food-description");
                 btnUpdate.removeAttr("data-food-price");
+                btnUpdate.removeAttr("data-food-quantity");
                 btnUpdate.removeAttr("data-food-status");
                 btnUpdate.removeAttr("data-food-rate");
                 btnUpdate.removeAttr("data-discount-percent");
@@ -115,14 +116,17 @@ $(document).ready(function () {
                             // https://datatables.net/reference/api/row().data()
                             btnUpdate.attr("data-food-id", data[0][0]);
                             btnUpdate.attr("data-food-type", data[0][1]);
+                            console.log(data[0][1]);
                             btnUpdate.attr("data-food-name", data[0][2]);
                             btnUpdate.attr("data-food-description", data[0][3]);
                             let price = data[0][4]
                                     .substring(0, data[0][4].length - 1) // Removes currency symbol
-                                    .replace(",", ""); // Removes thousand separators
+                                    .replace(",", "")
+                                    .replace(".", ""); // Removes thousand separators
                             btnUpdate.attr("data-food-price", price);
+                            btnUpdate.attr("data-food-quantity", data[0][6]);
                             let status = 0;
-                            if (data[0][6] == "Hết") {
+                            if (data[0][7] == "Hết") {
                                 status = 0;
                             } else {
                                 status = 1;
@@ -132,9 +136,9 @@ $(document).ready(function () {
                             btnUpdate.attr("data-food-rate", rate);
                             btnUpdate.attr(
                                     "data-discount-percent",
-                                    data[0][7].substring(0, data[0][7].length - 1)
+                                    data[0][8].substring(0, data[0][8].length - 1)
                                     ); // Removes percent symbol
-                            let url = data[0][8].match(/src="([^"]*)"/)[1];
+                            let url = data[0][9].match(/src="([^"]*)"/)[1];
                             btnUpdate.attr("data-image-url", url); // Keeps the image URL as the original string is the entire <img> tag
                             btnUpdate.removeClass("disabled");
                             let foods = {};
@@ -189,7 +193,7 @@ $(document).ready(function () {
     }
 
     // Voucher table config
-    {
+    if (document.querySelector("#vouchers-table")) {
         let voucherTable = $("#vouchers-table").DataTable({
             columnDefs: [
                 {
@@ -305,7 +309,7 @@ $(document).ready(function () {
     }
 
     // Role table config
-    {
+    if (document.querySelector("#roles-table")) {
         let roleTable = $("#roles-table").DataTable({
             columnDefs: [
                 {
@@ -375,10 +379,9 @@ $(document).ready(function () {
                             roles[data2[0][1]] = data2[0][3];
                             accounts[data2[0][0]] = data2[0][2];
                             let account_type = "";
-                            if (data2[0][5] === "Staff") {
+                            if (data2[0][5] === "staff") {
                                 account_type = "staff";
                                 temp1s[data2[0][1]] = account_type;
-
                                 btnDelete.attr("data-temp1s", JSON.stringify(temp1s));
                             } else {
                                 account_type = "promotionManager";
@@ -403,7 +406,7 @@ $(document).ready(function () {
                                 accounts[accountId] = data2[i][2];
 
                                 let account_type = "";
-                                if (data2[i][5] === "Staff") {
+                                if (data2[i][5] === "staff") {
                                     account_type = "staff";
                                     temp1s[roleId] = account_type;
                                 } else {
@@ -446,7 +449,7 @@ $(document).ready(function () {
     }
 
     // User table config
-    {
+    if (document.querySelector("#user-table")) {
         let userTable = $("#user-table").DataTable({
             columnDefs: [
                 {
@@ -570,7 +573,7 @@ $(document).ready(function () {
     }
 
     // Order table config
-    {
+    if (document.querySelector("#order-table")) {
         let orderTable = $("#order-table").DataTable({
             columnDefs: [
                 {
@@ -608,11 +611,19 @@ $(document).ready(function () {
                 btnUpdate.addClass("disabled");
             }
         }
+        
+        function disableHistoryOrderBtn() {
+            let btnHistory = $("#btn-history-order");
+            if (btnHistory) {
+                btnHistory.removeAttr("data-order-id");
+                btnHistory.addClass("disabled");
+            }
+        }
 
         function disableDeleteOrderBtn() {
             let btnDelete = $("#btn-delete-order");
             if (btnDelete) {
-                btnDelete.removeAttr("data-order-id");
+                btnDelete.removeAttr("data-orders");
                 btnDelete.addClass("disabled");
             }
         }
@@ -624,7 +635,7 @@ $(document).ready(function () {
                 btnNext.addClass("disabled");
             }
         }
-
+        
         orderTable.on(
                 "select selectItems deselect",
                 function (e, dt, type, indexes) {
@@ -632,6 +643,7 @@ $(document).ready(function () {
                         let btnUpdate = $("#btn-update-order");
                         let btnDelete = $("#btn-delete-order");
                         let btnNext = $("#btn-next-order");
+                        let btnHistory = $("#btn-history-order");
 
                         // Retrieves selected rows
                         let data4 = orderTable.rows({selected: true}).data();
@@ -641,30 +653,35 @@ $(document).ready(function () {
                             // data's type is a 2D array since the table's data is DOM-sourced
                             // https://datatables.net/reference/api/row().data()
                             btnUpdate.attr("data-order-id", data4[0][0]);
+                            btnHistory.attr("data-order-id", data4[0][0]);
                             btnUpdate.attr("data-order-phonenumber", data4[0][3]);
                             btnUpdate.attr("data-order-address", data4[0][6]);
                             btnUpdate.attr("data-order-paymentmethod", data4[0][7]);
                             btnUpdate.attr("data-order-note", data4[0][9]);
                             let total = data4[0][10]
                                     .substring(0, data4[0][10].length - 1) // Removes currency symbol
-                                    .replace(",", ""); // Removes thousand separators
+                                    .replace(",", "")
+                                    .replace(".", ""); // Removes thousand separators
                             btnUpdate.attr("data-order-total", total);
-                            btnUpdate.attr("data-order-status", data4[0][11]);
+                            btnUpdate.attr("data-order-status", data4[0][12]);
                             btnUpdate.removeClass("disabled");
+                            btnHistory.removeClass("disabled");
 
                             let orders = {};
 
-                            if (data4[0][11] != "Đã giao" && data4[0][11] != "Đã hủy") {
+                            if (data4[0][12] !== "Đã giao" && data4[0][12] !== "Đã hủy") {
                                 orders[data4[0][0]] = data4[0][0];
                             }
+                            orders[data4[0][0]] = data4[0][0];
                             btnDelete.attr("data-orders", JSON.stringify(orders));
                             btnNext.attr("data-orders", JSON.stringify(orders));
                             btnDelete.removeClass("disabled");
                             btnNext.removeClass("disabled");
+                            
                         } else if (data4.length > 1) {
                             let orders = {};
                             for (let i = 0; i < data4.length; i++) {
-                                if (data4[i][11] != "Đã giao" && data4[i][11] != "Đã hủy") {
+                                if (data4[i][12] !== "Đã giao" && data4[i][12] !== "Đã hủy") {
                                     let orderId = data4[i][0];
                                     orders[orderId] = data4[i][0];
                                 }
@@ -674,8 +691,10 @@ $(document).ready(function () {
                             btnDelete.removeClass("disabled");
                             btnNext.removeClass("disabled");
                             disableUpdateOrderBtn();
+                            disableHistoryOrderBtn();
                         } else {
                             disableUpdateOrderBtn();
+                            disableHistoryOrderBtn();
                             disableDeleteOrderBtn();
                             disableNextOrderBtn();
                         }
@@ -703,11 +722,16 @@ $(document).ready(function () {
                     || target.classList.contains("btn-cancel")
                     || target.classList.contains("btn-confirm")
                     || target.id === "update-order-modal"
-                    || target.id === "delete-order-modal") {
+                    || target.id === "delete-order-modal" 
+                    || target.id === "next-order-modal"
+                    || target.id === "history-order-modal")
+            {
                 e.preventDefault();
             } else {
                 disableUpdateOrderBtn();
+                disableHistoryOrderBtn();
                 disableDeleteOrderBtn();
+                disableNextOrderBtn();
             }
         });
 

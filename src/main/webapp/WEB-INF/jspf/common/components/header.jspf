@@ -3,7 +3,7 @@
 <%@ page pageEncoding="UTF-8" %>
 
 <!-- SUB NAVBAR -->
-<nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block">
+<nav class="navbar navbar-expand-lg bg-secondary30 navbar-light d-none d-lg-block">
     <div class="container text-light">
         <div class="w-100 d-flex justify-content-between">
             <div class="d-flex align-items-center">
@@ -52,19 +52,19 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse pt-3 pb-2 py-lg-2 w-100" id="navbarSupportedContent">
-            <form class="d-flex flex-column flex-md-row flex-grow-1 gap-2 flex-lg-row">
+            <form class="d-flex flex-column-reverse flex-md-row flex-grow-1 gap-2 flex-lg-row">
               <!-- Search bar -->
-              <div class="input-group mx-lg-3">
+              <div class="input-group me-md-3 mx-lg-5">
                 <!-- Search by keyword input -->
-                <input class="form-control bg-100" type="search" placeholder="Tìm món ăn"
+                <input class="form-control border border-2 border-primary border-end-0 bg-100" type="search" placeholder="Tìm món ăn"
                   aria-label="Tìm món ăn" id="search-bar" oninput="searchFoodByKeyword()" />
                 
                 <!-- Search by image button -->
                 <%@ include file="../../hyperfeat/fooddetechbutton.jspf" %>
                 
                 <!-- Search by keyword button -->
-                <div class="list-group search-results" style="position: absolute; top: 50px;" id="search-results-list"></div>
-                <button class="btn btn-primary" type="button" onclick="searchFoodByKeyword()" title="Tìm Món bằng từ khoá">
+                <div class="list-group d-none flex-column gap-3 card p-3 rounded-2 overflow-auto shadow search-results w-100" style="position: absolute; top: 50px; max-height: 27rem;" id="search-results-list"></div>
+                <button class="btn btn-primary px-4" type="button" onclick="searchFoodByKeyword()" title="Tìm Món bằng từ khoá">
                   <i class="ph-bold ph-magnifying-glass"></i>
                 </button>
               </div>

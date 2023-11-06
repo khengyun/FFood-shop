@@ -27,10 +27,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="txtAccountRole" class="form-label">Role</label>
-                        <select class="form-select" id="txtAccountRole" name="txtAccountRole" required>
-                            <option value="staff" selected>Staff</option>
-                            <option value="promotionManager">Promotion Manager</option>
-                        </select>
+                        <input type="text" class="form-control" id="txtAccountRole" name="txtAccountRole" value="" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="txtAccountPassword" class="form-label">Mật khẩu mới</label>

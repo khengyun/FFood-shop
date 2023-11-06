@@ -1,6 +1,6 @@
 <%-- any content can be specified here e.g.: --%>
 <%@ page pageEncoding="UTF-8" %>
-<section class="py-0 pt-4 bg-1000">
+<section class="py-0 pt-4 bg-secondary30">
     <div class="container">
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4">
             <div class="mb-3">

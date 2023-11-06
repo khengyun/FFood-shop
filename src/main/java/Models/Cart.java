@@ -6,6 +6,7 @@ package Models;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -91,17 +92,45 @@ public class Cart {
     }
 
     public void addItem(CartItem newItem) {
-        if (checkExist(newItem.getFood().getFoodID())) {
-            CartItem olditem = getItemById(newItem.getFood().getFoodID());
-            // Make sure the quantity does not exceed 10
-            if (olditem.getFoodQuantity() + newItem.getFoodQuantity() <= 10) {
-              olditem.setFoodQuantity(olditem.getFoodQuantity() + newItem.getFoodQuantity());
-            } else {
-                olditem.setFoodQuantity(10);
-            }
+      int stockQuantity = newItem.getFood().getQuantity();
+      int quantity = newItem.getFoodQuantity();
+      int maxQuantity = 5;
+      int minQuantity = 1;
+      
+      if (checkExist(newItem.getFood().getFoodID())) {
+        CartItem olditem = this.getItemById(newItem.getFood().getFoodID());
+        int newQuantity = olditem.getFoodQuantity() + quantity;
+
+        // Same as above
+        if (newQuantity >= minQuantity && newQuantity <= maxQuantity && stockQuantity >= maxQuantity) {
+            olditem.setFoodQuantity(newQuantity);
+        } else if (newQuantity >= minQuantity && newQuantity <= maxQuantity 
+              && stockQuantity >= minQuantity && stockQuantity <= maxQuantity) {
+            olditem.setFoodQuantity(stockQuantity);
+        } else if (newQuantity >= minQuantity && newQuantity > maxQuantity) {
+            olditem.setFoodQuantity(maxQuantity);
         } else {
-            items.add(newItem);
+            olditem.setFoodQuantity(minQuantity);
         }
+      } else {
+        // Make sure the quantity does not exceed 10 and does not exceed the food's stock quantity
+        // The range of acceptable quantity is [1, 10]. Note that the stock quantity can limit the upper range
+        // There are 4 cases:
+        // Case 1: quantity is within the range, and stockQuantity is out of the range
+        // Case 2: quantity is within the range, but stockQuantity is within the range
+        // Case 3: quantity is out of the upper range
+        // Case 4: quantity is out of the lower range
+        if (quantity > maxQuantity) {
+            quantity = maxQuantity;
+        } else if (quantity > stockQuantity) {
+            quantity = stockQuantity;
+        } else if (quantity < minQuantity) {
+            quantity = minQuantity;
+        }
+
+        newItem.setFoodQuantity(quantity);
+        items.add(newItem);
+      }
     }
 
     public void addItemCheckout(CartItem newItem) {

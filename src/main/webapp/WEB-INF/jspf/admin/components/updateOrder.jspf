@@ -25,7 +25,6 @@
                         <select class="form-select" id="txtPaymentMethod" name="txtPaymentMethod" required>
                             <option value="COD">COD</option>
                             <option value="Thẻ tín dụng">Thẻ tín dụng</option>
-                            <option value="Thẻ ghi nợ">Thẻ ghi nợ</option>
                         </select>
                     </div>
                     <div class="mb-3">
@@ -44,7 +43,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="txtOrderTotal" class="form-label">Thanh toán</label>
-                        <input type="number" step="1" class="form-control" id="txtOrderTotal" name="txtOrderTotal" min="0" required>
+                        <input type="number" step="1" class="form-control" id="txtOrderTotal" name="txtOrderTotal" min="0" required value="">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -58,3 +57,5 @@
         </div>
     </div>
 </div>
+
+

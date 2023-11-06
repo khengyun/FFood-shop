@@ -60,13 +60,6 @@
         <i class="ph ph-clipboard-text"></i>
       </button>
     </li>
-    <li class="nav-item">
-      <button data-bs-target="#orderLogs"
-              class="nav-link link-body-emphasis text-start d-flex justify-content-center p-2 mx-auto"
-              data-bs-toggle="tab">
-        <i class="ph ph-clipboard-text"></i>
-      </button>
-    </li>
   </ul>
   <div class="flex-grow-0"></div>
   <hr class="border border-800 border-1 border-opacity-25 w-100 my-1">
@@ -155,14 +148,6 @@
               data-bs-toggle="tab">
         <i class="ph ph-clipboard-text me-3"></i>
         Đơn món
-      </button>
-    </li>
-    <li class="nav-item d-grid gap-1 px-1">
-      <button data-bs-target="#orderLogs"
-              class="nav-link link-body-emphasis text-start w-100 d-flex justify-content-start p-2 mx-auto"
-              data-bs-toggle="tab">
-        <i class="ph ph-clipboard-text me-3"></i>
-        Lịch sử đơn hàng
       </button>
     </li>
   </ul>
