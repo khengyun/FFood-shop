@@ -233,7 +233,6 @@ public class StaffController extends HttpServlet {
         }
         OrderDAO orderDAO = new OrderDAO();
         Order order = new Order(orderID, orderStatusID, paymentMethodID, phonenumber, address, note, orderTotalPay);
-        Order oldOrder = orderDAO.getOrder(orderID);
 
         int result = orderDAO.updateForAdmin(order);
 
@@ -245,18 +244,6 @@ public class StaffController extends HttpServlet {
             log.setStaff_id(staffID);
             OrderLogDAO logDAO = new OrderLogDAO();
             logDAO.addStaffLog(log);
-
-            if (oldOrder.getOrderStatusID() != orderStatusID) {
-                OrderLog logStatusOrder = new OrderLog(orderID, "Cập nhật trạng thái đơn hàng: " + status, logTime);
-                logStatusOrder.setStaff_id(staffID);
-                logDAO.addStaffLog(logStatusOrder);
-            }
-
-            if (oldOrder.getOrderTotal() != orderTotalPay) {
-                OrderLog logTotalOrder = new OrderLog(orderID, "Cập nhật thanh toán đơn hàng: " + orderTotalPay, logTime);
-                logTotalOrder.setStaff_id(staffID);
-                logDAO.addStaffLog(logTotalOrder);
-            }
 
             response.sendRedirect("/staff#success_update_order");
             return;

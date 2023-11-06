@@ -47,13 +47,13 @@
                     <td>${f.foodName}</td>
                     <td style="display: none;">${f.description}</td>
                     <td><fmt:formatNumber type="number" pattern="###,###" value="${f.foodPrice}"/>đ</td>
-                <td> ${f.rate} Sao</td>
-                <td> ${f.quantity}</td>
-                <td> ${f.status eq 0 ? 'Hết' : 'Còn'}</td>
-                <td>${(f.discountPercent == null) ? 0 : f.discountPercent}%</td>
-                <td class="table-image-cell">
-                    <img src="${f.imageURL}" alt="${f.foodName}" loading="lazy" class="d-md-inline rounded me-3"/>
-                </td>
+                    <td> ${f.rate} Sao</td>
+                    <td> ${f.quantity}</td>
+                    <td> ${f.status eq 0 ? 'Hết' : 'Còn'}</td>
+                    <td>${(f.discountPercent == null) ? 0 : f.discountPercent}%</td>
+                    <td class="table-image-cell">
+                        <img src="${f.imageURL}" alt="${f.foodName}" loading="lazy" class="d-md-inline rounded me-3"/>
+                    </td>
                 </tr>
             </c:forEach>
             </tbody>

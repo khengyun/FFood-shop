@@ -131,11 +131,11 @@
                                     <h4>Phương thức thanh toán</h4>
                                     <fieldset>
                                         <input class="paying-method" checked type="radio" name="paymentMethod" id="cod-payment" value="COD">
-                                        <label for="paymentMethod1">Thanh toán khi nhận món (COD)</label>
+                                        <label for="cod-payment">Thanh toán khi nhận món (COD)</label>
                                     </fieldset>
                                     <fieldset>
                                         <input class="paying-method" type="radio" name="paymentMethod" id="vnpay-payment" value="VNPAY">
-                                        <label for="paymentMethod2">Thanh toán Online (VNPAY)</label>
+                                        <label for="vnpay-payment">Thanh toán Online (VNPAY)</label>
                                     </fieldset>
                                 </div>
                                 <div class="row">

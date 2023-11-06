@@ -25,32 +25,6 @@ import java.util.List;
 
 public class UserController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet UserController</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet UserController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
     private void doPostUpdateInfo(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //    int accountID = Integer.parseInt(request.getParameter("txtAccountID"));
@@ -67,7 +41,7 @@ public class UserController extends HttpServlet {
         CustomerDAO customerDAO = new CustomerDAO();
         AccountDAO accountDAO = new AccountDAO();
         Account account = accountDAO.getAccount(accountID);
-
+        session.setAttribute("tabID", 0);
         // If an Account already has an assigned Customer info (customerID)
         // then
         if (account.getCustomerID() != 0) {
@@ -115,29 +89,37 @@ public class UserController extends HttpServlet {
 
     private void doPostUpdateUser(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
         int accountID = Integer.parseInt(request.getParameter("txtAccountID"));
         String username = request.getParameter("txtAccountUsername");
         String email = request.getParameter("txtEmail");
-        String password = (String) request.getAttribute("txtAccountPassword");
-
         AccountDAO accountDAO = new AccountDAO();
-        Account account = new Account(username, email, password, "user");
-        account.setAccountID(accountID);
-
-        int result = accountDAO.update(account);
-
+        int result = 0;
+        if (request.getAttribute("txtUserAccountPassword") != null) {
+            String password = (String) request.getAttribute("txtUserAccountPassword");
+            Account account = new Account(username, email, password, "user");
+            account.setAccountID(accountID);   
+            result = accountDAO.update(account);
+        } else {
+            Account account = new Account(username, email, "user");
+            account.setAccountID(accountID);            
+            result = accountDAO.update(account);
+        }
+        
         if (result == 1) {
-            request.setAttribute("tabID", 3);
+            session.setAttribute("tabID", 1);
             response.sendRedirect("/user#account");
             return;
         } else {
             response.sendRedirect("/user#account");
             return;
         }
+        
     }
 
     private void doGetCancelOrder(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
         String path = request.getRequestURI();
         String[] s = path.split("/");
         int orderID = Integer.parseInt(s[s.length - 1]);
@@ -146,9 +128,8 @@ public class UserController extends HttpServlet {
         Timestamp cancelTime = Timestamp.valueOf(currentTime);
         OrderDAO orderDAO = new OrderDAO();
         orderDAO.cancelOrder(orderID, cancelTime);
+        session.setAttribute("tabID", 2);
         response.sendRedirect("/user#order");
-//        request.setAttribute("tabID", 3);
-//            response.sendRedirect("/user");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -264,15 +245,5 @@ public class UserController extends HttpServlet {
         }
 
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 
 }

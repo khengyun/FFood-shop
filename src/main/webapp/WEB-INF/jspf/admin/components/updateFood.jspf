@@ -15,12 +15,16 @@
                     <div class="mb-3">
                         <label for="txtFoodTypeID" class="form-label">Loại món</label>
                         <select class="form-select" id="txtFoodTypeID" name="txtFoodTypeID" required>
-                            <option value="1">Cơm</option>
-                            <option value="2">Mì</option>
-                            <option value="3">Bánh mì</option>
-                            <option value="4">Đồ ăn vặt</option>
-                            <option value="5">Tráng miệng</option>
-                            <option value="6">Đồ uống</option>
+                            <option value="1" selected>Mì và Bún</option>
+                            <option value="2">Bánh và Bánh Mì</option>
+                            <option value="3">Hải Sản</option>
+                            <option value="4">Món Ăn Truyền Thống</option>
+                            <option value="5">Món Ăn Châu Á</option>
+                            <option value="6">Món Thịt</option>
+                            <option value="7">Món ăn nhanh</option>
+                            <option value="8">Món ăn nhẹ</option>
+                            <option value="9">Món Tráng Miệng</option>
+                            <option value="10">Đồ uống</option>
                         </select>
                     </div>
                     <!-- Food Name -->
@@ -36,12 +40,12 @@
                     <!-- Price -->
                     <div class="mb-3">
                         <label for="txtFoodPrice" class="form-label">Đơn giá</label>
-                        <input type="number" step="0.01" class="form-control" id="txtFoodPrice" name="txtFoodPrice" min="0" required value="">
+                        <input type="number" step="1" class="form-control" id="txtFoodPrice" name="txtFoodPrice" min="0" required value="">
                     </div>
                      <!-- Quantity -->
                     <div class="mb-3">
                         <label for="txtFoodQuantity" class="form-label">Số lượng</label>
-                        <input type="number" step="0.01" class="form-control" id="txtFoodQuantity" name="txtFoodQuantity" min="0" required>
+                        <input type="number" step="1" class="form-control" id="txtFoodQuantity" name="txtFoodQuantity" min="0" required>
                     </div>
                     <!--Food Status-->
                     <div class="mb-3">
