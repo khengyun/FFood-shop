@@ -492,7 +492,8 @@ function validateForm() {
             txtAccountUsername: {
                 required: true,
                 minlength: 8,
-                maxlength: 50
+                maxlength: 50,
+                pattern: /^[a-zA-Z0-9-'_]+$/
             },
             txtAccountEmail: {
                 required: true,
@@ -514,7 +515,8 @@ function validateForm() {
             txtAccountUsername: {
                 required: "Vui lòng nhập Tên Tài khoản Người dùng",
                 minlength: "Tên tài khoản mới phải có ít nhất 8 ký tự",
-                maxlength: "Tên Tài khoản Người dùng không được vượt quá 50 ký tự"
+                maxlength: "Tên Tài khoản Người dùng không được vượt quá 50 ký tự",
+                pattern: "Tên Tài khoản chỉ chấp nhận chữ, số, dấu gạch ngang, gạch dưới, nháy đơn và không chứa khoảng trắng"
             },
             txtAccountEmail: {
                 required: "Vui lòng nhập Email",

@@ -12,6 +12,33 @@ public class ValidationUtils {
         }
         return false;
     }
+    
+    public static boolean signUpValidation(String username, String email, String password) {
+        if (isValidUsername(username) && isValidEmail(email) && isValidPassword(password)) {
+            return true;
+        }
+        return false;
+    }
+    
+    public static boolean isValidUsername(String username) {
+        // Check if username is not empty
+        if (username == null || username.trim().isEmpty()) {
+            return false;
+        }
+
+        // Check minimum and maximum length
+        if (username.length() < 8 || username.length() > 50) {
+            return false;
+        }
+
+        // Check if username matches the specified pattern
+        if (!username.matches("^[a-zA-Z0-9-'_]+$")) {
+            return false;
+        }
+
+        // Username is valid
+        return true;
+    }
 
     private static boolean isValidEmail(String email) {
         if (email == null || email.trim().isEmpty()) {
