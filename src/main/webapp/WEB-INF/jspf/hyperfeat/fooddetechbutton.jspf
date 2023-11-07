@@ -106,10 +106,10 @@
         }
 
         const data = await response.json();
-        console.log("Predicted Dish:", data.predicted_dish);
+        console.log("Predicted Dish:", data.predicted_dish[0][0]);
 
         if (data.predicted_dish) {
-          const searchURL = "http://localhost:8001/search_food_by_name/" + data.predicted_dish;
+          const searchURL = "http://localhost:8001/search_food_by_name/" + data.predicted_dish[0][0];
 
           const searchResponse = await fetch(searchURL);
 
@@ -126,6 +126,7 @@
             if (foodDetailsModal.classList.contains("show")) {
               // If it's showing, hide it
               const closeModalButton = foodDetailsModal.querySelector("[data-bs-dismiss='modal']");
+              foodDetailsModal.querySelector("#food-description").innerHTML = 'Mô tả món ăn.';
               closeModalButton.click();
             }
 

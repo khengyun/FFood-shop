@@ -181,8 +181,25 @@
                 modal.find("#food-discount").text("").addClass("d-none");
             }
 
-            // Set the description of the food
-            modal.find("#food-description").html(foodDescription);
+
+
+            // Fetch the description via the fetch API
+            fetch(`http://localhost:8123/generate_description/?food_name=` + foodName)
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.description) {
+                        foodDescription = data.description;
+                    } else {
+                        foodDescription = "Description not available.";
+                    }
+                    modal.find("#food-description").html(foodDescription);
+                })
+                .catch((error) => {
+                    console.error("Error fetching description:", error);
+                    foodDescription = "Description not available.";
+                    modal.find("#food-description").html(foodDescription);
+                });
+
 
             // Disables (but still shows) quantity input group if the food is out of stock/unavailable
             if (foodStatus === "0") {
