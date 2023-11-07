@@ -126,7 +126,7 @@
             if (foodDetailsModal.classList.contains("show")) {
               // If it's showing, hide it
               const closeModalButton = foodDetailsModal.querySelector("[data-bs-dismiss='modal']");
-              foodDetailsModal.querySelector("#food-description").innerHTML = 'Mô tả món ăn.';
+              foodDetailsModal.querySelector("#food-description").innerHTML = 'Đang cập nhật mô tả...';
               closeModalButton.click();
             }
 

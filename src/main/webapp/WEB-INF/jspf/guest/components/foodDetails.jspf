@@ -63,7 +63,7 @@
 
                                     <!-- Food description -->
                                     <p id="food-description"
-                                       class="card-text fs-1">Mô tả món ăn.</p>
+                                       class="card-text fs-1">Đang cập nhật mô tả...</p>
 
                                     <!-- Empty space -->
                                     <div class="flex-grow-1"></div>
