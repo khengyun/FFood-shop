@@ -68,12 +68,15 @@ public class LoginController extends HttpServlet {
             boolean success;
             try {
                 success = dao.login(loginAccount);
+                
             } catch (SQLException ex) {
                 Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
                 success = false;
+                System.err.println("A database issue occurred. Your login was cancelled");
             }
             
             if (success) {
+                System.out.println("Successful login");
                 session.setAttribute("isSuccessful", success);
                 Account account = dao.getAccount(email);
                 String accountType = account.getAccountType();
@@ -177,6 +180,7 @@ public class LoginController extends HttpServlet {
                     }
                 }
             } else {
+                System.err.println("Incorrect login credentials");
                 session.setAttribute("isSuccessful", success);
                 response.sendRedirect("/home#failure_login_info");
             }                   

@@ -84,10 +84,11 @@ public class PromotionManagerController extends HttpServlet {
         VoucherDAO voucherDAO = new VoucherDAO();
         Voucher voucher = new Voucher(voucherName, voucherCode, voucher_discount_percent, voucher_quantity, voucher_status, datetime);
         
-        if (voucherDAO.getVoucher(voucherName) != null){
-            response.sendRedirect("/promotionManager#failure_add_voucher_exist");
+        if (voucherDAO.getVoucher(voucherName) != null || voucherDAO.getVoucherByCode(voucherCode) != null) {
+            response.sendRedirect("/admin#failure_add_voucher_exist");
             return;
         }
+        
         HttpSession session = request.getSession();
         session.setAttribute("tabID", 2);
         int result = voucherDAO.add(voucher);

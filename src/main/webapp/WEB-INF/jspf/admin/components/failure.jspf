@@ -18,7 +18,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-body">
-        <h3 class="text-center p-3">Tên Voucher đã tồn tại!</h3>
+        <h3 class="text-center p-3">Voucher đã tồn tại!</h3>
       </div>
     </div>
   </div>
