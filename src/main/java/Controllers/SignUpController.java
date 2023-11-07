@@ -28,6 +28,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import Validation.ValidationUtils;
 
 public class SignUpController extends HttpServlet {
 
@@ -77,6 +78,13 @@ public class SignUpController extends HttpServlet {
         // Truy xuất URL hiện tại từ session attribute
         HttpSession session = request.getSession();
         String previousUrl = (String) session.getAttribute("previousUrl");
+        
+        ValidationUtils valid = new ValidationUtils();
+        
+        if (!valid.signUpValidation(username,email,pass)){
+            response.sendRedirect("/home#failure_register");
+            return;
+        }
         
         AccountDAO accountDAO = new AccountDAO();
         Account account = new Account(username, email, pass, "user");
