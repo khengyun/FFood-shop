@@ -6,7 +6,7 @@
   && hour < 11) { greeting = "Chào buổi sáng"; } else if (hour >= 11 && hour <
   14) { greeting = "Chào buổi trưa"; } else if (hour >= 14 && hour < 18) {
   greeting = "Chào buổi chiều"; } else { greeting = "Chào buổi tối"; } %>
-  <p class="fw-bolder fs-3 mb-4"><%= greeting %>, ${adminName}!</p>
+  <p class="fw-bolder fs-3 mb-4"><%= greeting %>, ${StaffName}!</p>
 
   <!-- Daily statistics -->
   <%@ include file="components/todayview.jspf" %>
