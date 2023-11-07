@@ -357,10 +357,8 @@ public class CheckoutController extends HttpServlet {
                 int customerID = currentAccount.getCustomerID();
                 CustomerDAO customerDAO = new CustomerDAO();
                 Customer customer = customerDAO.getCustomer(customerID);
-
                 request.setAttribute("customer", customer);
                 //</editor-fold>
-
             }
             //</editor-fold>
         }
@@ -395,7 +393,8 @@ public class CheckoutController extends HttpServlet {
             session.removeAttribute("mess");
         }
 
-        request.getRequestDispatcher("checkout.jsp").forward(request, response);
+//        request.getRequestDispatcher("checkout.jsp").forward(request, response);
+        response.sendRedirect("/checkout");
     }
     
     protected void doPostVoucher(HttpServletRequest request, HttpServletResponse response)
@@ -503,7 +502,6 @@ public class CheckoutController extends HttpServlet {
         } else if (request.getParameter("btnSubmit") != null && request.getParameter("btnSubmit").equals("SubmitVoucher")) {
             doPostVoucher(request,response);
         }
-
     }
 
     /**

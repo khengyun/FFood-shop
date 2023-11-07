@@ -13,10 +13,12 @@ import Models.Order;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.net.URLDecoder;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -147,8 +149,21 @@ public class UserController extends HttpServlet {
         HttpSession session = request.getSession();
         String path = request.getRequestURI();
         if (path.equals("/user")) {
-//<editor-fold defaultstate="collapsed" desc="Get user account info">
-            int userID = (Integer) session.getAttribute("userID");
+            //<editor-fold defaultstate="collapsed" desc="Get user account info">
+            int userID = 0;
+            if (session.getAttribute("userID") != null){
+                userID = (Integer) session.getAttribute("userID");
+            } else {
+                Cookie[] cookies = request.getCookies();
+                Cookie userIDCookie = null;
+                for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("userID")) {
+                  userIDCookie = cookie;
+                  session.setAttribute("userID", Integer.parseInt(userIDCookie.getValue()));
+                  userID =  Integer.parseInt(userIDCookie.getValue());
+                }
+              }
+            }
             AccountDAO accountDAO = new AccountDAO();
             Account currentAccount = accountDAO.getAccount(userID);
 

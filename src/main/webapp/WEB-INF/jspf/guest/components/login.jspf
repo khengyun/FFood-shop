@@ -77,7 +77,6 @@
               id="btnSubmit"
               name="btnSubmit"
               value="Submit"
-              onclick="RemoveOrderLogin()"
             >
               Đăng nhập
             </button>

@@ -297,68 +297,58 @@
             quantity = newQuantity;
         }
 
-        /**
-         * Increments the value of a field by 1 when triggered by an event.
-         *
-         * @param {Event} e - The event object.
-         * @return {number} The new value.
-         */
-        function incrementValue(e) {
-            e.preventDefault();
-            let target = $(e.target);
-            let fieldName = target.data("field");
-            let parent = target.closest("div");
-            let quantityInput = parent.find("input[name=" + fieldName + "]");
-            let currentQuantity = parseInt(quantityInput.val(), 10);
-            let maxQuantity = stockQuantity < 5 ? stockQuantity : 5;
-            let minQuantity = 1;
-
-            // Set the new value, making sure it is within 1-10
-            let newQuantity =
-                    !isNaN(currentQuantity) && currentQuantity >= minQuantity && currentQuantity < maxQuantity
-                    ? currentQuantity + 1
-                    : maxQuantity;
-            quantityInput.val(newQuantity);
-
-            return newQuantity;
-        }
-
-        /**
-         * Decrements the value of an input field by 1.
-         *
-         * @param {Event} e - The event object.
-         * @return {number} The new value.
-         */
-        function decrementValue(e) {
-            e.preventDefault();
-            let target = $(e.target);
-            let fieldName = target.data("field");
-            let parent = target.closest("div");
-            let quantityInput = parent.find("input[name=" + fieldName + "]");
-            let currentQuantity = parseInt(quantityInput.val(), 10);
-            let maxQuantity = stockQuantity < 5 ? stockQuantity : 5;
-            let minQuantity = 1;
-
-            // Set the new value, making sure it is within 1-10
-            let newQuantity =
-                    !isNaN(currentQuantity) && currentQuantity > minQuantity && currentQuantity <= maxQuantity
-                    ? currentQuantity - 1
-                    : minQuantity;
-            quantityInput.val(newQuantity);
-
-            return newQuantity;
-        }
-
         $("#food-details-modal .input-group").on("click", ".button-plus", (e) => {
-            let quantity = incrementValue(e);
-            // Update the button's data-quantity attribute
-            updateButtonQuantity(quantity);
+          let newQuantity = incrementValue(e); // Initial unvalidated decleration
+          let target = $(e.target);
+          
+          const maxQuantity = 5;
+          const minQuantity = 1;
+          
+          // Clamp to lower range
+          newQuantity = newQuantity < minQuantity ? minQuantity : newQuantity;
+          
+          // Clamp to upper range
+          if (stockQuantity < maxQuantity) { // Stock quantity is only relevant if it is less than maxQuantity
+            newQuantity = newQuantity > stockQuantity ? stockQuantity : newQuantity;
+          } else if (newQuantity > maxQuantity) {
+            newQuantity = maxQuantity;
+          }
+
+          // Update the validated quantity input
+          let fieldName = target.data("field");
+          let parent = target.closest("div");
+          let quantityInput = parent.find("input[name=" + fieldName + "]");
+          quantityInput.val(newQuantity);
+
+          // Update the button's data-quantity attribute
+          updateButtonQuantity(newQuantity);
         });
 
         $("#food-details-modal .input-group").on("click", ".button-minus", (e) => {
-            let quantity = decrementValue(e);
+            let newQuantity = decrementValue(e); // Initial unvalidated decleration
+            let target = $(e.target);
+            
+            const maxQuantity = 5;
+            const minQuantity = 1;
+
+             // Clamp to lower range
+            newQuantity = newQuantity < minQuantity ? minQuantity : newQuantity;
+          
+            // Clamp to upper range
+            if (stockQuantity < maxQuantity) { // Stock quantity is only relevant if it is less than maxQuantity
+              newQuantity = newQuantity > stockQuantity ? stockQuantity : newQuantity;
+            } else if (newQuantity > maxQuantity) {
+              newQuantity = maxQuantity;
+            }
+           
+            // Update the validated quantity input
+            let fieldName = target.data("field");
+            let parent = target.closest("div");
+            let quantityInput = parent.find("input[name=" + fieldName + "]");
+            quantityInput.val(newQuantity);
+
             // Update the button's data-quantity attribute
-            updateButtonQuantity(quantity);
+            updateButtonQuantity(newQuantity);
         });
 
         // Reset the quantity when the modal is closed

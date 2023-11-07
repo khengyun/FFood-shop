@@ -585,7 +585,7 @@ public class AdminController extends HttpServlet {
         VoucherDAO voucherDAO = new VoucherDAO();
         Voucher voucher = new Voucher(voucherName, voucherCode, voucher_discount_percent, voucher_quantity, voucher_status, datetime);
 
-        if (voucherDAO.getVoucher(voucherName) != null) {
+        if (voucherDAO.getVoucher(voucherName) != null || voucherDAO.getVoucherByCode(voucherCode) != null) {
             response.sendRedirect("/admin#failure_add_voucher_exist");
             return;
         }
@@ -616,9 +616,10 @@ public class AdminController extends HttpServlet {
         Timestamp datetime = Timestamp.valueOf(datetimelocal.replace("T", " ") + ":00");
 
         VoucherDAO voucherDAO = new VoucherDAO();
+        
         Voucher voucher = new Voucher(voucherName, voucherCode, voucher_discount_percent, voucher_quantity, voucher_status, datetime);
         voucher.setVoucherID(voucherID);
-
+        
         int result = voucherDAO.update(voucher);
         HttpSession session = request.getSession();
         session.setAttribute("tabID", 2);
