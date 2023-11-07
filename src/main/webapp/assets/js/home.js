@@ -9,19 +9,6 @@ let showMoreButton = document.getElementById("btn-show-more");
 const itemsToShow = 12;
 let itemsShown = 0;
 
-//show success order food
-$(document).ready(function () {
-  notSort = document.querySelectorAll("div[id^='food-']");
-  if (window.location.hash === "#success") {
-    $("#success").modal("show");
-    setTimeout(function () {
-      $("#success").modal("hide");
-      window.location.href = "/home";
-    }, 3000);
-  }
-  showInitialFoodItems();
-});
-
 $(document).on("click", ".btn-categories", function () {
   let categoryID = $(this).data("food-type-id");
   foodList = $("#food-list > div");

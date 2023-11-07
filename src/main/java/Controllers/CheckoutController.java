@@ -10,6 +10,8 @@ import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.Timestamp;
+import java.time.Clock;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -35,6 +37,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 
 public class CheckoutController extends HttpServlet {
@@ -184,7 +188,8 @@ public class CheckoutController extends HttpServlet {
                     accountDAO.updateCustomerID(account);
                     customerID = lastestCustomer.getCustomerID();
                 } else {
-                    response.sendRedirect("/home#failure");
+                    session.setAttribute("toastMessage", "error-order");
+                    request.getRequestDispatcher("checkout.jsp").forward(request, response);
                     return;
                 }
 
@@ -208,6 +213,7 @@ public class CheckoutController extends HttpServlet {
         cart.setUserId(customerID);
         result = cartdao.add(cart);
         if (result != 1) {
+            session.setAttribute("toastMessage", "error-order");
             request.getRequestDispatcher("checkout.jsp").forward(request, response);
         }
 
@@ -264,7 +270,7 @@ public class CheckoutController extends HttpServlet {
 
             if (paymentMethod.equals("COD")) {
                 session.setAttribute("toastMessage", "success-order");
-                response.sendRedirect("/" + "#success");
+                response.sendRedirect("/");
             }else if (paymentMethod.equals("VNPAY")) {
 
                 // Tạo URL cho việc gọi API
@@ -330,16 +336,21 @@ public class CheckoutController extends HttpServlet {
 
     protected void doPostCheckout(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        LocalTime currentTime = LocalTime.now();
-        int hour = currentTime.getHour(); // Get the current hour (24-hour format)
-        
-//        if (hour >= 20 || hour <= 8) {
-//            response.sendRedirect("/home#open_time");
-//            return;
-//        } 
-        
         HttpSession session = request.getSession();
+
+        // Gets the current time in GMT+7
+        Instant instant = Instant.now();
+        ZonedDateTime zdt = instant.atZone(ZoneId.of("GMT+7"));
+        LocalDateTime currentTime = zdt.toLocalDateTime();
+        
+        // Gets the current hour in GMT+7
+        int hour = currentTime.getHour();
+        
+        if (hour >= 20 || hour <= 8) {
+          session.setAttribute("toastMessage", "error-close-time");
+          response.sendRedirect("/");
+          return;
+        } 
         
         String voucherStatus = "Vui lòng nhập mã giảm giá nếu bạn có";
         request.setAttribute("voucherStatus", voucherStatus);
