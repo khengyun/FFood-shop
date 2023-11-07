@@ -58,7 +58,7 @@
                 <div class="input-group me-md-3 mx-lg-5" style="pointer-events: none;">
                     <!-- Search by keyword input -->
                     <input class="form-control border border-2 border-primary border-end-0 bg-100" type="search" placeholder="Tìm món ăn"
-                           aria-label="Tìm món ăn" id="search-bar" oninput="searchFoodByKeyword()" />
+                           aria-label="Tìm món ăn" autocomplete="off" id="search-bar" oninput="searchFoodByKeyword()" />
 
                     <!-- Search by image button -->
                     <%@ include file="../../hyperfeat/fooddetechbutton.jspf" %>
