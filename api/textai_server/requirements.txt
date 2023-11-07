@@ -3,9 +3,4 @@ pathlib2
 requests
 fastapi
 protobuf==3.20
-pymssql
-google-auth
-Unidecode
-wikipedia
-pytz
 g4f

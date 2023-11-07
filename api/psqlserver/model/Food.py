@@ -7,8 +7,11 @@ from datetime import date,timedelta
 from unidecode import unidecode
 from itertools import permutations
 import wikipedia
-from bardapi import Bard
+import g4f
 import json
+
+g4f.debug.logging = True # enable logging
+g4f.check_version = False # Disable automatic version checkinga
 
 class FoodModel(BaseModel):
     food_id: int
@@ -104,13 +107,6 @@ class FoodOperations:
             
             
             for record in records:
-                # add if record[2] is null call wikipedia_summary
-                print("record[2]: ",record[2])
-                print("record[2] type: ",type(record[2]))
-                # content = record[2]
-                # if content == None:
-                # content = self.wikipedia_summary(record[1])
-                
                 # print("content: ",content)
                 
                 food = FoodModel(
@@ -258,13 +254,30 @@ class FoodOperations:
             return str(e)
         
         
-    def wikipedia_summary(self, food_name: str):
-        token = 'cwhc0nEvP6vBJCnYULFK5k-1qPGVgnt6KmCtEXv7pIZEMrnROoiRXYqwYUopCJMc1ubDEw.'
-        bard = Bard(token=token)
-        content = bard.get_answer(f'As a waiter of a restaurant, generate a description of {food_name} '
-         'in a non-scientific way. The description should be easy to understand for normal people. '
-         'The description must be written in Vietnamese with a language that is close to human language '
-         'as possible. Avoid descriptive and robotic descriptions. The description length must be limited '
-         'to 1 paragraph and must not exceed 30 words. Do not add recommendations in the last sentence.')['content']
-        
-        return content
+
+    
+    def get_today_income(self):
+        try:
+            with pymssql.connect(**self.db_config) as conn:
+                cursor = conn.cursor()
+
+                daily_payments = []
+
+                cursor.execute("""
+                    SELECT SUM(payment_total) AS total_payment_today
+                    FROM Payment
+                    WHERE
+                        DAY(payment_time) = DAY(SYSDATETIME())
+                        AND MONTH(payment_time) = MONTH(SYSDATETIME())
+                        AND YEAR(payment_time) = YEAR(SYSDATETIME());
+                """)
+
+                row = cursor.fetchone()
+                today_income = float(row[0]) if row and row[0] is not None else 0.0
+
+                daily_payments.append({"today_income": today_income})
+
+                return daily_payments
+
+        except Exception as e:
+            return str(e)
