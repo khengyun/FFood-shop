@@ -1,19 +1,23 @@
-# FFood - Vietnamese Food Website
 
-FFood is a food website that lets customers order food in a quick and convenient way.
+
+<p align="center"><img src="https://socialify.git.ci/khengyun/FFood-shop/image?description=1&amp;font=Source%20Code%20Pro&amp;forks=1&amp;issues=1&amp;logo=%20%20%20https%3A%2F%2Fcdn-icons-png.flaticon.com%2F512%2F8827%2F8827871.png%20&amp;name=1&amp;pattern=Formal%20Invitation&amp;pulls=1&amp;stargazers=1&amp;theme=Auto" alt="project-image"></p>
+
+
 
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E) ![jQuery](https://img.shields.io/badge/jquery-%230769AD.svg?style=for-the-badge&logo=jquery&logoColor=white) ![Bootstrap](https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white)
 
 ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white) ![Apache Maven](https://img.shields.io/badge/Apache%20Maven-C71A36?style=for-the-badge&logo=Apache%20Maven&logoColor=white) ![Apache Tomcat](https://img.shields.io/badge/apache%20tomcat-%23F8DC75.svg?style=for-the-badge&logo=apache-tomcat&logoColor=black) ![Apache Netbeans](https://img.shields.io/badge/apache%20netbeans-1B6AC6?style=for-the-badge&logo=apache%20netbeans%20IDE&logoColor=white)
   
-  ![FFood Home](cover.png)
+
+## Project ScreenShots:
+  <img align="center" src="cover.png" alt="project-screenshot" >
 
 ## Table of Contents
 
 - [Introduction](#introduction)
 - [Features](#features)
 - [Technologies](#technologies)
-- [Installation](#installation)
+- [Installation](#dockerized-project-)
 - [License](#license)
 
 ## Introduction
@@ -52,54 +56,7 @@ FFood is a food website that lets customers order food in a quick and convenient
 - Microsoft JDBC Driver for SQL Server (10.2.0.jre8)
 - Jakarta Standard Tag Library Implementation (Glassfish)
 
-## Installation
-
-To install and set up the FFood website locally, follow these steps:
-
-1. Clone the repository to your local machine:
-
-   >```bash
-   > git clone https://github.com/khengyun/FFood-shop.git
-   >```
-
-2. Open the project in your preferred integrated development environment (IDE) such as NetBeans 13 and later.
-
-3. Ensure you have Java SE 1.8 installed on your system.
-
-4. Set up the Tomcat server:
-   - Download and [install Tomcat 10](https://tomcat.apache.org/download-10.cgi) (Java EE 7) from the Apache Tomcat website.
-   - Configure Tomcat in your IDE by specifying the installation directory.
-
-5. Resolve dependencies:
-   - Add the following dependencies to your project's build path:
-     - Jakarta Servlet API (5.0.0)
-     - Microsoft JDBC Driver for SQL Server (10.2.0.jre8)
-     - Jakarta Standard Tag Library Implementation (Glassfish)
-   - If you are using Maven, these dependencies can be added to the `pom.xml` file, however the `pom.xml`file included in the source code already has the necessary dependencies.
-
-6. Configure the database:
-   - Ensure you have a SQL Server database set up with the required schema for the food e-commerce website.
-   - Update the database connection details in [database.properties](src/main/resources/database.properties):
-
-```properties
-DATABASE_NAME=your-database-name
-PASSWORD=your-password
-USERNAME=your-username
-DATA_SERVER_NAME=your-data-server-name
-```
-
-7. Build and deploy the project:
-   - Build the project in your IDE to compile the source code and generate the necessary artifacts.
-   - Deploy the project to the Tomcat server by either:
-     - Manually copying the artifacts to the Tomcat deployment directory, typically `webapps/`.
-     - Using the deployment features provided by your IDE.
-
-8. Start the Tomcat server and access the food e-commerce website:
-   - Start the Tomcat server either through your IDE or by running the appropriate startup script.
-   - Open a web browser and visit `http://localhost:8080/your-web-app-context` to access the website. The web application context path can be configured in `src/main/webapp/META-INF/context.xml`
-    - By default it is `""`, so the website URL should be `http://localhost:8080`
-
-## Dockerized SQL Server
+## Dockerized Project 🚀🚀
 1. Install Docker on Window [click here](https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe?_gl=1*3jwbnk*_ga*MTU2MzcwNDM2OS4xNjk3NDU2NjY2*_ga_XJWPQMJYHQ*MTY5NzUyNjQ5Mi44LjEuMTY5NzUyODUxMy40My4wLjA.)
 2. Check Docker version after install 
 > ```bash
@@ -116,9 +73,7 @@ DATA_SERVER_NAME=your-data-server-name
 >docker compose up --build
 >```
 
-
-
-Now you should have FFood running locally on your machine.
+Now, FFood running locally on your machine at: http://localhost:8080
 
 ## License
 
