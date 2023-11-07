@@ -35,6 +35,19 @@ public class VoucherDAO {
         }
         return null;
     }
+    
+    public ResultSet getAllCode(String code) {
+        String sql = "select * from Voucher where voucher_code = ?";
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, code);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException ex) {
+            Logger.getLogger(VoucherDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
     public Voucher getVoucher(byte id) {
         Voucher voucher = null;
@@ -83,6 +96,28 @@ public class VoucherDAO {
     
     public List<Voucher> getAllList() {
         ResultSet voucherRS = this.getAll();
+        List<Voucher> voucherList = new ArrayList<>();
+        try {
+            while (voucherRS.next()) {
+                Voucher voucher = new Voucher(
+                        voucherRS.getByte("voucher_id"),
+                        voucherRS.getString("voucher_name"),   
+                        voucherRS.getString("voucher_code"),    
+                        voucherRS.getByte("voucher_discount_percent"),
+                        voucherRS.getByte("voucher_quantity"),
+                        voucherRS.getByte("voucher_status"),
+                        voucherRS.getTimestamp("voucher_date")
+                );                
+                voucherList.add(voucher);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(VoucherDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return voucherList;
+    }
+    
+    public List<Voucher> getAllListOfCode(String code) {
+        ResultSet voucherRS = this.getAllCode(code);
         List<Voucher> voucherList = new ArrayList<>();
         try {
             while (voucherRS.next()) {
