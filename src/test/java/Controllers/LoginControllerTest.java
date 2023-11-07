@@ -85,7 +85,6 @@ public class LoginControllerTest {
 
         loginController.doPost(request, response);
         verify(session, times(1)).setAttribute(eq("isSuccessful"), eq(true));
-        // Verify appropriate methods are called based on your business logic
         verify(session, times(1)).setAttribute(eq("user"), eq("quocanh123"));
         verify(session, times(1)).setAttribute(eq("userID"), eq(201));
         verify(response, times(1)).sendRedirect(eq("/"));
