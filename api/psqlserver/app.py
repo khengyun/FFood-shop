@@ -29,8 +29,8 @@ order_operations = OrderOperations()
 def get_all_food():
     return food_operations.get_food_data()
 
-@app.get('/search_food_by_name/{food_name}',response_model=list[FoodModel])
-def search_food_by_name_endpoint(food_name: str):
+@app.get('/search_food_by_name/{food_name}')
+async def search_food_by_name_endpoint(food_name: str):
     return food_operations.search_food_by_name(food_name)
 
 @app.get('/get_daily_revenue')
@@ -40,6 +40,11 @@ def get_daily_revenue():
 @app.get('/get_top_selling_foods')
 def get_top_selling_foods():
     return food_operations.get_top_selling_foods()
+
+# today income
+@app.get('/get_today_income')
+def get_today_income():
+    return food_operations.get_today_income()
 
 @app.get('/get_daily_sales')
 def get_daily_sales():
