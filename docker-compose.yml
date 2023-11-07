@@ -19,7 +19,7 @@ services:
       start_period: 10s
       timeout: 3s
     networks:
-      - my-network
+      - ffood-network
 
   sqlserver.configurator:
     image: mcr.microsoft.com/mssql/server:2019-latest
@@ -34,7 +34,7 @@ services:
       echo "All done!";
       '
     networks:
-      - my-network
+      - ffood-network
 
 
   ai-food-classification:
@@ -46,7 +46,7 @@ services:
       - sqlserver.configurator
     restart: always
     networks:
-      - my-network
+      - ffood-network
 
   psql-server:
     build: ./api/psqlserver
@@ -57,25 +57,25 @@ services:
       - sqlserver.configurator
     restart: always
     networks:
-      - my-network
+      - ffood-network
 
 
-  # tomcat-app:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "8081:8080"
-  #   restart: always
-  #   networks:
-  #     - my-network
-  #   depends_on:
-  #     - sqlserver
-  #     - sqlserver.configurator
+  tomcat-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    restart: always
+    networks:
+      - ffood-network
+    depends_on:
+      - sqlserver
+      - sqlserver.configurator
 
 networks:
-  my-network:
-    name: my-network
+  ffood-network:
+    name: ffood-network
 
 
 volumes:

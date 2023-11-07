@@ -4,7 +4,7 @@ Pillow
 pathlib2
 requests
 matplotlib 
-tensorflow==2.7.0  
+# tensorflow==2.7.0  
 scikit-learn 
 fastapi
 protobuf==3.20
