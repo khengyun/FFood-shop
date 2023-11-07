@@ -8,7 +8,7 @@
         role="alert"
         aria-live="assertive"
         aria-atomic="true"
-        data-message="${sessionScope.toastMessage}">
+        data-message="${toastMessage}">
 
     <div class="toast-body rounded-2 d-flex flex-row align-items-center">
       <div class="col-1">
@@ -32,7 +32,7 @@
         role="alert"
         aria-live="assertive"
         aria-atomic="true"
-        data-message="${sessionScope.toastMessage}">
+        data-message="${toastMessage}">
 
     <div class="toast-body rounded-2 d-flex flex-row align-items-center">
       <div class="col-1">

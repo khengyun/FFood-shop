@@ -323,6 +323,13 @@ public class AuthenticationFilter implements Filter {
           // If auth fails in neither admin nor user pages, continue the filter (nothing happens)
         }
       }
+
+      HttpSession session = httpRequest.getSession();
+      if (session != null && session.getAttribute("toastMessage") != null) {
+        String toastMessage = (String) session.getAttribute("toastMessage");
+        session.removeAttribute("toastMessage");
+        request.setAttribute("toastMessage", toastMessage);
+      }
       chain.doFilter(request, response);
 
     } catch (Throwable t) {
