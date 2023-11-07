@@ -15,7 +15,7 @@ public class DBConnection {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             try {
                 conn = DriverManager.getConnection("jdbc:sqlserver://"
-                        + "sqlserver:1433;"
+                        + "localhost:1450;"
                         + "databaseName=ffood;"
                         // Enter your SSMS login username
                         + "user=sa;"

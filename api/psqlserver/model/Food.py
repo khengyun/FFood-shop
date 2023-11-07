@@ -24,10 +24,11 @@ class FoodModel(BaseModel):
     
     
 class DailyReport:
-    def __init__(self,total_account=None, daily_revenue=None, daily_orders=None, customer_with_most_orders=None):
+    def __init__(self,total_account=None, daily_revenue=None, daily_orders=None, customer_with_most_orders=None,best_selling_food=None):
         self.total_account = total_account
         self.daily_revenue = daily_revenue
         self.daily_orders = daily_orders
+        self.best_selling_food=best_selling_food
         self.customer_with_most_orders = customer_with_most_orders
 
 class FoodOperations:
@@ -105,8 +106,8 @@ class FoodOperations:
             
             for record in records:
                 # add if record[2] is null call wikipedia_summary
-                print("record[2]: ",record[2])
-                print("record[2] type: ",type(record[2]))
+                # print("record[2]: ",record[2])
+                # print("record[2] type: ",type(record[2]))
                 # content = record[2]
                 # if content == None:
                 # content = self.wikipedia_summary(record[1])
@@ -180,12 +181,25 @@ class FoodOperations:
                 """)
                 rows3 = cursor.fetchall()
                 daily_orders = int(rows3[0][0]) if rows3 and rows3[0][0] is not None else 0
+                
+                
+                # Truy vấn 4: take the name of the best-selling food
+                cursor.execute("""
+                SELECT TOP 1 F.food_name
+                FROM Food AS F
+                INNER JOIN CartItem AS CI ON F.food_id = CI.food_id
+                GROUP BY F.food_name
+                ORDER BY SUM(CI.food_quantity) DESC
+                """)
+                rows4 = cursor.fetchall()
+                best_selling_food_name = rows4[0][0] if rows4 and rows4[0][0] is not None else None
 
                 result = DailyReport(
                     total_account=total_account,
                     daily_revenue=daily_revenue,
                     daily_orders=daily_orders,
-                    customer_with_most_orders=customer_with_most_orders
+                    best_selling_food=best_selling_food_name,
+                    customer_with_most_orders=customer_with_most_orders,
                 )
 
                 return result.__dict__
