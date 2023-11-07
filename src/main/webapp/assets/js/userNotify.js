@@ -38,6 +38,10 @@ const toastDetails = {
     title: "Không thể đăng ký tài khoản",
     message: "Hãy thử lại sau ít phút, hoặc liên hệ chúng tôi để tạo tài khoản.",
   },
+  "error-register-existing-email": {
+    title: "Không thể đăng ký tài khoản",
+    message: "Đã có tài khoản đăng ký bằng email này.",
+  },
   "error-verify-email": {
     title: "Không thể xác thực email",
     message: "Liên hệ chúng tôi để xác thực tài khoản.",
