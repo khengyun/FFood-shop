@@ -11,6 +11,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -34,7 +35,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.time.LocalTime;
 
 
 public class CheckoutController extends HttpServlet {
@@ -267,7 +267,7 @@ public class CheckoutController extends HttpServlet {
             }else if (paymentMethod.equals("VNPAY")) {
 
                 // Tạo URL cho việc gọi API
-                String apiURL = "http://localhost:8001/payment_from_cis?cis=" + customerID;
+                String apiURL = "http://psql-server:8001/payment_from_cis?cis=" + customerID;
 
                 // Thực hiện HTTP request để lấy vnpay_payment_url
                 String vnpayPaymentURL = sendGetRequest(apiURL);
