@@ -109,9 +109,9 @@ public class ForgetController extends HttpServlet {
                             MimeMessage message = new MimeMessage(mailSession);
                             message.setFrom(new InternetAddress("your-email@example.com")); // Change accordingly
                             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-                            message.setSubject("Hello");
-                            message.setText("Your OTP is: " + otpvalue);
-
+                            message.setSubject("Xác nhận email của bạn", "utf-8");
+                            message.setContent("Mã xác nhận của bạn là: " + otpvalue + "<br />Không chia sẻ mã này cho người khác.", "text/html; charset=utf-8");
+                            
                             // Send message
                             Transport.send(message);
                             System.out.println("Message sent successfully");
@@ -122,7 +122,8 @@ public class ForgetController extends HttpServlet {
                         session.setAttribute("otp", otpvalue);
                         session.setAttribute("email", email);
                         session.setAttribute("type_otp", "forget");
-                        response.sendRedirect("/home#verify_OTP");
+                        session.setAttribute("triggerOTP", true);
+                        response.sendRedirect("/");
                     }
 
                 } catch (IOException e) {
@@ -130,7 +131,13 @@ public class ForgetController extends HttpServlet {
                     session.setAttribute("toastMessage", "error-send-otp");
                     request.getRequestDispatcher("/index.jsp").forward(request, response);
                 }
+            } else {
+              session.setAttribute("toastMessage", "error-no-email-found");
+              response.sendRedirect("/");
             }
+        } else {
+          session.setAttribute("toastMessage", "error-no-email-found");
+          response.sendRedirect("/");
         }
 
     }

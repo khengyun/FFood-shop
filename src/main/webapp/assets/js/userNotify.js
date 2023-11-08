@@ -46,6 +46,10 @@ const toastDetails = {
     title: "Không thể gửi mã OTP",
     message: "Hãy thử lại sau ít phút, hoặc liên hệ chúng tôi để xác thực tài khoản.",
   },
+  "error-wrong-otp": {
+    title: "Mã xác thực không đúng",
+    message: "Hãy nhập lại mã xác thực, hoặc liên hệ chúng tôi để xác thực tài khoản.",
+  },
   "error-change-password": {
     title: "Không thể đổi mật khẩu",
     message: "Hãy thử lại sau ít phút, hoặc liên hệ chúng tôi để đổi mật khẩu.",
@@ -58,12 +62,49 @@ const toastDetails = {
     title: "Không thể đăng nhập",
     message: "Hãy kiểm tra lại email và mật khẩu của bạn.",
   },
+  "error-no-email-found": {
+    title: "Không tìm thấy email",
+    message: "Hãy kiểm tra lại email của bạn.",
+  },
+  "error-close-time": {
+    title: "Quán hiện đang đóng cửa",
+    message: "Vui lòng đặt món từ 8:00 - 20:00.",
+  }
 }
 
 // Get the message from the session scope
 let toastContent = successToast.getAttribute('data-message');
 
+function initModal(id) {
+  const modal = document.getElementById(`${id}`);
+  // Construct the attribute name using the id (e.g. trigger-otp-modal)
+  const attributeName = "data-" + id.replace("-modal", "");
+  if (modal.getAttribute(attributeName) && modal.getAttribute(attributeName) != "0") {
+    const modalInstance = new bootstrap.Modal(`#${id}`, {});
+    modal.setAttribute(attributeName, 'true');
+    modalInstance.show();
+  }
+}
+
+function showToast(toast, toastContent) {
+  const toastElement = bootstrap.Toast.getOrCreateInstance(toast);
+  const toastTitle = toast.getElementsByClassName('toast-title')[0];
+  const toastMessage = toast.getElementsByClassName('toast-message')[0];
+  
+  toastTitle.innerHTML = toastDetails[toastContent].title;
+  toastMessage.innerHTML = toastDetails[toastContent].message;
+  
+  toastElement.show();
+}
+function hideToast(toast) {
+  bootstrap.Toast.getInstance(toast).hide();
+}
+
+// Initialize either of these modals
 $(document).ready(function () {
+  initModal("trigger-otp-modal");
+  initModal("trigger-change-password-modal");
+
   toastContent = successToast.getAttribute('data-message');
   // Show success or error toast based on the message
   if (toastContent) {
@@ -77,18 +118,4 @@ $(document).ready(function () {
   }
 });
 
-function showToast(toast, toastContent) {
-  const toastElement = bootstrap.Toast.getOrCreateInstance(toast);
 
-  const toastTitle = toast.getElementsByClassName('toast-title')[0];
-  const toastMessage = toast.getElementsByClassName('toast-message')[0];
-  
-  toastTitle.innerHTML = toastDetails[toastContent].title;
-  toastMessage.innerHTML = toastDetails[toastContent].message;
-  
-  toastElement.show();
-}
-
-function hideToast(toast) {
-  bootstrap.Toast.getInstance(toast).hide();
-}

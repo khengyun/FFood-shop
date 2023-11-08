@@ -54,7 +54,11 @@ public class ChangePasswordController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+      if (request.getParameter("cancel") != null && request.getParameter("cancel").equals("true")) {
+        HttpSession session = request.getSession();    
+        session.removeAttribute("account");
+      }
+      response.sendRedirect("/");
     } 
     
     public static String generateMD5Hash(String input) {

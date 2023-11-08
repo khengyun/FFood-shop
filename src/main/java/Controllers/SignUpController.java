@@ -133,7 +133,8 @@ public class SignUpController extends HttpServlet {
                         session.setAttribute("otp", otpvalue);
                         session.setAttribute("type_otp", "sign_up");
                         session.setAttribute("registerUser", account);
-                        response.sendRedirect("/home#verify_OTP");
+                        session.setAttribute("triggerOTP", true);
+                        response.sendRedirect("/");
                     }
 
                 } catch (IOException e) {

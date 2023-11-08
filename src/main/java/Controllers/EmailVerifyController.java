@@ -51,7 +51,14 @@ public class EmailVerifyController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+      if (request.getParameter("cancel") != null && request.getParameter("cancel").equals("true")) {
+        HttpSession session = request.getSession();    
+        session.removeAttribute("otp");
+        session.removeAttribute("email");
+        session.removeAttribute("type_otp");
+        session.removeAttribute("triggerOTP");
+      }
+      response.sendRedirect("/");
     } 
 
     /** 
@@ -71,9 +78,10 @@ public class EmailVerifyController extends HttpServlet {
             otp = (int) session.getAttribute("otp");
         }
         
-        if (otp == 0){
+        if (otp == 0) {
             session.setAttribute("toastMessage", "error-verify-email");
             response.sendRedirect("/");
+            return;
         }
         AccountDAO accountDAO = new AccountDAO();
         
@@ -91,16 +99,17 @@ public class EmailVerifyController extends HttpServlet {
                     session.setAttribute("toastMessage", "error-register");
                     response.sendRedirect("/");
                 }
-            }else if (type_otp.equals("forget")){
+            } else if (type_otp.equals("forget")){
                 String email = (String) session.getAttribute("email");
                 Account account = new Account(email,"user");
                 session.setAttribute("account", account);
-                response.sendRedirect("/home#changePass_modal");
+                session.setAttribute("triggerChangePassword", "true");
+                response.sendRedirect("/");
             }
-
-        } else {          
-            response.sendRedirect("/home#verify_email");
-            
+        } else {
+            session.setAttribute("toastMessage", "error-wrong-otp");
+            session.setAttribute("triggerOTP", true);
+            response.sendRedirect("/");  
         }
     }
 
