@@ -49,6 +49,7 @@ FFood is a food website that lets customers order food in a quick and convenient
 - Bootstrap 5.3.0
 - jQuery 3.7.0
 - jQuery Validation Plugin
+- Docker 24.0.6
 
 ### Dependencies
 
@@ -61,9 +62,8 @@ FFood is a food website that lets customers order food in a quick and convenient
 2. Check Docker version after install 
 > ```bash
 > docker --version
+> Docker 24.0.6
 >```
-
-![Alt text](image.png)
 
 3. ``cd`` into the cloned FFood-shop folder
 >```bash

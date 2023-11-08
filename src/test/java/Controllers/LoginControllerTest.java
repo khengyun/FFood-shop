@@ -85,7 +85,6 @@ public class LoginControllerTest {
 
         loginController.doPost(request, response);
         verify(session, times(1)).setAttribute(eq("isSuccessful"), eq(true));
-        // Verify appropriate methods are called based on your business logic
         verify(session, times(1)).setAttribute(eq("user"), eq("quocanh123"));
         verify(session, times(1)).setAttribute(eq("userID"), eq(201));
         verify(response, times(1)).sendRedirect(eq("/"));
@@ -324,5 +323,46 @@ public class LoginControllerTest {
         verify(session, times(1)).setAttribute(eq("isSuccessful"), eq(false));
         verify(response, times(1)).sendRedirect(eq("/home#failure_login_info"));
     }
+    
+    @Test
+    public void testLoginCase15() throws Exception {
+        when(request.getParameter("btnSubmit")).thenReturn("Submit");
+        when(request.getParameter("txtEmail")).thenReturn("abccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc@fpt.edu.vn");
+        when(request.getAttribute("txtPassword")).thenReturn("e10adc3949ba59abbe56e057f20f883x");
+        when(request.getParameter("chkRememberMe")).thenReturn("");
+        when(request.getSession()).thenReturn(session);
+        when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
 
+        loginController.doPost(request, response);
+        verify(session, times(1)).setAttribute(eq("isSuccessful"), eq(false));
+        verify(response, times(1)).sendRedirect(eq("/home#failure_login_info"));
+    }
+    
+    @Test
+    public void testLoginCase16() throws Exception {
+        when(request.getParameter("btnSubmit")).thenReturn("Submit");
+        when(request.getParameter("txtEmail")).thenReturn("abccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc@fpt.edu.vn");
+        when(request.getAttribute("txtPassword")).thenReturn("e10adc3949ba59abbe56e057f20f883x");
+        when(request.getParameter("chkRememberMe")).thenReturn("");
+        when(request.getSession()).thenReturn(session);
+        when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
+
+        loginController.doPost(request, response);
+        verify(session, times(1)).setAttribute(eq("isSuccessful"), eq(false));
+        verify(response, times(1)).sendRedirect(eq("/home#failure_login_info"));
+    }
+    
+    @Test
+    public void testLoginCase17() throws Exception {
+        when(request.getParameter("btnSubmit")).thenReturn("Submit");
+        when(request.getParameter("txtEmail")).thenReturn("test1$%@fpt@edu.vn");
+        when(request.getAttribute("txtPassword")).thenReturn("e10adc3949ba59abbe56e057f20f883x");
+        when(request.getParameter("chkRememberMe")).thenReturn("");
+        when(request.getSession()).thenReturn(session);
+        when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
+
+        loginController.doPost(request, response);
+        verify(session, times(1)).setAttribute(eq("isSuccessful"), eq(false));
+        verify(response, times(1)).sendRedirect(eq("/home#failure_login_info"));
+    }
 }
