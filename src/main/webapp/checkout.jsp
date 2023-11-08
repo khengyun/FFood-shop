@@ -29,7 +29,7 @@
     <body>
         <main class="main" id="top">
             <%@ include file="WEB-INF/jspf/common/imports/base.jspf" %>
-            <%@ include file="WEB-INF/jspf/common/components/header.jspf" %>
+            <%@ include file="WEB-INF/jspf/common/components/header2.jspf" %>
             <%@ include file="WEB-INF/jspf/guest/components/login.jspf" %>
             <%@ include file="WEB-INF/jspf/guest/components/signup.jspf" %>
             <%@ include file="WEB-INF/jspf/guest/components/verify.jspf" %>
@@ -46,7 +46,7 @@
                                     <tr>
                                         <th>Món ăn/Đồ uống</th>
                                         <th>Đơn giá</th>
-                                        <th>Só lượng</th>
+                                        <th>Số lượng</th>
                                         <th>Số tiền</th>
                                     </tr>
                                 </thead>

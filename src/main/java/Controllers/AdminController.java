@@ -623,7 +623,7 @@ public class AdminController extends HttpServlet {
         Voucher voucher = new Voucher(voucherName, voucherCode, voucher_discount_percent, voucher_quantity, voucher_status, datetime);
 
         HttpSession session = request.getSession();
-        if (voucherDAO.getVoucher(voucherName) != null) {
+        if (voucherDAO.getVoucher(voucherName) != null || voucherDAO.getVoucherByCode(voucherCode) != null) {
             session.setAttribute("toastMessage", "error-add-voucher-existing-voucher");
             response.sendRedirect("/admin");
             return;
@@ -656,9 +656,10 @@ public class AdminController extends HttpServlet {
         Timestamp datetime = Timestamp.valueOf(datetimelocal.replace("T", " ") + ":00");
 
         VoucherDAO voucherDAO = new VoucherDAO();
+        
         Voucher voucher = new Voucher(voucherName, voucherCode, voucher_discount_percent, voucher_quantity, voucher_status, datetime);
         voucher.setVoucherID(voucherID);
-
+        
         int result = voucherDAO.update(voucher);
         HttpSession session = request.getSession();
         

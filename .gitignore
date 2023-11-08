@@ -34,11 +34,10 @@ src/main/resources/database.properties
 .idea/
 .vscode/
 /nbproject/
-
+src/main/java/DBConnection/
 
 # Docker volume
 db_scripts/.system
 db_scripts/log
 db_scripts/secrets
 
-api\Food_Classifier\model\food_model.onnx

@@ -13,6 +13,7 @@ import java.sql.Timestamp;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -274,7 +275,7 @@ public class CheckoutController extends HttpServlet {
             }else if (paymentMethod.equals("VNPAY")) {
 
                 // Tạo URL cho việc gọi API
-                String apiURL = "http://localhost:8001/payment_from_cis?cis=" + customerID;
+                String apiURL = "http://psql-server:8001/payment_from_cis?cis=" + customerID;
 
                 // Thực hiện HTTP request để lấy vnpay_payment_url
                 String vnpayPaymentURL = sendGetRequest(apiURL);
@@ -371,10 +372,8 @@ public class CheckoutController extends HttpServlet {
                 int customerID = currentAccount.getCustomerID();
                 CustomerDAO customerDAO = new CustomerDAO();
                 Customer customer = customerDAO.getCustomer(customerID);
-
                 request.setAttribute("customer", customer);
                 //</editor-fold>
-
             }
             //</editor-fold>
         }
@@ -409,7 +408,8 @@ public class CheckoutController extends HttpServlet {
             session.removeAttribute("mess");
         }
 
-        request.getRequestDispatcher("checkout.jsp").forward(request, response);
+//        request.getRequestDispatcher("checkout.jsp").forward(request, response);
+        response.sendRedirect("/checkout");
     }
     
     protected void doPostVoucher(HttpServletRequest request, HttpServletResponse response)
@@ -517,7 +517,6 @@ public class CheckoutController extends HttpServlet {
         } else if (request.getParameter("btnSubmit") != null && request.getParameter("btnSubmit").equals("SubmitVoucher")) {
             doPostVoucher(request,response);
         }
-
     }
 
     /**

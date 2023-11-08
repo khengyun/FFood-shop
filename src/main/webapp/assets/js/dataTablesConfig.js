@@ -447,27 +447,42 @@ $(document).ready(function () {
 
     // User table config
     if (document.querySelector("#user-table")) {
+//        let userTable = $("#user-table").DataTable({
+//            columnDefs: [
+//                {
+//                    searchable: false,
+//                    userable: false,
+//                    targets: [-1], // "Image" columns
+//                },
+//            ],
+//            dom:
+//                    "<'row'" +
+//                    "<'d-row col-sm-12 m-0'" +
+//                    "<'row'" +
+//                    "<'col-sm-12 col-lg-6 pt-2'l><'col-sm-12 col-lg-6 pt-1 'f>" + // length and search bar
+//                    ">" +
+//                    "<'col-sm-12'tr>" + // table
+//                    "<'row'" +
+//                    "<'col-sm-12 col-md-5 mt-1'i><'col-sm-12 col-md-7 mt-2'p>" + // info and pagination
+//                    ">" +
+//                    ">" +
+//                    ">",
+//        });
+
         let userTable = $("#user-table").DataTable({
-            columnDefs: [
-                {
-                    searchable: false,
-                    userable: false,
-                    targets: [-1], // "Image" columns
-                },
-            ],
-            dom:
-                    "<'row'" +
-                    "<'d-row col-sm-12 m-0'" +
-                    "<'row'" +
-                    "<'col-sm-12 col-lg-6 pt-2'l><'col-sm-12 col-lg-6 pt-1 'f>" + // length and search bar
-                    ">" +
-                    "<'col-sm-12'tr>" + // table
-                    "<'row'" +
-                    "<'col-sm-12 col-md-5 mt-1'i><'col-sm-12 col-md-7 mt-2'p>" + // info and pagination
-                    ">" +
-                    ">" +
-                    ">",
-        });
+                    columnDefs: [
+                        {
+                            searchable: false,
+                            orderable: false,
+                            targets: [-1], // "Image" columns
+                        },
+                    ],
+                    searchPanes: {
+                        columns: [1, 5],
+                        orderable: false,
+                        collapse: false
+                    },
+                });
 
         function disableUpdateUserBtn() {
             let btnUpdate = $("#btn-update-user");
