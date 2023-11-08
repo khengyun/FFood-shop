@@ -230,13 +230,12 @@ public class UserController extends HttpServlet {
                 //</editor-fold>
             }
             //</editor-fold>
-            session.setAttribute("tabID", 0);
             request.getRequestDispatcher("/user.jsp").forward(request, response);
         } else if (path.equals("/user/")) {
             session.setAttribute("tabID", 0);
             response.sendRedirect("/user");
         } else if (path.startsWith("/user/orders")) {
-            request.setAttribute("tabID", 2);
+            session.setAttribute("tabID", 2);
             response.sendRedirect("/user");
         } else if (path.startsWith("/user/cancel")) {
             doGetCancelOrder(request, response);
@@ -262,7 +261,6 @@ public class UserController extends HttpServlet {
         if (request.getParameter("btnSubmit") != null
                 && (request.getParameter("btnSubmit")).equals("SubmitUpdateInfo")) {
             doPostUpdateInfo(request, response);
-            session.setAttribute("tabID", 0);
         } else if (request.getParameter("btnSubmit") != null
                 && (request.getParameter("btnSubmit")).equals("SubmitUpdateUser")) {
             doPostUpdateUser(request, response);
@@ -273,7 +271,6 @@ public class UserController extends HttpServlet {
             session.setAttribute("tabID", 2);
         } else {
             session.setAttribute("toastMessage", "error-send-request");
-            session.setAttribute("tabID", 0);
             response.sendRedirect("/user");
         }
 

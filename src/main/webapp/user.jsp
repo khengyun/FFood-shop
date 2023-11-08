@@ -39,6 +39,11 @@
 
               <!-- Tab panes -->
               <div class="tab-content my-3" data-initial-tab="${tabID}">
+              <%
+                if (session != null && session.getAttribute("tabID") != null) {
+                  session.removeAttribute("tabID");
+                }
+              %>
                 <!-- Edit Information Tab -->
                 <div class="tab-pane fade" id="info" role="tabpanel" aria-labelledby="info-tab">
                   <div class="row">
