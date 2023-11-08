@@ -9,6 +9,12 @@ let showMoreButton = document.getElementById("btn-show-more");
 const itemsToShow = 12;
 let itemsShown = 0;
 
+//show success order food
+$(document).ready(function () {
+  notSort = document.querySelectorAll("div[id^='food-']");
+  showInitialFoodItems();
+});
+
 $(document).on("click", ".btn-categories", function () {
   let categoryID = $(this).data("food-type-id");
   foodList = $("#food-list > div");
