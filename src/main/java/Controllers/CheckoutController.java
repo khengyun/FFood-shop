@@ -10,6 +10,8 @@ import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.Timestamp;
+import java.time.Clock;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
@@ -35,6 +37,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 
 public class CheckoutController extends HttpServlet {
@@ -152,7 +157,7 @@ public class CheckoutController extends HttpServlet {
         String address = request.getParameter("txtAddress");
         String note = request.getParameter("txtNote");
         //  get payment method
-        String paymentMethod = request.getParameter("paymentMethod");
+        byte paymentMethod = Byte.parseByte(request.getParameter("paymentMethod"));
 
         // Trình tự đặt món: thêm Customer -> Cart -> tất cả Cartitem -> Order
         // Thêm Customer
@@ -170,7 +175,6 @@ public class CheckoutController extends HttpServlet {
         int result = 0;
         if (accountID != 0) {
             // Nếu có accountID -> đã login thành công
-           
             Account account = accountDAO.getAccount(accountID);
             if (account.getCustomerID() != 0) {
                 // Tài khoản này đã có thông tin KH
@@ -184,7 +188,8 @@ public class CheckoutController extends HttpServlet {
                     accountDAO.updateCustomerID(account);
                     customerID = lastestCustomer.getCustomerID();
                 } else {
-                    response.sendRedirect("/home#failure");
+                    session.setAttribute("toastMessage", "error-order");
+                    request.getRequestDispatcher("checkout.jsp").forward(request, response);
                     return;
                 }
 
@@ -192,7 +197,6 @@ public class CheckoutController extends HttpServlet {
                 customerID = customer.getCustomerID();
             }
         } else {
-
             //<editor-fold defaultstate="collapsed" desc="Nếu không có: thêm customer vào db">
             result = customerdao.add(customer);
             if (result != 1) {
@@ -204,10 +208,10 @@ public class CheckoutController extends HttpServlet {
         }
   
         Cart cart = (Cart) session.getAttribute("cart");
-        
         cart.setUserId(customerID);
         result = cartdao.add(cart);
         if (result != 1) {
+            session.setAttribute("toastMessage", "error-order");
             request.getRequestDispatcher("checkout.jsp").forward(request, response);
         }
 
@@ -240,6 +244,7 @@ public class CheckoutController extends HttpServlet {
         Timestamp deliveryTime = Timestamp.valueOf(deliveryDateTime);
         
         Order order = new Order(cartID, customerID, (byte) 1, (byte) 3, phone, address, orderTime, note, deliveryTime);
+        order.setPaymentMethodID(paymentMethod);
         // Do khi khởi tạo giá trị mặc định của orderTotal = 0
         // nên ta tự set cho nó
         
@@ -262,9 +267,10 @@ public class CheckoutController extends HttpServlet {
             // Xóa giỏ hàng từ session
             session.removeAttribute("cart");
 
-            if (paymentMethod.equals("COD")) {
-                response.sendRedirect("/home" + "#success");
-            }else if (paymentMethod.equals("VNPAY")) {
+            if (paymentMethod == 3) {
+                session.setAttribute("toastMessage", "success-order");
+                response.sendRedirect("/");
+            }else if (paymentMethod == 1) {
 
                 // Tạo URL cho việc gọi API
                 String apiURL = "http://psql-server:8001/payment_from_cis?cis=" + customerID;
@@ -276,7 +282,8 @@ public class CheckoutController extends HttpServlet {
                     response.sendRedirect(vnpayPaymentURL);
                 } else {
                     // Xử lý trường hợp không lấy được vnpay_payment_url
-                    response.sendRedirect("/home#failure");
+                    request.setAttribute("toastMessage", "error-order-vnpay");
+                    request.getRequestDispatcher("/checkout").forward(request, response);
                 }  
             }
             
@@ -288,7 +295,8 @@ public class CheckoutController extends HttpServlet {
             accountDAO.updateLastTimeOrder(accountID);
         } else {
             // Xử lý trường hợp không thêm đơn hàng thành công
-            request.getRequestDispatcher("checkout.jsp").forward(request, response);
+            request.setAttribute("toastMessage", "error-order");
+            request.getRequestDispatcher("/checkout").forward(request, response);
         }
     }
 
@@ -327,16 +335,21 @@ public class CheckoutController extends HttpServlet {
 
     protected void doPostCheckout(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        LocalTime currentTime = LocalTime.now();
-        int hour = currentTime.getHour(); // Get the current hour (24-hour format)
-        
-//        if (hour >= 20 || hour <= 8) {
-//            response.sendRedirect("/home#open_time");
-//            return;
-//        } 
-        
         HttpSession session = request.getSession();
+
+        // Gets the current time in GMT+7
+        Instant instant = Instant.now();
+        ZonedDateTime zdt = instant.atZone(ZoneId.of("GMT+7"));
+        LocalDateTime currentTime = zdt.toLocalDateTime();
+        
+        // Gets the current hour in GMT+7
+        int hour = currentTime.getHour();
+        
+        if (hour >= 20 || hour <= 8) {
+          session.setAttribute("toastMessage", "error-close-time");
+          response.sendRedirect("/");
+          return;
+        } 
         
         String voucherStatus = "Vui lòng nhập mã giảm giá nếu bạn có";
         request.setAttribute("voucherStatus", voucherStatus);
@@ -393,8 +406,7 @@ public class CheckoutController extends HttpServlet {
             session.removeAttribute("mess");
         }
 
-//        request.getRequestDispatcher("checkout.jsp").forward(request, response);
-        response.sendRedirect("/checkout");
+        request.getRequestDispatcher("checkout.jsp").forward(request, response);
     }
     
     protected void doPostVoucher(HttpServletRequest request, HttpServletResponse response)

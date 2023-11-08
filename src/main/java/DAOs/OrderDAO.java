@@ -394,7 +394,7 @@ public class OrderDAO {
             conn.setAutoCommit(false); // Start transaction
             for (Integer orderID : orderIDs) {
                 if (updateOrderStatus(orderID) == 1) {
-                    result++; // Count number of successful deletions
+                    result++; // Count number of successful status changes
                 } else {
                     conn.rollback(); // Rollback transaction if deletion fails
                     return 0;

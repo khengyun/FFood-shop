@@ -18,16 +18,16 @@
     <script src="https://accounts.google.com/gsi/client" async></script>
   </head>
   <body>
-    <%@ include file="WEB-INF/jspf/common/components/header1.jspf" %> 
+    <%@ include file="WEB-INF/jspf/common/components/mainHeader.jspf" %> 
     <%@ include file="WEB-INF/jspf/guest/components/cart.jspf" %> 
     <%@ include file="WEB-INF/jspf/guest/components/login.jspf" %> 
     <%@ include file="WEB-INF/jspf/guest/components/signup.jspf" %> 
     <%@ include file="WEB-INF/jspf/guest/components/forget.jspf" %> 
     <%@ include file="WEB-INF/jspf/guest/components/changePassword.jspf" %> 
     <%@ include file="WEB-INF/jspf/guest/components/verify.jspf" %> 
-    <%@ include file="WEB-INF/jspf/guest/components/success.jspf" %> 
     <%@ include file="WEB-INF/jspf/guest/components/failure.jspf" %> 
     <%@ include file="WEB-INF/jspf/guest/components/camera.jspf" %>
+    <%@ include file="WEB-INF/jspf/common/components/toast.jspf" %>
     
     <!-- Main Content -->
     <main class="main" id="top">

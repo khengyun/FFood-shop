@@ -2,7 +2,7 @@
 <%@ page pageEncoding="UTF-8" %>
 <!-- JavaScripts -->
 <script src="<%= request.getContextPath() + "vendors/@popperjs/popper.min.js"%>"></script>
-<script src="<%= request.getContextPath() + "vendors/bootstrap/bootstrap.min.js"%>"></script>
+<script src="<%= request.getContextPath() + "vendors/bootstrap-5.3.0-dist/js/bootstrap.min.js"%>"></script>
 <script src="<%= request.getContextPath() + "vendors/is/is.min.js"%>"></script>
 
 <script src="<%= request.getContextPath() + "vendors/fontawesome/all.min.js"%>"></script>

@@ -15,31 +15,37 @@
 
     <body class="d-flex flex-column">
       <%@ include file="WEB-INF/jspf/common/imports/base.jspf" %>
-        <%@ include file="WEB-INF/jspf/common/components/header2.jspf" %>
+        <%@ include file="WEB-INF/jspf/user/userHeader.jspf" %>
+          <%@ include file="WEB-INF/jspf/common/components/toast.jspf" %>
             <div class="container flex-grow-1 my-5">
               <!-- Nav tabs -->
               <ul id="user-tab" class="nav nav-tabs flex-center" role="tablist">
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link ${((tabID == 0) || (tabID == 1)) ? " active" : "" }" id="info-tab"
+                  <button class="nav-link" id="info-tab"
                     data-bs-toggle="tab" data-bs-target="#info" type="button" role="tab" aria-controls="info"
                     aria-checked="true">Thông tin của tôi</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link ${(tabID == 2) ? " active" : "" }" id="account-tab" data-bs-toggle="tab"
+                  <button class="nav-link" id="account-tab" data-bs-toggle="tab"
                     data-bs-target="#account" type="button" role="tab" aria-controls="account" aria-checked="false">Tài
                     khoản đăng nhập</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link ${(tabID == 3) ? " active" : "" }" id="order-tab" data-bs-toggle="tab"
+                  <button class="nav-link" id="order-tab" data-bs-toggle="tab"
                     data-bs-target="#order" type="button" role="tab" aria-controls="order" aria-checked="false">Đơn
                     món</button>
                 </li>
               </ul>
 
               <!-- Tab panes -->
-              <div class="tab-content my-3">
+              <div class="tab-content my-3" data-initial-tab="${tabID}">
+              <%
+                if (session != null && session.getAttribute("tabID") != null) {
+                  session.removeAttribute("tabID");
+                }
+              %>
                 <!-- Edit Information Tab -->
-                <div class="tab-pane fade ${(tabID == 0 || tabID == null) ? "active show" : ""}" id="info" role="tabpanel" aria-labelledby="info-tab">
+                <div class="tab-pane fade" id="info" role="tabpanel" aria-labelledby="info-tab">
                   <div class="row">
                     <!-- Edit user information form -->
                     <form class="update-info-form mx-auto col-12 col-md-10 col-lg-8" method="post" action="/user/info">
@@ -99,7 +105,7 @@
                 </div>
 
                 <!-- Change Login Info Tab -->
-                <div class="tab-pane fade ${(tabID == 1) ? "active show" : ""}" id="account" role="tabpanel" aria-labelledby="account-tab">
+                <div class="tab-pane fade" id="account" role="tabpanel" aria-labelledby="account-tab">
                   <div class="row">
                     <form class="update-user-account-form mx-auto col-12 col-md-10 col-lg-8" method="post" action="/user">
                       <!-- Hidden - User Account ID -->
@@ -122,8 +128,8 @@
                       <div class="col">
                         <!-- Change password -->
                         <div class="mb-3">
-                          <label for="txtUserAccountPassword" class="form-label">Mật khẩu mới</label>
-                          <input type="password" class="form-control" id="txtUserAccountPassword" name="txtUserAccountPassword">
+                          <label for="txtAccountPassword" class="form-label">Mật khẩu mới</label>
+                          <input type="password" class="form-control" id="txtAccountPassword" name="txtAccountPassword">
                         </div>
                         <div class="mb-3">
                           <label for="txtAccountRePassword" class="form-label">Nhập lại Mật khẩu mới</label>
@@ -138,7 +144,7 @@
                 </div>
 
                 <!-- Order History Tab -->
-                <div class="tab-pane fade ${(tabID == 2) ? "active show" : ""}" id="order" role="tabpanel" aria-labelledby="order-tab">
+                <div class="tab-pane fade" id="order" role="tabpanel" aria-labelledby="order-tab">
                   <div class="row">
                     <div class="mx-auto col-12 col-md-10 col-lg-8"><!-- Display order history as cards -->
                       <c:if test="${empty orderList}">
@@ -221,6 +227,7 @@
               <%@ include file="WEB-INF/jspf/common/imports/javascript.jspf" %>
                 <%@ include file="WEB-INF/jspf/common/imports/validation.jspf" %>
                   <script src="<%= request.getContextPath() + " assets/js/user.js"%>"></script>
+                  <script src="<%= request.getContextPath() + " assets/js/userNotify.js"%>"></script>
     </body>
 
     </html>

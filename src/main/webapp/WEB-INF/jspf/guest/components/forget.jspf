@@ -25,7 +25,10 @@
           </div>      
           <div class="form-group d-flex flex-row-reverse justify-content-between align-items-center mt-4">
             <button type="submit" class="btn btn-primary btn-lg btn-block" id="btnSubmit" name="btnSubmit" value="Submit">Tiếp tục</button>
-            <a href="#login-modal" class="btn btn-outline-light fw-bolder link-primary" data-bs-toggle="modal" data-bs-target="#login-modal" data-bs-dismiss="modal">
+            <a href=""
+               class="btn btn-outline-light fw-bolder link-primary"
+               data-bs-toggle="modal"
+               data-bs-target="#login-modal">
               Trở về đăng nhập
             </a>
           </div>

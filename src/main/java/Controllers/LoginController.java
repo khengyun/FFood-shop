@@ -152,6 +152,9 @@ public class LoginController extends HttpServlet {
                         promotionManagerCookie.setPath("/");
                         response.addCookie(promotionManagerCookie);
                         response.sendRedirect("/promotionManager");
+                    } else {
+                      session.setAttribute("toastMessage", "error-login");
+                        response.sendRedirect("/");
                     }
                 //handle not check remember button
                 } else {
@@ -187,14 +190,15 @@ public class LoginController extends HttpServlet {
                         session.setAttribute("promotionManager", username);
                         response.sendRedirect("/promotionManager");
                     } else {
-                        response.sendRedirect("/home#failure_login");
+                      session.setAttribute("toastMessage", "error-login");
+                        response.sendRedirect("/");
                     }
                 }
             //not found the accoutn in database
             } else {
                 System.err.println("Incorrect login credentials");
-                session.setAttribute("isSuccessful", success);
-                response.sendRedirect("/home#failure_login_info");
+                session.setAttribute("toastMessage", "error-login-credentials");
+                response.sendRedirect("/");
             }                   
         }
     }

@@ -50,10 +50,11 @@
 
           <div class="mt-4 text-center">
             Bạn đã có tài khoản? 
-            <a href="#login-modal">
-              <span class="fw-bold text-decoration-underline link-primary" data-bs-toggle="modal" data-bs-target="#login-modal" data-bs-dismiss="modal">
-                Đăng nhập tại đây
-              </span>
+            <a href=""
+               class="fw-bold text-decoration-underline link-primary"
+               data-bs-toggle="modal"
+               data-bs-target="#login-modal">
+              Đăng nhập tại đây
             </a>
           </div>
         </form>
