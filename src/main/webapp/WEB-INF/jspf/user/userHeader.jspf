@@ -1,0 +1,96 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ include file="../common/imports/base.jspf" %>
+<%@ page pageEncoding="UTF-8" %>
+
+<!-- SUB NAVBAR -->
+<nav class="navbar navbar-expand-lg bg-secondary30 navbar-light d-none d-lg-block">
+    <div class="container text-light">
+        <div class="w-100 d-flex justify-content-between">
+            <div class="d-flex align-items-center">
+                <i class="ph-fill ph-envelope mx-2"></i>
+                <a href="mailto:ffood.shop.cantho@gmail.com" class="navbar-sm-brand text-light text-decoration-none">
+                    ffood.shop.cantho@gmail.com
+                </a>
+            </div>
+            <div class="flex-grow-1"></div>
+
+            <!-- Language button -->
+            <%@ include file="../hyperfeat/langviewbutton.jspf" %>
+
+            <div class="d-flex align-items-center">
+                <i class="ph-fill ph-phone mx-2"></i>
+                <a href="tel:0914-875-606" class="navbar-sm-brand text-light text-decoration-none">
+                    0914-875-606
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- MAIN NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-light shadow bg-light sticky-top"
+     data-navbar-on-scroll="data-navbar-on-scroll">
+    <div class="container">
+        <a class="navbar-brand d-inline-flex me-0" href="/">
+            <img class="d-inline-block" src="<%= request.getContextPath() + " assets/img/gallery/logo.svg"%>"
+                 alt="logo"/>
+            <span class="text-1000 fs-3 fw-bold ms-2 text-gradient notranslate">FFood</span>
+        </a>
+        <div class="flex-grow-1"></div>
+
+        <div class="d-none d-md-flex d-lg-none align-items-center">
+            <!-- Language button -->
+            <%@ include file="../hyperfeat/langviewbutton.jspf" %>
+        </div>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse pt-3 pb-2 py-lg-2 w-100" id="navbarSupportedContent">
+            <form class="d-flex flex-column-reverse flex-md-row flex-grow-1 gap-2 flex-lg-row justify-content-end">
+                <div class="d-flex">
+                    <div class="d-flex d-md-none align-items-center" >
+                        <!-- Language button -->
+                        <%@ include file="../hyperfeat/langviewbutton.jspf" %>
+                    </div>
+                    <div class="flex-grow-1"></div>
+                    <!-- Login button -->
+                    <c:choose>
+                        <c:when test="${isLoggedIn}">
+                            <div class="dropdown">
+                                <button class="btn btn-secondary text-white px-3 px-lg-4 text-nowrap" data-bs-toggle="dropdown"
+                                        aria-expanded="false" type="button">
+                                    <i class="fas fa-user me-2"></i>
+                                    ${username}
+                                </button>
+                                <ul class="dropdown-menu text-small shadow ms-2 w-100">
+                                    <li><a class="dropdown-item" href="/">Trở về trang chủ</a></li>
+                                    <li><a class="dropdown-item" href="/user/logout" onclick="RemoveOrderLogout();">Đăng xuất</a></li>
+                                </ul>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <button class="btn btn-primary text-white px-3 px-lg-4 text-nowrap" data-bs-toggle="modal"
+                                    data-bs-target="#login-modal" type="button">
+                                <i class="fas fa-user me-2"></i>
+                                Đăng nhập
+                            </button>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<script>
+    function RemoveOrderLogout() {
+        // Clear the cart when the user logs out
+        sessionStorage.removeItem("cart");
+        // Optionally, update the cart display and total price
+        updateCartDisplay();
+        updateTotalPrice();
+    }
+</script>

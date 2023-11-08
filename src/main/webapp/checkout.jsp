@@ -29,7 +29,7 @@
     <body>
         <main class="main" id="top">
             <%@ include file="WEB-INF/jspf/common/imports/base.jspf" %>
-            <%@ include file="WEB-INF/jspf/common/components/header2.jspf" %>
+            <%@ include file="WEB-INF/jspf/common/components/checkoutHeader.jspf" %>
             <%@ include file="WEB-INF/jspf/guest/components/login.jspf" %>
             <%@ include file="WEB-INF/jspf/guest/components/signup.jspf" %>
             <%@ include file="WEB-INF/jspf/guest/components/verify.jspf" %>

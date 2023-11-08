@@ -15,7 +15,7 @@
 
     <body class="d-flex flex-column">
       <%@ include file="WEB-INF/jspf/common/imports/base.jspf" %>
-        <%@ include file="WEB-INF/jspf/common/components/header2.jspf" %>
+        <%@ include file="WEB-INF/jspf/user/userHeader.jspf" %>
           <%@ include file="WEB-INF/jspf/common/components/toast.jspf" %>
             <div class="container flex-grow-1 my-5">
               <!-- Nav tabs -->

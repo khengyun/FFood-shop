@@ -18,7 +18,7 @@
     <script src="https://accounts.google.com/gsi/client" async></script>
   </head>
   <body>
-    <%@ include file="WEB-INF/jspf/common/components/header1.jspf" %> 
+    <%@ include file="WEB-INF/jspf/common/components/mainHeader.jspf" %> 
     <%@ include file="WEB-INF/jspf/guest/components/cart.jspf" %> 
     <%@ include file="WEB-INF/jspf/guest/components/login.jspf" %> 
     <%@ include file="WEB-INF/jspf/guest/components/signup.jspf" %> 
