@@ -393,8 +393,7 @@ public class CheckoutController extends HttpServlet {
             session.removeAttribute("mess");
         }
 
-//        request.getRequestDispatcher("checkout.jsp").forward(request, response);
-        response.sendRedirect("/checkout");
+        request.getRequestDispatcher("checkout.jsp").forward(request, response);
     }
     
     protected void doPostVoucher(HttpServletRequest request, HttpServletResponse response)
