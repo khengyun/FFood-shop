@@ -41,6 +41,7 @@
                 <%@ include file="WEB-INF/jspf/admin/components/nextOrder.jspf" %>
                 <%@ include file="WEB-INF/jspf/admin/components/history.jspf" %>
                 <%@ include file="WEB-INF/jspf/admin/components/adminSidebar.jspf" %>
+                <%@ include file="WEB-INF/jspf/common/components/toast.jspf" %>
                 
                 <!-- Main Content -->
                 <main class="w-100 p-4 bg-surface">

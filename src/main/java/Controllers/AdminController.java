@@ -209,17 +209,20 @@ public class AdminController extends HttpServlet {
         FoodDAO foodDAO = new FoodDAO();
         Food food = new Food(foodName, foodDescription, foodPrice, foodStatus, foodRate, discountPercent, imageURL, foodTypeID);
         food.setQuantity(foodQuantity);
+        HttpSession session = request.getSession();
         if (foodDAO.getFood(foodName) != null) {
+            session.setAttribute("toastMessage", "error-add-food-existing-food");
             response.sendRedirect("/admin#failure_add_food_exist");
             return;
         }
         int result = foodDAO.add(food);
-        HttpSession session = request.getSession();
         session.setAttribute("tabID", 3);
         if (result >= 1) {
+            session.setAttribute("toastMessage", "success-add-food");
             response.sendRedirect("/admin#success_add_food");
             return;
         } else {
+            session.setAttribute("toastMessage", "error-add-food");
             response.sendRedirect("/admin#failure_add_food");
             return;
         }
@@ -246,9 +249,11 @@ public class AdminController extends HttpServlet {
         HttpSession session = request.getSession();
         session.setAttribute("tabID", 3);
         if (result >=1) {
-            response.sendRedirect("/admin#success_update_food");
-            return;
+          session.setAttribute("toastMessage", "success-update-food");
+          response.sendRedirect("/admin#success_update_food");
+          return;
         } else {
+            session.setAttribute("toastMessage", "error-update-food");
             response.sendRedirect("/admin#failure_update_food");
             return;
         }
@@ -270,11 +275,19 @@ public class AdminController extends HttpServlet {
         // Delete each food item, and count deleted items
         FoodDAO dao = new FoodDAO();
         int result = dao.deleteMultiple(foodIDList);
+        
         HttpSession session = request.getSession();
         session.setAttribute("tabID", 3);
-        // TODO implement a deletion status message after page reload
-        // Redirect or forward to another page if necessary
-        response.sendRedirect("/admin#success_delete_food");
+
+        if (result >= 1) {
+            session.setAttribute("toastMessage", "success-delete-food");
+            response.sendRedirect("/admin#success_delete_food");
+            return;
+        } else {
+            session.setAttribute("toastMessage", "error-delete-food");
+            response.sendRedirect("/admin#failure_delete_food");
+            return;
+        }
     }
     
     //add user
@@ -292,13 +305,14 @@ public class AdminController extends HttpServlet {
         AccountDAO accountDAO = new AccountDAO();
         Account account = new Account(username, email, password, "user");
 
+        HttpSession session = request.getSession();
         if (accountDAO.getAccount(email) != null) {
+            session.setAttribute("toastMessage", "error-add-user-existing-account");
             response.sendRedirect("/admin#failure_add_user_exist");
             return;
         }
 
         Customer newCustomer = new Customer(firstname, lastname, gender, phoneNumber, address);
-        HttpSession session = request.getSession();
         session.setAttribute("tabID", 4);
         CustomerDAO customerDAO = new CustomerDAO();
         int result = customerDAO.add(newCustomer);
@@ -307,14 +321,17 @@ public class AdminController extends HttpServlet {
             account.setCustomerID(customerDAO.getLatestCustomer().getCustomerID());
             System.out.println(account.getCustomerID());
             int result1 = accountDAO.add(account);
-            if (result >=1) {
+            if (result1 >=1) {
+                session.setAttribute("toastMessage", "success-add-user");
                 response.sendRedirect("/admin#success_add_user");
                 return;
             } else {
+                session.setAttribute("toastMessage", "error-add-user");
                 response.sendRedirect("/admin#failure_add_user");
                 return;
             }
         } else {
+            session.setAttribute("toastMessage", "error-add-user");
             response.sendRedirect("/admin#failure_add_user");
             return;
         }
@@ -354,9 +371,11 @@ public class AdminController extends HttpServlet {
         if (result1 >= 1) {
             int result = accountDAO.update(account);
             int result2 = accountDAO.updateCustomerID(account);
+            session.setAttribute("toastMessage", "success-update-user");
             response.sendRedirect("/admin#success_update_user");
             return;
         } else {
+            session.setAttribute("toastMessage", "error-update-user");
             response.sendRedirect("/admin#failure_update_user");
             return;
         }
@@ -388,8 +407,10 @@ public class AdminController extends HttpServlet {
         AccountDAO accountDAO = new AccountDAO();
         int result1 = accountDAO.deleteMultiple(userIDList);
         if (result1 >= 1) {
+            session.setAttribute("toastMessage", "success-delete-user");
             response.sendRedirect("/admin#success_delete_user");            
         } else {
+            session.setAttribute("toastMessage", "error-delete-user");
             response.sendRedirect("/admin#failure_delete_user");
         }
     }   
@@ -404,11 +425,12 @@ public class AdminController extends HttpServlet {
         String password = (String) request.getAttribute("txtAccountPassword");
         AccountDAO accountDAO = new AccountDAO();
         Account account = new Account(username, email, password, role);
+        HttpSession session = request.getSession();
         if (accountDAO.getAccount(email) != null) {
+            session.setAttribute("toastMessage", "error-add-role-existing-account");
             response.sendRedirect("/admin#failure_add_role_exist");
             return;
         }
-        HttpSession session = request.getSession();
         session.setAttribute("tabID", 5);
 
         if (role.equals("staff")) {
@@ -420,13 +442,16 @@ public class AdminController extends HttpServlet {
                 account.setStaffID(staffDAO.getNewStaff().getStaffID());
                 int result1 = accountDAO.add(account);
                 if (result1 >= 1) {
+                    session.setAttribute("toastMessage", "success-add-role");
                     response.sendRedirect("/admin#success_add_role");
                     return;
                 } else {
+                    session.setAttribute("toastMessage", "error-add-role");
                     response.sendRedirect("/admin#failure_add_role");
                     return;
                 }
             } else {
+                session.setAttribute("toastMessage", "error-add-role");
                 response.sendRedirect("/admin#failure_add_role");
                 return;
             }
@@ -439,13 +464,16 @@ public class AdminController extends HttpServlet {
                 account.setProID(promotionManagerDAO.getNewPromotionManager().getProID());
                 int result1 = accountDAO.add(account);
                 if (result1 >= 1) {
+                    session.setAttribute("toastMessage", "success-add-role");
                     response.sendRedirect("/admin#success_add_role");
                     return;
                 } else {
+                    session.setAttribute("toastMessage", "error-add-role");
                     response.sendRedirect("/admin#failure_add_role");
                     return;
                 }
             } else {
+                session.setAttribute("toastMessage", "error-add-role");
                 response.sendRedirect("/admin#failure_add_role");
                 return;
             }
@@ -477,13 +505,16 @@ public class AdminController extends HttpServlet {
                 account.setStaffID(roleID);
                 int result1 = accountDAO.update(account);
                 if (result1 >= 1) {
+                    session.setAttribute("toastMessage", "success-update-role");
                     response.sendRedirect("/admin#success_update_role");
                     return;
                 } else {
-                    response.sendRedirect("/admin#success_update_role");
+                    session.setAttribute("toastMessage", "error-update-role");
+                    response.sendRedirect("/admin#failure_update_role");
                     return;
                 }
             } else {
+                session.setAttribute("toastMessage", "error-update-role");
                 response.sendRedirect("/admin#failure_update_role");
                 return;
             }
@@ -496,13 +527,16 @@ public class AdminController extends HttpServlet {
                 account.setProID(roleID);
                 int result1 = accountDAO.update(account);
                 if (result1 >= 1) {
+                    session.setAttribute("toastMessage", "success-update-role");
                     response.sendRedirect("/admin#success_update_role");
                     return;
                 } else {
+                    session.setAttribute("toastMessage", "error-update-role");
                     response.sendRedirect("/admin#success_update_role");
                     return;
                 }
             } else {
+                session.setAttribute("toastMessage", "error-update-role");
                 response.sendRedirect("/admin#failure_update_role");
                 return;
             }
@@ -561,11 +595,14 @@ public class AdminController extends HttpServlet {
             }
 
             if (result2 >= 1) {
+                session.setAttribute("toastMessage", "success-delete-role");
                 response.sendRedirect("/admin#success_delete_role");
             } else {
+                session.setAttribute("toastMessage", "error-delete-role");
                 response.sendRedirect("/admin#failure_delete_role");
             }
         } else {
+            session.setAttribute("toastMessage", "error-delete-role");
             response.sendRedirect("/admin#failure_delete_role");
         }
     }
@@ -585,19 +622,22 @@ public class AdminController extends HttpServlet {
         VoucherDAO voucherDAO = new VoucherDAO();
         Voucher voucher = new Voucher(voucherName, voucherCode, voucher_discount_percent, voucher_quantity, voucher_status, datetime);
 
+        HttpSession session = request.getSession();
         if (voucherDAO.getVoucher(voucherName) != null) {
+            session.setAttribute("toastMessage", "error-add-voucher-existing-voucher");
             response.sendRedirect("/admin#failure_add_voucher_exist");
             return;
         }
 
         int result = voucherDAO.add(voucher);
-        HttpSession session = request.getSession();
         session.setAttribute("tabID", 2);
 
         if (result >= 1) {
+            session.setAttribute("toastMessage", "success-add-voucher");
             response.sendRedirect("/admin#success_add_voucher");
             return;
         } else {
+            session.setAttribute("toastMessage", "error-add-voucher");
             response.sendRedirect("/admin#failure_add_voucher");
             return;
         }
@@ -623,9 +663,11 @@ public class AdminController extends HttpServlet {
         HttpSession session = request.getSession();
         session.setAttribute("tabID", 2);
         if (result >= 1) {
+            session.setAttribute("toastMessage", "success-update-voucher");
             response.sendRedirect("/admin#success_update_voucher");
             return;
         } else {
+            session.setAttribute("toastMessage", "error-update-voucher");
             response.sendRedirect("/admin#failure_update_voucher");
             return;
         }
@@ -652,9 +694,11 @@ public class AdminController extends HttpServlet {
         // TODO implement a deletion status message after page reload
         // Redirect or forward to another page if necessary
         if (result >= 1) {
+            session.setAttribute("toastMessage", "success-delete-voucher");
             response.sendRedirect("/admin#success_delete_voucher");
             return;
         } else {
+            session.setAttribute("toastMessage", "error-delete-voucher");
             response.sendRedirect("/admin#failure_delete_voucher");
             return;
         }
@@ -712,9 +756,11 @@ public class AdminController extends HttpServlet {
                 logDAO.addAdminLog(logStatusOrder);
             }
 
+            session.setAttribute("toastMessage", "success-update-order");
             response.sendRedirect("/admin#success_update_order");
             return;
         } else {
+            session.setAttribute("toastMessage", "error-update-order");
             response.sendRedirect("/admin#failure_update_order");
             return;
         }
@@ -739,7 +785,6 @@ public class AdminController extends HttpServlet {
         int result = dao.deleteMultiple(orderIDList);
 
         session.setAttribute("tabID", 6);
-        // TODO implement a deletion status message after page reload
         // Redirect or forward to another page if necessary
         if (result >= 1) {
             OrderLogDAO logDAO = new OrderLogDAO();
@@ -751,9 +796,11 @@ public class AdminController extends HttpServlet {
                 log.setAdmin_id(adminID);
                 logDAO.addAdminLog(log);
             }
+            session.setAttribute("toastMessage", "success-delete-order");
             response.sendRedirect("/admin#success_delete_order");
             return;
         } else {
+            session.setAttribute("toastMessage", "error-delete-order");
             response.sendRedirect("/admin#failure_delete_order");
             return;
         }
@@ -778,7 +825,6 @@ public class AdminController extends HttpServlet {
         int result = dao.changeStatusMultiple(orderIDList);
 
         session.setAttribute("tabID", 6);
-        // TODO implement a deletion status message after page reload
         // Redirect or forward to another page if necessary
         if (result >= 1) {
             OrderLogDAO logDAO = new OrderLogDAO();
@@ -790,9 +836,11 @@ public class AdminController extends HttpServlet {
                 log.setAdmin_id(adminID);
                 logDAO.addAdminLog(log);
             }
+            session.setAttribute("toastMessage", "success-next-order");
             response.sendRedirect("/admin#success_next_order");
             return;
         } else {
+            session.setAttribute("toastMessage", "error-next-order");
             response.sendRedirect("/admin#failure_next_order");
             return;
         }
