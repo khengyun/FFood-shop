@@ -16,14 +16,22 @@ const toastDetails = {
   },
   "success-order": {
     title: "Đặt món thành công",
-    message: "Chúng tôi sẽ chuẩn bị món cho bạn.",
+    message: "",
+  },
+  "success-cancel-order": {
+    title: "Huỷ đơn thành công",
+    message: "",
   },
   "success-register": {
-    title: "Đăng ký thành công",
-    message: "Đăng nhập tài khoản để được hưởng ưu đãi nhé!",
+    title: "Đăng ký tài khoản thành công",
+    message: "",
   },
   "success-change-password": {
     title: "Đổi mật khẩu thành công",
+    message: "",
+  },
+  "success-update-info": {
+    title: "Cập nhật thông tin thành công",
     message: "",
   },
   "error-cart": {
@@ -33,6 +41,10 @@ const toastDetails = {
   "error-order": {
     title: "Không thể đặt đơn",
     message: "Hãy thử lại sau ít phút, hoặc liên hệ chúng tôi đặt đơn này.",
+  },
+  "error-cancel-order": {
+    title: "Không thể huỷ đơn",
+    message: "Đơn đặt đã quá thời gian cho phép huỷ.",
   },
   "error-register": {
     title: "Không thể đăng ký tài khoản",
@@ -58,6 +70,10 @@ const toastDetails = {
     title: "Không thể đổi mật khẩu",
     message: "Hãy thử lại sau ít phút, hoặc liên hệ chúng tôi để đổi mật khẩu.",
   },
+  "error-update-info": {
+    title: "Không thể cập nhật thông tin",
+    message: "Hãy thử lại sau ít phút, hoặc liên hệ chúng tôi để cập nhật thông tin.",
+  },
   "error-login": {
     title: "Không thể đăng nhập",
     message: "Hãy thử lại sau ít phút.",
@@ -73,6 +89,10 @@ const toastDetails = {
   "error-close-time": {
     title: "Quán hiện đang đóng cửa",
     message: "Vui lòng đặt món từ 8:00 - 20:00.",
+  },
+  "error-404": {
+    title: "Không tìm thấy trang",
+    message: "Đường dẫn hiện không tồn tại.",
   }
 }
 
