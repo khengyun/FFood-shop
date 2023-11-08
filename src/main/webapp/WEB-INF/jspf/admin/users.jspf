@@ -5,7 +5,7 @@
         <table id="user-table" class="table table-hover nowrap align-middle" style="width: 100%;">
             <h1 class="text-start fw-bold fs-3 mb-3">Quản lý Người dùng</h1>
             <div id="users-button-container" class="button-container row mb-2">
-                <div class="col-sm-12 col-lg-5 mt-sm-2 mt-lg-0 d-flex flex-wrap gap-2 justify-content-lg-end">
+                <div class="col-sm-12 col-lg-6 mt-sm-2 mt-lg-0 d-flex flex-wrap gap-2 justify-content-lg-end">
                     <button type="button" class="btn btn-success d-flex align-items-center flex-shrink-0" 
                             data-bs-toggle="modal"
                             data-bs-target="#add-user-modal">

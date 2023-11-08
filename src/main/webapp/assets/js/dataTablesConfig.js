@@ -791,7 +791,7 @@ $(document).ready(function () {
                 // Manually configure classes for the newly inserted button group
                 let tableButtons = $(buttonContainer).find("div.dt-buttons");
                 tableButtons.removeClass("btn-group");
-                tableButtons.addClass("col-sm-12 col-lg-7 d-flex gap-2");
+                tableButtons.addClass("col-sm-12 col-lg-6 d-flex gap-2");
                 /*$("#foods-button-container > div.dt-buttons > *").addClass("me-1");*/
 
                 // Mark state of all tables as initialized
