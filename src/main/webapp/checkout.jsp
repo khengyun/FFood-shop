@@ -134,11 +134,11 @@
                                 <div class="col-md-12">
                                     <h4>Phương thức thanh toán</h4>
                                     <fieldset>
-                                        <input class="paying-method" checked type="radio" name="paymentMethod" id="cod-payment" value="COD">
+                                        <input class="paying-method" checked type="radio" name="paymentMethod" id="cod-payment" value="3">
                                         <label for="cod-payment">Thanh toán khi nhận món (COD)</label>
                                     </fieldset>
                                     <fieldset>
-                                        <input class="paying-method" type="radio" name="paymentMethod" id="vnpay-payment" value="VNPAY">
+                                        <input class="paying-method" type="radio" name="paymentMethod" id="vnpay-payment" value="1">
                                         <label for="vnpay-payment">Thanh toán Online (VNPAY)</label>
                                     </fieldset>
                                 </div>
