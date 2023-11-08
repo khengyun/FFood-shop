@@ -8,10 +8,12 @@
                     <button type="button" id="btn-next-order"
                             class="btn btn-success btn-update d-flex disabled align-items-center flex-shrink-0" data-bs-toggle="modal"
                             data-bs-target="#next-order-modal">
+                        <i class="ph-bold ph-skip-forward fs-1 me-2"></i>
                         TT tiếp theo
                     </button>
                     <button type="button" id="btn-history-order"
                             class="btn btn-primary btn-update d-flex disabled align-items-center flex-shrink-0">
+                        <i class="ph-bold ph-clock-counter-clockwise fs-1 me-2"></i>
                         Lịch sử
                     </button>
                     <button type="button" id="btn-update-order"
