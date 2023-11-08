@@ -126,10 +126,6 @@ const toastDetails = {
     title: "Không thể thêm đơn",
     message: "Đã có lỗi hệ thống xảy ra.",
   },
-  "error-add-food-existing-food": {
-    title: "Không thể thêm món",
-    message: "Món này đã tồn tại.",
-  },
   "error-update-order": {
     title: "Không thể cập nhật đơn",
     message: "Đã có lỗi hệ thống xảy ra.",
@@ -145,6 +141,10 @@ const toastDetails = {
   "error-add-food": {
     title: "Không thể thêm món",
     message: "Đã có lỗi hệ thống xảy ra.",
+  },
+  "error-add-food-existing-food": {
+    title: "Không thể thêm món",
+    message: "Món này đã tồn tại.",
   },
   "error-update-food": {
     title: "Không thể cập nhật món",
