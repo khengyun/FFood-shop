@@ -96,7 +96,7 @@ public class StaffController extends HttpServlet {
             String Orderlastname = customerDAO.getCustomer(orderList.get(i).getCustomerID()).getLastName();
             String payment_status = "Chưa thanh toán";
             // Tạo URL cho việc gọi API
-            String apiURL = "http://localhost:8001/check_order_payment/" + orderList.get(i).getOrderID();
+            String apiURL = "http://psql-server:8001/check_order_payment/" + orderList.get(i).getOrderID();
             // Thực hiện HTTP request để lấy vnpay_payment_url            
             String payment_time = sendGetRequest(apiURL);
             if (payment_time != null) {

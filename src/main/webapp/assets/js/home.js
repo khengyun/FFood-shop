@@ -191,7 +191,7 @@ function searchFoodByKeyword() {
   // This timer should be cancelled when the input value changes (user types into the search bar)
   timer = setTimeout(() => {
     // Fetch search results based on the input
-    fetch(`http://localhost:8001/search_food_by_name/${searchInput.value}`)
+    fetch(`http://localhost:8001/search_food_by_name/${searchInput.value[0]}`)
       .then((response) => response.json())
       .then((data) => {
         if (data.length > 0) {
