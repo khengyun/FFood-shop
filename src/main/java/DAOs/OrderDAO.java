@@ -378,11 +378,6 @@ public class OrderDAO {
     public int updateOrderStatus(int order_id) {
         String sql = "UPDATE [Order] SET order_status_id = order_status_id + 1 WHERE order_id = ?";
         int result = 0;
-        // Refuse update if order status is already delivered or cancelled
-        Order order = getOrder(order_id);
-        if (order.getOrderStatusID() == 3 || order.getOrderStatusID() == 4) {
-            return result;
-        }
         try {
             ps = conn.prepareStatement(sql);
             ps.setInt(1, order_id);
