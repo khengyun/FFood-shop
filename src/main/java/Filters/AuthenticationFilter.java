@@ -332,6 +332,7 @@ public class AuthenticationFilter implements Filter {
           request.setAttribute("toastMessage", toastMessage);
         }
 
+        
         // Set OTP trigger if there is any
         if (session != null && session.getAttribute("triggerOTP") != null) {
           if (session.getAttribute("triggerOTP") != null) {
@@ -339,6 +340,23 @@ public class AuthenticationFilter implements Filter {
             request.setAttribute("triggerOTP", "true");
           };
         }
+      }
+
+
+      HttpSession session = httpRequest.getSession();
+      // // Process the default active tab upon admin page load,
+      // // depending on the user's previous action on which tab page
+      // if (session != null && session.getAttribute("tabID") != null) {
+      //   int tabID = (Integer) session.getAttribute("tabID");
+      //   session.removeAttribute("tabID");
+      //   request.setAttribute("tabID", tabID);
+      // }
+
+      // Process the special case of order history, to display the modal showing order history
+      if (session != null && session.getAttribute("orderHistory") != null) {
+          String orderHistory = (String) session.getAttribute("orderHistory");
+          session.removeAttribute("orderHistory");
+          request.setAttribute("orderHistory", orderHistory);
       }
 
       chain.doFilter(request, response);

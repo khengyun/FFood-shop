@@ -1,5 +1,5 @@
 <%@ page pageEncoding="UTF-8" %>
-<div class="tab-pane fade ${(tabID == 0 || tabID == null) ? "active show" : ""}" id="home">
+<div class="tab-pane fade id="home">
   <%--Dynamically generates appropriate greeting based on time of day--%> <%
   java.util.Calendar cal = java.util.Calendar.getInstance(); int hour =
   cal.get(java.util.Calendar.HOUR_OF_DAY); String greeting = ""; if (hour >= 4

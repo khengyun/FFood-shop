@@ -293,3 +293,56 @@ $(document).on("click", "#btn-history-order", function () {
         window.location.href = '/admin/history/' + orderID;
 //        window.location.reload();
 });
+
+$(document).ready(function () {
+  // Creates a dictionary of tabIDs and their corresponding tab links
+  const tabLinksDict = {
+    null: "home",
+    "0": "home",
+    "1": "insights",
+    "2": "vouchers",
+    "3": "foods",
+    "4": "users",
+    "5": "roles",
+    "6": "orders",
+  };
+
+  let tabID = document.getElementsByClassName("tab-content").item(0).getAttribute("data-initial-tab");
+  
+  if (tabID === null || tabID === undefined || tabID === "") {
+    tabID = "0";
+  }
+  
+  // Get the initial tabID ("home", "foods", etc. from the tabID index)
+  const initialTabID = tabLinksDict[tabID];
+
+  // Get a list of all tab links and add a click event listener
+  const tabLinks = document.querySelectorAll("ul [data-bs-target]");
+
+  // Iterate over each tab link, clicking link with the matching tabID
+  tabLinks.forEach((tabLink) => {
+    if (tabLink.getAttribute("data-bs-target") === "#" + initialTabID) {
+      tabLink.click();
+    }
+  })
+
+  // Check for the data-order-history attribute
+  const needsOrderHistory =
+    document
+      .getElementsByClassName("tab-content")
+      .item(0)
+      .getAttribute("data-order-history") !== "0" &&
+    document
+      .getElementsByClassName("tab-content")
+      .item(0)
+      .getAttribute("data-order-history") != null &&
+    document
+      .getElementsByClassName("tab-content")
+      .item(0)
+      .getAttribute("data-order-history") != "";
+  if (needsOrderHistory) {
+    // Show the order history modal
+    const modal = new bootstrap.Modal("#history-order-modal");
+    modal.show();
+  }
+})

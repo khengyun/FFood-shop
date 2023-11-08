@@ -216,7 +216,7 @@ public class AdminController extends HttpServlet {
             return;
         }
         int result = foodDAO.add(food);
-        session.setAttribute("tabID", 3);
+        
         if (result >= 1) {
             session.setAttribute("toastMessage", "success-add-food");
             response.sendRedirect("/admin#success_add_food");
@@ -247,7 +247,7 @@ public class AdminController extends HttpServlet {
         food.setQuantity(foodQuantity);
         int result = foodDAO.update(food);
         HttpSession session = request.getSession();
-        session.setAttribute("tabID", 3);
+        
         if (result >=1) {
           session.setAttribute("toastMessage", "success-update-food");
           response.sendRedirect("/admin#success_update_food");
@@ -277,7 +277,7 @@ public class AdminController extends HttpServlet {
         int result = dao.deleteMultiple(foodIDList);
         
         HttpSession session = request.getSession();
-        session.setAttribute("tabID", 3);
+        
 
         if (result >= 1) {
             session.setAttribute("toastMessage", "success-delete-food");
@@ -313,7 +313,7 @@ public class AdminController extends HttpServlet {
         }
 
         Customer newCustomer = new Customer(firstname, lastname, gender, phoneNumber, address);
-        session.setAttribute("tabID", 4);
+        
         CustomerDAO customerDAO = new CustomerDAO();
         int result = customerDAO.add(newCustomer);
 
@@ -355,7 +355,7 @@ public class AdminController extends HttpServlet {
         AccountDAO accountDAO = new AccountDAO();
         CustomerDAO customerDAO = new CustomerDAO();
         HttpSession session = request.getSession();
-        session.setAttribute("tabID", 4);
+        
         Account account = new Account(username, email, password, "user");
         account.setAccountID(userID);
         Customer customer = new Customer(firstname, lastname, gender, phoneNumber, address);
@@ -401,7 +401,7 @@ public class AdminController extends HttpServlet {
             customerIDList.add(Integer.parseInt(customerIDs[i]));
         }
         HttpSession session = request.getSession();
-        session.setAttribute("tabID", 4);
+        
 
         // Delete each food item, and count deleted items
         AccountDAO accountDAO = new AccountDAO();
@@ -431,7 +431,7 @@ public class AdminController extends HttpServlet {
             response.sendRedirect("/admin#failure_add_role_exist");
             return;
         }
-        session.setAttribute("tabID", 5);
+        
 
         if (role.equals("staff")) {
             Staff newstaff = new Staff(fullname);
@@ -495,7 +495,7 @@ public class AdminController extends HttpServlet {
         Account account = new Account(username, email, password, role);
         account.setAccountID(accountID);
         HttpSession session = request.getSession();
-        session.setAttribute("tabID", 5);
+        
         if (role.equals("staff")) {
             Staff updatestaff = new Staff(roleID, fullname);
             StaffDAO staffDAO = new StaffDAO();
@@ -583,7 +583,7 @@ public class AdminController extends HttpServlet {
         int result1 = accountDAO.deleteMultiple(accountIDList);
         int result2 = 0;
         HttpSession session = request.getSession();
-        session.setAttribute("tabID", 5);
+        
         if (result1 >= 1) {
             if (StaffIDList.size() != 0) {
                 StaffDAO staffDAO = new StaffDAO();
@@ -630,7 +630,7 @@ public class AdminController extends HttpServlet {
         }
 
         int result = voucherDAO.add(voucher);
-        session.setAttribute("tabID", 2);
+        
 
         if (result >= 1) {
             session.setAttribute("toastMessage", "success-add-voucher");
@@ -661,7 +661,7 @@ public class AdminController extends HttpServlet {
 
         int result = voucherDAO.update(voucher);
         HttpSession session = request.getSession();
-        session.setAttribute("tabID", 2);
+        
         if (result >= 1) {
             session.setAttribute("toastMessage", "success-update-voucher");
             response.sendRedirect("/admin#success_update_voucher");
@@ -690,7 +690,7 @@ public class AdminController extends HttpServlet {
         VoucherDAO dao = new VoucherDAO();
         int result = dao.deleteMultiple(voucherIDList);
         HttpSession session = request.getSession();
-        session.setAttribute("tabID", 2);
+        
         // TODO implement a deletion status message after page reload
         // Redirect or forward to another page if necessary
         if (result >= 1) {
@@ -741,7 +741,7 @@ public class AdminController extends HttpServlet {
 
 
         int result = orderDAO.updateForAdmin(order);
-        session.setAttribute("tabID", 6);
+        
         if (result >= 1) {
             OrderLogDAO logDAO = new OrderLogDAO();
             LocalDateTime currentTime = LocalDateTime.now();
@@ -784,7 +784,7 @@ public class AdminController extends HttpServlet {
         OrderDAO dao = new OrderDAO();
         int result = dao.deleteMultiple(orderIDList);
 
-        session.setAttribute("tabID", 6);
+        
         // Redirect or forward to another page if necessary
         if (result >= 1) {
             OrderLogDAO logDAO = new OrderLogDAO();
@@ -824,7 +824,7 @@ public class AdminController extends HttpServlet {
         OrderDAO dao = new OrderDAO();
         int result = dao.changeStatusMultiple(orderIDList);
 
-        session.setAttribute("tabID", 6);
+        
         // Redirect or forward to another page if necessary
         if (result >= 1) {
             OrderLogDAO logDAO = new OrderLogDAO();
@@ -869,6 +869,7 @@ public class AdminController extends HttpServlet {
                 }
             }
             session.setAttribute("logList", logList);
+            session.setAttribute("orderHistory", "orderHistory");
             response.sendRedirect("/admin#history");
         }  
     }
@@ -887,6 +888,10 @@ public class AdminController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String path = request.getRequestURI();
+        HttpSession session = request.getSession();
+        if (session != null && session.getAttribute("tabID") == null) {
+          session.setAttribute("tabID", 0);
+        }
         if (path.endsWith("/admin")) {
             doGetList(request, response);
         } else if (path.endsWith("/admin/")) {
@@ -909,51 +914,67 @@ public class AdminController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
         if (request.getParameter("btnSubmit") != null) {
             switch (request.getParameter("btnSubmit")) {
                 case "SubmitAddFood":
                     doPostAddFood(request, response);
+                    session.setAttribute("tabID", 3);
                     break;
                 case "SubmitUpdateFood":
                     doPostUpdateFood(request, response);
+                    session.setAttribute("tabID", 3);
                     break;
                 case "SubmitDeleteFood":
                     doPostDeleteFood(request, response);
+                    session.setAttribute("tabID", 3);
                     break;
                 case "SubmitAddUser":
                     doPostAddUser(request, response);
+                    session.setAttribute("tabID", 4);
                     break;
                 case "SubmitUpdateUser":
+                    session.setAttribute("tabID", 4);
                     doPostUpdateUser(request, response);
                     break;
                 case "SubmitDeleteUser":
+                  session.setAttribute("tabID", 4);
                     doPostDeleteUser(request, response);
                     break;
                 case "SubmitAddVoucher":
+                    session.setAttribute("tabID", 2);
                     doPostAddVoucher(request, response);
                     break;
                 case "SubmitUpdateVoucher":
+                    session.setAttribute("tabID", 2);
                     doPostUpdateVoucher(request, response);
                     break;
                 case "SubmitDeleteVoucher":
+                    session.setAttribute("tabID", 2);
                     doPostDeleteVoucher(request, response);
                     break;
                 case "SubmitAddRole":
+                    session.setAttribute("tabID", 5);
                     doPostAddRole(request, response);
                     break;
                 case "SubmitUpdateRole":
+                    session.setAttribute("tabID", 5);
                     doPostUpdateRole(request, response);
                     break;
                 case "SubmitDeleteRole":
+                    session.setAttribute("tabID", 5);
                     doPostDeleteRole(request, response);
                     break;
                 case "SubmitUpdateOrder":
+                    session.setAttribute("tabID", 6);
                     doPostUpdateOrder(request, response);
                     break;
                 case "SubmitDeleteOrder":
+                    session.setAttribute("tabID", 6);
                     doPostDeleteOrder(request, response);
                     break;
                 case "SubmitNextOrder":
+                    session.setAttribute("tabID", 6);
                     doPostNextOrder(request, response);
                     break;
                 default:

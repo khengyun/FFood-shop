@@ -106,9 +106,6 @@ function hideToast(toast) {
 
 // Initialize either of these modals
 $(document).ready(function () {
-  initModal("trigger-otp-modal");
-  initModal("trigger-change-password-modal");
-
   toastContent = successToast.getAttribute('data-message');
   // Show success or error toast based on the message
   if (toastContent) {
