@@ -23,10 +23,11 @@
                 <%@ include file="WEB-INF/jspf/promotionManager/components/failure.jspf" %>
                 <%@ include file="WEB-INF/jspf/promotionManager/components/success.jspf" %>
                 <%@ include file="WEB-INF/jspf/promotionManager/components/promotionManagerSidebar.jspf" %>
+                <%@ include file="WEB-INF/jspf/common/components/toast.jspf" %>
 
                 <!-- Main Content -->
                 <main class="w-100 p-4 bg-surface">
-                    <div class="tab-content">
+                    <div class="tab-content" data-initial-tab="${tabID}">
                         <!-- Home Tab Content -->
                         <%@ include file="WEB-INF/jspf/promotionManager/home.jspf" %>
                         <!-- Food & Drinks Tab Content -->

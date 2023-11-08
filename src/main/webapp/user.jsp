@@ -17,6 +17,7 @@
       <%@ include file="WEB-INF/jspf/common/imports/base.jspf" %>
         <%@ include file="WEB-INF/jspf/common/components/header.jspf" %>
           <%@ include file="WEB-INF/jspf/guest/components/cart.jspf" %>
+          <%@ include file="WEB-INF/jspf/common/components/toast.jspf" %>
 
             <div class="container flex-grow-1 my-5">
               <!-- Nav tabs -->

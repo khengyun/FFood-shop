@@ -4,21 +4,14 @@
  */
 package Controllers;
 
-import DAOs.AccountDAO;
-import DAOs.AdminDAO;
 import DAOs.CustomerDAO;
 import DAOs.FoodDAO;
 import DAOs.OrderDAO;
 import DAOs.OrderLogDAO;
-import DAOs.StaffDAO;
-import DAOs.VoucherDAO;
-import Models.Account;
 import Models.Food;
 import Models.Order;
 import Models.OrderLog;
-import Models.Voucher;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -126,21 +119,23 @@ public class StaffController extends HttpServlet {
         String imageURL = (String) request.getAttribute("txtImageURL");
         FoodDAO foodDAO = new FoodDAO();
         HttpSession session = request.getSession();
-        session.setAttribute("tabID", 1);
 
         Food food = new Food(foodName, foodDescription, foodPrice, foodStatus, foodRate, discountPercent, imageURL, foodTypeID);
         food.setQuantity(foodQuantity);
         if (foodDAO.getFood(foodName) != null) {
-            response.sendRedirect("/staff#failure_add_food_exist");
+            session.setAttribute("toastMessage", "error-add-food-existing-food");
+            response.sendRedirect("/staff");
         }
 
         int result = foodDAO.add(food);
 
         if (result >= 1) {
-            response.sendRedirect("/staff#success_add_food");
+            session.setAttribute("toastMessage", "success-add-food");
+            response.sendRedirect("/staff");
             return;
         } else {
-            response.sendRedirect("/staff#failure_add_food");
+            session.setAttribute("toastMessage", "error-add-food");  
+            response.sendRedirect("/staff");
             return;
         }
     }
@@ -163,12 +158,13 @@ public class StaffController extends HttpServlet {
         food.setQuantity(foodQuantity);
         int result = foodDAO.update(food);
         HttpSession session = request.getSession();
-        session.setAttribute("tabID", 1);
         if (result >= 1) {
-            response.sendRedirect("/staff#success_update_food");
+            session.setAttribute("toastMessage", "success-update-food");
+            response.sendRedirect("/staff");
             return;
         } else {
-            response.sendRedirect("/staff#failure_update_food");
+            session.setAttribute("toastMessage", "error-update-food");
+            response.sendRedirect("/staff");
             return;
         }
     }
@@ -188,15 +184,13 @@ public class StaffController extends HttpServlet {
         FoodDAO dao = new FoodDAO();
         int result = dao.deleteMultiple(foodIDList);
         HttpSession session = request.getSession();
-        session.setAttribute("tabID", 1);
-        // TODO implement a deletion status message after page reload
-        // Redirect or forward to another page if necessary
-        request.setAttribute("tabID", 3);
 
         if (result >= 1) {
-            response.sendRedirect("/staff#success_delete_food");
+            session.setAttribute("toastMessage", "success-delete-food");
+            response.sendRedirect("/staff");
         } else {
-            response.sendRedirect("/staff#failure_delete_food");
+            session.setAttribute("toastMessage", "error-delete-food");  
+            response.sendRedirect("/staff");
         }
 
     }
@@ -213,7 +207,6 @@ public class StaffController extends HttpServlet {
 
         BigDecimal orderTotalPay = BigDecimal.valueOf(orderTotal);
         HttpSession session = request.getSession();
-        session.setAttribute("tabID", 2);
         byte orderStatusID = 5;
         if (status.equals("Chờ xác nhận")) {
             orderStatusID = 1;
@@ -245,10 +238,12 @@ public class StaffController extends HttpServlet {
             OrderLogDAO logDAO = new OrderLogDAO();
             logDAO.addStaffLog(log);
 
-            response.sendRedirect("/staff#success_update_order");
+            session.setAttribute("toastMessage", "success-update-order");
+            response.sendRedirect("/staff");
             return;
         } else {
-            response.sendRedirect("/staff#failure_update_order");
+            session.setAttribute("toastMessage", "error-update-order");
+            response.sendRedirect("/staff");
             return;
         }
     }
@@ -270,9 +265,6 @@ public class StaffController extends HttpServlet {
         OrderDAO dao = new OrderDAO();
         int result = dao.changeStatusMultiple(orderIDList);
 
-        session.setAttribute("tabID", 2);
-        // TODO implement a deletion status message after page reload
-        // Redirect or forward to another page if necessary
         if (result >= 1) {
             OrderLogDAO logDAO = new OrderLogDAO();
             LocalDateTime currentTime = LocalDateTime.now();
@@ -283,10 +275,12 @@ public class StaffController extends HttpServlet {
                 log.setStaff_id(staffID);
                 logDAO.addStaffLog(log);
             }
-            response.sendRedirect("/staff#success_next_order");
+            session.setAttribute("toastMessage", "success-next-order");
+            response.sendRedirect("/staff");
             return;
         } else {
-            response.sendRedirect("/staff#failure_next_order");
+            session.setAttribute("toastMessage", "error-next-order");
+            response.sendRedirect("/staff");
             return;
         }
     }
@@ -304,6 +298,10 @@ public class StaffController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String path = request.getRequestURI();
+        HttpSession session = request.getSession();
+        if (session != null && session.getAttribute("tabID") == null) {
+          session.setAttribute("tabID", 0);
+        }
         if (path.endsWith("/staff")) {
             doGetList(request, response);
         } else if (path.endsWith("/staff/")) {
@@ -326,26 +324,31 @@ public class StaffController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        HttpSession session = request.getSession();
         if (request.getParameter("btnSubmit") != null) {
             switch (request.getParameter("btnSubmit")) {
-                case "SubmitAddFood":
-                    doPostAddFood(request, response);
-                    break;
-                case "SubmitUpdateFood":
-                    doPostUpdateFood(request, response);
-                    break;
-                case "SubmitDeleteFood":
-                    doPostDeleteFood(request, response);
-                    break;
-                case "SubmitUpdateOrder":
-                    doPostUpdateOrder(request, response);
-                    break;
-                case "SubmitNextOrder":
-                    doPostNextOrder(request, response);
-                    break;
-                default:
-                    break;
+              case "SubmitAddFood":
+                  doPostAddFood(request, response);
+                  session.setAttribute("tabID", 1);
+              break;
+              case "SubmitUpdateFood":
+                  doPostUpdateFood(request, response);
+                  session.setAttribute("tabID", 1);
+                  break;
+              case "SubmitDeleteFood":
+                  doPostDeleteFood(request, response);
+                  session.setAttribute("tabID", 1);
+                  break;
+              case "SubmitUpdateOrder":
+                  session.setAttribute("tabID", 2);
+                  doPostUpdateOrder(request, response);
+                  break;
+              case "SubmitNextOrder":
+                  session.setAttribute("tabID", 2);
+                  doPostNextOrder(request, response);
+                  break;
+              default:
+              break;
             }
         }
     }

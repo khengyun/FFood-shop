@@ -1,5 +1,5 @@
 <%@ page pageEncoding="UTF-8" %>
-<div class="tab-pane fade id="orders">
+<div class="tab-pane fade" id="orders">
     <div class="container-fluid p-4 shadow rounded-4 bg-white">
         <table id="order-table" class="table table-hover nowrap align-middle" style="width: 100%;">
             <h1 class="text-start fw-bold fs-3 mb-3">Quản lý Đơn món</h1>
@@ -8,7 +8,7 @@
                     <button type="button" id="btn-next-order"
                             class="btn btn-primary btn-success d-flex disabled align-items-center flex-shrink-0" data-bs-toggle="modal"
                             data-bs-target="#next-order-modal">
-                        <i class="ph-bold ph-pencil fs-1 me-2"></i>
+                        <i class="ph-bold ph-skip-forward fs-1 me-2"></i>
                         Trạng thái tiếp theo
                     </button>
                     <button type="button" id="btn-update-order"
