@@ -42,10 +42,6 @@
             <!-- Language button -->
             <%@ include file="../../hyperfeat/langviewbutton.jspf" %>
         </div>
-        <div class="d-flex d-lg-none align-items-center me-3" style="pointer-events: none;">  
-            <!-- Cart button -->
-            <%@ include file="../../guest/components/buttons/cartButton.jspf" %>
-        </div>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -53,28 +49,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse pt-3 pb-2 py-lg-2 w-100" id="navbarSupportedContent">
-            <form class="d-flex flex-column-reverse flex-md-row flex-grow-1 gap-2 flex-lg-row">
-                <!-- Search bar -->
-                <div class="input-group me-md-3 mx-lg-5" style="pointer-events: none;">
-                    <!-- Search by keyword input -->
-                    <input class="form-control border border-2 border-primary border-end-0 bg-100" type="search" placeholder="Tìm món ăn"
-                           aria-label="Tìm món ăn" autocomplete="off" id="search-bar" oninput="searchFoodByKeyword()" />
-
-                    <!-- Search by image button -->
-                    <%@ include file="../../hyperfeat/fooddetechbutton.jspf" %>
-
-                    <!-- Search by keyword button -->
-                    <div class="list-group d-none flex-column gap-3 card p-3 rounded-2 overflow-auto shadow search-results w-100" style="position: absolute; top: 50px; max-height: 27rem;" id="search-results-list"></div>
-                    <button class="btn btn-primary px-4" type="button" onclick="searchFoodByKeyword()" title="Tìm Món bằng từ khoá">
-                        <i class="ph-bold ph-magnifying-glass"></i>
-                    </button>
-                </div>
-
-                <div class="d-none d-lg-flex" style="pointer-events: none;">
-                    <!-- Cart button -->
-                    <%@ include file="../../guest/components/buttons/cartButton.jspf" %>
-                </div>
-
+            <form class="d-flex flex-column-reverse flex-md-row flex-grow-1 gap-2 flex-lg-row justify-content-end">
                 <div class="d-flex">
                     <div class="d-flex d-md-none align-items-center" >
                         <!-- Language button -->
@@ -91,8 +66,6 @@
                                     ${username}
                                 </button>
                                 <ul class="dropdown-menu text-small shadow ms-2 w-100">
-                                    <li><a class="dropdown-item" href="/user#info">Tài khoản của tôi</a></li>
-                                    <li><a class="dropdown-item" href="/user#order">Đơn món</a></li>
                                     <li><a class="dropdown-item" href="/user/logout" onclick="RemoveOrderLogout();">Đăng xuất</a></li>
                                 </ul>
                             </div>
