@@ -125,6 +125,7 @@ public class AuthenticationFilter implements Filter {
               || path.endsWith(".json"));
       if (!isStaticResource) {
         // URI does not lead to login controller itself or static resources
+        // Such as a normal page
         if (path.endsWith("/logout")) {
           // User/Admin clicks the log out button
           logout(httpRequest, httpResponse);
@@ -318,11 +319,46 @@ public class AuthenticationFilter implements Filter {
             // Account is of Admin type, cannot access user pages
             httpResponse.sendRedirect("/staff");
             return;
-          }
-          
-          // If auth fails in neither admin nor user pages, continue the filter (nothing happens)
+          }    
+
+        }
+        // If auth fails in neither admin nor user pages, continue the filter (nothing happens)
+        
+        HttpSession session = httpRequest.getSession();
+
+        if (session != null && session.getAttribute("toastMessage") != null) {
+          String toastMessage = (String) session.getAttribute("toastMessage");
+          session.removeAttribute("toastMessage");
+          request.setAttribute("toastMessage", toastMessage);
+        }
+
+        
+        // Set OTP trigger if there is any
+        if (session != null && session.getAttribute("triggerOTP") != null) {
+          if (session.getAttribute("triggerOTP") != null) {
+            session.removeAttribute("triggerOTP");
+            request.setAttribute("triggerOTP", "true");
+          };
         }
       }
+
+
+      HttpSession session = httpRequest.getSession();
+      // // Process the default active tab upon admin page load,
+      // // depending on the user's previous action on which tab page
+      // if (session != null && session.getAttribute("tabID") != null) {
+      //   int tabID = (Integer) session.getAttribute("tabID");
+      //   session.removeAttribute("tabID");
+      //   request.setAttribute("tabID", tabID);
+      // }
+
+      // Process the special case of order history, to display the modal showing order history
+      if (session != null && session.getAttribute("orderHistory") != null) {
+          String orderHistory = (String) session.getAttribute("orderHistory");
+          session.removeAttribute("orderHistory");
+          request.setAttribute("orderHistory", orderHistory);
+      }
+
       chain.doFilter(request, response);
 
     } catch (Throwable t) {

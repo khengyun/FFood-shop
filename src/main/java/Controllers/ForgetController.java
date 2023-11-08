@@ -5,7 +5,6 @@
 package Controllers;
 
 import DAOs.AccountDAO;
-import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,11 +12,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.sql.SQLException;
 import java.util.Properties;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -41,7 +37,6 @@ public class ForgetController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -80,7 +75,6 @@ public class ForgetController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String contextPath = request.getContextPath();
         HttpSession session = request.getSession();
         if (request.getParameter("btnSubmit") != null
                 && ((String) request.getParameter("btnSubmit")).equals("Submit")) {
@@ -88,7 +82,6 @@ public class ForgetController extends HttpServlet {
             AccountDAO accountDAO = new AccountDAO();
             if (accountDAO.getAccount(email) != null) {
                 try {
-                    RequestDispatcher dispatcher = null;
                     int otpvalue = 0;
 
                     if (email != null && !email.equals("")) {
@@ -116,9 +109,9 @@ public class ForgetController extends HttpServlet {
                             MimeMessage message = new MimeMessage(mailSession);
                             message.setFrom(new InternetAddress("your-email@example.com")); // Change accordingly
                             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-                            message.setSubject("Hello");
-                            message.setText("Your OTP is: " + otpvalue);
-
+                            message.setSubject("Xác nhận email của bạn", "utf-8");
+                            message.setContent("Mã xác nhận của bạn là: " + otpvalue + "<br />Không chia sẻ mã này cho người khác.", "text/html; charset=utf-8");
+                            
                             // Send message
                             Transport.send(message);
                             System.out.println("Message sent successfully");
@@ -129,14 +122,22 @@ public class ForgetController extends HttpServlet {
                         session.setAttribute("otp", otpvalue);
                         session.setAttribute("email", email);
                         session.setAttribute("type_otp", "forget");
-                        response.sendRedirect("/home#verify_OTP");
+                        session.setAttribute("triggerOTP", true);
+                        response.sendRedirect("/");
                     }
 
                 } catch (IOException e) {
                     System.out.println("Could not send user register");
+                    session.setAttribute("toastMessage", "error-send-otp");
                     request.getRequestDispatcher("/index.jsp").forward(request, response);
                 }
+            } else {
+              session.setAttribute("toastMessage", "error-no-email-found");
+              response.sendRedirect("/");
             }
+        } else {
+          session.setAttribute("toastMessage", "error-no-email-found");
+          response.sendRedirect("/");
         }
 
     }

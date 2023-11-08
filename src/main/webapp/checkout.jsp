@@ -24,14 +24,18 @@
                 background-color: #ddd;
             }
         </style>
+        <script src="https://accounts.google.com/gsi/client" async></script>
     </head>
     <body>
         <main class="main" id="top">
             <%@ include file="WEB-INF/jspf/common/imports/base.jspf" %>
-            <%@ include file="WEB-INF/jspf/common/components/header2.jspf" %>
+            <%@ include file="WEB-INF/jspf/common/components/checkoutHeader.jspf" %>
             <%@ include file="WEB-INF/jspf/guest/components/login.jspf" %>
             <%@ include file="WEB-INF/jspf/guest/components/signup.jspf" %>
             <%@ include file="WEB-INF/jspf/guest/components/verify.jspf" %>
+            <%@ include file="WEB-INF/jspf/guest/components/forget.jspf" %> 
+            <%@ include file="WEB-INF/jspf/guest/components/changePassword.jspf" %> 
+            <%@ include file="WEB-INF/jspf/common/components/toast.jspf" %>
             <div class="container my-5">
                 <div class="row">
                     <div class="col-md-6">
@@ -167,7 +171,7 @@
         </main>
         <%@ include file="WEB-INF/jspf/common/imports/javascript.jspf" %>
         <%@ include file="WEB-INF/jspf/common/imports/validation.jspf" %>
-
+        <script src="assets/js/userNotify.js"></script>
         <script>
             function checkAndCompleteOrder() {
                 if (checkPaying()) {
