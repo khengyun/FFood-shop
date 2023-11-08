@@ -123,8 +123,8 @@
                       <div class="col">
                         <!-- Change password -->
                         <div class="mb-3">
-                          <label for="txtUserAccountPassword" class="form-label">Mật khẩu mới</label>
-                          <input type="password" class="form-control" id="txtUserAccountPassword" name="txtUserAccountPassword">
+                          <label for="txtAccountPassword" class="form-label">Mật khẩu mới</label>
+                          <input type="password" class="form-control" id="txtAccountPassword" name="txtAccountPassword">
                         </div>
                         <div class="mb-3">
                           <label for="txtAccountRePassword" class="form-label">Nhập lại Mật khẩu mới</label>

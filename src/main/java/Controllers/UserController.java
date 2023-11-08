@@ -99,8 +99,8 @@ public class UserController extends HttpServlet {
         String email = request.getParameter("txtEmail");
         AccountDAO accountDAO = new AccountDAO();
         int result = 0;
-        if (request.getAttribute("txtUserAccountPassword") != null) {
-            String password = (String) request.getAttribute("txtUserAccountPassword");
+        if (request.getAttribute("txtAccountPassword") != null) {
+            String password = (String) request.getAttribute("txtAccountPassword");
             Account account = new Account(username, email, password, "user");
             account.setAccountID(accountID);   
             result = accountDAO.update(account);
