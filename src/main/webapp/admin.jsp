@@ -41,10 +41,16 @@
                 <%@ include file="WEB-INF/jspf/admin/components/nextOrder.jspf" %>
                 <%@ include file="WEB-INF/jspf/admin/components/history.jspf" %>
                 <%@ include file="WEB-INF/jspf/admin/components/adminSidebar.jspf" %>
+                <%@ include file="WEB-INF/jspf/common/components/toast.jspf" %>
                 
                 <!-- Main Content -->
                 <main class="w-100 p-4 bg-surface">
-                    <div class="tab-content">
+                    <div class="tab-content" data-initial-tab="${tabID}" data-order-history="${orderHistory}">
+                    <%
+                      if (session != null && session.getAttribute("tabID") != null) {
+                        session.removeAttribute("tabID");
+                      }
+                    %>
                         <!-- Home Tab Content -->
                         <%@ include file="WEB-INF/jspf/admin/home.jspf" %>
                        <!-- Insight Tab Content -->

@@ -29,10 +29,11 @@
                 <%@ include file="WEB-INF/jspf/staff/components/failure.jspf" %>
                 <%@ include file="WEB-INF/jspf/staff/components/success.jspf" %>
                 <%@ include file="WEB-INF/jspf/staff/components/staffSidebar.jspf" %>
+                <%@ include file="WEB-INF/jspf/common/components/toast.jspf" %>
 
                 <!-- Main Content -->
                 <main class="w-100 p-4 bg-surface">
-                    <div class="tab-content">
+                    <div class="tab-content" data-initial-tab="${tabID}">
                         <!-- Home Tab Content -->
                         <%@ include file="WEB-INF/jspf/staff/home.jspf" %>
                         <!-- Food & Drinks Tab Content -->

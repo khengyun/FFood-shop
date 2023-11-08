@@ -11,14 +11,12 @@ import Models.Account;
 import Models.Customer;
 import Models.Order;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.net.URLDecoder;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -43,7 +41,7 @@ public class UserController extends HttpServlet {
         CustomerDAO customerDAO = new CustomerDAO();
         AccountDAO accountDAO = new AccountDAO();
         Account account = accountDAO.getAccount(accountID);
-        session.setAttribute("tabID", 0);
+
         // If an Account already has an assigned Customer info (customerID)
         // then
         if (account.getCustomerID() != 0) {
@@ -56,18 +54,21 @@ public class UserController extends HttpServlet {
             result = customerDAO.update(customer);
             if (result != 1) {
                 // New Customer failed to be updated
-                response.sendRedirect("/user#info");
+                session.setAttribute("toastMessage", "error-update-info");
+                response.sendRedirect("/user");
                 return;
             }
             // Customer info update is successful
-            response.sendRedirect("/user#info");
+            session.setAttribute("toastMessage", "success-update-info");
+            response.sendRedirect("/user");
             return;
         } else {
             // Customer does not already exists -> create new Customer
             result = customerDAO.add(customer);
             if (result != 1) {
                 // New Customer failed to be added to database
-                response.sendRedirect("/user#info");
+                session.setAttribute("toastMessage", "error-add-customer");
+                response.sendRedirect("/user");
                 return;
             }
             // Proceed to assign the customer to User account if the new Customer is
@@ -79,13 +80,14 @@ public class UserController extends HttpServlet {
             result = accountDAO.update(account);
             if (result != 1) {
                 // Either or both Customer insertion and Account update procedures are unsuccessful
-                response.sendRedirect("/user#info");
+                session.setAttribute("toastMessage", "error-add-customer");
+                response.sendRedirect("/user");
                 return;
             }
             // Both procedures are successful
-            response.sendRedirect("/user#info");
+            session.setAttribute("toastMessage", "success-update-info");
+            response.sendRedirect("/user");
             return;
-
         }
     }
 
@@ -97,8 +99,8 @@ public class UserController extends HttpServlet {
         String email = request.getParameter("txtEmail");
         AccountDAO accountDAO = new AccountDAO();
         int result = 0;
-        if (request.getAttribute("txtUserAccountPassword") != null) {
-            String password = (String) request.getAttribute("txtUserAccountPassword");
+        if (request.getAttribute("txtAccountPassword") != null) {
+            String password = (String) request.getAttribute("txtAccountPassword");
             Account account = new Account(username, email, password, "user");
             account.setAccountID(accountID);   
             result = accountDAO.update(account);
@@ -109,11 +111,12 @@ public class UserController extends HttpServlet {
         }
         
         if (result == 1) {
-            session.setAttribute("tabID", 1);
-            response.sendRedirect("/user#account");
+            session.setAttribute("toastMessage", "success-change-password");
+            response.sendRedirect("/user");
             return;
         } else {
-            response.sendRedirect("/user#account");
+            session.setAttribute("toastMessage", "error-change-password");
+            response.sendRedirect("/user");
             return;
         }
         
@@ -129,9 +132,16 @@ public class UserController extends HttpServlet {
         // Chuyển đổi thời gian hiện tại thành Timestamp
         Timestamp cancelTime = Timestamp.valueOf(currentTime);
         OrderDAO orderDAO = new OrderDAO();
-        orderDAO.cancelOrder(orderID, cancelTime);
+        int result = orderDAO.cancelOrder(orderID, cancelTime);
+        
         session.setAttribute("tabID", 2);
-        response.sendRedirect("/user#order");
+        if (result != 1) {
+            session.setAttribute("toastMessage", "error-cancel-order");
+            response.sendRedirect("/user");
+            return;
+        }
+        session.setAttribute("toastMessage", "success-cancel-order");
+        response.sendRedirect("/user");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -220,18 +230,19 @@ public class UserController extends HttpServlet {
                 //</editor-fold>
             }
             //</editor-fold>
-
             request.getRequestDispatcher("/user.jsp").forward(request, response);
         } else if (path.equals("/user/")) {
+            session.setAttribute("tabID", 0);
             response.sendRedirect("/user");
         } else if (path.startsWith("/user/orders")) {
-            request.setAttribute("tabID", 3);
+            session.setAttribute("tabID", 2);
             response.sendRedirect("/user");
         } else if (path.startsWith("/user/cancel")) {
             doGetCancelOrder(request, response);
 
         } else {
-            response.sendRedirect("/user");
+            session.setAttribute("toastMessage", "error-404");
+            response.sendRedirect("/");
         }
     }
 
@@ -246,16 +257,20 @@ public class UserController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
         if (request.getParameter("btnSubmit") != null
                 && (request.getParameter("btnSubmit")).equals("SubmitUpdateInfo")) {
             doPostUpdateInfo(request, response);
         } else if (request.getParameter("btnSubmit") != null
                 && (request.getParameter("btnSubmit")).equals("SubmitUpdateUser")) {
             doPostUpdateUser(request, response);
+            session.setAttribute("tabID", 1);
         } else if (request.getParameter("btnSubmit") != null
                 && (request.getParameter("btnSubmit")).equals("SubmitCancelOrder")) {
             doGetCancelOrder(request, response);
+            session.setAttribute("tabID", 2);
         } else {
+            session.setAttribute("toastMessage", "error-send-request");
             response.sendRedirect("/user");
         }
 
