@@ -316,15 +316,11 @@ $(document).ready(function () {
   // Get the initial tabID ("home", "foods", etc. from the tabID index)
   const initialTabID = tabLinksDict[tabID];
 
-  // Get a list of all tab links and add a click event listener
-  const tabLinks = document.querySelectorAll("ul [data-bs-target]");
-
-  // Iterate over each tab link, clicking link with the matching tabID
-  tabLinks.forEach((tabLink) => {
-    if (tabLink.getAttribute("data-bs-target") === "#" + initialTabID) {
-      tabLink.click();
-    }
-  })
+  // Get a list of all tab links that correspond to the initial tab
+  // Because the page has a minimized and maximized version,
+  // each tab has 2 triggering links
+  const tabLinks = document.querySelectorAll("ul [data-bs-target='#" + initialTabID + "']");
+  tabLinks[0].click();
 
   // Check for the data-order-history attribute
   const needsOrderHistory =

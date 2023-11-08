@@ -52,9 +52,6 @@ $(document).ready(function () {
         scrollX: true,
     });
 
-    // Define a list of DataTables instances to be used
-    let dataTables = [];
-
     // Food table config
     if (document.querySelector("#food-table")) {
         let foodTable = $("#food-table").DataTable({
@@ -738,72 +735,104 @@ $(document).ready(function () {
         dataTables.push(orderTable);
     }
 
-    // Ensures that the function is called only once to prevent memory issues
-    let areTablesInitialized = false;
-    // This triggers once any tab links are clicked, regardless of the destination tab
-    $("ul [data-bs-target]").on("shown.bs.tab", function () {
-        // Initialize all tables exactly once
-        if (!areTablesInitialized) {
-            // Remove searchPanes' expand and collapse all panes button
-            $(".dtsp-showAll").remove();
-            $(".dtsp-collapseAll").remove();
+});
 
-            // Additional custom styling for searchPane's title row
-            $(".dtsp-titleRow").addClass(
-                    "d-flex flex-wrap align-items-center gap-2 mt-1"
-                    );
-            $(".dtsp-titleRow > div")
-                    .addClass("py-0")
-                    .after("<div class='flex-grow-1'>");
-            $(".dtsp-titleRow > button").addClass(
-                    "d-flex align-items-center btn-sm py-2"
-                    );
+// Define a list of DataTables instances to be used
+let dataTables = [];
 
-            dataTables.forEach((dataTable) => {
-                /*
-                 Highlights current column that the mouse cursor is hovering on
-                 This should be used in tandem with default hover option for increased cursor visibility
-                 */
-                dataTable.on("mouseenter", "td", function () {
-                    let columnIndex = dataTable.cell(this).index().column;
+// Ensures that the function is called only once to prevent memory issues
+let areTablesInitialized = false;
+// This triggers once any tab links are clicked, regardless of the destination tab
+$("ul [data-bs-target]").on("shown.bs.tab", function (event) {
+    // Initialize all tables exactly once
+    // And only triggers when targeted tab is not the home tab
+    const targetTab = event.target.getAttribute("data-bs-target");
+    if (!areTablesInitialized && targetTab != "#home") {
+        // Remove searchPanes' expand and collapse all panes button
+        $(".dtsp-showAll").remove();
+        $(".dtsp-collapseAll").remove();
 
-                    dataTable
-                            .cells()
-                            .nodes()
-                            .each((element) => element.classList.remove("highlight"));
+        // Additional custom styling for searchPane's title row
+        $(".dtsp-titleRow").addClass(
+                "d-flex flex-wrap align-items-center gap-2 mt-1"
+                );
+        $(".dtsp-titleRow > div")
+                .addClass("py-0")
+                .after("<div class='flex-grow-1'>");
+        $(".dtsp-titleRow > button").addClass(
+                "d-flex align-items-center btn-sm py-2"
+                );
 
-                    dataTable
-                            .column(columnIndex)
-                            .nodes()
-                            .each((element) => element.classList.add("highlight"));
-                });
+        dataTables.forEach((dataTable) => {
+            /*
+              Highlights current column that the mouse cursor is hovering on
+              This should be used in tandem with default hover option for increased cursor visibility
+              */
+            dataTable.on("mouseenter", "td", function () {
+                let columnIndex = dataTable.cell(this).index().column;
 
-                // Get the HTMLElement table from the DataTableAPI object
-                let table = dataTable.tables().nodes()[0];
-                let tabID = table.closest(".tab-pane").id;
-                let buttonContainer = document.querySelector(
-                        `#${tabID} .button-container`
-                        );
+                dataTable
+                        .cells()
+                        .nodes()
+                        .each((element) => element.classList.remove("highlight"));
 
-                // Insert the table's button group to existing button container that already has Add, Update, Delete buttons
-                dataTable.buttons().container().prependTo(buttonContainer);
-
-                // Manually configure classes for the newly inserted button group
-                let tableButtons = $(buttonContainer).find("div.dt-buttons");
-                tableButtons.removeClass("btn-group");
-                tableButtons.addClass("col-sm-12 col-lg-6 d-flex gap-2");
-                /*$("#foods-button-container > div.dt-buttons > *").addClass("me-1");*/
-
-                // Mark state of all tables as initialized
-                areTablesInitialized = true;
+                dataTable
+                        .column(columnIndex)
+                        .nodes()
+                        .each((element) => element.classList.add("highlight"));
             });
 
+            // Get the HTMLElement table from the DataTableAPI object
+            let table = dataTable.tables().nodes()[0];
+            let tabID = table.closest(".tab-pane").id;
+            let buttonContainer = document.querySelector(
+                    `#${tabID} .button-container`
+                    );
+            
+            // Fix dumbass button group not showing up after a page load with a non-default tab selected
+            // This is a workaround for the fact that DataTables doesn't initialize the buttons group for some goddamn reason
+            // Took me 8 hours for fuck's sake so uh...
+            // Fuck you DataTables, why do I have to initialize the buttons again?
+            new $.fn.dataTable.Buttons( dataTable, {
+                buttons: [
+                    {
+                        extend: "selectAll",
+                        text: "Chọn tất cả",
+                    },
+                    {
+                        extend: "selectNone",
+                        text: "Bỏ chọn tất cả",
+                    },
+                    {
+                        extend: "colvis",
+                        text: "Hiển thị theo cột",
+                    },
+                    {
+                        extend: "collection",
+                        text: "Xuất file",
+                        autoClose: true,
+                        fade: 0,
+                        buttons: ["pdf", "excel", "csv", "print", "copy"],
+                    },
+                ]
+            } );  
+            
+            // Insert the table's button group to existing button container that already has Add, Update, Delete buttons
+            dataTable.buttons().container().prependTo(buttonContainer);
 
-        }
+            // Manually configure classes for the newly inserted button group
+            let tableButtons = $(buttonContainer).find("div.dt-buttons");
+            console.log(tableButtons)
+            tableButtons.removeClass("btn-group");
+            tableButtons.addClass("col-sm-12 col-lg-6 d-flex gap-2");
 
-        // Get target tab's ID, which can be used to find its table
-        let tabID = $(this).attr("data-bs-target");
-        // Resize the table	
-        $(tabID).find("table").resize();
-    });
+        });
+        // Mark state of all tables as initialized
+        areTablesInitialized = true;
+    }
+
+    // Get target tab's ID, which can be used to find its table
+    let tabID = $(this).attr("data-bs-target");
+    // Resize the table	
+    $(tabID).find("table").resize();
 });
