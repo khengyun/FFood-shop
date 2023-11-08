@@ -152,7 +152,7 @@ public class CheckoutController extends HttpServlet {
         String address = request.getParameter("txtAddress");
         String note = request.getParameter("txtNote");
         //  get payment method
-        String paymentMethod = request.getParameter("paymentMethod");
+        byte paymentMethod = Byte.parseByte(request.getParameter("paymentMethod"));
 
         // Trình tự đặt món: thêm Customer -> Cart -> tất cả Cartitem -> Order
         // Thêm Customer
@@ -170,7 +170,6 @@ public class CheckoutController extends HttpServlet {
         int result = 0;
         if (accountID != 0) {
             // Nếu có accountID -> đã login thành công
-           
             Account account = accountDAO.getAccount(accountID);
             if (account.getCustomerID() != 0) {
                 // Tài khoản này đã có thông tin KH
@@ -192,7 +191,6 @@ public class CheckoutController extends HttpServlet {
                 customerID = customer.getCustomerID();
             }
         } else {
-
             //<editor-fold defaultstate="collapsed" desc="Nếu không có: thêm customer vào db">
             result = customerdao.add(customer);
             if (result != 1) {
@@ -204,7 +202,6 @@ public class CheckoutController extends HttpServlet {
         }
   
         Cart cart = (Cart) session.getAttribute("cart");
-        
         cart.setUserId(customerID);
         result = cartdao.add(cart);
         if (result != 1) {
@@ -240,6 +237,7 @@ public class CheckoutController extends HttpServlet {
         Timestamp deliveryTime = Timestamp.valueOf(deliveryDateTime);
         
         Order order = new Order(cartID, customerID, (byte) 1, (byte) 3, phone, address, orderTime, note, deliveryTime);
+        order.setPaymentMethodID(paymentMethod);
         // Do khi khởi tạo giá trị mặc định của orderTotal = 0
         // nên ta tự set cho nó
         
@@ -262,9 +260,9 @@ public class CheckoutController extends HttpServlet {
             // Xóa giỏ hàng từ session
             session.removeAttribute("cart");
 
-            if (paymentMethod.equals("COD")) {
+            if (paymentMethod == 3) {
                 response.sendRedirect("/home" + "#success");
-            }else if (paymentMethod.equals("VNPAY")) {
+            }else if (paymentMethod == 1) {
 
                 // Tạo URL cho việc gọi API
                 String apiURL = "http://psql-server:8001/payment_from_cis?cis=" + customerID;
