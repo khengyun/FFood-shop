@@ -4,13 +4,9 @@
  */
 package Controllers;
 
-import DAOs.AccountDAO;
 import DAOs.FoodDAO;
-import DAOs.OrderDAO;
 import DAOs.VoucherDAO;
-import Models.Account;
 import Models.Food;
-import Models.Order;
 import Models.Voucher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,9 +15,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,6 +50,7 @@ public class PromotionManagerController extends HttpServlet {
     private void doGetVoucher(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String path = request.getRequestURI();
+        HttpSession session = request.getSession();
         if (path.startsWith("/promotionManager/voucher/delete")) {
             String[] s = path.split("/");
             byte voucherID = Byte.parseByte(s[s.length - 1]);
@@ -63,11 +58,14 @@ public class PromotionManagerController extends HttpServlet {
             int result = dao.delete(voucherID);
             
             if (result >= 1) {
-                response.sendRedirect("/promotionManager#success_delete_voucher");
+                session.setAttribute("toastMessage", "success-delete-voucher");
+                response.sendRedirect("/promotionManager");
             } else {
+                session.setAttribute("toastMessage", "error-delete-voucher");
                 response.sendRedirect("/promotionManager#failure_delete_voucher");
             }
         }
+        session.setAttribute("toastMessage", "error-delete-voucher");
         response.sendRedirect("/promotionManager#failure_delete_voucher");
     }
 
@@ -84,19 +82,22 @@ public class PromotionManagerController extends HttpServlet {
         VoucherDAO voucherDAO = new VoucherDAO();
         Voucher voucher = new Voucher(voucherName, voucherCode, voucher_discount_percent, voucher_quantity, voucher_status, datetime);
         
+        HttpSession session = request.getSession();
         if (voucherDAO.getVoucher(voucherName) != null){
-            response.sendRedirect("/promotionManager#failure_add_voucher_exist");
+            session.setAttribute("toastMessage", "error-add-voucher-existing-voucher");
+            response.sendRedirect("/promotionManager");
             return;
         }
-        HttpSession session = request.getSession();
-        session.setAttribute("tabID", 2);
+        
         int result = voucherDAO.add(voucher);
 
         if (result >= 1) {
-            response.sendRedirect("/promotionManager#success_add_voucher");
+            session.setAttribute("toastMessage", "success-add-voucher");
+            response.sendRedirect("/promotionManager");
             return;
         } else {
-            response.sendRedirect("/promotionManager#failure_add_voucher");
+            session.setAttribute("toastMessage", "error-add-voucher");
+            response.sendRedirect("/promotionManager");
             return;
         }
     }
@@ -118,12 +119,13 @@ public class PromotionManagerController extends HttpServlet {
 
         int result = voucherDAO.update(voucher);
         HttpSession session = request.getSession();
-        session.setAttribute("tabID", 2);
         if (result >= 1) {
-            response.sendRedirect("/promotionManager#success_update_voucher");
+            session.setAttribute("toastMessage", "success-update-voucher");
+            response.sendRedirect("/promotionManager");
             return;
         } else {
-            response.sendRedirect("/promotionManager#failure_update_voucher");
+            session.setAttribute("toastMessage", "error-update-voucher");
+            response.sendRedirect("/promotionManager");
             return;
         }
     }
@@ -144,15 +146,13 @@ public class PromotionManagerController extends HttpServlet {
         VoucherDAO dao = new VoucherDAO();
         int result = dao.deleteMultiple(voucherIDList);
 
-        // TODO implement a deletion status message after page reload
-        // Redirect or forward to another page if necessary
-        request.setAttribute("tabID", 3);
         HttpSession session = request.getSession();
-        session.setAttribute("tabID", 2);
         if (result >= 1) {
-            response.sendRedirect("/promotionManager#success_delete_voucher");
+            session.setAttribute("toastMessage", "success-delete-voucher");
+            response.sendRedirect("/promotionManager");
         } else {
-            response.sendRedirect("/promotionManager#failure_delete_voucher");
+            session.setAttribute("toastMessage", "error-delete-voucher");
+            response.sendRedirect("/promotionManager");
         }
         
     }
@@ -167,12 +167,13 @@ public class PromotionManagerController extends HttpServlet {
         Food food = new Food(foodID, discountPercent);
         int result = foodDAO.updateDiscount(food);
         HttpSession session = request.getSession();
-        session.setAttribute("tabID", 1);
         if (result >= 1) {
-            response.sendRedirect("/promotionManager#success_update_food");
+            session.setAttribute("toastMessage", "success-update-food");
+            response.sendRedirect("/promotionManager");
             return;
         } else {
-            response.sendRedirect("/promotionManager#failure_update_food");
+            session.setAttribute("toastMessage", "error-update-food");  
+            response.sendRedirect("/promotionManager");
             return;
         }
     }
@@ -190,6 +191,10 @@ public class PromotionManagerController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String path = request.getRequestURI();
+        HttpSession session = request.getSession();
+        if (session != null && session.getAttribute("tabID") == null) {
+          session.setAttribute("tabID", 0);
+        }
         if (path.endsWith("/promotionManager")) {
             VoucherDAO voucherDAO = new VoucherDAO();
             List<Voucher> voucherList = voucherDAO.getAllList();
@@ -221,19 +226,24 @@ public class PromotionManagerController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
         if (request.getParameter("btnSubmit") != null) {
             switch (request.getParameter("btnSubmit")) {
                 case "SubmitAddVoucher":
                     doPostAddVoucher(request, response);
+                    session.setAttribute("tabID", 2);
                     break;
                 case "SubmitUpdateVoucher":
                     doPostUpdateVoucher(request, response);
+                    session.setAttribute("tabID", 2);
                     break;
                 case "SubmitDeleteVoucher":
                     doPostDeleteVoucher(request, response);
+                    session.setAttribute("tabID", 2);
                     break;
                 case "SubmitUpdateFood":
                     doPostUpdateFood(request, response);
+                    session.setAttribute("tabID", 1);
                     break;    
                 default:
                     break;
