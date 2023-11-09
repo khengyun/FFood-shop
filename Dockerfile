@@ -32,5 +32,8 @@ COPY --from=build /app/target/FFood-shop-1.0-SNAPSHOT.war ROOT.war
 # Expose the default Tomcat port
 EXPOSE 8080
 
+# Copy setenv.sh to the bin directory of Tomcat
+COPY setenv.sh /usr/local/tomcat/bin/setenv.sh
+
 # Start Tomcat when the container runs
 CMD ["catalina.sh", "run"]
