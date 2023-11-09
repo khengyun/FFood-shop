@@ -31,7 +31,7 @@ def get_all_food():
 
 @app.get('/search_food_by_name/{food_name}')
 async def search_food_by_name_endpoint(food_name: str):
-    return food_operations.search_food_by_name(food_name)
+    return food_operations.search_foods(food_name)
 
 @app.get('/get_daily_revenue')
 def get_daily_revenue():
