@@ -684,7 +684,6 @@ $(document).ready(function () {
                             if (data4[0][12] !== "Đã giao" && data4[0][12] !== "Đã hủy") {
                                 orders[data4[0][0]] = data4[0][0];
                             }
-                            orders[data4[0][0]] = data4[0][0];
                             btnDelete.attr("data-orders", JSON.stringify(orders));
                             btnNext.attr("data-orders", JSON.stringify(orders));
                             btnDelete.removeClass("disabled");

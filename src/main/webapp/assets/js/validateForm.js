@@ -287,15 +287,6 @@ function validateForm() {
             txtAddress: {
                 required: true,
                 maxlength: 200,
-            },
-            txtAccountPassword: {
-                required: true,
-                minlength: 8
-            },
-            txtAccountRePassword: {
-                minlength: 8,
-                required: true,
-                equalTo: "#txtUpdateUserAccountPassword"
             }
         },
         messages: {
@@ -327,15 +318,6 @@ function validateForm() {
             txtAddress: {
                 required: "Vui lòng nhập địa chỉ",
                 maxlength: "Địa chỉ không được vượt quá 200 ký tự",
-            },
-            txtAccountPassword: {
-                minlength: "Mật khẩu phải có ít nhất 8 ký tự",
-                required: "Vui lòng nhập mật khẩu"
-            },
-            txtAccountRePassword: {
-                required: "Vui lòng nhập lại mật khẩu",
-                minlength: "Mật khẩu phải có ít nhất 8 ký tự",
-                equalTo: "Mật khẩu không khớp"
             }
         },
         submitHandler: function (form) {
