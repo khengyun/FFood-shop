@@ -14,7 +14,7 @@
 
   <button id="openCameraModal" type="button"
     class="btn bg-100 border border-primary border-2 border-start-0 d-flex align-items-center" data-bs-toggle="modal"
-    data-bs-target="#cameraModal" title="Tìm Môn bằng hình ảnh">
+    data-bs-target="#image-drop-modal" title="Tìm Môn bằng hình ảnh">
     <i class="ph-fill ph-camera" style="font-size: 1.2rem"></i>
   </button>
 
@@ -69,21 +69,40 @@
     }
 
     function handleDrop(e) {
-      const files = e.dataTransfer.files;
+      // Check argument type
+      if (e.dataTransfer && e.dataTransfer.files) {
+        // If it is a FileList, get the first file
+        const files = e.dataTransfer.files;
 
-      if (files.length > 0) {
-        const file = files[0];
-        if (file.type.startsWith('image/')) {
-          const reader = new FileReader();
-          reader.onload = function () {
-            imagePreview.src = reader.result;
-            const imageBase64 = reader.result;
-            predict_to_popup(imageBase64);
+        if (files.length > 0) {
+          const file = files[0];
+          if (file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = function () {
+              imagePreview.src = reader.result;
+              const imageBase64 = reader.result;
+              predict_to_popup(imageBase64);
+            }
+            reader.readAsDataURL(file);
+          } else {
+            alert('Please drop an image file.');
           }
-          reader.readAsDataURL(file);
-        } else {
-          alert('Please drop an image file.');
         }
+      } else {
+        // Otherwise assume it is a direct file type
+        const file = input.files[0];
+        if (file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = function () {
+              imagePreview.src = reader.result;
+              const imageBase64 = reader.result;
+              predict_to_popup(imageBase64);
+            }
+            reader.readAsDataURL(file);
+            input.value = null;
+          } else {
+            alert('Please drop an image file.');
+          }
       }
 
       unhighlight();
@@ -149,5 +168,20 @@
       }
     }
 
+    const uploadImgButton = document.getElementById('upload-image-button');
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    
+    uploadImgButton.addEventListener('click', (e) => {
+      input.value = null; // Clear the value
+
+      // Only pass in reference to the function, not the function itself
+      input.removeEventListener('change', handleDrop);
+
+      input.addEventListener('change', handleDrop);
+      
+      input.click();
+    });
 
   </script>
