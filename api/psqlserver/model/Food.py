@@ -7,8 +7,11 @@ from datetime import date,timedelta
 from unidecode import unidecode
 from itertools import permutations
 import wikipedia
-from bardapi import Bard
+import g4f
 import json
+
+g4f.debug.logging = True # enable logging
+g4f.check_version = False # Disable automatic version checkinga
 
 class FoodModel(BaseModel):
     food_id: int
@@ -257,16 +260,7 @@ class FoodOperations:
             return str(e)
         
         
-    def wikipedia_summary(self, food_name: str):
-        token = 'cwhc0nEvP6vBJCnYULFK5k-1qPGVgnt6KmCtEXv7pIZEMrnROoiRXYqwYUopCJMc1ubDEw.'
-        bard = Bard(token=token)
-        content = bard.get_answer(f'As a waiter of a restaurant, generate a description of {food_name} '
-         'in a non-scientific way. The description should be easy to understand for normal people. '
-         'The description must be written in Vietnamese with a language that is close to human language '
-         'as possible. Avoid descriptive and robotic descriptions. The description length must be limited '
-         'to 1 paragraph and must not exceed 30 words. Do not add recommendations in the last sentence.')['content']
-        
-        return content
+
     
     def get_today_income(self):
         try:
