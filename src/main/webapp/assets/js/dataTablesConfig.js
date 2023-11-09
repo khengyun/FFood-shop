@@ -680,28 +680,32 @@ $(document).ready(function () {
                             btnHistory.removeClass("disabled");
 
                             let orders = {};
-
-                            if (data4[0][12] !== "Đã giao" && data4[0][12] !== "Đã hủy") {
-                                orders[data4[0][0]] = data4[0][0];
+                            
+                            // Initially enable the next button
+                            btnNext.attr("data-orders", JSON.stringify(orders));
+                            btnNext.removeClass("disabled");
+                            // And then disabled it if the order status is "Đã giao" or "Đã hủy"
+                            if (data4[0][12] === "Đã giao" || data4[0][12] === "Đã hủy") {
+                                disableNextOrderBtn();
                             }
                             orders[data4[0][0]] = data4[0][0];
                             btnDelete.attr("data-orders", JSON.stringify(orders));
-                            btnNext.attr("data-orders", JSON.stringify(orders));
                             btnDelete.removeClass("disabled");
-                            btnNext.removeClass("disabled");
                             
                         } else if (data4.length > 1) {
                             let orders = {};
+                            
+                            // Initially enable the next button
+                            btnNext.attr("data-orders", JSON.stringify(orders));
+                            btnNext.removeClass("disabled");
+                            // And then disabled it if any order status is "Đã giao" or "Đã hủy"
                             for (let i = 0; i < data4.length; i++) {
-                                if (data4[i][12] !== "Đã giao" && data4[i][12] !== "Đã hủy") {
-                                    let orderId = data4[i][0];
-                                    orders[orderId] = data4[i][0];
+                                if (data4[i][12] === "Đã giao" || data4[i][12] === "Đã hủy") {
+                                    disableNextOrderBtn();
                                 }
                             }
                             btnDelete.attr("data-orders", JSON.stringify(orders));
-                            btnNext.attr("data-orders", JSON.stringify(orders));
                             btnDelete.removeClass("disabled");
-                            btnNext.removeClass("disabled");
                             disableUpdateOrderBtn();
                             disableHistoryOrderBtn();
                         } else {
