@@ -1,0 +1,1 @@
+CATALINA_OPTS="-Duser.timezone=GMT+7"
