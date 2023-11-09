@@ -689,6 +689,7 @@ $(document).ready(function () {
                             } else {
                               orders[data4[0][0]] = data4[0][0];
                             }
+
                             btnNext.attr("data-orders", JSON.stringify(orders));
                             orders[data4[0][0]] = data4[0][0];
                             btnDelete.attr("data-orders", JSON.stringify(orders));
