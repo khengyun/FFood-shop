@@ -60,11 +60,10 @@
             <div class="flex-grow-1"></div>
             <div class="my-auto">
               <a
-                href="#forget-modal"
+                href=""
                 class="text-decoration-underline link-primary"
                 data-bs-toggle="modal"
                 data-bs-target="#forget-modal"
-                data-bs-dismiss="modal"
               >
                 Quên mật khẩu?
               </a>
@@ -77,7 +76,6 @@
               id="btnSubmit"
               name="btnSubmit"
               value="Submit"
-              onclick="RemoveOrderLogin()"
             >
               Đăng nhập
             </button>
@@ -87,15 +85,11 @@
 
           <div class="mt-4 text-center">
             Bạn chưa có tài khoản?
-            <a href="#signup-modal">
-              <span
-                class="fw-bold text-decoration-underline link-primary"
+            <a href="" class="fw-bold text-decoration-underline link-primary"
                 data-bs-toggle="modal"
                 data-bs-target="#signup-modal"
-                data-bs-dismiss="modal"
-              >
+            >
                 Đăng ký ngay
-              </span>
             </a>
           </div>
         </form>

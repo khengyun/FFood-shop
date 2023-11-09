@@ -24,14 +24,18 @@
                 background-color: #ddd;
             }
         </style>
+        <script src="https://accounts.google.com/gsi/client" async></script>
     </head>
     <body>
         <main class="main" id="top">
             <%@ include file="WEB-INF/jspf/common/imports/base.jspf" %>
-            <%@ include file="WEB-INF/jspf/common/components/header.jspf" %>
+            <%@ include file="WEB-INF/jspf/common/components/checkoutHeader.jspf" %>
             <%@ include file="WEB-INF/jspf/guest/components/login.jspf" %>
             <%@ include file="WEB-INF/jspf/guest/components/signup.jspf" %>
             <%@ include file="WEB-INF/jspf/guest/components/verify.jspf" %>
+            <%@ include file="WEB-INF/jspf/guest/components/forget.jspf" %> 
+            <%@ include file="WEB-INF/jspf/guest/components/changePassword.jspf" %> 
+            <%@ include file="WEB-INF/jspf/common/components/toast.jspf" %>
             <div class="container my-5">
                 <div class="row">
                     <div class="col-md-6">
@@ -42,7 +46,7 @@
                                     <tr>
                                         <th>Món ăn/Đồ uống</th>
                                         <th>Đơn giá</th>
-                                        <th>Só lượng</th>
+                                        <th>Số lượng</th>
                                         <th>Số tiền</th>
                                     </tr>
                                 </thead>
@@ -130,11 +134,11 @@
                                 <div class="col-md-12">
                                     <h4>Phương thức thanh toán</h4>
                                     <fieldset>
-                                        <input class="paying-method" checked type="radio" name="paymentMethod" id="cod-payment" value="COD">
+                                        <input class="paying-method" checked type="radio" name="paymentMethod" id="cod-payment" value="3">
                                         <label for="cod-payment">Thanh toán khi nhận món (COD)</label>
                                     </fieldset>
                                     <fieldset>
-                                        <input class="paying-method" type="radio" name="paymentMethod" id="vnpay-payment" value="VNPAY">
+                                        <input class="paying-method" type="radio" name="paymentMethod" id="vnpay-payment" value="1">
                                         <label for="vnpay-payment">Thanh toán Online (VNPAY)</label>
                                     </fieldset>
                                 </div>
@@ -167,7 +171,7 @@
         </main>
         <%@ include file="WEB-INF/jspf/common/imports/javascript.jspf" %>
         <%@ include file="WEB-INF/jspf/common/imports/validation.jspf" %>
-
+        <script src="assets/js/userNotify.js"></script>
         <script>
             function checkAndCompleteOrder() {
                 if (checkPaying()) {

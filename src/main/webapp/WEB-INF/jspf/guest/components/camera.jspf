@@ -14,8 +14,12 @@
           </div>
         </div>
         <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-target="#image-drop-modal" data-bs-toggle="modal" data-bs-dismiss="modal">
+            <i class="ph-bold ph-image"></i>
+            Kéo hoặc tải ảnh lên
+          </button>
           <button id="startbutton" data-bs-target="#cameraModal2" data-bs-toggle="modal" data-bs-dismiss="modal"
-            class="btn btn-primary">
+            class="btn btn-primary btn-lg">
             Chụp ảnh
           </button>
         </div>
@@ -35,9 +39,43 @@
           <canvas id="canvas" class="d-block mx-auto"> </canvas>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-primary" data-bs-target="#cameraModal" data-bs-toggle="modal" data-bs-dismiss="modal"
+          <button class="btn btn-primary btn-lg" data-bs-target="#cameraModal" data-bs-toggle="modal" data-bs-dismiss="modal"
             data-bs-toggle="popover" data-bs-trigger="focus" title="Quét tiếp tục nếu món ăn không như bạn muốn.">
             Thử lại
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="image-drop-modal" tabindex="-1" aria-labelledby="imageDropModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="cameraModalLabel2">Tìm Món bằng hình ảnh</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body d-flex flex-row flex-wrap">
+          <!-- Blank rectangle that allows users to drag-and-drop images -->
+          <div id="drop-zone" class="d-flex flex-column w-100 align-items-center">
+            <p class="fs-1 fw-bolder">Kéo ảnh của bạn vào đây</p>
+            <p>hoặc</p>
+            <div class="d-flex flex-row flex-wrap justify-content-center gap-3">
+              <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal"
+                      data-bs-target="#cameraModal">
+                <i class="ph-bold ph-camera"></i>
+                Chụp ảnh
+              </button>
+              <button type="button" id="upload-image-button" class="btn btn-outline-secondary">
+                <i class="ph-bold ph-image"></i>
+                Tải ảnh lên
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" data-bs-dismiss="modal">
+            Đóng
           </button>
         </div>
       </div>

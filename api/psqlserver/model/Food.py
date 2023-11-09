@@ -27,10 +27,11 @@ class FoodModel(BaseModel):
     
     
 class DailyReport:
-    def __init__(self,total_account=None, daily_revenue=None, daily_orders=None, customer_with_most_orders=None):
+    def __init__(self,total_account=None, daily_revenue=None, daily_orders=None, customer_with_most_orders=None,best_selling_food=None):
         self.total_account = total_account
         self.daily_revenue = daily_revenue
         self.daily_orders = daily_orders
+        self.best_selling_food=best_selling_food
         self.customer_with_most_orders = customer_with_most_orders
 
 class FoodOperations:
@@ -67,69 +68,61 @@ class FoodOperations:
             return str(e)
         
 
-    def generate_variants(self, food_name):
-        words = food_name.split()
-        variants = set()
-        
-        variants.add(food_name)
-        
-        for word in words:
-            variants.add(word)
-        
-        for r in range(2, len(words) + 1):
-            for combo in permutations(words, r):
-                variants.add(' '.join(combo))
-        
-        return variants
 
-    def similarity_score(self, food_name, food):
-        print(food_name, food.food_name)
-        food_name_lower = food_name.lower()
-        food_name_tokens = food_name_lower.split()
-        food_tokens = food.food_name.lower().split()
-        score = sum(1 for token in food_tokens if token in food_name_tokens)
-        return score
+    def search_foods(self, food_name):
+        def generate_variants(name):
+            words = name.split()
+            variants = set()
+            
+            variants.add(name)
+            
+            for word in words:
+                variants.add(word)
+            
+            for r in range(2, len(words) + 1):
+                for combo in permutations(words, r):
+                    variants.add(' '.join(combo))
+            
+            return variants
 
-    def search_food_by_name(self, food_name: str):
+        def similarity_score(name, food):
+            name_lower = name.lower()
+            name_tokens = name_lower.split()
+            food_tokens = food.lower().split()
+            score = sum(1 for token in food_tokens if token in name_tokens)
+            return score
+
         try:
             conn = pymssql.connect(**self.db_config)
             cursor = conn.cursor()
-            variants = self.generate_variants(food_name)
+            variants = generate_variants(food_name)
             
-            query = "SELECT TOP 10 * FROM Food WHERE "
-            query += " OR ".join(["food_name COLLATE Vietnamese_CI_AI LIKE %s" for _ in variants])
-            
+            query = "SELECT * FROM Food WHERE " + " OR ".join(["food_name COLLATE Vietnamese_CI_AI LIKE %s" for _ in variants])
             cursor.execute(query, tuple('%' + variant + '%' for variant in variants))
             records = cursor.fetchall()
             food_data = []
-            print(records)
 
-            
-            
             for record in records:
-                # print("content: ",content)
-                
-                food = FoodModel(
-                    food_id=record[0],
-                    food_name=record[1],
-                    food_description=record[2],
-                    food_price=float(record[3]),
-                    food_stock_quantity=int(record[4]),
-                    food_status=bool(record[5]),
-                    food_rate=int(record[6]),
-                    discount_percent=int(record[7]),
-                    food_url=record[8],
-                    food_type_id=record[9]
-                )
+                food = {
+                    "food_id": record[0],
+                    "food_name": record[1],
+                    "food_description": record[2],
+                    "food_price": float(record[3]),
+                    "food_stock_quantity": int(record[4]),
+                    "food_status": bool(record[5]),
+                    "food_rate": int(record[6]),
+                    "discount_percent": int(record[7]),
+                    "food_url": record[8],
+                    "food_type_id": record[9]
+                }
                 food_data.append(food)
-            print(food_data)
 
             # Sort food_data based on similarity_score
-            food_data = sorted(food_data, key=lambda x: self.similarity_score(food_name, x), reverse=True)
+            food_data = sorted(food_data, key=lambda x: similarity_score(food_name, x["food_name"]), reverse=True)
 
             conn.close()
 
-            return [food.dict() for food in food_data]
+            return food_data
 
         except Exception as e:
             return str(e)
@@ -176,12 +169,25 @@ class FoodOperations:
                 """)
                 rows3 = cursor.fetchall()
                 daily_orders = int(rows3[0][0]) if rows3 and rows3[0][0] is not None else 0
+                
+                
+                # Truy vấn 4: take the name of the best-selling food
+                cursor.execute("""
+                SELECT TOP 1 F.food_name
+                FROM Food AS F
+                INNER JOIN CartItem AS CI ON F.food_id = CI.food_id
+                GROUP BY F.food_name
+                ORDER BY SUM(CI.food_quantity) DESC
+                """)
+                rows4 = cursor.fetchall()
+                best_selling_food_name = rows4[0][0] if rows4 and rows4[0][0] is not None else None
 
                 result = DailyReport(
                     total_account=total_account,
                     daily_revenue=daily_revenue,
                     daily_orders=daily_orders,
-                    customer_with_most_orders=customer_with_most_orders
+                    best_selling_food=best_selling_food_name,
+                    customer_with_most_orders=customer_with_most_orders,
                 )
 
                 return result.__dict__
@@ -232,7 +238,7 @@ class FoodOperations:
                 daily_payments = []
 
                 for i in range(7):  # Lấy dữ liệu trong 7 ngày gần đây
-                    target_date = (date.today()+timedelta(days=1)) - timedelta(days=i)
+                    target_date = date.today() - timedelta(days=i)
                     print(target_date)
                     print(date.today())
                     print("======================")

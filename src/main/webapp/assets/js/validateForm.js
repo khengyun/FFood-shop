@@ -207,7 +207,7 @@ function validateForm() {
             txtAccountRePassword: {
                 required: true,
                 minlength: 8,
-                equalTo: "#txtUserAccountPassword"
+                equalTo: "#txtAccountPassword"
             }
         },
         messages: {
@@ -287,13 +287,6 @@ function validateForm() {
             txtAddress: {
                 required: true,
                 maxlength: 200,
-            },
-            txtAccountPassword: {
-                minlength: 8
-            },
-            txtAccountRePassword: {
-                minlength: 8,
-                equalTo: "#txtUpdateUserAccountPassword"
             }
         },
         messages: {
@@ -325,13 +318,6 @@ function validateForm() {
             txtAddress: {
                 required: "Vui lòng nhập địa chỉ",
                 maxlength: "Địa chỉ không được vượt quá 200 ký tự",
-            },
-            txtAccountPassword: {
-                minlength: "Mật khẩu phải có ít nhất 8 ký tự"
-            },
-            txtAccountRePassword: {
-                minlength: "Mật khẩu phải có ít nhất 8 ký tự",
-                equalTo: "Mật khẩu không khớp"
             }
         },
         submitHandler: function (form) {
@@ -349,11 +335,13 @@ function validateForm() {
                 pattern: /^[a-zA-Z0-9-'_]+$/
             },
             txtAccountPassword: {
+                required: true,
                 minlength: 8
             },
             txtAccountRePassword: {
+                required: true,
                 minlength: 8,
-                equalTo: "#txtUserAccountRePassword"
+                equalTo: "#txtAccountPassword"
             }
         },
         messages: {
@@ -363,9 +351,11 @@ function validateForm() {
                 pattern: "Tên Tài khoản chỉ chấp nhận chữ, số, dấu gạch ngang, gạch dưới, nháy đơn và không chứa khoảng trắng"
             },           
             txtAccountPassword: {
+                required: "Vui lòng nhập mật khẩu",
                 minlength: "Mật khẩu phải có ít nhất 8 ký tự"
             },
             txtAccountRePassword: {
+                required: "Vui lòng nhập lại mật khẩu",
                 minlength: "Mật khẩu phải có ít nhất 8 ký tự",
                 equalTo: "Mật khẩu không khớp"
             }
@@ -492,7 +482,8 @@ function validateForm() {
             txtAccountUsername: {
                 required: true,
                 minlength: 8,
-                maxlength: 50
+                maxlength: 50,
+                pattern: /^[a-zA-Z0-9-'_]+$/
             },
             txtAccountEmail: {
                 required: true,
@@ -514,7 +505,8 @@ function validateForm() {
             txtAccountUsername: {
                 required: "Vui lòng nhập Tên Tài khoản Người dùng",
                 minlength: "Tên tài khoản mới phải có ít nhất 8 ký tự",
-                maxlength: "Tên Tài khoản Người dùng không được vượt quá 50 ký tự"
+                maxlength: "Tên Tài khoản Người dùng không được vượt quá 50 ký tự",
+                pattern: "Tên Tài khoản chỉ chấp nhận chữ, số, dấu gạch ngang, gạch dưới, nháy đơn và không chứa khoảng trắng"
             },
             txtAccountEmail: {
                 required: "Vui lòng nhập Email",
@@ -680,6 +672,7 @@ function validateForm() {
             },
             txtReAccountPassword: {
                 required: true,
+                minlength: 8,
                 equalTo: "#txtAdminAccountPassword"
             }
         },
@@ -705,6 +698,7 @@ function validateForm() {
             },
             txtReAccountPassword: {
                 required: "Vui lòng nhập lại Mật khẩu",
+                minlength: "Mật khẩu phải có ít nhất 8 ký tự",
                 equalTo: "Mật khẩu không khớp"
             }
         },

@@ -1,95 +1,102 @@
-//===============================SUCCESS================================
+// Requires importing toast.jspf
 
+const successToast = document.getElementById('success');
+const errorToast = document.getElementById('error');
 
+// Initialize toasts
+const toastElList = [successToast, errorToast];
+const toastList = [...toastElList].map(toastEl => new bootstrap.Toast(toastEl, {
+  delay: 3000
+}))
 
-//show success for food
+const toastDetails = {
+  "success-delete-order": {
+    title: "Xoá đơn thành công",
+    message: "",
+  },
+  "success-next-order": {
+    title: "Chuyển trạng thái đơn thành công",
+    message: "",
+  },
+  "success-add-food": {
+    title: "Thêm món thành công",
+    message: "",
+  },
+  "success-update-food": {
+    title: "Cập nhật món thành công",
+    message: "",
+  },
+  "success-delete-food": {
+    title: "Xoá món thành công",
+    message: "",
+  },
+  "error-delete-order": {
+    title: "Không thể xoá đơn",
+    message: "Đã có lỗi hệ thống xảy ra.",
+  },
+  "error-next-order": {
+    title: "Không thể chuyển trạng thái đơn",
+    message: "Đã có lỗi hệ thống xảy ra.",
+  },
+  "error-add-food": {
+    title: "Không thể thêm món",
+    message: "Đã có lỗi hệ thống xảy ra.",
+  },
+  "error-add-food-existing-food": {
+    title: "Không thể thêm món",
+    message: "Món này đã tồn tại.",
+  },
+  "error-update-food": {
+    title: "Không thể cập nhật món",
+    message: "Đã có lỗi hệ thống xảy ra.",
+  },
+  "error-delete-food": {
+    title: "Không thể xoá món",
+    message: "Đã có lỗi hệ thống xảy ra.",
+  },
+}
+
+// Get the message from the session scope
+let toastContent = successToast.getAttribute('data-message');
+
+function initModal(id) {
+  const modal = document.getElementById(`${id}`);
+  // Construct the attribute name using the id (e.g. trigger-otp-modal)
+  const attributeName = "data-" + id.replace("-modal", "");
+  if (modal.getAttribute(attributeName) && modal.getAttribute(attributeName) != "0") {
+    const modalInstance = new bootstrap.Modal(`#${id}`, {});
+    modal.setAttribute(attributeName, 'true');
+    modalInstance.show();
+  }
+}
+
+function showToast(toast, toastContent) {
+  const toastElement = bootstrap.Toast.getOrCreateInstance(toast);
+  const toastTitle = toast.getElementsByClassName('toast-title')[0];
+  const toastMessage = toast.getElementsByClassName('toast-message')[0];
+  
+  toastTitle.innerHTML = toastDetails[toastContent].title;
+  toastMessage.innerHTML = toastDetails[toastContent].message;
+  
+  toastElement.show();
+}
+function hideToast(toast) {
+  bootstrap.Toast.getInstance(toast).hide();
+}
+
+// Initialize either of these modals
 $(document).ready(function () {
-  if (window.location.hash === '#success_add_food') {
-    $('#success_add_food').modal('show');
-    setTimeout(function () {
-      $('#success_add_food').modal('hide');
-    }, 3000);
-  };
-  
-  if (window.location.hash === '#success_update_food') {
-    $('#success_update_food').modal('show');
-    setTimeout(function () {
-      $('#success_update_food').modal('hide');
-    }, 3000);
-  };
-  
-  if (window.location.hash === '#success_delete_food') {
-    $('#success_delete_food').modal('show');
-    setTimeout(function () {
-      $('#success_delete_food').modal('hide');
-    }, 3000);
-  };
-  
-});
+  //initModal("trigger-otp-modal");
 
-
-//show success for order
-$(document).ready(function () {
-  if (window.location.hash === '#success_delete_order') {
-    $('#success_delete_order').modal('show');
-    setTimeout(function () {
-      $('#success_delete_order').modal('hide');
-    }, 3000);
-  };
-  
-  if (window.location.hash === '#success_next_order') {
-    $('#success_next_order').modal('show');
-    setTimeout(function () {
-      $('#success_next_order').modal('hide');
-    }, 3000);
-  };
-  
-});
-
-// ===================================FAILURE======================================
-
-//show fail for food
-$(document).ready(function () {
-  if (window.location.hash === '#failure_add_food') {
-    $('#failure_add_food').modal('show');
-    setTimeout(function () {
-      $('#failure_add_food').modal('hide');
-    }, 3000);
-  };
-  if (window.location.hash === '#failure_add_food_exist') {
-    $('#failure_add_food_exist').modal('show');
-    setTimeout(function () {
-      $('#failure_add_food_exist').modal('hide');
-    }, 3000);
-  };
-  if (window.location.hash === '#failure_update_food') {
-    $('#failure_update_food').modal('show');
-    setTimeout(function () {
-      $('#failure_update_food').modal('hide');
-    }, 3000);
-  };
-  
-  if (window.location.hash === '#failure_delete_food') {
-    $('#failure_delete_food').modal('show');
-    setTimeout(function () {
-      $('#failure_delete_food').modal('hide');
-    }, 3000);
-  }; 
-});
-
-//show fail for order
-$(document).ready(function () {
-  if (window.location.hash === '#failure_update_order') {
-    $('#failure_update_order').modal('show');
-    setTimeout(function () {
-      $('#failure_update_order').modal('hide');
-    }, 3000);
-  };
-  
-  if (window.location.hash === '#failure_next_order') {
-    $('#failure_next_order').modal('show');
-    setTimeout(function () {
-      $('#failure_next_order').modal('hide');
-    }, 3000);
-  };
+  toastContent = successToast.getAttribute('data-message');
+  // Show success or error toast based on the message
+  if (toastContent) {
+    if (toastContent.includes('success')) {
+      hideToast(errorToast);
+      showToast(successToast, toastContent);
+    } else if (toastContent.includes('error')) {
+      hideToast(successToast);
+      showToast(errorToast, toastContent);
+    }
+  }
 });

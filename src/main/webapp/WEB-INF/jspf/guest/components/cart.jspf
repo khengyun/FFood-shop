@@ -81,19 +81,22 @@
 
         if (existingItem) {
           const stockQuantity = existingItem.stockQuantity;
-          let newQuantity = existingItem.quantity + quantity;
+          let newQuantity = existingItem.quantity + quantity; // Initial decleration
           
-          // Same as below
-          if (newQuantity > maxQuantity) {
-              newQuantity = maxQuantity;
-          } else if (newQuantity > stockQuantity) {
-              newQuantity = stockQuantity;
-          } else if (newQuantity < minQuantity) {
-              newQuantity = minQuantity;
+          // Clamp to lower range
+          newQuantity = newQuantity < minQuantity ? minQuantity : newQuantity;
+          
+          // Clamp to upper range
+          if (stockQuantity < maxQuantity) { // Stock quantity is only relevant if it is less than maxQuantity
+            newQuantity = newQuantity > stockQuantity ? stockQuantity : newQuantity;
+          } else if (newQuantity > maxQuantity) {
+            newQuantity = maxQuantity;
           }
           
           // Update the quantity of the existing item
           existingItem.quantity = newQuantity;
+          const successToast = document.getElementById('success');
+          showToast(successToast, "success-cart");
         } else {
             var foodItem = foodLists.find(item => item.foodID === foodID);
             const stockQuantity = foodItem.quantity;
@@ -121,6 +124,7 @@
                                 imageURL: foodItem.imageURL,
                                 discount: foodItem.discountPercent,
                                 stockQuantity: foodItem.quantity});
+              showToast(successToast, "success-cart");
             }
         }
         // Store the updated cart back in session storage
@@ -400,7 +404,7 @@
         const maxQuantity = existingItem.stockQuantity < 5 ? existingItem.stockQuantity : 5;
         const minQuantity = 1;
 
-        // Validates the user input, making sure it is within 1-10
+        // Validates the user input, making sure it is within 1-5
         let newQuantity =
                 !isNaN(currentQuantity) && currentQuantity >= minQuantity && currentQuantity <= maxQuantity // user input is valid
                 ? currentQuantity
@@ -470,12 +474,14 @@
       let parent = target.closest("div");
       let quantityInput = parent.find("input[name=" + fieldName + "]");
       let currentQuantity = parseInt(quantityInput.val(), 10);
+      let maxQuantity = 5;
+      let minQuantity = 1;
 
-      // Set the new value, making sure it is within 1-10
+      // Set the new value, making sure it is within 1-5
       let newQuantity =
-        !isNaN(currentQuantity) && currentQuantity >= 1 && currentQuantity < 10
-          ? currentQuantity + 1
-          : 10;
+              !isNaN(currentQuantity) && currentQuantity >= minQuantity && currentQuantity < maxQuantity
+              ? currentQuantity + 1
+              : maxQuantity;
       quantityInput.val(newQuantity);
 
       return newQuantity;
@@ -494,12 +500,14 @@
       let parent = target.closest("div");
       let quantityInput = parent.find("input[name=" + fieldName + "]");
       let currentQuantity = parseInt(quantityInput.val(), 10);
+      let maxQuantity = 5;
+      let minQuantity = 1;
 
-      // Set the new value, making sure it is within 1-10
+      // Set the new value, making sure it is within 1-5
       let newQuantity =
-        !isNaN(currentQuantity) && currentQuantity > 1 && currentQuantity <= 10
-          ? currentQuantity - 1
-          : 1;
+              !isNaN(currentQuantity) && currentQuantity > minQuantity && currentQuantity <= maxQuantity
+              ? currentQuantity - 1
+              : minQuantity;
       quantityInput.val(newQuantity);
 
       return newQuantity;

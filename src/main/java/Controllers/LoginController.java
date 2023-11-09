@@ -7,7 +7,6 @@ package Controllers;
 import DAOs.AccountDAO;
 import Models.Account;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
@@ -16,37 +15,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.net.URLEncoder;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import Validation.ValidationUtils;
 
 public class LoginController extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Login</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Login at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -75,91 +48,117 @@ public class LoginController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String contextPath = request.getContextPath();
+        ValidationUtils valid = new ValidationUtils();
+        HttpSession session = request.getSession();
+        
+        // Check if the form is submitted
         if (request.getParameter("btnSubmit") != null
                 && ((String) request.getParameter("btnSubmit")).equals("Submit")) {
             String email = request.getParameter("txtEmail");
             String password = (String) request.getAttribute("txtPassword");
-
-            Account account = new Account(email, password);
+            
+             // Validate the login credentials
+            if (!valid.loginValidation(email,password)){
+                session.setAttribute("isSuccessful", false);
+                response.sendRedirect("/home#failure_login_info"); 
+                return;
+            }
+            
+            Account loginAccount = new Account(email, password);
             AccountDAO dao = new AccountDAO();
             boolean success;
             try {
-                success = dao.login(account);
+                success = dao.login(loginAccount);
+                
             } catch (SQLException ex) {
                 Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
                 success = false;
+                System.err.println("A database issue occurred. Your login was cancelled");
             }
-            // Truy xuất URL hiện tại từ session attribute
-            HttpSession session = request.getSession();
+            //found the accoutn in database
             if (success) {
-                
-                account = dao.getAccount(email);
+                System.out.println("Successful login");
+                session.setAttribute("isSuccessful", success);
+                Account account = dao.getAccount(email);
                 String accountType = account.getAccountType();
                 boolean isRemembered = (request.getParameter("chkRememberMe") != null
                         && request.getParameter("chkRememberMe").equals("remember"));
+                
+                //handle checked the remember button
                 if (isRemembered) {
-                    if (accountType.equals("user")) {
-                        int cAge = 24 * 60 * 60 * 7; // 7 days
+                    int cAge = 24 * 60 * 60 * 7; // 7 days
+                    // Handle different account types
+                    if (accountType.equals("user")) {                       
                         account = dao.getAccount(email);
                         String username = account.getUsername();
                         username = URLEncoder.encode(username, "UTF-8");
-                        int userID = account.getAccountID();
+                        //add username cookie
                         Cookie cUser = new Cookie("user", username);
                         cUser.setMaxAge(cAge);
                         cUser.setPath("/");
                         response.addCookie(cUser);
+                        //add user id cookie
+                        int userID = account.getAccountID();
                         Cookie cUserID = new Cookie("userID", String.valueOf(userID));
-                        cUser.setMaxAge(cAge);
-                        cUser.setPath("/");
+                        cUserID.setMaxAge(cAge);
+                        cUserID.setPath("/");
                         response.addCookie(cUserID);
+                        
                         response.sendRedirect("/");
                     } else if (accountType.equals("admin")) {
-                        int cAge = 24 * 60 * 60 * 7; // 7 days
                         account = dao.getAccount(email);
                         String username = account.getUsername();
                         username = URLEncoder.encode(username, "UTF-8");
                         byte adminID = account.getAdminID();
-                        System.out.println("adminID " + adminID);
                         session.setAttribute("adminID", adminID);
+                        //add admin cookie
                         Cookie adminCookie = new Cookie("admin", username);
-                        Cookie adminIDCookie = new Cookie("adminID", Byte.toString(adminID));
                         adminCookie.setMaxAge(cAge);
                         adminCookie.setPath("/");
-                        adminIDCookie.setMaxAge(cAge);
-                        adminIDCookie.setPath("/");
                         response.addCookie(adminCookie);
-                        response.addCookie(adminIDCookie);
+                        //add admin id cookie
+                        Cookie adminIDCookie = new Cookie("adminID", Byte.toString(adminID));
+                        adminIDCookie.setMaxAge(cAge);
+                        adminIDCookie.setPath("/");      
+                        response.addCookie(adminIDCookie);                       
                         response.sendRedirect("/admin");
                     } else if (accountType.equals("staff")) {
-                        int cAge = 24 * 60 * 60 * 7; // 7 days
                         account = dao.getAccount(email);
                         String username = account.getUsername();
-                        byte staffID = account.getStaffID();
-                        System.out.println("staffID " + staffID);
+                        byte staffID = account.getStaffID();                       
                         session.setAttribute("staffID", staffID);
                         username = URLEncoder.encode(username, "UTF-8");
-                        Cookie staffCookie = new Cookie("staff", username);
-                        Cookie staffIDCookie = new Cookie("staffID", Byte.toString(staffID));
                         
+                        //add staff cookie
+                        Cookie staffCookie = new Cookie("staff", username);
                         staffCookie.setMaxAge(cAge);
                         staffCookie.setPath("/");
-                        staffIDCookie.setMaxAge(cAge);
-                        staffIDCookie.setPath("/");                        
                         response.addCookie(staffCookie);
+                        //add staff id cookie
+                        Cookie staffIDCookie = new Cookie("staffID", Byte.toString(staffID));                                             
+                        staffIDCookie.setMaxAge(cAge);
+                        staffIDCookie.setPath("/");                                               
                         response.addCookie(staffIDCookie);
+                        
                         response.sendRedirect("/staff");
+                        
                     } else if (accountType.equals("promotionManager")) {
-                        int cAge = 24 * 60 * 60 * 7; // 7 days
                         account = dao.getAccount(email);
                         String username = account.getUsername();
                         username = URLEncoder.encode(username, "UTF-8");
+                        //add promotionManager cookie
                         Cookie promotionManagerCookie = new Cookie("promotionManager", username);
                         promotionManagerCookie.setMaxAge(cAge);
                         promotionManagerCookie.setPath("/");
                         response.addCookie(promotionManagerCookie);
                         response.sendRedirect("/promotionManager");
+                    } else {
+                      session.setAttribute("toastMessage", "error-login");
+                        response.sendRedirect("/");
                     }
+                //handle not check remember button
                 } else {
+                    // Handle different account types
                     if (accountType.equals("user")) {
                         account = dao.getAccount(email);
                         String username = account.getUsername();
@@ -173,7 +172,6 @@ public class LoginController extends HttpServlet {
                         String username = account.getUsername();
                         session = request.getSession();
                         byte adminID = account.getAdminID();
-                        System.out.println("adminID " + adminID);
                         session.setAttribute("adminID", adminID);
                         session.setAttribute("admin", username);
                         response.sendRedirect("/admin");
@@ -181,7 +179,8 @@ public class LoginController extends HttpServlet {
                         account = dao.getAccount(email);
                         String username = account.getUsername();
                         session = request.getSession();
-                        session.setAttribute("staffID", account.getStaffID());
+                        byte staffID = account.getStaffID();
+                        session.setAttribute("staffID", staffID);
                         session.setAttribute("staff", username);
                         response.sendRedirect("/staff");
                     } else if (accountType.equals("promotionManager")) {
@@ -191,13 +190,16 @@ public class LoginController extends HttpServlet {
                         session.setAttribute("promotionManager", username);
                         response.sendRedirect("/promotionManager");
                     } else {
-                        response.sendRedirect("/home#failure_login");
+                      session.setAttribute("toastMessage", "error-login");
+                        response.sendRedirect("/");
                     }
                 }
+            //not found the accoutn in database
             } else {
-                response.sendRedirect("/home#failure_login_info");
-            }
-                   
+                System.err.println("Incorrect login credentials");
+                session.setAttribute("toastMessage", "error-login-credentials");
+                response.sendRedirect("/");
+            }                   
         }
     }
 }

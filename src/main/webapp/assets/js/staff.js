@@ -106,3 +106,28 @@ $(document).on("click", "#btn-update-order", function () {
     modal.find("#txtOrderStatus").val(orderStatus);
     modal.find("#txtOrderTotal").val(orderTotal);
 });
+
+$(document).ready(function () {
+  // Creates a dictionary of tabIDs and their corresponding tab links
+  const tabLinksDict = {
+    null: "home",
+    "0": "home",
+    "1": "foods",
+    "2": "orders",
+  };
+
+  let tabID = document.getElementsByClassName("tab-content").item(0).getAttribute("data-initial-tab");
+  
+  if (tabID === null || tabID === undefined || tabID === "") {
+    tabID = "0";
+  }
+  
+  // Get the initial tabID ("home", "foods", etc. from the tabID index)
+  const initialTabID = tabLinksDict[tabID];
+
+  // Get a list of all tab links that correspond to the initial tab
+  // Because the page has a minimized and maximized version,
+  // each tab has 2 triggering links
+  const tabLinks = document.querySelectorAll("ul [data-bs-target='#" + initialTabID + "']");
+  tabLinks[0].click();
+})

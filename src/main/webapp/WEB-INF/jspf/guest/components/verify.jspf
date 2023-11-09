@@ -2,13 +2,13 @@
 <%@ page pageEncoding="UTF-8" %>
 
 <!--VERIFY OTP-->
-<div class="modal" tabindex="-1" id="verify_OTP">
+<div class="modal fade" tabindex="-1" id="trigger-otp-modal" data-trigger-otp="${triggerOTP}" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="d-flex col">
                     <div class="flex-grow-1"></div>
-                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>                
+                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal" aria-label="Close" onclick="confirmCloseOTP()"></button>                
                 </div>
                 <form class="form mx-2 p-2 mx-md-4 p-md-4 mb-4" id="otp-form" method="post" action="/verifyOTP">
                     <h1 class="text-center mb-4 mb-md-5">Nhập mã xác thực (OTP)</h1>
@@ -25,15 +25,58 @@
                     </div> 
                     <div class="form-group d-flex flex-row-reverse justify-content-between align-items-center mt-4">
                         <button type="submit" class="btn btn-primary btn-block px-4" id="btnSubmit" name="btnSubmit" value="Submit" onclick="validateForm()">Xác nhận email</button>
-                        <a href="https://mail.google.com/mail/u/0/#inbox" target="_blank" class="btn btn-outline-light fw-bolder link-primary">
-                          Mở hộp thư email
-                        </a>
+                        <button type="button" class="btn btn-outline-light fw-bolder link-primary" id="btnCancel" onclick="confirmCloseOTP()">Huỷ xác nhận</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<!-- OTP close confirmation modal -->
+<div class="modal" id="confirm-close-otp-modal" tabindex="-1" aria-labelledby="confirmCloseLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Huỷ xác nhận email</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="continueOTP()"></button>
+      </div>
+      <div class="modal-body">
+        Bạn có muốn huỷ xác nhận email không?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal" onclick="continueOTP()">Tiếp tục xác nhận</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="cancelOTP()">Huỷ xác nhận</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function confirmCloseOTP() {
+    const modalInstance = new bootstrap.Modal("#confirm-close-otp-modal", {});
+    bootstrap.Modal.getOrCreateInstance("#trigger-otp-modal").toggle();
+    modalInstance.show();
+  }
+
+  function continueOTP() {
+    bootstrap.Modal.getOrCreateInstance("#trigger-otp-modal").toggle();
+  }
+
+  function cancelOTP() {
+    // Send cancel email confirmation request to the server
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", "verifyOTP?cancel=true", true);
+    xhr.send();
+  }
+
+  const otpModal = document.getElementById("trigger-otp-modal");
+  otpModal.addEventListener("hide.bs-modal", function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    confirmCloseOTP();
+  });
+</script>
 
 <!--Check Voucher-->
 <div class="modal" tabindex="-1" id="voucher-modal">

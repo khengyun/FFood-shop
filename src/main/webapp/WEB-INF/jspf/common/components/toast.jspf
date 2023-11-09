@@ -1,0 +1,74 @@
+<%@ page pageEncoding="UTF-8" %>
+<!-- Toast container -->
+<div class="toast-container position-fixed end-0 me-3 pt-4"
+      style="top: 5rem;">
+  <!-- Success toast -->
+  <div id="success"
+        class="toast position-relative rounded-2 p-0 fade"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+        data-message="${toastMessage}">
+
+    <div class="toast-body rounded-2 d-flex flex-row align-items-center">
+      <div class="col-1">
+        <i class="ph-fill fs-4 ph-check-circle"></i>
+      </div>
+      <div class="col-10 ps-3 justify-content-start">
+        <p class="text-start fw-bolder mb-0 toast-title"
+            style="font-size: larger;">Thành công</p>
+        <p class="text-start mb-0 toast-message"></p>
+      </div>
+      <div class="col-1"><button type="button"
+                class="btn-close"
+                data-bs-dismiss="toast"
+                aria-label="Close"></button></div>
+    </div>
+  </div>
+
+  <!-- Error toast -->
+  <div id="error"
+        class="toast position-relative rounded-2 p-0 fade"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+        data-message="${toastMessage}">
+
+    <div class="toast-body rounded-2 d-flex flex-row align-items-center">
+      <div class="col-1">
+        <i class="ph-fill fs-4 ph-x-circle"></i>
+      </div>
+      <div class="col-10 ps-3 justify-content-start">
+        <p class="text-start fw-bolder mb-0 toast-title"
+            style="font-size: larger;">Thất bại</p>
+        <p class="text-start mb-0 toast-message"></p>
+      </div>
+      <div class="col-1"><button type="button"
+                class="btn-close"
+                data-bs-dismiss="toast"
+                aria-label="Close"></button></div>
+    </div>
+  </div>
+</div>
+
+<style>
+  #success .toast-body {
+    border: 3px solid var(--bs-form-valid-border-color);
+    background-color: var(--m3--ref--tertiary--tertiary99);
+    color: var(--m3--sys--light--on-tertiary-container);
+  }
+
+  #success .toast-body .ph-fill {
+    color: var(--bs-form-valid-color);
+  }
+
+  #error .toast-body {
+    border: 3px solid var(--bs-form-invalid-border-color);
+    background-color: var(--m3--ref--danger--danger95);
+    color: var(--m3--sys--light--on-danger-container);
+  }
+
+  #error .toast-body .ph-fill {
+    color: var(--bs-form-invalid-color);
+  }
+</style>

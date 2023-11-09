@@ -331,40 +331,40 @@ public class AccountDAO {
                 if (rs.getString("account_type").equals("user")) {
                     // Account is of User type (no adminID)
                     account = new Account(
-                            rs.getInt("account_id"),
-                            rs.getInt("customer_id"),
                             rs.getString("account_username"),
                             rs.getString("account_email"),
                             rs.getString("account_password"),
-                            rs.getString("account_type"));
+                            rs.getString("account_type")
+                    );
+                    account.setAccountID( rs.getInt("account_id"));
+                    account.setCustomerID(rs.getInt("customer_id"));
                 } else if (rs.getString("account_type").equals("admin")) {
                     //  Account is of Admin type (no customerID)
                     account = new Account(
-                            rs.getInt("account_id"),
-                            rs.getByte("admin_id"),
                             rs.getString("account_username"),
                             rs.getString("account_email"),
                             rs.getString("account_password"),
                             rs.getString("account_type"));
+                    account.setAccountID(rs.getInt("account_id"));
+                    account.setAdminID(rs.getByte("admin_id"));
                 } else if (rs.getString("account_type").equals("staff")) {
                     //  Account is of Admin type (no customerID)
-                    account = new Account(
-                            rs.getInt("account_id"),
-                            rs.getByte("staff_id"),
+                    account = new Account(                           
                             rs.getString("account_username"),
                             rs.getString("account_email"),
                             rs.getString("account_password"),
                             rs.getString("account_type"));
-
+                    account.setAccountID(rs.getInt("account_id"));
+                    account.setStaffID(rs.getByte("staff_id"));
                 } else {
                     //  Account is of Admin type (no customerID)
                     account = new Account(
-                            rs.getInt("account_id"),
-                            rs.getByte("pro_id"),
                             rs.getString("account_username"),
                             rs.getString("account_email"),
                             rs.getString("account_password"),
                             rs.getString("account_type"));
+                    account.setAccountID(rs.getInt("account_id"));
+                    account.setProID(rs.getByte("pro_id"));
                 }
             }
             return account;
@@ -389,14 +389,33 @@ public class AccountDAO {
                             rs.getString("account_email"),
                             rs.getString("account_password"),
                             rs.getString("account_type"));
-                } else {
+                } else if (rs.getString("account_type").equals("admin")) {
                     //  Account is of Admin type (no customerID)
-                    account = new Account(rs.getInt("account_id"),
-                            rs.getByte("admin_id"),
+                    account = new Account(
                             rs.getString("account_username"),
                             rs.getString("account_email"),
                             rs.getString("account_password"),
                             rs.getString("account_type"));
+                    account.setAccountID(rs.getInt("account_id"));
+                    account.setAdminID(rs.getByte("admin_id"));
+                } else if (rs.getString("account_type").equals("staff")) {
+                    //  Account is of Admin type (no customerID)
+                    account = new Account(                           
+                            rs.getString("account_username"),
+                            rs.getString("account_email"),
+                            rs.getString("account_password"),
+                            rs.getString("account_type"));
+                    account.setAccountID(rs.getInt("account_id"));
+                    account.setStaffID(rs.getByte("staff_id"));
+                } else {
+                    //  Account is of Admin type (no customerID)
+                    account = new Account(
+                            rs.getString("account_username"),
+                            rs.getString("account_email"),
+                            rs.getString("account_password"),
+                            rs.getString("account_type"));
+                    account.setAccountID(rs.getInt("account_id"));
+                    account.setProID(rs.getByte("pro_id"));
                 }
             }
             return account;

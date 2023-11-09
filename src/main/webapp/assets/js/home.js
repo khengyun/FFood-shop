@@ -12,13 +12,6 @@ let itemsShown = 0;
 //show success order food
 $(document).ready(function () {
   notSort = document.querySelectorAll("div[id^='food-']");
-  if (window.location.hash === "#success") {
-    $("#success").modal("show");
-    setTimeout(function () {
-      $("#success").modal("hide");
-      window.location.href = "/home";
-    }, 3000);
-  }
   showInitialFoodItems();
 });
 

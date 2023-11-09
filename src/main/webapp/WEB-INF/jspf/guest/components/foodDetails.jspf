@@ -1,7 +1,5 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-    <div class="modal"
-         tabindex="-1"
-         id="food-details-modal">
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
+    <div class="modal fade" tabindex="-1" id="food-details-modal">
         <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered modal-fullscreen-lg-down">
             <div class="modal-content p-0">
                 <div class="modal-body p-0">
@@ -9,30 +7,21 @@
                         <div class="row g-0">
                             <!-- Food image -->
                             <div class="col-lg-6 position-relative">
-                                <img src=""
-                                     id="food-image"
-                                     class="img-fluid w-100 vh-50"
-                                     alt="Placeholder image"
-                                     loading="lazy"
-                                     style="object-fit: cover; object-position: center;">
+                                <img src="" id="food-image" class="img-fluid w-100 vh-50" alt="Placeholder image"
+                                    loading="lazy" style="object-fit: cover; object-position: center;">
                                 <button type="button"
-                                        class="btn-close position-absolute d-flex d-lg-none bg-white fs-1 p-3"
-                                        style="top: 2rem; right: 2rem;"
-                                        data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
+                                    class="btn-close position-absolute d-flex d-lg-none bg-white fs-1 p-3"
+                                    style="top: 2rem; right: 2rem;" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
 
                             <!-- Food details -->
                             <div class="col-lg-6">
                                 <div class="card-body d-flex flex-column vh-50 p-3 p-lg-4">
                                     <!-- Food name -->
-                                    <div id="food-name"
-                                         class="d-flex align-items-center justify-content-between">
+                                    <div id="food-name" class="d-flex align-items-center justify-content-between">
                                         <h5 class="card-title fw-bolder fs-3 text-1000 mb-1">Tên món</h5>
-                                        <button type="button"
-                                                class="btn-close d-none d-lg-flex"
-                                                data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
+                                        <button type="button" class="btn-close d-none d-lg-flex" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
                                     </div>
 
                                     <!-- Food rating -->
@@ -46,17 +35,14 @@
 
                                     <!-- Food price -->
                                     <div class="card-text mb-3 d-flex flex-wrap align-items-center lh-1">
-                                        <span id="food-price-original"
-                                              class="fs-1 me-2 text-600">
+                                        <span id="food-price-original" class="fs-1 me-2 text-600">
                                             <s>50.000 đ</s>
                                         </span>
-                                        <span id="food-price"
-                                              class="text-secondary fw-bolder me-3 fs-3"
-                                              style="font-size: 1.2rem">
+                                        <span id="food-price" class="text-secondary fw-bolder me-3 fs-3"
+                                            style="font-size: 1.2rem">
                                             40.000 đ
                                         </span>
-                                        <span id="food-discount"
-                                              class="badge bg-success mt-2 mt-sm-0 px-3 py-2 fs-0">
+                                        <span id="food-discount" class="badge bg-success mt-2 mt-sm-0 px-3 py-2 fs-0">
                                             Giảm 10%
                                         </span>
                                     </div>
@@ -71,37 +57,25 @@
                                     <!-- Quantity input -->
                                     <div id="food-quantity"
                                         class="d-flex flex-row flex-wrap mb-4 justify-content-between justify-content-lg-start gap-4 align-items-center">
-                                        <label for="quantity"
-                                               class="fs-1 fw-bold mb-0">Số lượng</label>
-                                        <div class="d-flex input-group align-items-center notranslate" style="width: fit-content;">
-                                            <input type="button"
-                                                   value="-"
-                                                   data-field="quantity"
-                                                   class="btn btn-outline-dark border border-dark border-1 button-minus px-3 py-2">
-                                            <input type="number"
-                                                   step="1"
-                                                   min="1"
-                                                   max="5"
-                                                   maxlength="1"
-                                                   style="width: 4em;"
-                                                   name="quantity"
-                                                   value="1"
-                                                   class="quantity-input quantity-field border border-dark border-1 border-start-0 border-end-0 text-center py-2">
-                                            <input type="button"
-                                                   value="+"
-                                                   data-field="quantity"
-                                                   class="btn btn-outline-dark border border-dark border-1 button-plus px-3 py-2">
+                                        <label for="quantity" class="fs-1 fw-bold mb-0">Số lượng</label>
+                                        <div class="d-flex input-group align-items-center notranslate"
+                                            style="width: fit-content;">
+                                            <input type="button" value="-" data-field="quantity"
+                                                class="btn btn-outline-dark border border-dark border-1 button-minus px-3 py-2">
+                                            <input type="number" step="1" min="1" max="5" maxlength="1"
+                                                style="width: 4em;" name="quantity" value="1"
+                                                class="quantity-input quantity-field border border-dark border-1 border-start-0 border-end-0 text-center py-2">
+                                            <input type="button" value="+" data-field="quantity"
+                                                class="btn btn-outline-dark border border-dark border-1 button-plus px-3 py-2">
                                         </div>
-                                        <label for="quantity" id="food-stock-quantity"
-                                               class="fs-1 mb-0">Còn 10 món</label>
+                                        <label for="quantity" id="food-stock-quantity" class="fs-1 mb-0">Còn 10
+                                            món</label>
                                     </div>
 
                                     <!-- Add to cart button whose quantity attribute dynamically changes based on user's choice -->
                                     <button class="btn btn-lg btn-primary py-3 fs-2 py-lg-2 fs-lg-1 addToCartBtn"
-                                            data-foodid=""
-                                            data-quantity="1"
-                                            onclick="() => { document.querySelector('#food-details-modal').modal('hide'); }"
-                                            >
+                                        data-foodid="" data-quantity="1"
+                                        onclick="() => { document.querySelector('#food-details-modal').modal('hide'); }">
                                         Thêm vào Giỏ hàng
                                     </button>
                                 </div>
@@ -144,7 +118,7 @@
 
             // Set the image of the food
             modal.find("#food-image").attr("src", imageURL)
-                    .attr("alt", foodName);
+                .attr("alt", foodName);
 
             // Set the name of the food
             modal.find("#food-name h5").text(foodName);
@@ -203,18 +177,18 @@
 
             // Disables (but still shows) quantity input group if the food is out of stock/unavailable
             if (foodStatus === "0") {
-              let inputs = modal.find("#food-quantity input");
-              modal.find("#food-stock-quantity").text("Tạm hết món");
-              inputs.attr("disabled", "disabled");
+                let inputs = modal.find("#food-quantity input");
+                modal.find("#food-stock-quantity").text("Tạm hết món");
+                inputs.attr("disabled", "disabled");
             } else {
-              let inputs = modal.find("#food-quantity input");
-              const limit = (stockQuantity < 5) ? stockQuantity : 5;
-              modal.find("input[type='number']").attr("max", limit);
-              modal.find("#food-stock-quantity").text("Còn " + stockQuantity + " món");
-              inputs.removeAttr("disabled");
+                let inputs = modal.find("#food-quantity input");
+                const limit = (stockQuantity < 5) ? stockQuantity : 5;
+                modal.find("input[type='number']").attr("max", limit);
+                modal.find("#food-stock-quantity").text("Còn " + stockQuantity + " món");
+                inputs.removeAttr("disabled");
             }
 
-            
+
 
             // Disables the add to cart button if the food is out of stock/unavailable
             if (foodStatus === "0") {
@@ -290,7 +264,7 @@
 
             // Validates the user input, making sure it is within 1-10
             let newQuantity =
-                    !isNaN(currentQuantity) && currentQuantity >= minQuantity && currentQuantity <= maxQuantity // user input is valid
+                !isNaN(currentQuantity) && currentQuantity >= minQuantity && currentQuantity <= maxQuantity // user input is valid
                     ? currentQuantity
                     : oldQuantity; // This is retrieve before the user typed anything, so this acts as the backup value
 
@@ -314,68 +288,58 @@
             quantity = newQuantity;
         }
 
-        /**
-         * Increments the value of a field by 1 when triggered by an event.
-         *
-         * @param {Event} e - The event object.
-         * @return {number} The new value.
-         */
-        function incrementValue(e) {
-            e.preventDefault();
-            let target = $(e.target);
-            let fieldName = target.data("field");
-            let parent = target.closest("div");
-            let quantityInput = parent.find("input[name=" + fieldName + "]");
-            let currentQuantity = parseInt(quantityInput.val(), 10);
-            let maxQuantity = stockQuantity < 5 ? stockQuantity : 5;
-            let minQuantity = 1;
-
-            // Set the new value, making sure it is within 1-10
-            let newQuantity =
-                    !isNaN(currentQuantity) && currentQuantity >= minQuantity && currentQuantity < maxQuantity
-                    ? currentQuantity + 1
-                    : maxQuantity;
-            quantityInput.val(newQuantity);
-
-            return newQuantity;
-        }
-
-        /**
-         * Decrements the value of an input field by 1.
-         *
-         * @param {Event} e - The event object.
-         * @return {number} The new value.
-         */
-        function decrementValue(e) {
-            e.preventDefault();
-            let target = $(e.target);
-            let fieldName = target.data("field");
-            let parent = target.closest("div");
-            let quantityInput = parent.find("input[name=" + fieldName + "]");
-            let currentQuantity = parseInt(quantityInput.val(), 10);
-            let maxQuantity = stockQuantity < 5 ? stockQuantity : 5;
-            let minQuantity = 1;
-
-            // Set the new value, making sure it is within 1-10
-            let newQuantity =
-                    !isNaN(currentQuantity) && currentQuantity > minQuantity && currentQuantity <= maxQuantity
-                    ? currentQuantity - 1
-                    : minQuantity;
-            quantityInput.val(newQuantity);
-
-            return newQuantity;
-        }
-
         $("#food-details-modal .input-group").on("click", ".button-plus", (e) => {
-            let quantity = incrementValue(e);
-            // Update the button's data-quantity attribute
-            updateButtonQuantity(quantity);
+          let newQuantity = incrementValue(e); // Initial unvalidated decleration
+          let target = $(e.target);
+          
+          const maxQuantity = 5;
+          const minQuantity = 1;
+          
+          // Clamp to lower range
+          newQuantity = newQuantity < minQuantity ? minQuantity : newQuantity;
+          
+          // Clamp to upper range
+          if (stockQuantity < maxQuantity) { // Stock quantity is only relevant if it is less than maxQuantity
+            newQuantity = newQuantity > stockQuantity ? stockQuantity : newQuantity;
+          } else if (newQuantity > maxQuantity) {
+            newQuantity = maxQuantity;
+          }
+
+          // Update the validated quantity input
+          let fieldName = target.data("field");
+          let parent = target.closest("div");
+          let quantityInput = parent.find("input[name=" + fieldName + "]");
+          quantityInput.val(newQuantity);
+
+          // Update the button's data-quantity attribute
+          updateButtonQuantity(newQuantity);
         });
 
         $("#food-details-modal .input-group").on("click", ".button-minus", (e) => {
-            let quantity = decrementValue(e);
+            let newQuantity = decrementValue(e); // Initial unvalidated decleration
+            let target = $(e.target);
+            
+            const maxQuantity = 5;
+            const minQuantity = 1;
+
+             // Clamp to lower range
+            newQuantity = newQuantity < minQuantity ? minQuantity : newQuantity;
+          
+            // Clamp to upper range
+            if (stockQuantity < maxQuantity) { // Stock quantity is only relevant if it is less than maxQuantity
+              newQuantity = newQuantity > stockQuantity ? stockQuantity : newQuantity;
+            } else if (newQuantity > maxQuantity) {
+              newQuantity = maxQuantity;
+            }
+           
+            // Update the validated quantity input
+            let fieldName = target.data("field");
+            let parent = target.closest("div");
+            let quantityInput = parent.find("input[name=" + fieldName + "]");
+            quantityInput.val(newQuantity);
+
             // Update the button's data-quantity attribute
-            updateButtonQuantity(quantity);
+            updateButtonQuantity(newQuantity);
         });
 
         // Reset the quantity when the modal is closed

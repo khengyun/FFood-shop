@@ -6,9 +6,7 @@ package Controllers;
 
 import DAOs.AccountDAO;
 import Models.Account;
-import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,12 +20,11 @@ import java.util.Random;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
-import sun.security.jgss.GSSCaller;
-import sun.security.jgss.GSSUtil;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import Validation.ValidationUtils;
 
 public class SignUpController extends HttpServlet {
 
@@ -70,7 +67,6 @@ public class SignUpController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String contextPath = request.getContextPath();
         String username = request.getParameter("txtAccountUsername");
         String email = request.getParameter("txtAccountEmail");
         String pass = (String) request.getAttribute("txtAccountPassword");
@@ -78,14 +74,23 @@ public class SignUpController extends HttpServlet {
         HttpSession session = request.getSession();
         String previousUrl = (String) session.getAttribute("previousUrl");
         
+        ValidationUtils valid = new ValidationUtils();
+        
+        if (!valid.signUpValidation(username,email,pass)){
+            response.sendRedirect("/home#failure_register");
+            return;
+        }
+        
         AccountDAO accountDAO = new AccountDAO();
         Account account = new Account(username, email, pass, "user");
         if (accountDAO.getAccount(email) != null) {
-            response.sendRedirect("/home#failure_register_exist");
+            session.setAttribute("toastMessage", "error-register-existing-email");
+            response.sendRedirect("/");
             return;
         }
         try {
             if (accountDAO.login(account)) {
+                session.setAttribute("toastMessage", "success-register");
                 if (previousUrl != null) {
                     // Chuyển hướng người dùng về trang hiện tại
                     response.sendRedirect(previousUrl);
@@ -96,7 +101,6 @@ public class SignUpController extends HttpServlet {
             } else {
                 try {
 
-                    RequestDispatcher dispatcher = null;
                     int otpvalue = 0;
 
                     if (email != null && !email.equals("")) {
@@ -124,8 +128,8 @@ public class SignUpController extends HttpServlet {
                             MimeMessage message = new MimeMessage(mailSession);
                             message.setFrom(new InternetAddress("your-email@example.com")); // Change accordingly
                             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-                            message.setSubject("Hello");
-                            message.setText("Your OTP is: " + otpvalue);
+                            message.setSubject("Xác nhận Email của bạn");
+                            message.setContent("Mã OTP của bạn là: " + otpvalue + ".<br />Để tránh mất tài khoản, đừng chia sẻ mã này cho bất cứ ai khác.", "text/html; charset=UTF-8");
 
                             // Send message
                             Transport.send(message);
@@ -138,11 +142,13 @@ public class SignUpController extends HttpServlet {
                         session.setAttribute("otp", otpvalue);
                         session.setAttribute("type_otp", "sign_up");
                         session.setAttribute("registerUser", account);
-                        response.sendRedirect("/home#verify_OTP");
+                        session.setAttribute("triggerOTP", true);
+                        response.sendRedirect("/");
                     }
 
                 } catch (IOException e) {
-                    response.sendRedirect("/home#failure_register");
+                  session.setAttribute("toastMessage", "error-register");
+                    response.sendRedirect("/");
                 }
 //              
             }
