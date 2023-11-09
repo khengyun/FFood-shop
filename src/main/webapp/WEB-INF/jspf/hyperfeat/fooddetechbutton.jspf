@@ -109,7 +109,8 @@
         console.log("Predicted Dish:", data.predicted_dish);
 
         if (data.predicted_dish) {
-          const searchURL = "http://localhost:8001/search_food_by_name/" + data.predicted_dish;
+          const searchURL = "http://localhost:8001/search_food_by_name/" + data.predicted_dish[0][0];
+          console.log("data.predicted_dish: ", data.predicted_dish)
 
           const searchResponse = await fetch(searchURL);
 
