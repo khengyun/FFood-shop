@@ -682,12 +682,14 @@ $(document).ready(function () {
                             let orders = {};
                             
                             // Initially enable the next button
-                            btnNext.attr("data-orders", JSON.stringify(orders));
                             btnNext.removeClass("disabled");
                             // And then disabled it if the order status is "Đã giao" or "Đã hủy"
                             if (data4[0][12] === "Đã giao" || data4[0][12] === "Đã hủy") {
-                                disableNextOrderBtn();
+                              disableNextOrderBtn();
+                            } else {
+                              orders[data4[0][0]] = data4[0][0];
                             }
+                            btnNext.attr("data-orders", JSON.stringify(orders));
                             orders[data4[0][0]] = data4[0][0];
                             btnDelete.attr("data-orders", JSON.stringify(orders));
                             btnDelete.removeClass("disabled");
@@ -696,14 +698,17 @@ $(document).ready(function () {
                             let orders = {};
                             
                             // Initially enable the next button
-                            btnNext.attr("data-orders", JSON.stringify(orders));
                             btnNext.removeClass("disabled");
                             // And then disabled it if any order status is "Đã giao" or "Đã hủy"
                             for (let i = 0; i < data4.length; i++) {
-                                if (data4[i][12] === "Đã giao" || data4[i][12] === "Đã hủy") {
-                                    disableNextOrderBtn();
-                                }
+                              if (data4[i][12] === "Đã giao" || data4[i][12] === "Đã hủy") {
+                                disableNextOrderBtn();
+                              } else {
+                                let orderId = data4[i][0];
+                                orders[orderId] = data4[i][0];
+                              }
                             }
+                            btnNext.attr("data-orders", JSON.stringify(orders));
                             btnDelete.attr("data-orders", JSON.stringify(orders));
                             btnDelete.removeClass("disabled");
                             disableUpdateOrderBtn();
