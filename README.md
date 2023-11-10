@@ -1,6 +1,8 @@
 <div align="center">
 <h1 align="center">
+  <a src="https://github.com/khengyun/FFood-shop">
 <img src="https://github.com/khengyun/FFood-shop/blob/29835c240b656bb24c1ae445327bce14930dfbf8/src/main/webapp/assets/img/favicons/apple-touch-icon.png?raw=true" width="100" />
+  </a>
 <br>FFOOD-SHOP</h1>
 <h3> FFood is a food e-commerce site that lets customers order food in a quick and convenient way.</h3>
 <h3>◦ Developed with the software and tools below. ◦</h3>
