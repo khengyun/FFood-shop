@@ -253,7 +253,8 @@ public class CheckoutController extends HttpServlet {
             String voucherCode = request.getParameter("txtVoucherCode");
             Voucher voucher = voucherDAO.getVoucherByCode(voucherCode);
             if (voucher != null ) {
-                orderTotalDouble = orderTotalDouble * voucher.getVoucherDiscount();
+                double voucherpercent = voucher.getVoucherDiscount();
+                orderTotalDouble = orderTotalDouble * (voucherpercent == 1 ? 1 : 1 - voucherpercent);
                 voucherDAO.updateQuantity(voucher);
                 order.setVoucherID(voucher.getVoucherID());
             } else {
