@@ -7,8 +7,11 @@ from datetime import date,timedelta
 from unidecode import unidecode
 from itertools import permutations
 import wikipedia
-from bardapi import Bard
+import g4f
 import json
+
+g4f.debug.logging = True # enable logging
+g4f.check_version = False # Disable automatic version checkinga
 
 class FoodModel(BaseModel):
     food_id: int
@@ -65,76 +68,61 @@ class FoodOperations:
             return str(e)
         
 
-    def generate_variants(self, food_name):
-        words = food_name.split()
-        variants = set()
-        
-        variants.add(food_name)
-        
-        for word in words:
-            variants.add(word)
-        
-        for r in range(2, len(words) + 1):
-            for combo in permutations(words, r):
-                variants.add(' '.join(combo))
-        
-        return variants
 
-    def similarity_score(self, food_name, food):
-        print(food_name, food.food_name)
-        food_name_lower = food_name.lower()
-        food_name_tokens = food_name_lower.split()
-        food_tokens = food.food_name.lower().split()
-        score = sum(1 for token in food_tokens if token in food_name_tokens)
-        return score
+    def search_foods(self, food_name):
+        def generate_variants(name):
+            words = name.split()
+            variants = set()
+            
+            variants.add(name)
+            
+            for word in words:
+                variants.add(word)
+            
+            for r in range(2, len(words) + 1):
+                for combo in permutations(words, r):
+                    variants.add(' '.join(combo))
+            
+            return variants
 
-    def search_food_by_name(self, food_name: str):
+        def similarity_score(name, food):
+            name_lower = name.lower()
+            name_tokens = name_lower.split()
+            food_tokens = food.lower().split()
+            score = sum(1 for token in food_tokens if token in name_tokens)
+            return score
+
         try:
             conn = pymssql.connect(**self.db_config)
             cursor = conn.cursor()
-            variants = self.generate_variants(food_name)
+            variants = generate_variants(food_name)
             
-            query = "SELECT TOP 10 * FROM Food WHERE "
-            query += " OR ".join(["food_name COLLATE Vietnamese_CI_AI LIKE %s" for _ in variants])
-            
+            query = "SELECT * FROM Food WHERE " + " OR ".join(["food_name COLLATE Vietnamese_CI_AI LIKE %s" for _ in variants])
             cursor.execute(query, tuple('%' + variant + '%' for variant in variants))
             records = cursor.fetchall()
             food_data = []
-            print(records)
 
-            
-            
             for record in records:
-                # add if record[2] is null call wikipedia_summary
-                # print("record[2]: ",record[2])
-                # print("record[2] type: ",type(record[2]))
-                # content = record[2]
-                # if content == None:
-                # content = self.wikipedia_summary(record[1])
-                
-                # print("content: ",content)
-                
-                food = FoodModel(
-                    food_id=record[0],
-                    food_name=record[1],
-                    food_description=record[2],
-                    food_price=float(record[3]),
-                    food_stock_quantity=int(record[4]),
-                    food_status=bool(record[5]),
-                    food_rate=int(record[6]),
-                    discount_percent=int(record[7]),
-                    food_url=record[8],
-                    food_type_id=record[9]
-                )
+                food = {
+                    "food_id": record[0],
+                    "food_name": record[1],
+                    "food_description": record[2],
+                    "food_price": float(record[3]),
+                    "food_stock_quantity": int(record[4]),
+                    "food_status": bool(record[5]),
+                    "food_rate": int(record[6]),
+                    "discount_percent": int(record[7]),
+                    "food_url": record[8],
+                    "food_type_id": record[9]
+                }
                 food_data.append(food)
-            print(food_data)
 
             # Sort food_data based on similarity_score
-            food_data = sorted(food_data, key=lambda x: self.similarity_score(food_name, x), reverse=True)
+            food_data = sorted(food_data, key=lambda x: similarity_score(food_name, x["food_name"]), reverse=True)
 
             conn.close()
 
-            return [food.dict() for food in food_data]
+            return food_data
 
         except Exception as e:
             return str(e)
@@ -272,16 +260,7 @@ class FoodOperations:
             return str(e)
         
         
-    def wikipedia_summary(self, food_name: str):
-        token = 'cwhc0nEvP6vBJCnYULFK5k-1qPGVgnt6KmCtEXv7pIZEMrnROoiRXYqwYUopCJMc1ubDEw.'
-        bard = Bard(token=token)
-        content = bard.get_answer(f'As a waiter of a restaurant, generate a description of {food_name} '
-         'in a non-scientific way. The description should be easy to understand for normal people. '
-         'The description must be written in Vietnamese with a language that is close to human language '
-         'as possible. Avoid descriptive and robotic descriptions. The description length must be limited '
-         'to 1 paragraph and must not exceed 30 words. Do not add recommendations in the last sentence.')['content']
-        
-        return content
+
     
     def get_today_income(self):
         try:
