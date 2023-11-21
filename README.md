@@ -50,19 +50,33 @@ FFood is a food website that lets customers order food in a quick and convenient
 
 ## Features
 
-- Menu filtering and searching on home page
-- Quick and convenient ordering process (Choose Food -> Proceed to Checkout -> Place Order)
-- Order without logging in
-- Order tracking and auto-fill checkout forms for logged in users
-- Optimized UX for customers: forms are contained in modals (pop-ups), users do not have to be redirected to different pages for these actions:
-  - Logging in, signing up
-  - Viewing Carts
-- Food, User, Order management for Admins
-- Authorization system prevents unauthorized access to certain pages
-  - Non-logged in users cannot access User and Admin pages
-  - Logged-in Users can access User pages, but not Admin pages
-  - Admins can only access Admin pages, the rest is restricted from access to prevent security risks
-- Optimized UX for admins: CRUD actions are prompted using modals (pop-ups) instead of redirecting to specific pages
+- Register a User account.
+- Log in as a User.
+- Log in as a User through a Google account.
+- Log in as Employee (Admin, Staff, Promotion Manager)
+- Log out.
+- View Website information (contact information, location).
+- View Food by Categories.
+- View Food Details.
+- Rate Food.
+- Search Food by keyword.
+- Search Food by image.
+- User cart Management.
+- Payment option.
+- Place order as Guest.
+- Place order as User.
+- Personal User Account Settings.
+- View User’s Order History.
+- Help menu for Admins.
+- Change display language (Ordering System only).
+- Display today’s system status.
+- View Dashboard.
+- View Business Insight.
+- Food Management.
+- Order Management.
+- Promotion and Voucher Management.
+- User account Management for Admins.
+- Employee role Management (Admin, Staff, Promotion Manager).
 
 ## Technologies
 
