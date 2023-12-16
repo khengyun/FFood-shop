@@ -48,8 +48,7 @@
                                     </div>
 
                                     <!-- Food description -->
-                                    <p id="food-description"
-                                       class="card-text fs-1">Đang cập nhật mô tả...</p>
+                                    <p id="food-description" class="card-text fs-1">Đang cập nhật mô tả...</p>
 
                                     <!-- Empty space -->
                                     <div class="flex-grow-1"></div>
@@ -156,7 +155,7 @@
             }
 
 
-
+            modal.find("#food-description").html("Đang cập nhật mô tả...");
             // Fetch the description via the fetch API
             fetch(`http://localhost:8123/generate_description/?food_name=` + foodName)
                 .then((response) => response.json())
@@ -289,49 +288,49 @@
         }
 
         $("#food-details-modal .input-group").on("click", ".button-plus", (e) => {
-          let newQuantity = incrementValue(e); // Initial unvalidated decleration
-          let target = $(e.target);
-          
-          const maxQuantity = 5;
-          const minQuantity = 1;
-          
-          // Clamp to lower range
-          newQuantity = newQuantity < minQuantity ? minQuantity : newQuantity;
-          
-          // Clamp to upper range
-          if (stockQuantity < maxQuantity) { // Stock quantity is only relevant if it is less than maxQuantity
-            newQuantity = newQuantity > stockQuantity ? stockQuantity : newQuantity;
-          } else if (newQuantity > maxQuantity) {
-            newQuantity = maxQuantity;
-          }
+            let newQuantity = incrementValue(e); // Initial unvalidated decleration
+            let target = $(e.target);
 
-          // Update the validated quantity input
-          let fieldName = target.data("field");
-          let parent = target.closest("div");
-          let quantityInput = parent.find("input[name=" + fieldName + "]");
-          quantityInput.val(newQuantity);
+            const maxQuantity = 5;
+            const minQuantity = 1;
 
-          // Update the button's data-quantity attribute
-          updateButtonQuantity(newQuantity);
+            // Clamp to lower range
+            newQuantity = newQuantity < minQuantity ? minQuantity : newQuantity;
+
+            // Clamp to upper range
+            if (stockQuantity < maxQuantity) { // Stock quantity is only relevant if it is less than maxQuantity
+                newQuantity = newQuantity > stockQuantity ? stockQuantity : newQuantity;
+            } else if (newQuantity > maxQuantity) {
+                newQuantity = maxQuantity;
+            }
+
+            // Update the validated quantity input
+            let fieldName = target.data("field");
+            let parent = target.closest("div");
+            let quantityInput = parent.find("input[name=" + fieldName + "]");
+            quantityInput.val(newQuantity);
+
+            // Update the button's data-quantity attribute
+            updateButtonQuantity(newQuantity);
         });
 
         $("#food-details-modal .input-group").on("click", ".button-minus", (e) => {
             let newQuantity = decrementValue(e); // Initial unvalidated decleration
             let target = $(e.target);
-            
+
             const maxQuantity = 5;
             const minQuantity = 1;
 
-             // Clamp to lower range
+            // Clamp to lower range
             newQuantity = newQuantity < minQuantity ? minQuantity : newQuantity;
-          
+
             // Clamp to upper range
             if (stockQuantity < maxQuantity) { // Stock quantity is only relevant if it is less than maxQuantity
-              newQuantity = newQuantity > stockQuantity ? stockQuantity : newQuantity;
+                newQuantity = newQuantity > stockQuantity ? stockQuantity : newQuantity;
             } else if (newQuantity > maxQuantity) {
-              newQuantity = maxQuantity;
+                newQuantity = maxQuantity;
             }
-           
+
             // Update the validated quantity input
             let fieldName = target.data("field");
             let parent = target.closest("div");
