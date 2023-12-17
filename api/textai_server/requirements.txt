@@ -3,4 +3,4 @@ pathlib2
 requests
 fastapi
 protobuf==3.20
-g4f
+g4f==0.1.8.7
