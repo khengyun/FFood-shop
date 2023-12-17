@@ -8,7 +8,7 @@ services:
       - SA_PASSWORD=sa@123456
       - MSSQL_PID=Developer
     ports:
-      - "1450:1433"
+      - 1433
     volumes:
       - sqlserver_data:/var/opt/mssql
     restart: always
@@ -52,6 +52,17 @@ services:
     build: ./api/psqlserver
     ports:
       - 8001:8001
+    depends_on:
+      - sqlserver
+      - sqlserver.configurator
+    restart: always
+    networks:
+      - ffood-network
+    
+  textai_server:
+    build: ./api/textai_server
+    ports:
+      - 8123:8123
     depends_on:
       - sqlserver
       - sqlserver.configurator
