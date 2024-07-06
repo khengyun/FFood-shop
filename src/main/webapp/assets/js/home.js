@@ -384,3 +384,4 @@ function searchFoodByKeyword() {
       .catch((error) => console.error(error));
   }, 300);
 }
+

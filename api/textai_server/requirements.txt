@@ -4,3 +4,5 @@ requests
 fastapi
 protobuf==3.20
 g4f
+curl-cffi
+nest_asyncio

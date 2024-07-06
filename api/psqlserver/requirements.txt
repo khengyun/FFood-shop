@@ -9,3 +9,4 @@ Unidecode
 wikipedia
 pytz
 g4f
+curl_cffi

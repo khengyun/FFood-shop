@@ -1,0 +1,657 @@
+[
+  {
+    "category": "FFood",
+    "items": [
+      {
+        "name": "Banh Bèo",
+        "description": "Steamed rice cake topped with shrimp, scallions, and crispy shallots.",
+        "question": "What is Bánh Bèo?"
+      },
+      {
+        "name": "Bánh Bột Lộc",
+        "description": "Chewy tapioca dumplings filled with shrimp and pork.",
+        "question": "What is Bánh Bột Lộc?"
+      },
+      {
+        "name": "Bánh Căn",
+        "description": "Mini pancakes made from rice flour, often served with dipping sauce.",
+        "question": "What is Bánh Căn?"
+      },
+      {
+        "name": "Bánh Canh",
+        "description": "Thick noodle soup with various toppings.",
+        "question": "What is Bánh Canh?"
+      },
+      {
+        "name": "Bánh Chưng",
+        "description": "Traditional rice cake with pork and mung beans, wrapped in banana leaves.",
+        "question": "What is Bánh Chưng?"
+      },
+      {
+        "name": "Bánh Cuốn",
+        "description": "Steamed rice rolls filled with minced pork and mushrooms.",
+        "question": "What is Bánh Cuốn?"
+      },
+      {
+        "name": "Bánh Đúc",
+        "description": "Steamed rice cake, often served with savory toppings.",
+        "question": "What is Bánh Đúc?"
+      },
+      {
+        "name": "Bánh Giò",
+        "description": "Pyramid-shaped rice cake filled with pork and mushrooms.",
+        "question": "What is Bánh Giò?"
+      },
+      {
+        "name": "Bánh Khọt",
+        "description": "Mini savory pancakes topped with shrimp and herbs.",
+        "question": "What is Bánh Khọt?"
+      },
+      {
+        "name": "Bánh Mì",
+        "description": "Vietnamese baguette sandwich with various fillings.",
+        "question": "What is Bánh Mì?"
+      },
+      {
+        "name": "Bánh Pía",
+        "description": "Flaky pastry filled with mung beans and salted egg yolk.",
+        "question": "What is Bánh Pía?"
+      },
+      {
+        "name": "Bánh Tét",
+        "description": "Cylindrical rice cake with pork and mung beans, wrapped in banana leaves.",
+        "question": "What is Bánh Tét?"
+      },
+      {
+        "name": "Bánh Tráng Nướng",
+        "description": "Grilled rice paper topped with various ingredients.",
+        "question": "What is Bánh Tráng Nướng?"
+      },
+      {
+        "name": "Bánh Xèo",
+        "description": "Vietnamese crispy pancake filled with shrimp, pork, and bean sprouts.",
+        "question": "What is Bánh Xèo?"
+      },
+      {
+        "name": "Bún Bò Huế",
+        "description": "Spicy beef noodle soup from Huế.",
+        "question": "What is Bún Bò Huế?"
+      },
+      {
+        "name": "Bún Đậu Mắm Tôm",
+        "description": "Rice noodles with tofu, herbs, and fermented shrimp paste.",
+        "question": "What is Bún Đậu Mắm Tôm?"
+      },
+      {
+        "name": "Bún Mắm",
+        "description": "Fermented fish noodle soup with a variety of toppings.",
+        "question": "What is Bún Mắm?"
+      },
+      {
+        "name": "Bún Riêu",
+        "description": "Crab noodle soup with a tomato broth.",
+        "question": "What is Bún Riêu?"
+      },
+      {
+        "name": "Bún Thịt Nướng",
+        "description": "Grilled pork with rice noodles and fresh herbs.",
+        "question": "What is Bún Thịt Nướng?"
+      },
+      {
+        "name": "Cá Kho Tộ",
+        "description": "Caramelized fish in a clay pot.",
+        "question": "What is Cá Kho Tộ?"
+      },
+      {
+        "name": "Canh Chua",
+        "description": "Vietnamese sour soup with fish, pineapple, and tamarind.",
+        "question": "What is Canh Chua?"
+      },
+      {
+        "name": "Cao Lầu",
+        "description": "Noodle dish from Hội An with pork and fresh greens.",
+        "question": "What is Cao Lầu?"
+      },
+      {
+        "name": "Cháo Lòng",
+        "description": "Rice porridge with pig innards.",
+        "question": "What is Cháo Lòng?"
+      },
+      {
+        "name": "Cơm Tấm",
+        "description": "Broken rice served with grilled pork and various sides.",
+        "question": "What is Cơm Tấm?"
+      },
+      {
+        "name": "Gỏi Cuốn",
+        "description": "Fresh spring rolls with shrimp, pork, and herbs.",
+        "question": "What is Gỏi Cuốn?"
+      },
+      {
+        "name": "Hủ Tiếu",
+        "description": "Rice noodle soup with pork and seafood.",
+        "question": "What is Hủ Tiếu?"
+      },
+      {
+        "name": "Mì Quảng",
+        "description": "Turmeric noodles with shrimp, pork, and fresh herbs.",
+        "question": "What is Mì Quảng?"
+      },
+      {
+        "name": "Nem Chua",
+        "description": "Fermented pork sausage.",
+        "question": "What is Nem Chua?"
+      },
+      {
+        "name": "Xôi Xéo",
+        "description": "Sticky rice with mung bean paste and fried shallots.",
+        "question": "What is Xôi Xéo?"
+      },
+      {
+        "name": "Apple Pie",
+        "description": "Classic dessert pie filled with spiced apples.",
+        "question": "What is Apple Pie?"
+      },
+      {
+        "name": "Baby Back Ribs",
+        "description": "Pork ribs cooked until tender, often grilled with barbecue sauce.",
+        "question": "What are Baby Back Ribs?"
+      },
+      {
+        "name": "Baklava",
+        "description": "Sweet pastry made of layers of filo dough, filled with nuts and honey.",
+        "question": "What is Baklava?"
+      },
+      {
+        "name": "Beef Carpaccio",
+        "description": "Thinly sliced raw beef, typically served with lemon, olive oil, and parmesan.",
+        "question": "What is Beef Carpaccio?"
+      },
+      {
+        "name": "Beef Tartare",
+        "description": "Raw ground beef mixed with spices and condiments.",
+        "question": "What is Beef Tartare?"
+      },
+      {
+        "name": "Beet Salad",
+        "description": "Salad made with cooked or raw beets, often mixed with greens and cheese.",
+        "question": "What is Beet Salad?"
+      },
+      {
+        "name": "Beignets",
+        "description": "Deep-fried pastry dusted with powdered sugar, popular in New Orleans.",
+        "question": "What are Beignets?"
+      },
+      {
+        "name": "Bibimbap",
+        "description": "Korean rice dish topped with assorted vegetables, meat, and a fried egg.",
+        "question": "What is Bibimbap?"
+      },
+      {
+        "name": "Bread Pudding",
+        "description": "Dessert made from bread soaked in a mixture of milk, eggs, and sugar.",
+        "question": "What is Bread Pudding?"
+      },
+      {
+        "name": "Breakfast Burrito",
+        "description": "Tortilla filled with eggs, cheese, and other breakfast ingredients.",
+        "question": "What is a Breakfast Burrito?"
+      },
+      {
+        "name": "Bruschetta",
+        "description": "Grilled bread topped with tomatoes, garlic, and basil.",
+        "question": "What is Bruschetta?"
+      },
+      {
+        "name": "Caesar Salad",
+        "description": "Salad made with romaine lettuce, croutons, parmesan cheese, and Caesar dressing.",
+        "question": "What is Caesar Salad?"
+      },
+      {
+        "name": "Cannoli",
+        "description": "Italian pastry tube filled with sweetened ricotta cheese.",
+        "question": "What is Cannoli?"
+      },
+      {
+        "name": "Caprese Salad",
+        "description": "Salad made with fresh tomatoes, mozzarella cheese, basil, olive oil, and balsamic vinegar.",
+        "question": "What is Caprese Salad?"
+      },
+      {
+        "name": "Carrot Cake",
+        "description": "Cake made with grated carrots and typically topped with cream cheese frosting.",
+        "question": "What is Carrot Cake?"
+      },
+      {
+        "name": "Ceviche",
+        "description": "Seafood dish where raw fish is marinated in citrus juices, often with onions, cilantro, and chili peppers.",
+        "question": "What is Ceviche?"
+      },
+      {
+        "name": "Cheese Plate",
+        "description": "Selection of cheeses served with accompaniments like fruits, nuts, and bread.",
+        "question": "What is a Cheese Plate?"
+      },
+      {
+        "name": "Cheesecake",
+        "description": "Dessert with a crust made of crushed cookies or graham crackers, filled with a mixture of soft cheese, eggs, and sugar.",
+        "question": "What is Cheesecake?"
+      },
+      {
+        "name": "Chicken Curry",
+        "description": "Curry dish made with chicken, curry spices, and often coconut milk or tomatoes.",
+        "question": "What is Chicken Curry?"
+      },
+      {
+        "name": "Chicken Quesadilla",
+        "description": "Tortilla filled with melted cheese and chicken, grilled until crispy.",
+        "question": "What is Chicken Quesadilla?"
+      },
+      {
+        "name": "Chicken Wings",
+        "description": "Chicken wings typically fried or baked and coated in sauce.",
+        "question": "What are Chicken Wings?"
+      },
+      {
+        "name": "Chocolate Cake",
+        "description": "Cake flavored with chocolate, often with layers of chocolate icing or ganache.",
+        "question": "What is Chocolate Cake?"
+      },
+      {
+        "name": "Chocolate Mousse",
+        "description": "Light and airy dessert made with chocolate, eggs, and whipped cream.",
+        "question": "What is Chocolate Mousse?"
+      },
+      {
+        "name": "Churros",
+        "description": "Fried dough pastry dusted with sugar, often served with chocolate sauce.",
+        "question": "What are Churros?"
+      },
+      {
+        "name": "Clam Chowder",
+        "description": "Cream-based soup with clams, potatoes, onions, and celery.",
+        "question": "What is Clam Chowder?"
+      },
+      {
+        "name": "Club Sandwich",
+        "description": "Sandwich with layers of toasted bread, lettuce, tomato, bacon, turkey, and mayonnaise.",
+        "question": "What is a Club Sandwich?"
+      },
+      {
+        "name": "Crab Cakes",
+        "description": "Patties made from crab meat, breadcrumbs, and seasonings, often pan-fried.",
+        "question": "What are Crab Cakes?"
+      },
+      {
+        "name": "Creme Brulee",
+        "description": "Dessert consisting of rich custard topped with caramelized sugar.",
+        "question": "What is Creme Brulee?"
+      },
+      {
+        "name": "Croque Madame",
+        "description": "Grilled ham and cheese sandwich topped with a fried egg.",
+        "question": "What is Croque Madame?"
+      },
+      {
+        "name": "Cupcakes",
+        "description": "Small cakes baked in cup-shaped containers and typically frosted.",
+        "question": "What are Cupcakes?"
+      },
+      {
+        "name": "Deviled Eggs",
+        "description": "Hard-boiled eggs sliced in half, filled with a seasoned yolk mixture.",
+        "question": "What are Deviled Eggs?"
+      },
+      {
+        "name": "Donuts",
+        "description": "Deep-fried sweet dough, often ring-shaped and topped with glaze or sugar.",
+        "question": "What are Donuts?"
+      },
+      {
+        "name": "Dumplings",
+        "description": "Small pieces of dough filled with meat, vegetables, or sweets, typically boiled or steamed.",
+        "question": "What are Dumplings?"
+      },
+      {
+        "name": "Edamame",
+        "description": "Steamed or boiled young soybeans in the pod, often served as a snack.",
+        "question": "What is Edamame?"
+      },
+      {
+        "name": "Eggs Benedict",
+        "description": "Breakfast dish consisting of poached eggs and Canadian bacon on an English muffin, topped with hollandaise sauce.",
+        "question": "What is Eggs Benedict?"
+      },
+      {
+        "name": "Escargots",
+        "description": "Cooked land snails often served with garlic and butter.",
+        "question": "What are Escargots?"
+      },
+      {
+        "name": "Falafel",
+        "description": "Fried balls or patties made from ground chickpeas or fava beans, often served in pita bread.",
+        "question": "What is Falafel?"
+      },
+      {
+        "name": "Filet Mignon",
+        "description": "Tender cut of beef from the tenderloin, typically grilled or pan-seared.",
+        "question": "What is Filet Mignon?"
+      },
+      {
+        "name": "Fish and Chips",
+        "description": "Deep-fried fish served with thick-cut fries, often accompanied by tartar sauce.",
+        "question": "What are Fish and Chips?"
+      },
+      {
+        "name": "Foie Gras",
+        "description": "Duck or goose liver that has been specially fattened, often used in French cuisine.",
+        "question": "What is Foie Gras?"
+      },
+      {
+        "name": "French Fries",
+        "description": "Potato sticks deep-fried until crispy, often served as a side dish.",
+        "question": "What are French Fries?"
+      },
+      {
+        "name": "French Onion Soup",
+        "description": "Soup made with caramelized onions, beef broth, and topped with melted cheese and croutons.",
+        "question": "What is French Onion Soup?"
+      },
+      {
+        "name": "French Toast",
+        "description": "Bread dipped in eggs and milk, then fried until golden brown, often served with syrup.",
+        "question": "What is French Toast?"
+      },
+      {
+        "name": "Fried Calamari",
+        "description": "Squid rings coated in batter and deep-fried, often served with marinara sauce.",
+        "question": "What is Fried Calamari?"
+      },
+      {
+        "name": "Fried Rice",
+        "description": "Stir-fried rice with vegetables, meat, and sometimes egg.",
+        "question": "What is Fried Rice?"
+      },
+      {
+        "name": "Frozen Yogurt",
+        "description": "Dessert similar to ice cream but made with yogurt.",
+        "question": "What is Frozen Yogurt?"
+      },
+      {
+        "name": "Garlic Bread",
+        "description": "Bread topped with garlic butter and often toasted.",
+        "question": "What is Garlic Bread?"
+      },
+      {
+        "name": "Gnocchi",
+        "description": "Italian dumplings made from potatoes, flour, and sometimes egg, served with sauce.",
+        "question": "What are Gnocchi?"
+      },
+      {
+        "name": "Greek Salad",
+        "description": "Salad made with tomatoes, cucumbers, olives, feta cheese, and olive oil.",
+        "question": "What is Greek Salad?"
+      },
+      {
+        "name": "Grilled Cheese Sandwich",
+        "description": "Sandwich with melted cheese between slices of buttered and grilled bread.",
+        "question": "What is a Grilled Cheese Sandwich?"
+      },
+      {
+        "name": "Grilled Salmon",
+        "description": "Salmon fillet grilled until tender and often seasoned with herbs or lemon.",
+        "question": "What is Grilled Salmon?"
+      },
+      {
+        "name": "Guacamole",
+        "description": "Mexican dip made from mashed avocado, lime juice, onions, tomatoes, and cilantro.",
+        "question": "What is Guacamole?"
+      },
+      {
+        "name": "Gyoza",
+        "description": "Japanese dumplings filled with ground meat and vegetables, typically pan-fried.",
+        "question": "What are Gyoza?"
+      },
+      {
+        "name": "Hamburger",
+        "description": "Sandwich consisting of a cooked beef patty in a bun, often with various toppings.",
+        "question": "What is a Hamburger?"
+      },
+      {
+        "name": "Hot and Sour Soup",
+        "description": "Chinese soup with a spicy and tangy broth, often containing mushrooms, tofu, and bamboo shoots.",
+        "question": "What is Hot and Sour Soup?"
+      },
+      {
+        "name": "Hot Dog",
+        "description": "Cooked sausage served in a sliced bun, often with condiments like mustard and ketchup.",
+        "question": "What is a Hot Dog?"
+      },
+      {
+        "name": "Huevos Rancheros",
+        "description": "Mexican breakfast dish consisting of eggs served on tortillas with salsa.",
+        "question": "What are Huevos Rancheros?"
+      },
+      {
+        "name": "Hummus",
+        "description": "Middle Eastern dip made from mashed chickpeas, tahini, lemon juice, and garlic.",
+        "question": "What is Hummus?"
+      },
+      {
+        "name": "Ice Cream",
+        "description": "Frozen dessert made from cream, sugar, and often flavored with fruit or other ingredients.",
+        "question": "What is Ice Cream?"
+      },
+      {
+        "name": "Lasagna",
+        "description": "Italian pasta dish made with layers of pasta, cheese, meat sauce, and sometimes vegetables.",
+        "question": "What is Lasagna?"
+      },
+      {
+        "name": "Lobster Bisque",
+        "description": "Creamy soup made from lobster, often flavored with sherry.",
+        "question": "What is Lobster Bisque?"
+      },
+      {
+        "name": "Lobster Roll Sandwich",
+        "description": "Sandwich filled with lobster meat, typically mixed with mayonnaise, lemon juice, and herbs, served in a grilled or toasted roll.",
+        "question": "What is a Lobster Roll Sandwich?"
+      },
+      {
+        "name": "Macaroni and Cheese",
+        "description": "Pasta dish with cheese sauce, often baked until golden and bubbly.",
+        "question": "What is Macaroni and Cheese?"
+      },
+      {
+        "name": "Macarons",
+        "description": "Colorful French pastry made from almond flour, sugar, and egg whites, sandwiched together with ganache, buttercream, or jam.",
+        "question": "What are Macarons?"
+      },
+      {
+        "name": "Miso Soup",
+        "description": "Japanese soup made with miso paste and dashi broth, often containing tofu, seaweed, and green onions.",
+        "question": "What is Miso Soup?"
+      },
+      {
+        "name": "Mussels",
+        "description": "Shellfish cooked in a broth of wine, garlic, butter, and herbs.",
+        "question": "What are Mussels?"
+      },
+      {
+        "name": "Nachos",
+        "description": "Mexican dish of tortilla chips topped with melted cheese and often other toppings like meat, beans, and salsa.",
+        "question": "What are Nachos?"
+      },
+      {
+        "name": "Non Food",
+        "description": "This category denotes items that are not food.",
+        "question": "What does Non Food mean in this context?"
+      },
+      {
+        "name": "Omelette",
+        "description": "Egg dish cooked with various fillings such as cheese, vegetables, and meats.",
+        "question": "What is an Omelette?"
+      },
+      {
+        "name": "Onion Rings",
+        "description": "Sliced onions dipped in batter and deep-fried until crispy.",
+        "question": "What are Onion Rings?"
+      },
+      {
+        "name": "Oysters",
+        "description": "Shellfish often served raw on the half shell, sometimes with lemon juice or a mignonette sauce.",
+        "question": "What are Oysters?"
+      },
+      {
+        "name": "Pad Thai",
+        "description": "Thai stir-fried rice noodles with eggs, tofu, shrimp, peanuts, and bean sprouts.",
+        "question": "What is Pad Thai?"
+      },
+      {
+        "name": "Paella",
+        "description": "Spanish rice dish made with saffron, seafood, chicken, and/or vegetables.",
+        "question": "What is Paella?"
+      },
+      {
+        "name": "Pancakes",
+        "description": "Flat cakes made from batter and fried in a pan, often served with syrup or toppings.",
+        "question": "What are Pancakes?"
+      },
+      {
+        "name": "Panna Cotta",
+        "description": "Italian dessert made with cream, milk, sugar, and gelatin, often flavored with vanilla.",
+        "question": "What is Panna Cotta?"
+      },
+      {
+        "name": "Peking Duck",
+        "description": "Chinese dish of roasted duck with crispy skin, often served with pancakes, hoisin sauce, and scallions.",
+        "question": "What is Peking Duck?"
+      },
+      {
+        "name": "Pho",
+        "description": "Vietnamese noodle soup with broth, rice noodles, herbs, and meat (typically beef or chicken).",
+        "question": "What is Pho?"
+      },
+      {
+        "name": "Pizza",
+        "description": "Italian dish consisting of a round, flat base of dough topped with tomato sauce, cheese, and various toppings.",
+        "question": "What is Pizza?"
+      },
+      {
+        "name": "Pork Chop",
+        "description": "Cut of pork loin or rib, often grilled, fried, or baked.",
+        "question": "What is a Pork Chop?"
+      },
+      {
+        "name": "Poutine",
+        "description": "Canadian dish of fries topped with cheese curds and gravy.",
+        "question": "What is Poutine?"
+      },
+      {
+        "name": "Prime Rib",
+        "description": "Roast beef cut from the rib section, often served with au jus.",
+        "question": "What is Prime Rib?"
+      },
+      {
+        "name": "Pulled Pork Sandwich",
+        "description": "Sandwich made with shredded, slow-cooked pork, typically served with barbecue sauce.",
+        "question": "What is a Pulled Pork Sandwich?"
+      },
+      {
+        "name": "Ramen",
+        "description": "Japanese noodle soup dish with broth, noodles, meat (often pork), and toppings like egg and nori.",
+        "question": "What is Ramen?"
+      },
+      {
+        "name": "Ravioli",
+        "description": "Italian pasta parcels filled with cheese, meat, or vegetables, typically served with sauce.",
+        "question": "What are Ravioli?"
+      },
+      {
+        "name": "Red Velvet Cake",
+        "description": "Moist, slightly chocolate-flavored cake with cream cheese frosting, often dyed red.",
+        "question": "What is Red Velvet Cake?"
+      },
+      {
+        "name": "Risotto",
+        "description": "Italian rice dish cooked with broth until creamy, often flavored with cheese and vegetables or meat.",
+        "question": "What is Risotto?"
+      },
+      {
+        "name": "Samosa",
+        "description": "Indian pastry filled with spiced potatoes, peas, and sometimes meat, fried until crispy.",
+        "question": "What is Samosa?"
+      },
+      {
+        "name": "Sashimi",
+        "description": "Japanese dish of thinly sliced raw fish or seafood, served with soy sauce and wasabi.",
+        "question": "What is Sashimi?"
+      },
+      {
+        "name": "Scallops",
+        "description": "Shellfish with a delicate texture, often pan-seared or grilled.",
+        "question": "What are Scallops?"
+      },
+      {
+        "name": "Seaweed Salad",
+        "description": "Japanese salad made with seaweed, typically dressed with sesame oil, soy sauce, and vinegar.",
+        "question": "What is Seaweed Salad?"
+      },
+      {
+        "name": "Shrimp and Grits",
+        "description": "Southern dish of shrimp served over creamy grits, often seasoned with bacon and spices.",
+        "question": "What are Shrimp and Grits?"
+      },
+      {
+        "name": "Spaghetti Bolognese",
+        "description": "Italian pasta dish with meat sauce made from ground beef, tomatoes, and herbs, served over spaghetti.",
+        "question": "What is Spaghetti Bolognese?"
+      },
+      {
+        "name": "Spaghetti Carbonara",
+        "description": "Italian pasta dish made with eggs, cheese (typically Pecorino Romano), pancetta, and black pepper.",
+        "question": "What is Spaghetti Carbonara?"
+      },
+      {
+        "name": "Spring Rolls",
+        "description": "Asian appetizer consisting of vegetables, sometimes meat, and sometimes noodles rolled in a thin wrapper and fried or served fresh.",
+        "question": "What are Spring Rolls?"
+      },
+      {
+        "name": "Steak",
+        "description": "High-quality cut of beef cooked to preference, often grilled or pan-seared.",
+        "question": "What is Steak?"
+      },
+      {
+        "name": "Strawberry Shortcake",
+        "description": "Dessert made with layers of shortcake, whipped cream, and fresh strawberries.",
+        "question": "What is Strawberry Shortcake?"
+      },
+      {
+        "name": "Sushi",
+        "description": "Japanese dish of vinegared rice combined with various ingredients such as seafood, vegetables, and occasionally tropical fruits.",
+        "question": "What is Sushi?"
+      },
+      {
+        "name": "Tacos",
+        "description": "Mexican dish consisting of a folded or rolled tortilla filled with various ingredients, typically including meat, beans, lettuce, and salsa.",
+        "question": "What are Tacos?"
+      },
+      {
+        "name": "Takoyaki",
+        "description": "Japanese snack made of battered octopus pieces cooked in a special molded pan, typically served with takoyaki sauce and bonito flakes.",
+        "question": "What is Takoyaki?"
+      },
+      {
+        "name": "Tiramisu",
+        "description": "Italian dessert made of layers of coffee-soaked ladyfingers, mascarpone cheese, and cocoa powder.",
+        "question": "What is Tiramisu?"
+      },
+      {
+        "name": "Tuna Tartare",
+        "description": "Dish made with raw tuna finely chopped or minced, often seasoned with ingredients like soy sauce, sesame oil, and avocado.",
+        "question": "What is Tuna Tartare?"
+      }
+    ]
+  }
+]
