@@ -77,7 +77,7 @@ public class SignUpController extends HttpServlet {
         ValidationUtils valid = new ValidationUtils();
         
         if (!valid.signUpValidation(username,email,pass)){
-            response.sendRedirect("/home#failure_register");
+            response.sendRedirect("/");
             return;
         }
         

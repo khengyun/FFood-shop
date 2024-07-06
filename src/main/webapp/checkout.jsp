@@ -161,7 +161,11 @@
 
                             </div>
                             <div class="col-md-12 text-md-end mt-3 d-flex justify-content-end align-items-center">
-                                <h4 class="d-inline-flex">Tổng thanh toán: <fmt:formatNumber type="number" pattern="###,###" value="${totalPrice*(voucherpercent)}"/>đ</h4>
+                                <h4 class="d-inline-flex">Tổng thanh toán:
+                                  <fmt:formatNumber type="number"
+                                                    pattern="###,###"
+                                                    value="${totalPrice * ((voucherpercent == 1) ? 1 : (1 - voucherpercent))}" />đ
+                                </h4>
                                 <button type="submit"  id=”btnSubmit” name="btnSubmit" value="SubmitOrder" class="btn btn-primary ms-3" onclick="return checkAndCompleteOrder();" >Đặt món</button>
                             </div>
                     </div>
