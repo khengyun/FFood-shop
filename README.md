@@ -59,6 +59,7 @@ FFood is a food website that lets customers order food in a quick and convenient
 - View Food by Categories.
 - View Food Details.
 - Rate Food.
+- Chat bot
 - Search Food by keyword.
 - Search Food by image.
 - User cart Management.
