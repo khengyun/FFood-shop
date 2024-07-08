@@ -59,8 +59,8 @@ public class LoginController extends HttpServlet {
             
              // Validate the login credentials
             if (!valid.loginValidation(email,password)){
-                session.setAttribute("isSuccessful", false);
-                response.sendRedirect("/home#failure_login_info"); 
+                session.setAttribute("toastMessage", "error-login-credentials");
+                response.sendRedirect("/"); 
                 return;
             }
             

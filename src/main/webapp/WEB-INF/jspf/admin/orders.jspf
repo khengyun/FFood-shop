@@ -86,7 +86,7 @@
 
 <style>
     tr.odd.selected > td > a.text-decoration-none {
-        color: #ffffff; !important;
+        color: #ffffff !important;
     }
 </style>
 

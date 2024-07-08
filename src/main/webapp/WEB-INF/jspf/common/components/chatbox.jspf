@@ -1,0 +1,30 @@
+
+<div class="chatbox">
+    <div class="chatbox__support">
+        <div class="chatbox__header">
+            <div class="chatbox__image--header">
+                <img src="https://img.icons8.com/color/48/000000/circled-user-female-skin-type-5--v1.png" alt="image">
+            </div>
+            <div class="chatbox__content--header">
+                <h4 class="chatbox__heading--header">Chat support</h4>
+                <p class="chatbox__description--header">Hi. My name is Sam. How can I help you?</p>
+            </div>
+            <!-- Call Button -->
+            <div class="chatbox__call-button">
+                <button title="Start a call">
+                    <img src="https://img.icons8.com/color/48/000000/phone.png" alt="Call">
+                </button>
+            </div>
+        </div>
+        <div class="chatbox__messages">
+            <div></div>
+        </div>
+        <div class="chatbox__footer">
+            <input type="text" placeholder="Write a message...">
+            <button class="chatbox__send--footer send__button">Send</button>
+        </div>
+    </div>
+    <div class="chatbox__button">
+        <button><img src="data:image/png;base64,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"></button>
+    </div>
+</div>

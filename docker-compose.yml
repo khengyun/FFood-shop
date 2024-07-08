@@ -8,7 +8,7 @@ services:
       - SA_PASSWORD=sa@123456
       - MSSQL_PID=Developer
     ports:
-      - 1433
+      - "1433:1433"
     volumes:
       - sqlserver_data:/var/opt/mssql
     restart: always
@@ -36,11 +36,10 @@ services:
     networks:
       - ffood-network
 
-
   ai-food-classification:
     build: ./api/Food_Classifier
     ports:
-      - 8000:8000
+      - "8000:8000"
     depends_on:
       - sqlserver
       - sqlserver.configurator
@@ -51,25 +50,35 @@ services:
   psql-server:
     build: ./api/psqlserver
     ports:
-      - 8001:8001
+      - "8001:8001"
     depends_on:
       - sqlserver
       - sqlserver.configurator
     restart: always
     networks:
       - ffood-network
-    
-  # textai_server:
-  #   build: ./api/textai_server
-  #   ports:
-  #     - 8123:8123
-  #   depends_on:
-  #     - sqlserver
-  #     - sqlserver.configurator
-  #   restart: always
-  #   networks:
-  #     - ffood-network
 
+  chatbot_rag:
+    build: ./api/chatbot
+    ports:
+      - "8100:8100"
+    depends_on:
+      - sqlserver
+      - sqlserver.configurator
+    restart: always
+    networks:
+      - ffood-network
+
+  textai_server:
+    build: ./api/textai_server
+    ports:
+      - "8123:8123"
+    depends_on:
+      - sqlserver
+      - sqlserver.configurator
+    restart: always
+    networks:
+      - ffood-network
 
   tomcat-app:
     build:
@@ -89,8 +98,5 @@ networks:
   ffood-network:
     name: ffood-network
 
-
 volumes:
   sqlserver_data:
-
-

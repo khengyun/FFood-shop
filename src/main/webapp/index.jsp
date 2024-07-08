@@ -73,13 +73,16 @@
 
       <!-- CTA order banner -->
       <%@ include file="WEB-INF/jspf/guest/components/ctaOrderBanner.jspf" %>
-
+      
       <!-- Footer -->
       <%@ include file="WEB-INF/jspf/common/components/footer.jspf" %>
+      <%@ include file="WEB-INF/jspf/common/components/chatbox.jspf" %>
     </main>
     <%@ include file="WEB-INF/jspf/common/imports/javascript.jspf" %> 
     <%@ include file="WEB-INF/jspf/common/imports/validation.jspf" %>
+    
     <script src="assets/js/home.js"></script>
     <script src="assets/js/userNotify.js"></script>
+    <script src="assets/js/chatbot.js"></script>
   </body>
 </html>

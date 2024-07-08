@@ -62,11 +62,11 @@ public class PromotionManagerController extends HttpServlet {
                 response.sendRedirect("/promotionManager");
             } else {
                 session.setAttribute("toastMessage", "error-delete-voucher");
-                response.sendRedirect("/promotionManager#failure_delete_voucher");
+                response.sendRedirect("/promotionManager");
             }
         }
         session.setAttribute("toastMessage", "error-delete-voucher");
-        response.sendRedirect("/promotionManager#failure_delete_voucher");
+        response.sendRedirect("/promotionManager");
     }
 
     private void doPostAddVoucher(HttpServletRequest request, HttpServletResponse response)
