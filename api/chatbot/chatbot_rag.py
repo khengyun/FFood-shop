@@ -1,33 +1,52 @@
-import minsearch
+import requests
+import os
 import json
-from g4f.client import Client
-import g4f
+import minsearch
+from dotenv import load_dotenv
 
-_providers = [
-    g4f.Provider.Aichat,
-    g4f.Provider.ChatBase,
-    g4f.Provider.Bing,
-    g4f.Provider.GptGo,
-    g4f.Provider.You,
-    g4f.Provider.Yqcloud,
-]
+# Import necessary libraries
+
+# Load the environment variables from the .env file
+load_dotenv()
+
+# Retrieve the API key from environment variables
+api_key = os.getenv('API_KEY')
 
 def llm(prompt):
-    client = Client()
-    print("Creating chat completion...")
-    chat_completion = client.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages=[{"role": "user", "content": prompt}], 
-        ignored=["Ylokh", "GptGo", "AItianhu", "Aibn", "Myshell", "FreeGpt"],
-        stream=True
-    )
-    
-    response = ""
-    print("Waiting for completion...")
-    for completion in chat_completion:
-        response += completion.choices[0].delta.content or ""
+
+    # Define the endpoint URL
+    url = f'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key={api_key}'
+
+    # Define headers
+    headers = {
+        'Content-Type': 'application/json'
+    }
+
+    # Define the data to send
+    data = {
+        "contents": [
+            {
+                "parts": [
+                    {"text": prompt}
+                ]
+            }
+        ]
+    }
+
+    # Make the POST request
+    response = requests.post(url, headers=headers, json=data)
+
+    # Print the response
+    if response.status_code == 200:
+        response_data = response.json()
+        text_content = response_data['candidates'][0]['content']['parts'][0]['text']
+        print(text_content)
+        return {"response": text_content}
+    else:
+        print(f"Error: {response.status_code}")
+        print(response.text)
         
-    return {"response": response}
+        return {"response": "response error"}      
 
 def read_json(file):
     with open(file, 'rt', encoding='utf-8') as f_in:  # Specify UTF-8 encoding

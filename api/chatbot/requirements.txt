@@ -1,7 +1,8 @@
 pandas
 scikit-learn 
-g4f
 curl-cffi
 uvicorn
 fastapi
 nest_asyncio
+python-dotenv
+requests

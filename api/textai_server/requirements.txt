@@ -3,6 +3,7 @@ pathlib2
 requests
 fastapi
 protobuf==3.20
-g4f
 curl-cffi
 nest_asyncio
+requests
+python-dotenv
