@@ -22,12 +22,11 @@ services:
       - ffood-network
 
   sqlserver.configurator:
-    image: mcr.microsoft.com/mssql/server:2019-latest
+    image: mcr.microsoft.com/mssql-tools:latest
     volumes:
       - ./init:/docker-entrypoint-initdb.d
     depends_on:
-      sqlserver:
-        condition: service_healthy
+      - sqlserver
     command: >
       bash -c '
       /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P sa@123456  -i docker-entrypoint-initdb.d/full.sql;
@@ -58,27 +57,27 @@ services:
     networks:
       - ffood-network
 
-  chatbot_rag:
-    build: ./api/chatbot
-    ports:
-      - "8100:8100"
-    depends_on:
-      - sqlserver
-      - sqlserver.configurator
-    restart: always
-    networks:
-      - ffood-network
+  # chatbot_rag:
+  #   build: ./api/chatbot
+  #   ports:
+  #     - "8100:8100"
+  #   depends_on:
+  #     - sqlserver
+  #     - sqlserver.configurator
+  #   restart: always
+  #   networks:
+  #     - ffood-network
 
-  textai_server:
-    build: ./api/textai_server
-    ports:
-      - "8123:8123"
-    depends_on:
-      - sqlserver
-      - sqlserver.configurator
-    restart: always
-    networks:
-      - ffood-network
+  # textai_server:
+  #   build: ./api/textai_server
+  #   ports:
+  #     - "8123:8123"
+  #   depends_on:
+  #     - sqlserver
+  #     - sqlserver.configurator
+  #   restart: always
+  #   networks:
+  #     - ffood-network
 
   tomcat-app:
     build:
