@@ -76,6 +76,16 @@
     event.stopPropagation();
     confirmCloseOTP();
   });
+
+document.addEventListener("DOMContentLoaded", function() {
+        const otpModal = document.getElementById('trigger-otp-modal');
+        const triggerOtp = otpModal.getAttribute('data-trigger-otp');
+        console.log(triggerOtp);
+        if (triggerOtp === 'true') {
+            const modalInstance = new bootstrap.Modal(otpModal);
+            modalInstance.show();
+        }
+    });
 </script>
 
 <!--Check Voucher-->
