@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "ffoodv3"
+version = "0.1.0"
+description = ""
+authors = ["Kang The Variants <78076796+khengyun@users.noreply.github.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = {extras = ["standard"], version = "^0.112.2"}
+uvicorn = {extras = ["standard"], version = "^0.30.6"}
+pydantic = "^2.8.2"
+pydantic-settings = "^2.4.0"
+sqlmodel = "^0.0.21"
+asyncpg = "^0.29.0"
+sqlalchemy = {extras = ["asyncio"], version = "^2.0.32"}
+alembic = "^1.13.2"
+passlib = "^1.7.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
