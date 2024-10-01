@@ -1,0 +1,49 @@
+version: "3.8"
+
+services:
+  # app:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   command: poetry run uvicorn main:app --host 0.0.0.0 --port 8000
+  #   ports:
+  #     - "8000:8000"
+  #   volumes:
+  #     - .:/workspace
+  #   environment:
+  #     - PYTHONUNBUFFERED=1
+  #   user: root
+
+  db:
+    image: "postgres:alpine"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
+    volumes:
+      - bookdb_data:/var/lib/postgresql/data
+    networks:
+      - book_providers
+    env_file: .env
+    restart: always
+
+  redis:
+    container_name: ${REDIS_SERVICE_NAME}
+    image: redis/redis-stack
+    ports:
+      - "${REDIS_PORT}:${REDIS_PORT}"
+    volumes:
+      - ./data:/data
+    env_file:
+      - .env
+    networks:
+      - book_providers
+
+networks:
+  book_providers:
+    name: book_providers
+
+volumes:
+  bookdb_data:
