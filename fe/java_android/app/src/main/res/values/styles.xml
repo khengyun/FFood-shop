@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Widget.FFoodAndroid.Button" parent="Widget.Material3.Button">
+        <item name="textAppearanceButton">@style/TextAppearance.FFoodAndroid.Button</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.FFoodAndroid.Button.Large</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:minHeight">@dimen/min_button_height</item>
+        <item name="android:minWidth">@dimen/min_button_width</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.FFoodAndroid.Button.Large" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
+    <style name="TextAppearance.FFoodAndroid.Button" parent="TextAppearance.FFoodAndroid.LabelLarge.Prominent"/>
+
+    <style name="TextAppearance.FFoodAndroid.DisplayLarge" parent="TextAppearance.Material3.DisplayLarge">
+        <item name="fontFamily">@font/manrope</item>
+        <item name="fontVariationSettings">"'wght' 800"</item>
+        <item name="android:textSize">57sp</item>
+        <item name="android:lineHeight">64dp</item>
+        <item name="android:letterSpacing">-1.75</item>
+    </style>
+    <style name="TextAppearance.FFoodAndroid.DisplayMedium" parent="TextAppearance.Material3.DisplayMedium">
+        <item name="android:fontFamily">@font/manrope</item>
+        <item name="fontVariationSettings">"'wght' 800"</item>
+        <item name="android:textSize">45sp</item>
+        <item name="android:lineHeight">52dp</item>
+        <item name="android:letterSpacing">-0.03</item>
+    </style>
+    <style name="TextAppearance.FFoodAndroid.DisplaySmall" parent="TextAppearance.Material3.DisplaySmall">
+        <item name="android:fontFamily">@font/manrope</item>
+        <item name="fontVariationSettings">"'wght' 800"</item>
+        <item name="android:textSize">36sp</item>
+        <item name="android:lineHeight">44dp</item>
+        <item name="android:letterSpacing">-0.025</item>
+    </style>
+
+    <style name="TextAppearance.FFoodAndroid.HeadlineLarge" parent="TextAppearance.Material3.HeadlineLarge">
+        <item name="android:fontFamily">@font/manrope</item>
+        <item name="fontVariationSettings">"'wght' 700"</item>
+        <item name="android:textSize">32sp</item>
+        <item name="android:lineHeight">40dp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="TextAppearance.FFoodAndroid.HeadlineMedium" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="android:fontFamily">@font/manrope</item>
+        <item name="fontVariationSettings">"'wght' 700"</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:lineHeight">36dp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="TextAppearance.FFoodAndroid.HeadlineSmall" parent="TextAppearance.Material3.HeadlineSmall">
+        <item name="android:fontFamily">@font/manrope</item>
+        <item name="fontVariationSettings">"'wght' 700"</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:lineHeight">32dp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="TextAppearance.FFoodAndroid.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:fontFamily">@font/manrope</item>
+        <item name="fontVariationSettings">"'wght' 600"</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:lineHeight">28dp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="TextAppearance.FFoodAndroid.TitleMedium" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:fontFamily">@font/manrope</item>
+        <item name="fontVariationSettings">"'wght' 600"</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineHeight">24dp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="TextAppearance.FFoodAndroid.TitleSmall" parent="TextAppearance.Material3.TitleSmall">
+        <item name="android:fontFamily">@font/manrope</item>
+        <item name="fontVariationSettings">"'wght' 600"</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineHeight">20dp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="TextAppearance.FFoodAndroid.LabelLarge.Prominent" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:fontFamily">@font/manrope</item>
+        <item name="fontVariationSettings">"'wght' 700"</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineHeight">20dp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="TextAppearance.FFoodAndroid.LabelLarge" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:fontFamily">@font/manrope</item>
+        <item name="fontVariationSettings">"'wght' 500"</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineHeight">20dp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="TextAppearance.FFoodAndroid.LabelMedium.Prominent" parent="TextAppearance.Material3.LabelMedium">
+        <item name="android:fontFamily">@font/manrope</item>
+        <item name="fontVariationSettings">"'wght' 700"</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:lineHeight">16dp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="TextAppearance.FFoodAndroid.LabelMedium" parent="TextAppearance.Material3.LabelMedium">
+        <item name="android:fontFamily">@font/manrope</item>
+        <item name="fontVariationSettings">"'wght' 500"</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:lineHeight">16dp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="TextAppearance.FFoodAndroid.LabelSmall" parent="TextAppearance.Material3.LabelSmall">
+        <item name="android:fontFamily">@font/manrope</item>
+        <item name="fontVariationSettings">"'wght' 500"</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:lineHeight">16dp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="TextAppearance.FFoodAndroid.BodyLarge" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:fontFamily">@font/manrope</item>
+        <item name="fontVariationSettings">"'wght' 500"</item>
+        <item name="android:lineHeight">24dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="TextAppearance.FFoodAndroid.BodyMedium" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:fontFamily">@font/manrope</item>
+        <item name="android:fontWeight">500</item>
+        <item name="android:lineHeight">20dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="TextAppearance.FFoodAndroid.BodySmall" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:fontFamily">@font/manrope</item>
+        <item name="android:fontWeight">500</item>
+        <item name="android:lineHeight">16dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+</resources>

@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">FFood Android</string>
+    <string name="title_welcome">Đăng ký</string>
+    <dimen name="min_button_width">120dp</dimen>
+    <dimen name="min_button_height">64dp</dimen>
+    <dimen name="button_padding">16dp</dimen>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+</resources>
