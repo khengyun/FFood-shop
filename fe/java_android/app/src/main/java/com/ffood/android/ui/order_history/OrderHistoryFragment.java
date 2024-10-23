@@ -1,4 +1,4 @@
-package com.ffood.android.view.ui.dashboard;
+package com.ffood.android.ui.order_history;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,20 +12,20 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.ffood.android.databinding.FragmentDashboardBinding;
 
-public class DashboardFragment extends Fragment {
+public class OrderHistoryFragment extends Fragment {
 
     private FragmentDashboardBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        DashboardViewModel dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
+        OrderHistoryViewModel orderHistoryViewModel =
+                new ViewModelProvider(this).get(OrderHistoryViewModel.class);
 
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textDashboard;
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        orderHistoryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

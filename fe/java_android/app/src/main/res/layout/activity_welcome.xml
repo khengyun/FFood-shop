@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.WelcomeActivity">
+    tools:context=".WelcomeActivity">
 
     <ImageView
         android:id="@+id/imageView"
@@ -25,7 +25,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/welcomeTitle"
+            android:id="@+id/welcome_title"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -33,26 +33,26 @@
             android:textAppearance="?attr/textAppearanceDisplayMedium"
             android:text="Đặt món ở đâu cũng được."
             android:textColor="?attr/colorOnSurface"
-            app:layout_constraintBottom_toTopOf="@+id/welcomeSubtitle"
+            app:layout_constraintBottom_toTopOf="@+id/welcome_subtitle"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/welcomeSubtitle"
+            android:id="@+id/welcome_subtitle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/welcomeTitle"
+            android:layout_below="@id/welcome_title"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="16dp"
             android:text="FFood sẽ giao đến tận nơi cho bạn."
             android:textAppearance="?attr/textAppearanceBodyLarge"
             android:textColor="?attr/colorOnSurface"
             android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/signUpButton"
+            app:layout_constraintBottom_toTopOf="@+id/button_signup"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_goneMarginTop="16dp" />
 
         <Button
-            android:id="@+id/signUpButton"
+            android:id="@+id/button_signup"
             style="?attr/buttonStyle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -62,12 +62,12 @@
             android:textColor="?attr/colorOnPrimary"
             android:text="@string/title_welcome"
             android:textAppearance="?attr/textAppearanceButton"
-            app:layout_constraintBottom_toTopOf="@+id/loginButton"
+            app:layout_constraintBottom_toTopOf="@+id/button_login"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_goneMarginTop="16dp" />
 
         <Button
-            android:id="@+id/loginButton"
+            android:id="@+id/button_login"
             style="?attr/buttonStyle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

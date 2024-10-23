@@ -2,6 +2,7 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.FFoodAndroid" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:fontFamily">@font/manrope</item>
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
     <style name="Theme.FFoodAndroid.TransparentSystemBars" parent="Base.Theme.FFoodAndroid">

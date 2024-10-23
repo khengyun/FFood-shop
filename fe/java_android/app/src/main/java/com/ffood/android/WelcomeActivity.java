@@ -1,6 +1,8 @@
-package com.ffood.android.view;
+package com.ffood.android;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +11,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.ffood.android.R;
+import com.ffood.android.LoginActivity;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -23,6 +26,11 @@ public class WelcomeActivity extends AppCompatActivity {
             return insets;
         });
 
+        Button buttonLogin = findViewById(R.id.button_login);
 
+        buttonLogin.setOnClickListener(v -> {
+            Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
+            startActivity(intent);
+        });
     }
 }

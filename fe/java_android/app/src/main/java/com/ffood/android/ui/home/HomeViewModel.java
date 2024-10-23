@@ -1,4 +1,4 @@
-package com.ffood.android.view.ui.home;
+package com.ffood.android.ui.home;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

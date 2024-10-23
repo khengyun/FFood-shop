@@ -32,6 +32,7 @@
     <style name="TextAppearance.FFoodAndroid.DisplaySmall" parent="TextAppearance.Material3.DisplaySmall">
         <item name="android:fontFamily">@font/manrope</item>
         <item name="fontVariationSettings">"'wght' 800"</item>
+        <item name="android:textFontWeight">800</item>
         <item name="android:textSize">36sp</item>
         <item name="android:lineHeight">44dp</item>
         <item name="android:letterSpacing">-0.025</item>

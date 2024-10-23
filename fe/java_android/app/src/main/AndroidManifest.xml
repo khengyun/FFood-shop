@@ -14,19 +14,24 @@
         tools:ignore="ObsoleteSdkInt"
         tools:targetApi="31">
         <activity
-            android:name=".view.MainActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.WelcomeActivity"
+            android:name=".WelcomeActivity"
             android:exported="true"
             android:theme="@style/Theme.FFoodAndroid.Light" />
         <activity
-            android:name=".view.HomeActivity"
+            android:name=".HomeActivity"
+            android:exported="true"
+            android:theme="@style/Theme.FFoodAndroid.Light" />
+        <activity
+            android:name=".LoginActivity"
             android:exported="true"
             android:theme="@style/Theme.FFoodAndroid.Light" />
     </application>
